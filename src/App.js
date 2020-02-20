@@ -12,18 +12,12 @@ class App extends Component {
     ];
 
     return (
-      <GridLayout
-        className="layout"
-        layout={layout1}
-        cols={12}
-        rowHeight={100}
-        width={2000}
-      >
+      <GridLayout className="layout" layout={layout1} cols={12} width={2000}>
         <div key="settings">
           <PlotSettings />
         </div>
 
-        <div key="playground" className="layout-component">
+        <div key="playground" className="layout-playground">
           <Playground />
         </div>
       </GridLayout>

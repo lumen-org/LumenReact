@@ -13,11 +13,11 @@ class PlotSettings extends Component {
     ];
     return (
       <GridLayout layout={layout2} width={600} cols={4} rowHeight={100}>
-        <div key="schema" className="layout-component">
+        <div key="schema" className="layout-schema">
           {" "}
           Schema{" "}
         </div>
-        <div key="specification" className="layout-component">
+        <div key="specification" className="layout-specification">
           {" "}
           Specification{" "}
         </div>
