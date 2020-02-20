@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import GridLayout from "react-grid-layout";
 
 class Playground extends Component {
-    render() {
-        return <p> Playground</p>;
-    }
+  render() {
+    return <div> playground </div>;
+  }
 }
 
 export default Playground;
-
