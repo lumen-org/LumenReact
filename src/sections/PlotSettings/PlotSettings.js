@@ -23,13 +23,15 @@ class PlotSettings extends Component {
       >
         <div key="schema" className="layout-schema">
           <Schema
-            titles={Object.keys(this.data_list)}
-            data_lists={this.data_list}
+            titles={Object.keys(this.props.schema_list)}
+            data_lists={this.props.schema_list}
           />
         </div>
         <div key="specification" className="layout-specification">
-          {" "}
-          Specification{" "}
+          <Specification
+            titles={Object.keys(this.props.schema_list)}
+            data_lists={this.props.schema_list}
+          />
         </div>
       </GridLayout>
     );
