@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import PlotSettings from "../PlotSettings";
 import Playground from "../Playground";
-import "./MainWiondows.css";
+import "./MainWindows.css";
 
-class MainWiondows extends Component {
+class MainWindows extends Component {
   render() {
     return (
       <div>
@@ -14,4 +14,4 @@ class MainWiondows extends Component {
   }
 }
 
-export default MainWiondows;
+export default MainWindows;
