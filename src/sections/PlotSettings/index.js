@@ -1,1 +1,2 @@
-export { default } from "./PlotSettings";
+export { default } from "./PlotSettingsContainer";
+
