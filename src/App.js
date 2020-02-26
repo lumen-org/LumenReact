@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import { Provider } from "react-redux";
 import GridLayout from "react-grid-layout";
 import PlotSettings from "./sections/PlotSettings";
 import Playground from "./sections/Playground";
 import "./App.css";
+import store from "./stores/appStore";
 
 class App extends Component {
 
@@ -13,15 +15,18 @@ class App extends Component {
     ];
 
     return (
-      <GridLayout className="layout" layout={layout1} cols={12} width={2000}>
-        <div key="settings">
-          <PlotSettings />
-        </div>
 
-        <div key="playground" className="layout-playground">
-          <Playground />
-        </div>
-      </GridLayout>
+      <Provider store={store}>
+        <GridLayout className="layout" layout={layout1} cols={12} width={2000}>
+          <div key="settings">
+            <PlotSettings/>
+          </div>
+
+          <div key="playground" className="layout-playground">
+            <Playground/>
+          </div>
+        </GridLayout>
+      </Provider>
     );
   }
 }
