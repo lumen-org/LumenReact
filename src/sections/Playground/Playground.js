@@ -5,7 +5,7 @@ import "./Playground.css";
 
 class Playground extends Component {
   render() {
-    return <div> playground </div>;
+    return <div className="playground-container"> playground </div>;
   }
 }
 

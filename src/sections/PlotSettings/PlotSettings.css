@@ -21,3 +21,7 @@
   flex-direction: column;
   overflow: hidden;
 }
+
+.plotSettings-container {
+  width: 400px;
+}
