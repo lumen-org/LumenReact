@@ -5,6 +5,7 @@ import Playground from "./sections/Playground";
 import "./App.css";
 
 class App extends Component {
+
   render() {
     const layout1 = [
       { i: "settings", x: 0, y: 0.5, w: 3, h: 10, static: true },
