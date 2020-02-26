@@ -18,22 +18,35 @@ class PlotSettings extends Component {
 
   get_data_list(data) {
     const categorical_vals = ["string"];
-    let obj = { "Quantitative": [], "Categorical": [] };
-    obj.Categorical = data.fields.filter(field => categorical_vals.indexOf(field.dtype) !== -1).map( field => field.name);
-    obj.Quantitative = data.fields.filter(field => categorical_vals.indexOf(field.dtype) === -1).map(field => field.name);
-    return obj
+    let obj = { Quantitative: [], Categorical: [] };
+    obj.Categorical = data.fields
+      .filter(field => categorical_vals.indexOf(field.dtype) !== -1)
+      .map(field => field.name);
+    obj.Quantitative = data.fields
+      .filter(field => categorical_vals.indexOf(field.dtype) === -1)
+      .map(field => field.name);
+    return obj;
   }
 
   render() {
     const { layoutKey } = this.props;
     const layout2 = [
-      { i: "schema", x: 0, y: 0, w: 1.5, h: 10, static: true },
-      { i: "specification", x: 1.5, y: 0, w: 1.5, h: 10, static: true }
+      { i: "schema", x: 0, y: 0, w: 1, h: 10, static: true },
+      { i: "specification", x: 1, y: 0, w: 1, h: 10, static: true }
     ];
     return (
-      <GridLayout className="hello" layout={layout2} width={600} cols={4} rowHeight={100}>
+      <GridLayout
+        className="plotSettings-container"
+        layout={layout2}
+        width={400}
+        cols={2}
+        rowHeight={100}
+      >
         <div key="schema" className="layout-schema">
-          <Schema titles={Object.keys(this.data_list)} data_lists={this.data_list}/>
+          <Schema
+            titles={Object.keys(this.data_list)}
+            data_lists={this.data_list}
+          />
         </div>
         <div key="specification" className="layout-specification">
           {" "}

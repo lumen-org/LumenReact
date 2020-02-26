@@ -6,7 +6,7 @@ import "./MainWindows.css";
 class MainWindows extends Component {
   render() {
     return (
-      <div>
+      <div className="MainWindows-Container">
         <PlotSettings />
         <Playground />
       </div>
