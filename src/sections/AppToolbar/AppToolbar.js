@@ -18,11 +18,7 @@ class AppToolbar extends Component {
             <Button
               variant="contained"
               color="default"
-              endIcon={
-                <SvgIcon>
-                  <img src={"../../assets/icons/adjust-24px.svg"} alt="" />
-                </SvgIcon>
-              }
+              endIcon={<img src={item.icon} alt="" />}
             >
               {item.name}
             </Button>
