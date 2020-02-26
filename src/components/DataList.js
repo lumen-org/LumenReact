@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import DataItem from "./DataItem";
-import "./DataList.css"
+import "./DataList.css";
 
-function DataList(props) {
-  const listItems = props.value.map((values) =>
+function DataList({ data_list }) {
+
+  const listItems = data_list.map((values) =>
     <DataItem value={values}/>
   );
   return (
-      <div className="data-list">
-        {listItems}
-      </div>
-  )
+    <div  className="data-list">
+      {listItems}
+    </div>
+  );
 }
 
-export default DataList
+export default DataList;
