@@ -3,3 +3,7 @@
     position: relative;
     margin: 0.2rem;
 }
+
+.is-hover {
+    background: aqua;
+}

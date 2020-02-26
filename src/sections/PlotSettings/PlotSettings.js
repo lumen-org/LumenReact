@@ -1,6 +1,10 @@
 import React, { Component } from "react";
-//import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import GridLayout from "react-grid-layout";
+
+import { DndProvider } from "react-dnd";
+import Backend from "react-dnd-html5-backend";
+
 
 import "./PlotSettings.css";
 import Schema from "../Schema";
@@ -14,28 +18,33 @@ class PlotSettings extends Component {
       { i: "specification", x: 1, y: 0, w: 1, h: 10, static: true }
     ];
     return (
-      <GridLayout
-        className="plotSettings-container"
-        layout={layout2}
-        width={400}
-        cols={2}
-        rowHeight={100}
-      >
-        <div key="schema" className="layout-schema">
-          <Schema
-            titles={Object.keys(this.props.schema_list)}
-            data_lists={this.props.schema_list}
-          />
-        </div>
-        <div key="specification" className="layout-specification">
-          <Specification
-            titles={Object.keys(this.props.schema_list)}
-            data_lists={this.props.schema_list}
-          />
-        </div>
-      </GridLayout>
+      <DndProvider backend={Backend}>
+        <GridLayout
+          className="plotSettings-container"
+          layout={layout2}
+          width={400}
+          cols={2}
+          rowHeight={100}
+        >
+          <div key="schema" className="layout-schema">
+            <Schema
+              data_lists={this.props.schema_list}
+            />
+          </div>
+          <div key="specification" className="layout-specification">
+            <Specification
+              data_lists={this.props.specification_list}
+            />
+          </div>
+        </GridLayout>
+      </DndProvider>
     );
   }
 }
+
+PlotSettings.propTypes = {
+  schema_list: PropTypes.object,
+  specification_list: PropTypes.object
+};
 
 export default PlotSettings;
