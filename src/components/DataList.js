@@ -1,5 +1,6 @@
 import React from "react";
 import DataItem from "./DataItem";
+import "./DataList.css"
 
 function DataList(props) {
   const listItems = props.value.map((values) =>

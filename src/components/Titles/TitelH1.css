@@ -1,6 +1,16 @@
 
 .title_h1 {
-    background-color: azure;
-    width: 100%;
-    box-shadow: 1px 1px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    margin: 0;
+    padding: 0.2em 0 0;
+    position: sticky;
+    top: 0;
+    text-align: center;
+    background-color: white;
+    border-bottom: 2px solid #d5d5d5;
+    box-sizing: border-box;
+
+    font-family: Roboto, sans-serif;
+    font-size: x-large;
+    font-weight: lighter;
 }

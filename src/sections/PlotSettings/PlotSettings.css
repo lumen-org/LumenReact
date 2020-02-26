@@ -1,11 +1,23 @@
 .layout-schema {
-  border: white solid 1px;
-  border-radius: 10px;
+  margin: 0.3em;
   background-color: white;
+  border: #dbdbdb 1px solid;
+  border-radius: 10px;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .layout-specification {
-  border: white solid 1px;
-  border-radius: 10px;
+  margin: 0.3em;
   background-color: white;
+  border: #dbdbdb 1px solid;
+  border-radius: 10px;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }

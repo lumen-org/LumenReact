@@ -4,9 +4,9 @@ import "./TitelH1.css"
 
 function TitelH1(props) {
   return (
-      <h1 className="title_h1">
+      <div className="title_h1">
         {props.value}
-      </h1>
+      </div>
   )
 }
 
