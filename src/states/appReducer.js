@@ -1,4 +1,6 @@
 import { SELECT_MODEL, SAVE_MODELS } from "../constants/actionType";
+import { combineReducers } from "redux";
+import modelReducer from "./model/modelReducer";
 
 export const defaultState = {
   models: [],
@@ -18,4 +20,5 @@ const appReducer = (state = defaultState, action) => {
   }
 };
 
-export default appReducer;
+const rootReducer = combineReducers({ app: appReducer, model: modelReducer });
+export default rootReducer;
