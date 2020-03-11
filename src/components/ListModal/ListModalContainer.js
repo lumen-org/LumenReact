@@ -17,8 +17,9 @@ class ListModalContainer extends React.Component {
   };
 
   handleItemSelection = item => {
-    const { selectModel } = this.props;
+    const { selectModel, handleModalClose } = this.props;
     selectModel(item);
+    handleModalClose();
   };
 
   componentWillMount() {

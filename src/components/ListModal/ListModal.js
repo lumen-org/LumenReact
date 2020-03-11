@@ -34,11 +34,11 @@ class MainWindowsModal extends Component {
   };
 
   render() {
-    const { open, itemList } = this.props;
+    const { open, itemList, handleModalClose } = this.props;
     return (
       <Modal
         isOpen={open}
-        //        onRequestClose={closeModal}
+        onRequestClose={handleModalClose}
         style={modalStyles}
         contentLabel="Main Windows"
       >
