@@ -4,14 +4,11 @@ import "./VisualizationCanvas.css";
 
 class VisualizationCanvas extends Component {
   static propTypes = {
-    modelName: PropTypes.string.isRequired
+    modelName: PropTypes.string
   };
   render() {
-    return (
-      <div className="VisualizationCanvas-container">
-        {this.props.modelName}
-      </div>
-    );
+    const { modelName } = this.props;
+    return <div className="VisualizationCanvas-container">{modelName}</div>;
   }
 }
 

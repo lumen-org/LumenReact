@@ -5,7 +5,7 @@ export const defaultState = {
   currentModel: "model1"
 };
 
-const appReducer = (state = defaultState, action) => {
+const app = (state = defaultState, action) => {
   switch (action.type) {
     case SAVE_MODELS: {
       return {
@@ -26,4 +26,4 @@ const appReducer = (state = defaultState, action) => {
   }
 };
 
-export default appReducer;
+export default app;

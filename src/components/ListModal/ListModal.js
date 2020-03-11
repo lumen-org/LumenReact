@@ -50,11 +50,7 @@ class MainWindowsModal extends Component {
         </div>
         <List>
           {itemList.map((item, key) => (
-            <ListItem
-              button
-              onClick={item => this.onItemSelect(item)}
-              key={key}
-            >
+            <ListItem button onClick={() => this.onItemSelect(item)} key={key}>
               {item}
             </ListItem>
           ))}

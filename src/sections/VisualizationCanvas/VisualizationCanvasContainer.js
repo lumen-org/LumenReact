@@ -11,7 +11,7 @@ class VisualizationCanvasContainer extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  modelName: state.currentModel
+  modelName: state.app.currentModel
 });
 
 export default connect(mapStateToProps, null)(VisualizationCanvasContainer);
