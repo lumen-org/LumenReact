@@ -1,4 +1,4 @@
-import { SELECT_MODEL, SAVE_MODELS } from "../constants/actionType";
+import { SELECT_MODEL, SAVE_MODELS } from "../../constants/actionType";
 
 export function saveModels(payload) {
   return {

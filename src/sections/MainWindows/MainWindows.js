@@ -10,8 +10,7 @@ import "./MainWindows.css";
 class MainWindows extends Component {
   static propTypes = {
     openModal: PropTypes.bool.isRequired,
-    handleModalClose: PropTypes.func.isRequired,
-    handleSelectModal: PropTypes.func
+    handleModalClose: PropTypes.func.isRequired
   };
 
   state = {

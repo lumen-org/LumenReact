@@ -8,7 +8,7 @@ class ListModalContainer extends React.Component {
     handleModalClose: PropTypes.func.isRequired
   };
 
-  handleSelectModal = model => {
+  handleItemSelection = model => {
     console.log(model);
   };
 
@@ -19,7 +19,7 @@ class ListModalContainer extends React.Component {
       <ListModal
         open={open}
         handleModalClose={handleModalClose}
-        handleSelectModal={this.handleSelectModal}
+        handleItemSelection={this.handleItemSelection}
       />
     );
   }

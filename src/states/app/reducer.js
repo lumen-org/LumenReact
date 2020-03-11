@@ -1,8 +1,8 @@
-import { SELECT_MODEL, SAVE_MODELS } from "../constants/actionType";
+import { SELECT_MODEL, SAVE_MODELS } from "../../constants/actionType";
 
 export const defaultState = {
-  models: [],
-  currentModel: ""
+  foundModels: ["model1", "model2", "model3"],
+  currentModel: "model1"
 };
 
 const appReducer = (state = defaultState, action) => {
@@ -13,6 +13,7 @@ const appReducer = (state = defaultState, action) => {
         models: state.models.concat(action.payload)
       };
     }
+
     default:
       return state;
   }
