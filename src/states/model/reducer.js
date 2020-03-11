@@ -1,16 +1,16 @@
-import { SELECT_MODEL, SAVE_MODELS } from "../../constants/actionType";
+import { GET_SPECIFICATION, GET_SCHEMA } from "../../constants/actionType";
 
 export const defaultState = {
-  foundModels: ["model1", "model2", "model3"],
-  currentModel: "model1"
+  schema: {},
+  specification: {}
 };
 
 const modelReducer = (state = defaultState, action) => {
   switch (action.type) {
-    case SAVE_MODELS: {
+    case GET_SCHEMA: {
       return {
         ...state,
-        models: state.models.concat(action.payload)
+        schema: state.models.concat(action.payload)
       };
     }
 

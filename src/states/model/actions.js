@@ -1,8 +1,8 @@
-import { SELECT_MODEL, SAVE_MODELS } from "../../constants/actionType";
+import { GET_SPECIFICATION, GET_SCHEMA } from "../../constants/actionType";
 
-export function saveModels(payload) {
+export function getSchema(payload) {
   return {
-    type: SAVE_MODELS,
+    type: GET_SCHEMA,
     payload
   };
 }
