@@ -10,7 +10,14 @@ const appReducer = (state = defaultState, action) => {
     case SAVE_MODELS: {
       return {
         ...state,
-        models: state.models.concat(action.payload)
+        foundModels: state.models.concat(action.payload)
+      };
+    }
+
+    case SELECT_MODEL: {
+      return {
+        ...state,
+        currentModel: action.payload
       };
     }
 

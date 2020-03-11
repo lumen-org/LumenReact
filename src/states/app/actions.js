@@ -6,3 +6,10 @@ export function saveModels(payload) {
     payload
   };
 }
+
+export function selectModel(payload) {
+  return {
+    type: SELECT_MODEL,
+    payload
+  };
+}

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import PlotSettings from "../PlotSettings";
-import Playground from "../Playground";
+import VisualizationCanvas from "../VisualizationCanvas";
 import AppToolbar from "../AppToolbar";
 import ListModal from "../../components/ListModal";
 import "./MainWindows.css";
@@ -33,7 +33,7 @@ class MainWindows extends Component {
 
         <div className="MainWindows-Container">
           <PlotSettings />
-          <Playground />
+          <VisualizationCanvas />
         </div>
       </div>
     );
