@@ -18,6 +18,7 @@ class AppToolbar extends Component {
               color="default"
               endIcon={<img src={item.icon} alt="" />}
               size="small"
+              key={key}
             >
               {item.name}
             </Button>

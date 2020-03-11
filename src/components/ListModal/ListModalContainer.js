@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { saveModels, selectModel } from "../../states/app/actions";
 import PropTypes from "prop-types";
 import ListModal from "./ListModal";
+import fetchData from "../../utils/fetch";
+import { BASE_URL, FETCH_MODEL_NAME } from "../../constants/query";
 
 class ListModalContainer extends React.Component {
   static propTypes = {
@@ -10,19 +12,29 @@ class ListModalContainer extends React.Component {
     handleModalClose: PropTypes.func.isRequired
   };
 
-  handleItemSelection = model => {
-    const { selectModel } = this.props;
-    selectModel(model);
+  state = {
+    models: []
   };
 
-  componentWillMount() {}
+  handleItemSelection = item => {
+    const { selectModel } = this.props;
+    selectModel(item);
+  };
+
+  componentWillMount() {
+    fetchData(BASE_URL, FETCH_MODEL_NAME).then(response =>
+      this.setState({ models: response["models"] })
+    );
+  }
 
   render() {
     const { open, handleModalClose } = this.props;
+    const { models } = this.state;
 
     return (
       <ListModal
         open={open}
+        itemList={models}
         handleModalClose={handleModalClose}
         handleItemSelection={this.handleItemSelection}
       />

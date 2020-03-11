@@ -26,13 +26,13 @@ class MainWindowsModal extends Component {
     handleModalClose();
   };
 
-  onItemSelect = () => {
+  onItemSelect = item => {
     const { handleItemSelection } = this.props;
-    handleItemSelection("model");
+    handleItemSelection(item);
   };
 
   render() {
-    const { open } = this.props;
+    const { open, itemList } = this.props;
     return (
       <Modal
         isOpen={open}
@@ -42,11 +42,15 @@ class MainWindowsModal extends Component {
       >
         <h2> Found Models</h2>
         <List>
-          <ListItem button onClick={this.onItemSelect}>
-            Model 1
-          </ListItem>
-          <ListItem button>Model 1</ListItem>
-          <ListItem button>Model 1</ListItem>
+          {itemList.map((item, key) => (
+            <ListItem
+              button
+              onClick={item => this.onItemSelect(item)}
+              key={key}
+            >
+              {item}
+            </ListItem>
+          ))}
         </List>
         <button onClick={this.onCloseClick}>close</button>{" "}
       </Modal>
