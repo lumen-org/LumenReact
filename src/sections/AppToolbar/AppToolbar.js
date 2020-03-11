@@ -17,6 +17,7 @@ class AppToolbar extends Component {
               variant="contained"
               color="default"
               endIcon={<img src={item.icon} alt="" />}
+              size="small"
             >
               {item.name}
             </Button>
