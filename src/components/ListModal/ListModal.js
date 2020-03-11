@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Modal from "react-modal";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-
+import "./ListModal.css";
 const modalStyles = {
   content: {
     top: "30%",
@@ -40,7 +42,12 @@ class MainWindowsModal extends Component {
         style={modalStyles}
         contentLabel="Main Windows"
       >
-        <h2> Found Models</h2>
+        <div className="ListModal-Header">
+          <h3 className="ListModal-Header-Text"> Models Found </h3>
+          <IconButton aria-label="delete" onClick={this.onCloseClick}>
+            <CloseIcon fontSize="small" />
+          </IconButton>{" "}
+        </div>
         <List>
           {itemList.map((item, key) => (
             <ListItem
@@ -52,7 +59,6 @@ class MainWindowsModal extends Component {
             </ListItem>
           ))}
         </List>
-        <button onClick={this.onCloseClick}>close</button>{" "}
       </Modal>
     );
   }

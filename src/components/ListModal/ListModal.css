@@ -1,3 +1,13 @@
-.ListModal-Container {
-  background-color: white;
+.ListModal-Header {
+  display: flex;
+  flex-direction: row;
+  border-bottom: grey 1px dashed;
+  padding: 5px;
+  justify-content: space-between;
+  height: 40px;
+}
+
+.ListModal-Header-Text {
+  font-size: 18px;
+  line-height: 0;
 }
