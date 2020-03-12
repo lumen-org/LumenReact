@@ -19,7 +19,7 @@ class AppToolbar extends Component {
   };
 
   onButtonClick = buttonKey => {
-    if (buttonKey == 0) {
+    if (buttonKey === 0) {
       this.setState({
         openModal: true
       });

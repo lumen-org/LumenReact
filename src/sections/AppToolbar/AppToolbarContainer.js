@@ -37,7 +37,18 @@ class AppToolbarContainer extends React.Component {
     console.log("query...");
   };
   render() {
-    return <AppToolbar />;
+    return (
+      <AppToolbar
+        handleClearClick={this.handleClearClick}
+        handleCloneClick={this.handleCloneClick}
+        handleConfigClick={this.handleConfigClick}
+        handleQueryClick={this.handleQueryClick}
+        handleGraphClick={this.handleGraphClick}
+        handleQueryClick={this.handleQueryClick}
+        handleRedoClick={this.handleSyncModelClick}
+        handleUndoClick={this.handleUndoClick}
+      />
+    );
   }
 }
 
