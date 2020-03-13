@@ -1,35 +1,39 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import PlotSettings from "../PlotSettings";
-import Playground from "../Playground";
+import VisualizationCanvas from "../VisualizationCanvas";
 import AppToolbar from "../AppToolbar";
-import MainWindowsModal from "../../components/MainWindowsModal";
+import ListModal from "../../components/ListModal";
 import "./MainWindows.css";
 
 // TODO: Make it responsive according to tablet size
 class MainWindows extends Component {
-  state = {
-    openModal: false
+  static propTypes = {
+    openModal: PropTypes.bool.isRequired,
+    handleModalClose: PropTypes.func.isRequired
   };
 
-  handleModelClose = () => {
+  state = {
+    openModal: true
+  };
+
+  handleModalClose = () => {
     this.setState({
       openModal: false
     });
   };
+
   render() {
     const { openModal } = this.state;
 
     return (
       <div className="MainWindows-MainContainer">
         <AppToolbar />
-        <MainWindowsModal
-          open={openModal}
-          handleModelClose={this.handleModelClose}
-        />
+        <ListModal open={openModal} handleModalClose={this.handleModalClose} />
 
         <div className="MainWindows-Container">
           <PlotSettings />
-          <Playground />
+          <VisualizationCanvas />
         </div>
       </div>
     );

@@ -1,6 +1,12 @@
 const toolbarConfig = {
   appToolbarActions: [
     {
+      name: "Select Model",
+      icon: require("../assets/icons/play_for_work_24px.svg"),
+      color: "primary",
+      variant: "contained"
+    },
+    {
       name: "query",
       icon: require("../assets/icons/adjust-24px.svg")
     },

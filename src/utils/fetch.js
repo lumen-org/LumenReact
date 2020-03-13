@@ -1,12 +1,12 @@
-export const fetchData = (url, body) =>
-  fetch(url, {
+export const fetchData = (url, body) => {
+  return fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body)
   })
     .then(response => response.json())
     .then(response => {
-      console.log(response["body"]);
+      return response;
     })
     .catch(error => {
       const { response: { status = -1, statusText = "" } = {} } = error;
@@ -15,3 +15,6 @@ export const fetchData = (url, body) =>
         return Promise.resolve({ status, statusText });
       } else throw error;
     });
+};
+
+export default fetchData;
