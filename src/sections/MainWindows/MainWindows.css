@@ -1,4 +1,11 @@
 .MainWindows-Container {
   display: flex;
   flex-direction: row;
+  background-color: #e3e4e6;
+}
+
+.MainWindows-MainContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: #e3e4e6;
 }

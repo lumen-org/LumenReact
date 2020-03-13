@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
-import store from "./stores/appStore";
+import store from "./store";
 import MainWindows from "./sections/MainWindows";
 import "./App.css";
 class App extends Component {
