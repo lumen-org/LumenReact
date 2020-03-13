@@ -23,8 +23,8 @@ class PlotSettingsContainer extends Component {
   }
 
   get_specification_list(data) {
-    // let obj = { "X-Axis": ["Peter"], "Y-Axis": [], "Filter": [], "Detail": [], "Color": [], "Shape": [], "Size": [] };
-    return this.props.model_specifications
+    // todo:: set data handel for model_specification
+    return this.props.model_specifications;
   }
 
   render() {
@@ -35,7 +35,7 @@ class PlotSettingsContainer extends Component {
 const mapStateToProps = state => {
   return {
     model_specifications: state.model.model_specifications
-  }
+  };
 };
 
-export default connect(mapStateToProps)(PlotSettingsContainer)
+export default connect(mapStateToProps)(PlotSettingsContainer);

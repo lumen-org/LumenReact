@@ -1,16 +1,26 @@
 import { useDrag } from "react-dnd";
-import React from "react";
+import React, { useState } from "react";
 import FieldItem from "./FieldItem";
 import { useDispatch } from "react-redux";
 import { add_model_to_list, delete_model_from_list } from "../../states/model/modelActions";
 import { FIELD_ITEM } from "../../constants/dragAndDropTypes";
+import FieldModal from "../FieldModal/FieldModal";
 
+function FieldItemContainer({ value, associated_list_key = "", type = FIELD_ITEM }) {
+  function dispatch_list_item() {
+    dispatch(delete_model_from_list({ "key": associated_list_key, "value": value }));
+  }
 
-function FieldItemContainer({ value, associated_list_key = "", type =  FIELD_ITEM}) {
-  const item = { type: type};
+  const [isOpen, setIsOpen] = useState(false);
+  const handleModal = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const item = { type: type };
 
   // to hook into model actions
   const dispatch = useDispatch();
+  const input_dom = (<h6>PeterPan</h6>);
 
   // Thats what is called a hook! ;)
   // which sadly requires the hook into redux above :/
@@ -31,9 +41,16 @@ function FieldItemContainer({ value, associated_list_key = "", type =  FIELD_ITE
   });
   return (
     <div ref={drag}>
-      <FieldItem value={value}/>
+      {associated_list_key ? (
+        <FieldItem value={value} handleClose={() => dispatch_list_item()} handleClick={handleModal}
+                   isOpen={isOpen} handleModal={handleModal}/>
+      ) : (
+        <FieldItem value={value}/>
+      )}
+      <FieldModal></FieldModal>
     </div>
   );
 }
+
 
 export default FieldItemContainer;

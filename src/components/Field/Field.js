@@ -15,7 +15,7 @@ function Field({ title, data, associated_list_key="" }) {
 
 Field.propTypes = {
   title: PropTypes.string.isRequired,
-  data: PropTypes.array.isRequired
+  data: PropTypes.object.isRequired
 };
 
 export default Field;
