@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React  from "react";
 import { useDrop } from "react-dnd";
 import classNames from "classnames";
 import Field from "./Field";
+import { FIELD_ITEM } from "../../constants/dragAndDropTypes";
 
-function FieldContainer({ title, data, dropable = false }) {
-  const [hasDropped, setHasDropped] = useState(false);
+function FieldContainer({ title, data, dropable = false, type = FIELD_ITEM}) {
   const [{ isOverCurrent }, drop] = useDrop({
-    accept: "DataItem",
-    drop(item, monitor) {
-      setHasDropped(true);
-    },
+    accept: [type],
+    drop: () => ({
+      result: title
+    }),
     collect: monitor => ({
       isOverCurrent: monitor.isOver({ shallow: true })
     })
@@ -20,7 +20,7 @@ function FieldContainer({ title, data, dropable = false }) {
       fieldClasses += " is-hover";
     }
     return <div ref={drop} className={fieldClasses}>
-      <Field title={title} data={data}/>
+      <Field title={title} data={data} associated_list_key={title} />
     </div>;
   }
   return (

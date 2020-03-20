@@ -6,16 +6,20 @@ import "./Specification.css"
 
 class Specification extends Component {
 
+  handleDrop(item){
+
+  }
+
   specification_values() {
     return Object.entries(this.props.data_lists).map(([title, data]) =>
-      <Field title={title} data={data} dropable={true}/>
+      <Field title={title} data={data} dropable={true} onDrop={this.handleDrop}/>
     );
   }
 
   render() {
     return (
       <div className="specification">
-        <TitelH1 value={"Schema"}/>
+        <TitelH1 value={"Spezification"}/>
         {this.specification_values()}
         <TitelH2 value={"Drop here to remove"}/>
       </div>
