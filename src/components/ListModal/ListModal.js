@@ -6,6 +6,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import "./ListModal.css";
+
 const modalStyles = {
   content: {
     top: "30%",

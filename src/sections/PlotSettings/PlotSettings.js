@@ -5,7 +5,6 @@ import GridLayout from "react-grid-layout";
 import { DndProvider } from "react-dnd";
 import Backend from "react-dnd-html5-backend";
 
-
 import "./PlotSettings.css";
 import Schema from "../Schema";
 import Specification from "../Specification";
@@ -27,24 +26,15 @@ class PlotSettings extends Component {
           rowHeight={100}
         >
           <div key="schema" className="layout-schema">
-            <Schema
-              data_lists={this.props.schema_list}
-            />
+            <Schema />
           </div>
           <div key="specification" className="layout-specification">
-            <Specification
-              data_lists={this.props.specification_list}
-            />
+            <Specification data_lists={this.props.specification_list} />
           </div>
         </GridLayout>
       </DndProvider>
     );
   }
 }
-
-PlotSettings.propTypes = {
-  schema_list: PropTypes.object,
-  specification_list: PropTypes.object
-};
 
 export default PlotSettings;
