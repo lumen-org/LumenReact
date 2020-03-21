@@ -11,14 +11,8 @@ class Schema extends Component {
     categorical: PropTypes.array.isRequired
   };
 
-  /*   function schema_values(data_list) {
-    return Object.entries(data_list).map(([title, data]) =>
-      <Field title={title} data={data} draggable={true}/>
-    ); */
-
   render() {
     const { quantitative, categorical } = this.props;
-    console.log(quantitative, categorical);
     return (
       <div className="Schema">
         <Field title={"Quantitative"} data={quantitative} dropable={true} />

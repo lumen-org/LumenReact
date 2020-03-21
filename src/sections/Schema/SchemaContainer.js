@@ -17,7 +17,7 @@ class SchemaContainer extends React.Component {
 
   // TODO: CAN WE THINK OF A BETTER NAME THANK SCHEMA, AND FEILDS?
 
-  componentDidMount() {
+  componentWillMount() {
     const { modelName } = this.props;
 
     FETCH_SCHEMA.FROM = modelName;

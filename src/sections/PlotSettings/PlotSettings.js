@@ -29,7 +29,7 @@ class PlotSettings extends Component {
             <Schema />
           </div>
           <div key="specification" className="layout-specification">
-            <Specification data_lists={this.props.specification_list} />
+            <Specification />
           </div>
         </GridLayout>
       </DndProvider>
