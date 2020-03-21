@@ -14,9 +14,6 @@ function FieldItemContainer({
 
   // to hook into model actions
   const dispatch = useDispatch();
-
-  // Thats what is called a hook! ;)
-  // which sadly requires the hook into redux above :/
   const [, drag] = useDrag({
     item,
     end(item, monitor) {
@@ -24,11 +21,14 @@ function FieldItemContainer({
 
       if (item && dropResult) {
         if (associated_list_key) {
+          // TODO: FIX BUG:
+          //when drag an item from shcema and drop it in specification,
+          // an error would occur
           dispatch(deleteModel({ key: dropResult.result, value: value }));
         }
         dispatch(addModel({ key: dropResult.result, value: value }));
       } else if (associated_list_key) {
-        dispatch(deleteModel({ key: dropResult.result, value: value }));
+        dispatch(deleteModel({ key: associated_list_key, value: value }));
       }
     }
   });
