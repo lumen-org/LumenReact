@@ -11,24 +11,36 @@ class SchemaContainer extends React.Component {
   };
 
   state = {
-    schemaFields: []
+    quantitativeFields: [],
+    categoricalFields: []
   };
 
   // TODO: CAN WE THINK OF A BETTER NAME THANK SCHEMA, AND FEILDS?
 
-  componentWillMount() {
+  componentDidMount() {
     const { modelName } = this.props;
+
     FETCH_SCHEMA.FROM = modelName;
     fetchData(BASE_URL, FETCH_SCHEMA).then(response =>
       this.setState({
-        schemaFields: response["fields"]
+        categoricalFields: response["fields"].filter((field, index) => {
+          return field.dtype === "string";
+        }),
+        quantitativeFields: response["fields"].filter((field, index) => {
+          return field.dtype === "numerical";
+        })
       })
     );
   }
 
   render() {
-    const { schemaFields } = this.state;
-    return <Schema fields={schemaFields} />;
+    const { quantitativeFields, categoricalFields } = this.state;
+    return (
+      <Schema
+        quantitative={quantitativeFields}
+        categorical={categoricalFields}
+      />
+    );
   }
 }
 
