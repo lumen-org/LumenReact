@@ -23,12 +23,16 @@ class SchemaContainer extends React.Component {
     FETCH_SCHEMA.FROM = modelName;
     fetchData(BASE_URL, FETCH_SCHEMA).then(response =>
       this.setState({
-        categoricalFields: response["fields"].filter((field, index) => {
-          return field.dtype === "string";
-        }),
-        quantitativeFields: response["fields"].filter((field, index) => {
-          return field.dtype === "numerical";
-        })
+        categoricalFields: response["fields"]
+          .filter((field, index) => {
+            return field.dtype === "string";
+          })
+          .map(field => field.name),
+        quantitativeFields: response["fields"]
+          .filter((field, index) => {
+            return field.dtype === "numerical";
+          })
+          .map(field => field.name)
       })
     );
   }
