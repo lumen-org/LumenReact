@@ -37,8 +37,6 @@ class SchemaContainer extends React.Component {
   componentDidMount() {
     const { modelName } = this.props;
     const FETCH_SCHEMA = { SHOW: "HEADER", FROM: modelName };
-    console.log("model name:", modelName);
-
     this.getData(FETCH_SCHEMA);
   }
 
@@ -46,11 +44,10 @@ class SchemaContainer extends React.Component {
     if (prevProps.modelName !== this.props.modelName) {
       const { modelName } = this.props;
       const FETCH_SCHEMA = { SHOW: "HEADER", FROM: modelName };
-      console.log("model name:", modelName);
-
       this.getData(FETCH_SCHEMA);
     }
   }
+
   render() {
     const { quantitativeFields, categoricalFields } = this.state;
     return (
