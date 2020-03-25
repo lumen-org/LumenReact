@@ -19,7 +19,7 @@ class SchemaContainer extends React.Component {
 
   componentWillMount() {
     const { modelName } = this.props;
-
+    console.log("model name:", modelName);
     FETCH_SCHEMA.FROM = modelName;
     fetchData(BASE_URL, FETCH_SCHEMA).then(response =>
       this.setState({

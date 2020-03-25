@@ -16,7 +16,7 @@ const modalStyles = {
   }
 };
 
-class MainWindowsModal extends Component {
+class ListModdal extends Component {
   static propTypes = {
     open: PropTypes.bool.isRequired,
     handleModalClose: PropTypes.func.isRequired,
@@ -61,4 +61,4 @@ class MainWindowsModal extends Component {
   }
 }
 
-export default MainWindowsModal;
+export default ListModdal;
