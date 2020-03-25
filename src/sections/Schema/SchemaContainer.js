@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import fetchData from "../../utils/fetch";
 import Schema from "./Schema";
-import { BASE_URL, FETCH_SCHEMA } from "../../constants/query";
+import { BASE_URL } from "../../constants/query";
 
 class SchemaContainer extends React.Component {
   static propTypes = {
@@ -17,10 +17,7 @@ class SchemaContainer extends React.Component {
 
   // TODO: CAN WE THINK OF A BETTER NAME THANK SCHEMA, AND FEILDS?
 
-  componentWillMount() {
-    const { modelName } = this.props;
-    console.log("model name:", modelName);
-    FETCH_SCHEMA.FROM = modelName;
+  getData = FETCH_SCHEMA => {
     fetchData(BASE_URL, FETCH_SCHEMA).then(response =>
       this.setState({
         categoricalFields: response["fields"]
@@ -35,8 +32,25 @@ class SchemaContainer extends React.Component {
           .map(field => field.name)
       })
     );
+  };
+
+  componentDidMount() {
+    const { modelName } = this.props;
+    const FETCH_SCHEMA = { SHOW: "HEADER", FROM: modelName };
+    console.log("model name:", modelName);
+
+    this.getData(FETCH_SCHEMA);
   }
 
+  componentDidUpdate(prevProps, preState) {
+    if (prevProps.modelName !== this.props.modelName) {
+      const { modelName } = this.props;
+      const FETCH_SCHEMA = { SHOW: "HEADER", FROM: modelName };
+      console.log("model name:", modelName);
+
+      this.getData(FETCH_SCHEMA);
+    }
+  }
   render() {
     const { quantitativeFields, categoricalFields } = this.state;
     return (
@@ -48,8 +62,4 @@ class SchemaContainer extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  modelName: state.app.currentModel
-});
-
-export default connect(mapStateToProps, null)(SchemaContainer);
+export default SchemaContainer;

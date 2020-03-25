@@ -5,8 +5,12 @@ import { connect } from "react-redux";
 
 class PlotSettingsContainer extends Component {
   render() {
-    return <PlotSettings />;
+    const { modelName } = this.props;
+    return <PlotSettings currentModel={modelName} />;
   }
 }
+const mapStateToProps = state => ({
+  modelName: state.app.currentModel
+});
 
-export default PlotSettingsContainer;
+export default connect(mapStateToProps, null)(PlotSettingsContainer);
