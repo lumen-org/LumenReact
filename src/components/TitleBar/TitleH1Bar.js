@@ -6,8 +6,8 @@ import TitelH1 from "../Titles/TitelH1";
 const TitleH1Bar = ({ handleClose, title}) => {
   return (
     <div className={"title-bar-h1"}>
-      <CloseButton handleClose={handleClose}/>
-      <TitelH1 value={title}/>
+      <CloseButton className={"title-bar-close-button"} handleClose={handleClose}/>
+      <TitelH1 className={"title-bar-title"} value={title}/>
     </div>
   );
 };

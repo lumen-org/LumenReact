@@ -1,7 +1,7 @@
 import React from "react";
 import "./FielItem.css";
 import CloseButton from "../Button/CloseButton";
-import FieldModal from "../FieldModal/FieldModal";
+import FieldItemModal from "../FieldItemModal/FieldItemModal";
 
 
 const FieldItem = ({ value, handleClick = null, handleClose = null, handleModal = null, isOpen = false, input_dom=null }) => {
@@ -11,7 +11,7 @@ const FieldItem = ({ value, handleClick = null, handleClose = null, handleModal 
       <div className={"field-item"} onClick={handleClick}>
         {value}
       </div>
-      <FieldModal title={value} isOpen={isOpen} handleClose={handleModal}/>
+      <FieldItemModal title={value} isOpen={isOpen} handleClose={handleModal}/>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import FieldItem from "./FieldItem";
 import { useDispatch } from "react-redux";
 import { add_model_to_list, delete_model_from_list } from "../../states/model/modelActions";
 import { FIELD_ITEM } from "../../constants/dragAndDropTypes";
-import FieldModal from "../FieldModal/FieldModal";
+import FieldItemModal from "../FieldItemModal/FieldItemModal";
 
 function FieldItemContainer({ value, associated_list_key = "", type = FIELD_ITEM }) {
   function dispatch_list_item() {
@@ -47,7 +47,7 @@ function FieldItemContainer({ value, associated_list_key = "", type = FIELD_ITEM
       ) : (
         <FieldItem value={value}/>
       )}
-      <FieldModal></FieldModal>
+      <FieldItemModal/>
     </div>
   );
 }
