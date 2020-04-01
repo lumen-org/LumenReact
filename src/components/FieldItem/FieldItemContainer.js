@@ -1,16 +1,26 @@
 import { useDrag } from "react-dnd";
-import React from "react";
+import React, { useState } from "react";
 import FieldItem from "./FieldItem";
 import { useDispatch } from "react-redux";
 import { addModel, deleteModel } from "../../states/model/actions";
 import { FIELD_ITEM } from "../../constants/dragAndDropTypes";
+import FieldItemModal from "../FieldItemModal/FieldItemModal";
 
 function FieldItemContainer({
-  value,
-  associated_list_key = "",
-  type = FIELD_ITEM
-}) {
+                              value,
+                              fieldName = "",
+                              type = FIELD_ITEM
+                            }) {
   const item = { type: type };
+
+  function dispatch_list_item() {
+    dispatch(deleteModel({ "key": fieldName, "value": value }));
+  }
+
+  const [isOpen, setIsOpen] = useState(false);
+  const handleModal = () => {
+    setIsOpen(!isOpen);
+  };
 
   // to hook into model actions
   const dispatch = useDispatch();
@@ -23,11 +33,11 @@ function FieldItemContainer({
       const dropResult = monitor.getDropResult();
       if (item && dropResult) {
         if (fieldName) {
-          dispatch(delete_model_from_list({ "key": fieldName, "value": value }));
+          dispatch_list_item();
         }
-        dispatch(add_model_to_list({ "key": dropResult.result, "value": value }));
+        dispatch(addModel({ "key": dropResult.result, "value": value }));
       } else if (fieldName) {
-        dispatch(delete_model_from_list({ "key": fieldName, "value": value }));
+        dispatch_list_item();
       }
     }
   });
