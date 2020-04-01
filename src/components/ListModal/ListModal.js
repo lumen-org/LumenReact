@@ -6,6 +6,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import "./ListModal.css";
+
 const modalStyles = {
   content: {
     top: "30%",
@@ -15,7 +16,7 @@ const modalStyles = {
   }
 };
 
-class MainWindowsModal extends Component {
+class ListModdal extends Component {
   static propTypes = {
     open: PropTypes.bool.isRequired,
     handleModalClose: PropTypes.func.isRequired,
@@ -60,4 +61,4 @@ class MainWindowsModal extends Component {
   }
 }
 
-export default MainWindowsModal;
+export default ListModdal;

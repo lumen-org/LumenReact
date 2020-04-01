@@ -1,22 +1,15 @@
 import { useDrag } from "react-dnd";
-import React, { useState } from "react";
+import React from "react";
 import FieldItem from "./FieldItem";
 import { useDispatch } from "react-redux";
-import { add_model_to_list, delete_model_from_list } from "../../states/model/modelActions";
+import { addModel, deleteModel } from "../../states/model/actions";
 import { FIELD_ITEM } from "../../constants/dragAndDropTypes";
-import FieldItemModal from "../FieldItemModal/FieldItemModal";
 
-function FieldItemContainer({ value, associated_list_key: fieldName = "", type = FIELD_ITEM }) {
-
-  function dispatch_list_item() {
-    dispatch(delete_model_from_list({ "key": fieldName, "value": value }));
-  }
-
-  const [isOpen, setIsOpen] = useState(false);
-  const handleModal = () => {
-    setIsOpen(!isOpen);
-  };
-
+function FieldItemContainer({
+  value,
+  associated_list_key = "",
+  type = FIELD_ITEM
+}) {
   const item = { type: type };
 
   // to hook into model actions
@@ -51,6 +44,5 @@ function FieldItemContainer({ value, associated_list_key: fieldName = "", type =
     </div>
   );
 }
-
 
 export default FieldItemContainer;

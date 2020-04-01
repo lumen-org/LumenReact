@@ -1,8 +1,18 @@
-import { GET_SPECIFICATION, GET_SCHEMA } from "../../constants/actionType";
+import {
+  ADD_TO_SCHEMA,
+  DELETE_FROM_SCHEMA
+} from "../../constants/modelActionTypes";
 
-export function getSchema(payload) {
+export function addModel(payload) {
   return {
-    type: GET_SCHEMA,
+    type: ADD_TO_SCHEMA,
+    payload
+  };
+}
+
+export function deleteModel(payload) {
+  return {
+    type: DELETE_FROM_SCHEMA,
     payload
   };
 }
