@@ -12,5 +12,4 @@ class PlotSettingsContainer extends Component {
 const mapStateToProps = state => ({
   modelName: state.app.currentModel
 });
-
 export default connect(mapStateToProps, null)(PlotSettingsContainer);
