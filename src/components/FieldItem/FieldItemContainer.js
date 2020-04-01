@@ -6,9 +6,10 @@ import { add_model_to_list, delete_model_from_list } from "../../states/model/mo
 import { FIELD_ITEM } from "../../constants/dragAndDropTypes";
 import FieldItemModal from "../FieldItemModal/FieldItemModal";
 
-function FieldItemContainer({ value, associated_list_key = "", type = FIELD_ITEM }) {
+function FieldItemContainer({ value, associated_list_key: fieldName = "", type = FIELD_ITEM }) {
+
   function dispatch_list_item() {
-    dispatch(delete_model_from_list({ "key": associated_list_key, "value": value }));
+    dispatch(delete_model_from_list({ "key": fieldName, "value": value }));
   }
 
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +21,6 @@ function FieldItemContainer({ value, associated_list_key = "", type = FIELD_ITEM
 
   // to hook into model actions
   const dispatch = useDispatch();
-  const input_dom = (<h6>PeterPan</h6>);
 
   // Thats what is called a hook! ;)
   // which sadly requires the hook into redux above :/
@@ -29,19 +29,19 @@ function FieldItemContainer({ value, associated_list_key = "", type = FIELD_ITEM
     end(item, monitor) {
       const dropResult = monitor.getDropResult();
       if (item && dropResult) {
-        console.log(dropResult);
-        if (associated_list_key) {
-          dispatch(delete_model_from_list({ "key": associated_list_key, "value": value }));
+        if (fieldName) {
+          dispatch(delete_model_from_list({ "key": fieldName, "value": value }));
         }
         dispatch(add_model_to_list({ "key": dropResult.result, "value": value }));
-      } else if (associated_list_key) {
-        dispatch(delete_model_from_list({ "key": associated_list_key, "value": value }));
+      } else if (fieldName) {
+        dispatch(delete_model_from_list({ "key": fieldName, "value": value }));
       }
     }
   });
+
   return (
     <div ref={drag}>
-      {associated_list_key ? (
+      {fieldName ? (
         <FieldItem value={value} handleClose={() => dispatch_list_item()} handleClick={handleModal}
                    isOpen={isOpen} handleModal={handleModal}/>
       ) : (

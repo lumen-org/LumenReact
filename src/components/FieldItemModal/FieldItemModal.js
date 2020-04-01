@@ -1,5 +1,5 @@
-import React from "react";
-// import "./FieldItemModal.css";
+import React  from "react";
+import "./FieldItemModal.css";
 import TitleH1Bar from "../TitleBar/TitleH1Bar";
 import Modal from "react-modal";
 
@@ -13,13 +13,15 @@ const modalStyles = {
     // right: "auto",
     // bottom: "auto",
     // marginRight: "-50%",
-    transform: "translate(-50%, -50%)"
+    // top: 10,
+    // left: 10,
+    // transform: "translate(-50%, -50%)"
   }
 };
 
-Modal.setAppElement(".field-modal");
 
-const FieldItemModal = ({ isOpen, handleClose, title = "Unkown", input_dom = null }) => {
+const FieldItemModal = ({ isOpen, handleClose, title = "Unkown"}) => {
+  console.log("Called!");
   return (
     <div className={"field-modal"}>
       <Modal
@@ -30,7 +32,7 @@ const FieldItemModal = ({ isOpen, handleClose, title = "Unkown", input_dom = nul
         <TitleH1Bar title={title} handleClose={handleClose}/>
       </Modal>
     </div>
-  );
+  )
 };
 
 
