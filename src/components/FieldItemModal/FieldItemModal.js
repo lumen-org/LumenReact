@@ -21,7 +21,6 @@ const modalStyles = {
 
 
 const FieldItemModal = ({ isOpen, handleClose, title = "Unkown"}) => {
-  console.log("Called!");
   return (
     <div className={"field-modal"}>
       <Modal

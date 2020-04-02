@@ -13,7 +13,7 @@ function FieldItemContainer({
                             }) {
   const item = { type: type };
 
-  function dispatch_list_item() {
+  function dispatchListItem() {
     dispatch(deleteModel({ "key": fieldName, "value": value }));
   }
 
@@ -33,11 +33,11 @@ function FieldItemContainer({
       const dropResult = monitor.getDropResult();
       if (item && dropResult) {
         if (fieldName) {
-          dispatch_list_item();
+          dispatchListItem();
         }
         dispatch(addModel({ "key": dropResult.result, "value": value }));
       } else if (fieldName) {
-        dispatch_list_item();
+        dispatchListItem();
       }
     }
   });
@@ -45,7 +45,7 @@ function FieldItemContainer({
   return (
     <div ref={drag}>
       {fieldName ? (
-        <FieldItem value={value} handleClose={() => dispatch_list_item()} handleClick={handleModal}
+        <FieldItem value={value} handleClose={() => dispatchListItem()} handleClick={handleModal}
                    isOpen={isOpen} handleModal={handleModal}/>
       ) : (
         <FieldItem value={value}/>

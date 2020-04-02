@@ -15,8 +15,8 @@ class Schema extends Component {
     return (
       <div className="Schema">
         <TitelH1 value={"Schema"} />
-        <Field title={"Quantitative"} data={quantitative} dropable={true} />
-        <Field title={"Categorical"} data={categorical} dropable={true} />
+        <Field title={"Quantitative"} data={quantitative} dropable={false} />
+        <Field title={"Categorical"} data={categorical} dropable={false} />
       </div>
     );
   }

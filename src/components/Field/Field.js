@@ -4,11 +4,11 @@ import DataList from "../DataList";
 import "./Field.css";
 import PropTypes from 'prop-types'
 
-function Field({ title, data, associated_list_key="" }) {
+function Field({ title, data, fieldName="" }) {
   return (
     <div className={"Field"}>
       <TitelH2 value={title}/>
-      <DataList data_list={data} associated_list_key={associated_list_key}/>
+      <DataList dataList={data} fieldName={fieldName}/>
     </div>
   );
 }

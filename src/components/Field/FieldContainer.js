@@ -20,7 +20,7 @@ function FieldContainer({ title, data, dropable = false, type = FIELD_ITEM}) {
       fieldClasses += " is-hover";
     }
     return <div ref={drop} className={fieldClasses}>
-      <Field title={title} data={data} associated_list_key={title} />
+      <Field title={title} data={data} fieldName={title} />
     </div>;
   }
   return (

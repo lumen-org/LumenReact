@@ -2,10 +2,10 @@ import React  from "react";
 import FieldItem from "./FieldItem";
 import "./DataList.css";
 
-function DataList({ data_list, associated_list_key: title = "" }) {
+function DataList({ dataList, fieldName = "" }) {
 
-  const listItems = [...data_list].map((values) =>
-    <FieldItem value={values} associated_list_key={title}/>
+  const listItems = [...dataList].map((values) =>
+    <FieldItem value={values} fieldName={fieldName}/>
   );
   return (
     <div  className="data-list">
