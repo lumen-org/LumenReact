@@ -128,3 +128,9 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps,mapDispatchToProps)(ExampleContainer);
 
 ```
+
+The index.js file export the component container.
+
+```javascript
+export defualt from "./ExampleContainer";
+```
