@@ -43,6 +43,9 @@ class Example extends React.Component {
  }
 
 }
+
+export default Example;
+
 ```
 
 The props of the class are static data that won't change during the component's lifecycle, such as title and current user information. We use PropType to check the data type, this could help us prevent bugs when the the project and the components get large.
@@ -105,5 +108,23 @@ class ExampleContainer extends React.Component {
     }
 
 }
+
+// here we can get the state from global store directly to props.
+
+const mapStateToProps = state => ({
+  propFromStore: state.store1.storedProp1
+});
+
+// here we can use the state from the class directly.
+
+const mapDispatchToProps = dispatch => {
+  return {
+    propInStore: dataArray1 => dispatch(saveDataArray1(dataArray1))
+  };
+}
+
+// connect() function is a higher oder component wrapper.
+
+export default connect(mapStateToProps,mapDispatchToProps)(ExampleContainer);
 
 ```
