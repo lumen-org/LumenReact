@@ -1,5 +1,5 @@
 const toolbarConfig = {
-  appToolbarActions: [
+  items:[
     {
       name: "Select Model",
       icon: require("../assets/icons/play_for_work_24px.svg"),
