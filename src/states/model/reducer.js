@@ -30,7 +30,10 @@ const modelReducer = (state = defaultState, action) => {
       return { ...state, specifications };
     default:
       return state;
+
   }
 };
+
+
 
 export default modelReducer;

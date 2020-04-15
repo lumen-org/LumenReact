@@ -1,0 +1,16 @@
+.facet-bar {
+    border: #dbdbdb 1px solid;
+    border-radius: 10px;
+    background-color: #a1a3a6;
+    width: -moz-available;
+    margin: 0.3em;
+    margin-bottom: 0;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.facet-label {
+    margin-left: 10px;
+}
