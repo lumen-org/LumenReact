@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import DataItem from "./DataItem";
+import React  from "react";
+import FieldItem from "./FieldItem";
 import "./DataList.css";
 
-function DataList({ data_list }) {
+function DataList({ dataList, fieldName = "" }) {
 
-  const listItems = data_list.map((values) =>
-    <DataItem value={values}/>
+  const listItems = [...dataList].map((values) =>
+    <FieldItem value={values} fieldName={fieldName}/>
   );
   return (
     <div  className="data-list">

@@ -1,10 +1,10 @@
 import { SELECT_MODEL, SAVE_MODELS } from "../../constants/actionType";
 
 export const defaultState = {
-  foundModels: ["model1", "model2", "model3"],
-  currentModel: "model1"
+  foundModels: [],
+  currentModel: "mcg_iris_map"
 };
-
+// TODO: add a check for default model.
 const app = (state = defaultState, action) => {
   switch (action.type) {
     case SAVE_MODELS: {

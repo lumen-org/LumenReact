@@ -1,23 +1,31 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import TitelH1 from "../../components/Titles/TitelH1";
-import Field from "../../components/Field";
 import TitelH2 from "../../components/Titles/TitleH2";
-import "./Specification.css"
+import Field from "../../components/Field";
+import "./Specification.css";
 
 class Specification extends Component {
+  static propTypes = {
+    specifications: PropTypes.object.isRequired
+  };
 
-  specification_values() {
-    return Object.entries(this.props.data_lists).map(([title, data]) =>
-      <Field title={title} data={data} dropable={true}/>
-    );
-  }
+  handleDrop = item => {};
 
   render() {
+    const { specifications } = this.props;
     return (
       <div className="specification">
-        <TitelH1 value={"Schema"}/>
-        {this.specification_values()}
-        <TitelH2 value={"Drop here to remove"}/>
+        <TitelH1 value={"Spezification"} />
+        {Object.entries(specifications).map((item, index) => (
+          <Field
+            title={item[0]}
+            data={item[1]}
+            dropable={true}
+            onDrop={this.handleDrop}
+          />
+        ))}
+        <TitelH2 value={"Drop here to remove"} />
       </div>
     );
   }

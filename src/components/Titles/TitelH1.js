@@ -4,7 +4,7 @@ import "./TitelH1.css"
 
 function TitelH1(props) {
   return (
-      <div className="title_h1">
+      <div className="title-h1">
         {props.value}
       </div>
   )
