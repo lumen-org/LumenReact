@@ -6,7 +6,7 @@ import Button from "@material-ui/core/Button";
 import { Label } from "@material-ui/icons";
 import ListModal from "../../components/ListModal";
 import toolbarConfig from "../../configs/appToolbar";
-//import "./Facet.css"
+import "./Facet.css"
 
 class Facet extends React.Component{
   render() {
@@ -14,17 +14,16 @@ class Facet extends React.Component{
     const { openModal } = true;
     return (
       <div className="facet-bar ">
-        {Object.entries(facetsActions).map((item, key) => (
+        {facetsActions.map((item, key) => (
           <div className="facet-label">
-
-            <Button
-              endIcon={<img src={item.icon} alt="" />}
-              key={key}
-              onClick={() => console.log("clicked")}
-            >
-              {item.name}
-
-            </Button>
+            <div>
+              <img src={item.icon} alt="" />
+              {item.name}<input type="checkbox"
+                                checked={item.model}
+            /><input type="checkbox"
+                     checked={item.data}
+            />
+            </div>
           </div>
         ))}
       </div>

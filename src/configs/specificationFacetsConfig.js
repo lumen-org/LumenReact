@@ -10,13 +10,13 @@ const specificationFacetsConfig = {
       name: "Data Points",
       icon: require("../assets/icons/dataPoints.svg"),
       model: false,
-      data: false,
+      data: true,
     },
     {
       name: "Marginals",
       icon: require("../assets/icons/uniDensity.svg"),
       model: false,
-      data: false,
+      data: true,
     },
     {
       name: "Density",
