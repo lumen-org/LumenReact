@@ -7,13 +7,8 @@ class Facet extends React.Component{
     return (
       <div>
         <label>
-
-          <input type="checkbox" />
-          Test Check box
-          <img src="../../../public/logo192.png"
-               width="300"
-               height="300"
-          />
+          <img src={require('../../assets/icons/contour.svg')}
+          />{this.props.text}<input type="checkbox"/><input type="checkbox"/>
         </label>
       </div>
     )

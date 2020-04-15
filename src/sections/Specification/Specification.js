@@ -29,7 +29,7 @@ class Specification extends Component {
         <TitelH2 value={"Drop here to remove"} />
         <TitelH1 value={"Facets"} />
 
-        <Facet />
+        <Facet text="Test"/>
       </div>
     );
   }
