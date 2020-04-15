@@ -37,13 +37,13 @@ class AppToolbar extends Component {
   };
 
   render() {
-    const { appToolbarActions } = toolbarConfig;
+    const { items } = toolbarConfig;
     const { openModal } = this.state;
     return (
       <div className="appToolbar-container ">
         <ListModal open={openModal} handleModalClose={this.handleModalClose} />
 
-        {appToolbarActions.map((item, key) => (
+        {items.map((item, key) => (
           <div className="appToolbar-buttonContainer">
             <Button
               variant={item.variant || "outlined"}
