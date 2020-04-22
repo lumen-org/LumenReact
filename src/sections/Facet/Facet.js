@@ -15,6 +15,16 @@ class Facet extends React.Component {
     facets: PropTypes.object.isRequired
   };
 
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+
+  handleClick(key) {
+    console.log("handled");
+  }
+
   render(){
     const { facetsActions } = specificationFacetConfig;
     const { facets } = this.props;
@@ -25,7 +35,7 @@ class Facet extends React.Component {
           <div className="facet-label">
             <div>
               <img src={item.icon} alt="" />
-              {item.name}<input type="checkbox"
+              {item.name}<input id={key} type="checkbox" onClick={() => this.handleClick(key)}
                                 checked={facets[key].model}
             /><input type="checkbox"
                      checked={facets[key].data}
