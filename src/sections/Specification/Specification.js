@@ -14,7 +14,7 @@ class Specification extends Component {
   handleDrop = item => {};
 
   render() {
-    const { specifications } = this.props;
+    const { specifications, facets } = this.props;
     return (
       <div className="specification">
         <TitelH1 value={"Spezification"} />
@@ -29,7 +29,7 @@ class Specification extends Component {
         <TitelH2 value={"Drop here to remove"} />
         <TitelH1 value={"Facets"} />
 
-        <Facet text="Test"/>
+        <Facet text="Test" facets={facets}/>
       </div>
     );
   }

@@ -7,9 +7,17 @@ import { Label } from "@material-ui/icons";
 import ListModal from "../../components/ListModal";
 import toolbarConfig from "../../configs/appToolbar";
 import "./Facet.css"
+import PropTypes from "prop-types";
 
-function Facet() {
+class Facet extends React.Component {
+
+  static propTypes = {
+    facets: PropTypes.object.isRequired
+  };
+
+  render(){
     const { facetsActions } = specificationFacetConfig;
+    const { facets } = this.props;
     const { openModal } = true;
     return (
       <div className="facet-bar ">
@@ -18,14 +26,16 @@ function Facet() {
             <div>
               <img src={item.icon} alt="" />
               {item.name}<input type="checkbox"
-                                checked={item.model}
+                                checked={facets[key].model}
             /><input type="checkbox"
-                     checked={item.data}
+                     checked={facets[key].data}
             />
             </div>
           </div>
         ))}
       </div>
     )
+  }
+
 }
 export default Facet;
