@@ -23,6 +23,7 @@ class Facet extends React.Component {
 
   handleClick(key) {
     console.log("handled");
+
   }
 
   render(){
