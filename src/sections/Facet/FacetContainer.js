@@ -2,18 +2,24 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Facet from "./Facet";
 import { connect } from "react-redux";
-import { addDataFacet } from "../../states/model/actions";
+import { changeDataFacet } from "../../states/model/actions";
 
 class FacetContainer extends React.Component {
   render() {
     const { facets } = this.props;
-    return <Facet facets={facets} />;
+    return <Facet facets={facets} onFacetDataUpdate={this.updateFacetData} onFacetModelUpdate={this.updateFacetModel}/>;
   }
 
-  updateFacetData(){
-    
+  updateFacetData = isBoxChecked => {
+    this.props.changeFacets(isBoxChecked, "data");
+  };
+
+  updateFacetModel = isBoxChecked => {
+    this.props.changeFacets(isBoxChecked, "model")
   }
+
 }
+
 
 const mapStateToProps = state => {
   return {
@@ -23,8 +29,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    facets: dataArray1 => dispatch(addDataFacet(dataArray1))
+    changeFacets: (isBoxChecked, type) => dispatch(changeDataFacet({type: type ,key: isBoxChecked}))
   };
-}
+};
 
-export default connect(mapStateToProps, null)(FacetContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(FacetContainer);

@@ -4,8 +4,7 @@ import {
 } from "../../constants/modelActionTypes";
 
 import {
-  ADD_DATA_FROM_FACET,
-  DELETE_DATA_FROM_FACET
+  CHANGE_FACETS,
 } from "../../constants/facetActionTypes";
 
 export function addModel(payload) {
@@ -22,16 +21,10 @@ export function deleteModel(payload) {
   };
 }
 
-export function addDataFacet(payload) {
+export function changeDataFacet(payload) {
   return {
-    type: ADD_DATA_FROM_FACET,
+    type: CHANGE_FACETS,
     payload
   };
 }
 
-export function deleteDataFacet(payload) {
-  return {
-    type: DELETE_DATA_FROM_FACET,
-    payload
-  };
-}

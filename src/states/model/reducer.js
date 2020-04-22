@@ -4,8 +4,7 @@ import {
 } from "../../constants/modelActionTypes";
 
 import {
-  ADD_DATA_FROM_FACET,
-  DELETE_DATA_FROM_FACET
+  CHANGE_FACETS,
 } from "../../constants/facetActionTypes";
 
 export const defaultState = {
@@ -20,20 +19,20 @@ export const defaultState = {
   },
   facets:{
     0 : {
-      model: true,
-      data: false,
+      "model": false,
+      "data": false,
     },
     1 : {
-      model: false,
-      data: true,
+      "model": false,
+      "data": true,
     },
     2 : {
-      model: false,
-      data: true,
+      "model": false,
+      "data": true,
     },
     3: {
-      model: true,
-      data: false,
+      "model": false,
+      "data": false,
     }
 
   }
@@ -45,7 +44,7 @@ Zumindest wird mir dieser Eindruck vermittelt... KOTZ
  */
 const modelReducer = (state = defaultState, action) => {
   let specifications = Object.assign({}, state.specifications);
-  let facets = Object.assign({}, state.specifications);
+  let facets = Object.assign({}, state.facets);
   switch (action.type) {
     case ADD_TO_SCHEMA:
       specifications[action.payload.key].add(action.payload.value);
@@ -53,11 +52,8 @@ const modelReducer = (state = defaultState, action) => {
     case DELETE_FROM_SCHEMA:
       specifications[action.payload.key].delete(action.payload.value);
       return { ...state, specifications };
-    case ADD_DATA_FROM_FACET:
-      facets[action.payload.key].data = true;
-      return { ...state, facets};
-    case DELETE_DATA_FROM_FACET:
-      facets[action.payload.key].data = false;
+    case CHANGE_FACETS:
+      facets[action.payload.key][action.payload.type] = !facets[action.payload.key][action.payload.type];
       return { ...state, facets};
     default:
       return state;
