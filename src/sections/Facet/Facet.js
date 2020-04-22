@@ -1,5 +1,5 @@
 import React from "react";
-import Field from "../Field/FieldContainer";
+import Field from "../../components/Field/FieldContainer";
 import Checkbox from "styled-components"
 import specificationFacetConfig from "../../configs/specificationFacetsConfig";
 import Button from "@material-ui/core/Button";

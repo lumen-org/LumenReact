@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import TitelH1 from "../../components/Titles/TitelH1";
 import TitelH2 from "../../components/Titles/TitleH2";
 import Field from "../../components/Field";
-import Facet from "../../components/Facet";
+import Facet from "../Facet";
 import "./Specification.css";
 
 class Specification extends Component {
