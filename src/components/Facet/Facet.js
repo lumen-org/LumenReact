@@ -8,8 +8,7 @@ import ListModal from "../../components/ListModal";
 import toolbarConfig from "../../configs/appToolbar";
 import "./Facet.css"
 
-class Facet extends React.Component{
-  render() {
+function Facet() {
     const { facetsActions } = specificationFacetConfig;
     const { openModal } = true;
     return (
@@ -28,6 +27,5 @@ class Facet extends React.Component{
         ))}
       </div>
     )
-  }
 }
 export default Facet;
