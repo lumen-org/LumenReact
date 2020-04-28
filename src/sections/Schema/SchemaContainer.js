@@ -1,50 +1,51 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import fetchData from "../../utils/fetch";
+import fetchData, { fetchPlotData } from "../../utils/fetch";
 import Schema from "./Schema";
-import { BASE_URL } from "../../constants/query";
+import { BASE_URL, FETCH_SCHEMA } from "../../constants/query";
 
 class SchemaContainer extends React.Component {
   static propTypes = {
-    modelName: PropTypes.string.isRequired
+    modelName: PropTypes.string.isRequired,
   };
 
   state = {
     quantitativeFields: [],
-    categoricalFields: []
+    categoricalFields: [],
   };
 
   // TODO: CAN WE THINK OF A BETTER NAME THANK SCHEMA, AND FEILDS?
+  // TODO2: Refactor this function to utils/fetch.js
 
-  getData = FETCH_SCHEMA => {
-    fetchData(BASE_URL, FETCH_SCHEMA).then(response =>
+  getData = (POST_BODY) => {
+    fetchData(BASE_URL, POST_BODY).then((response) =>
       this.setState({
         categoricalFields: response["fields"]
           .filter((field, index) => {
             return field.dtype === "string";
           })
-          .map(field => field.name),
+          .map((field) => field.name),
         quantitativeFields: response["fields"]
           .filter((field, index) => {
             return field.dtype === "numerical";
           })
-          .map(field => field.name)
+          .map((field) => field.name),
       })
     );
   };
 
   componentDidMount() {
     const { modelName } = this.props;
-    const FETCH_SCHEMA = { SHOW: "HEADER", FROM: modelName };
-    this.getData(FETCH_SCHEMA);
+    const POST_BODY = { ...FETCH_SCHEMA, FROM: modelName };
+    this.getData(POST_BODY);
   }
 
   componentDidUpdate(prevProps, preState) {
     if (prevProps.modelName !== this.props.modelName) {
       const { modelName } = this.props;
-      const FETCH_SCHEMA = { SHOW: "HEADER", FROM: modelName };
-      this.getData(FETCH_SCHEMA);
+      const POST_BODY = { ...FETCH_SCHEMA, FROM: modelName };
+      this.getData(POST_BODY);
     }
   }
 

@@ -17,8 +17,8 @@ class RnDPlot extends Component {
   state = {
     plotWindowsWidth: 500,
     plotWindowsHeight: 500,
-    plotWindowsPosX: 100,
-    plotWindowsPosY: 100,
+    plotWindowsPosX: 50,
+    plotWindowsPosY: 50,
     plotData: [
       {
         x: [1, 2, 3],

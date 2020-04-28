@@ -9,21 +9,21 @@ import { BASE_URL, FETCH_ALL_MODEL_NAME } from "../../constants/query";
 class ListModalContainer extends React.Component {
   static propTypes = {
     open: PropTypes.bool.isRequired,
-    handleModalClose: PropTypes.func.isRequired
+    handleModalClose: PropTypes.func.isRequired,
   };
 
   state = {
-    models: []
+    models: [],
   };
 
-  handleItemSelection = item => {
+  handleItemSelection = (item) => {
     const { selectModel, handleModalClose } = this.props;
     selectModel(item);
     handleModalClose();
   };
 
   componentWillMount() {
-    fetchData(BASE_URL, FETCH_ALL_MODEL_NAME).then(response =>
+    fetchData(BASE_URL, FETCH_ALL_MODEL_NAME).then((response) =>
       this.setState({ models: response["models"] })
     );
   }
@@ -43,9 +43,9 @@ class ListModalContainer extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    selectModel: model => dispatch(selectModel(model))
+    selectModel: (model) => dispatch(selectModel(model)),
   };
 };
 

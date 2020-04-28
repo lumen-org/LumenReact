@@ -1,18 +1,18 @@
 import {
   ADD_TO_SCHEMA,
-  DELETE_FROM_SCHEMA
+  DELETE_FROM_SCHEMA,
 } from "../../constants/modelActionTypes";
 
 export const defaultState = {
   specifications: {
-    "X-Axis": new Set([]),
-    "Y-Axis": new Set([]),
+    X_Axis: new Set([]),
+    Y_Axis: new Set([]),
     Filter: new Set([]),
     Detail: new Set([]),
     Color: new Set([]),
     Shape: new Set([]),
-    Size: new Set([])
-  }
+    Size: new Set([]),
+  },
 };
 
 /*
