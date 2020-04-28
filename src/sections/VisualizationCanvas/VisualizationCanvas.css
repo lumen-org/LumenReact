@@ -1,6 +1,6 @@
 .VisualizationCanvas-container {
-  min-width: 400px;
-  max-width: 1500px;
+  min-width: 70%;
+  max-width: 100%;
   display: flex;
   background-color: white;
   border: #dbdbdb 1px solid;
