@@ -10,12 +10,12 @@
   border-radius: 10px;
 }
 
-.VisualizationCanvas-plot {
+.VisualizationCanvas-plot-container {
   border: #dbdbdb 3px solid;
   border-radius: 10px;
 }
 
-.VisualizationCanvas-plot-titlebar {
-  margin: 5px;
-  display: inline-flex;
+.VisualizationCanvas-plot {
+  width: 93%;
+  height: 93%;
 }

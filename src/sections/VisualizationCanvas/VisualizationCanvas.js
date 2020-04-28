@@ -3,6 +3,11 @@ import { Rnd } from "react-rnd";
 import CloseButton from "../../components/Button/CloseButton";
 import PropTypes from "prop-types";
 import "./VisualizationCanvas.css";
+// We need to import Plotly in this strange way due to heap memory
+// See issue: https://github.com/plotly/react-plotly.js/issues/135
+import createPlotlyComponent from "react-plotly.js/factory";
+const Plotly = window.Plotly;
+const Plot = createPlotlyComponent(Plotly);
 
 class VisualizationCanvas extends Component {
   static propTypes = {
@@ -14,6 +19,17 @@ class VisualizationCanvas extends Component {
     plotWindowsHeight: 500,
     plotWindowsPosX: 100,
     plotWindowsPosY: 100,
+    plotData: [
+      {
+        x: [1, 2, 3],
+        y: [2, 6, 3],
+        type: "scatter",
+        mode: "lines+markers",
+        marker: { color: "red" },
+      },
+      { type: "bar", x: [1, 2, 3], y: [2, 5, 3] },
+    ],
+    figure: {},
   };
 
   onDragStop = (event, dragIndex) => {
@@ -35,6 +51,9 @@ class VisualizationCanvas extends Component {
     // remove the plot information from the queue here.
   };
 
+  onPlotLayoutUpdate = (figure) => {
+    this.setState(figure);
+  };
   render() {
     const { modelName } = this.props;
     const {
@@ -42,6 +61,7 @@ class VisualizationCanvas extends Component {
       plotWindowsWidth,
       plotWindowsPosX,
       plotWindowsPosY,
+      plotData,
     } = this.state;
 
     return (
@@ -51,12 +71,21 @@ class VisualizationCanvas extends Component {
           position={{ x: plotWindowsPosX, y: plotWindowsPosY }}
           onDragStop={this.onDragStop}
           onResizeStop={this.onResizeStop}
-          className="VisualizationCanvas-plot"
+          className="VisualizationCanvas-plot-container"
         >
           <div className="VisualizationCanvas-plot-titlebar">
             <CloseButton handleClose={this.handleClose} />
-            {modelName}
           </div>
+
+          <Plot
+            data={plotData}
+            layout={{
+              autosize: true,
+              title: modelName,
+            }}
+            useResizeHandler={true}
+            className="VisualizationCanvas-plot"
+          />
         </Rnd>
       </div>
     );
