@@ -9,13 +9,3 @@
   margin-top: 15px;
   border-radius: 10px;
 }
-
-.VisualizationCanvas-plot-container {
-  border: #dbdbdb 3px solid;
-  border-radius: 10px;
-}
-
-.VisualizationCanvas-plot {
-  width: 93%;
-  height: 93%;
-}

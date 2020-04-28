@@ -29,7 +29,6 @@ class RnDPlot extends Component {
       },
       { type: "bar", x: [1, 2, 3], y: [2, 5, 3] },
     ],
-    figure: {},
   };
 
   onDragStop = (event, dragIndex) => {
@@ -68,9 +67,9 @@ class RnDPlot extends Component {
         position={{ x: plotWindowsPosX, y: plotWindowsPosY }}
         onDragStop={this.onDragStop}
         onResizeStop={this.onResizeStop}
-        className="VisualizationCanvas-plot-container"
+        className="RndPlot-container"
       >
-        <div className="VisualizationCanvas-plot-titlebar">
+        <div className="RndPlot-titlebar">
           <CloseButton handleClose={this.handleClose} />
         </div>
 
@@ -81,7 +80,7 @@ class RnDPlot extends Component {
             title: modelName,
           }}
           useResizeHandler={true}
-          className="VisualizationCanvas-plot"
+          className="RndPlot-plot"
         />
       </Rnd>
     );
