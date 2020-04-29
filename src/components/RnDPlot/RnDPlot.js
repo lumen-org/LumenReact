@@ -71,7 +71,14 @@ class RnDPlot extends Component {
               y: Y,
               type: "scatter",
               mode: "markers",
-              marker: { color: "red" },
+              marker: {
+                color: "rgba(17, 157, 255,0.5)",
+                size: 10,
+                line: {
+                  color: "rgb(231, 99, 250)",
+                  width: 1,
+                },
+              },
             },
           ]}
           layout={{
