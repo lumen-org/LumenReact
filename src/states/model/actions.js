@@ -3,6 +3,10 @@ import {
   DELETE_FROM_SCHEMA
 } from "../../constants/modelActionTypes";
 
+import {
+  CHANGE_FACETS,
+} from "../../constants/facetActionTypes";
+
 export function addModel(payload) {
   return {
     type: ADD_TO_SCHEMA,
@@ -16,3 +20,11 @@ export function deleteModel(payload) {
     payload
   };
 }
+
+export function changeDataFacet(payload) {
+  return {
+    type: CHANGE_FACETS,
+    payload
+  };
+}
+
