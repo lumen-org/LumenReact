@@ -1,6 +1,7 @@
-import React from "react";
-import Field from "../../components/Field/FieldContainer";
-import Checkbox from "styled-components"
+import React from "react"
+import specificationFacetConfig from "../../configs/specificationFacetsConfig";
+import "./Facet.css"
+import PropTypes from "prop-types"
 import PropTypes from "prop-types";
 
 class Facet extends React.Component {
