@@ -1,12 +1,6 @@
 import React from "react";
 import Field from "../../components/Field/FieldContainer";
 import Checkbox from "styled-components"
-import specificationFacetConfig from "../../configs/specificationFacetsConfig";
-import Button from "@material-ui/core/Button";
-import { Label } from "@material-ui/icons";
-import ListModal from "../../components/ListModal";
-import toolbarConfig from "../../configs/appToolbar";
-import "./Facet.css"
 import PropTypes from "prop-types";
 
 class Facet extends React.Component {
