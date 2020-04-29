@@ -1,4 +1,5 @@
 import { BASE_URL } from "../constants/query";
+
 export const fetchData = (url, body) => {
   return fetch(url, {
     method: "POST",
@@ -18,7 +19,37 @@ export const fetchData = (url, body) => {
     });
 };
 
-export const fetchPlotData = (BODY) => {
-  fetchData(BASE_URL, BODY).then((response) => console.log(response));
+export const fetchSchemaData = (BODY) => {
+  return fetchData(BASE_URL, BODY).then((response) => {
+    return {
+      categoricalFields: response["fields"]
+        .filter((field, index) => {
+          return field.dtype === "string";
+        })
+        .map((field) => field.name),
+      quantitativeFields: response["fields"]
+        .filter((field, index) => {
+          return field.dtype === "numerical";
+        })
+        .map((field) => field.name),
+    };
+  });
 };
+
+export const fetchPlotData = (BODY) => {
+  return fetchData(BASE_URL, BODY).then((response) => {
+    const dataString = response["data"].split("\n");
+    const X = [];
+    const Y = [];
+    dataString.forEach((element) => {
+      X.push(element.split(",")[0]);
+      Y.push(element.split(",")[1]);
+    });
+    return {
+      X: X,
+      Y: Y,
+    };
+  });
+};
+
 export default fetchData;
