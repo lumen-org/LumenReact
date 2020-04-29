@@ -1,4 +1,4 @@
-import { SELECT_MODEL, SAVE_MODELS } from "../../constants/actionType";
+import { SELECT_MODEL } from "../../constants/actionType";
 
 export const defaultState = {
   currentModel: "mcg_iris_map",

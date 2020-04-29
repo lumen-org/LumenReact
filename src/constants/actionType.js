@@ -1,4 +1,3 @@
-export const SAVE_MODELS = "SAVE_MODELS";
 export const SELECT_MODEL = "SELECT_MODEL";
 export const GET_SCHEMA = "GET_SCHEMA";
 export const GET_SPECIFICATION = "GET_SPECIFICATION";

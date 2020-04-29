@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import TitelH1 from "../../components/Titles/TitelH1";
 import TitelH2 from "../../components/Titles/TitleH2";
 import Field from "../../components/Field";
+import Facet from "../Facet";
 import "./Specification.css";
 
 class Specification extends Component {
@@ -13,7 +14,7 @@ class Specification extends Component {
   handleDrop = item => {};
 
   render() {
-    const { specifications } = this.props;
+    const { specifications, facets } = this.props;
     return (
       <div className="specification">
         <TitelH1 value={"Spezification"} />
@@ -26,6 +27,9 @@ class Specification extends Component {
           />
         ))}
         <TitelH2 value={"Drop here to remove"} />
+        <TitelH1 value={"Facets"} />
+
+        <Facet text="Test" facets={facets}/>
       </div>
     );
   }

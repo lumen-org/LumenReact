@@ -10875,6 +10875,13 @@ re-resizable@6.3.2:
   dependencies:
     fast-memoize "^2.5.1"
 
+re-resizable@6.3.2:
+  version "6.3.2"
+  resolved "https://registry.yarnpkg.com/re-resizable/-/re-resizable-6.3.2.tgz#27cc984af6ea5dbafd2b79f64c5224a6e1722fbe"
+  integrity sha512-ngxe4XBSb46vfwXjAwpURacVDig/pPt1kHRhcKlRRIoGICmo4aQHr725jurezepp1pm5jSC6iQhyLYfx3zOC3w==
+  dependencies:
+    fast-memoize "^2.5.1"
+
 react-app-polyfill@^1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/react-app-polyfill/-/react-app-polyfill-1.0.6.tgz#890f8d7f2842ce6073f030b117de9130a5f385f0"
@@ -10943,6 +10950,7 @@ react-dom@^16.12.0:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     scheduler "^0.19.1"
+
 
 react-draggable@4.3.1, react-draggable@^4.0.0, react-draggable@^4.0.3:
   version "4.3.1"
