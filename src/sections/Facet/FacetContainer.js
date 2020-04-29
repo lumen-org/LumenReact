@@ -11,7 +11,8 @@ class FacetContainer extends React.Component {
   }
 
   updateFacetData = isBoxChecked => {
-    this.props.changeFacets(isBoxChecked, "data");
+    const {changeFacets} = this.props;
+    changeFacets(isBoxChecked, "data");
   };
 
   updateFacetModel = isBoxChecked => {
