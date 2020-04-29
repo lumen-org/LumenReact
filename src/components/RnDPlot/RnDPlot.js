@@ -12,6 +12,8 @@ const Plot = createPlotlyComponent(Plotly);
 class RnDPlot extends Component {
   static propTypes = {
     modelName: PropTypes.string,
+    X: PropTypes.array,
+    Y: PropTypes.array,
   };
 
   state = {
@@ -19,16 +21,6 @@ class RnDPlot extends Component {
     plotWindowsHeight: 500,
     plotWindowsPosX: 50,
     plotWindowsPosY: 50,
-    plotData: [
-      {
-        x: [1, 2, 3],
-        y: [2, 6, 3],
-        type: "scatter",
-        mode: "lines+markers",
-        marker: { color: "red" },
-      },
-      { type: "bar", x: [1, 2, 3], y: [2, 5, 3] },
-    ],
   };
 
   onDragStop = (event, dragIndex) => {
@@ -58,9 +50,8 @@ class RnDPlot extends Component {
       plotWindowsWidth,
       plotWindowsPosX,
       plotWindowsPosY,
-      plotData,
     } = this.state;
-
+    const { X, Y } = this.props;
     return (
       <Rnd
         size={{ width: plotWindowsWidth, height: plotWindowsHeight }}
@@ -74,7 +65,15 @@ class RnDPlot extends Component {
         </div>
 
         <Plot
-          data={plotData}
+          data={[
+            {
+              x: X,
+              y: Y,
+              type: "scatter",
+              mode: "markers",
+              marker: { color: "red" },
+            },
+          ]}
           layout={{
             autosize: true,
             title: modelName,
