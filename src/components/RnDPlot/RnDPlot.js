@@ -12,8 +12,8 @@ const Plot = createPlotlyComponent(Plotly);
 class RnDPlot extends Component {
   static propTypes = {
     modelName: PropTypes.string,
-    X: PropTypes.array,
-    Y: PropTypes.array,
+    plotData: PropTypes.array,
+    layout: PropTypes.object,
   };
 
   state = {
@@ -43,15 +43,14 @@ class RnDPlot extends Component {
   };
 
   render() {
-    const { modelName } = this.props;
-
+    const { modelName, plotData, layout } = this.props;
+    console.log(plotData);
     const {
       plotWindowsHeight,
       plotWindowsWidth,
       plotWindowsPosX,
       plotWindowsPosY,
     } = this.state;
-    const { X, Y } = this.props;
     return (
       <Rnd
         size={{ width: plotWindowsWidth, height: plotWindowsHeight }}
@@ -63,27 +62,16 @@ class RnDPlot extends Component {
         <div className="RndPlot-titlebar">
           <CloseButton handleClose={this.handleClose} />
         </div>
-
         <Plot
-          data={[
-            {
-              x: X,
-              y: Y,
-              type: "scatter",
-              mode: "markers",
-              marker: {
-                color: "rgba(17, 157, 255,0.5)",
-                size: 10,
-                line: {
-                  color: "rgb(231, 99, 250)",
-                  width: 1,
-                },
-              },
-            },
-          ]}
+          data={plotData}
           layout={{
             autosize: true,
             title: modelName,
+            grid: {
+              rows: layout.row,
+              columns: layout.column,
+              pattern: "independent",
+            },
           }}
           useResizeHandler={true}
           className="RndPlot-plot"

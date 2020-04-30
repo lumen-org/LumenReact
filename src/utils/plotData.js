@@ -1,5 +1,24 @@
 import { fetchPlotData } from "./fetch";
 
+export const getLayoutInformation = (specifications) => {
+  const X_Axis = [...specifications.X_Axis];
+  const Y_Axis = [...specifications.Y_Axis];
+
+  if (X_Axis.length === 0 && Y_Axis.length === 0) {
+    return {};
+  } else if (X_Axis.length === 0 || Y_Axis.length === 0) {
+    return {
+      row: 1,
+      column: 1,
+    };
+  } else {
+    return {
+      row: Y_Axis.length,
+      column: X_Axis.length,
+    };
+  }
+};
+
 export const getPlotData = (specifications, modelName) => {
   const X_Axis = [...specifications.X_Axis];
   const Y_Axis = [...specifications.Y_Axis];
@@ -9,6 +28,20 @@ export const getPlotData = (specifications, modelName) => {
       return fetchPlotData({
         SELECT: comb,
         FROM: modelName,
+      }).then((response) => {
+        return {
+          ...response,
+          type: "scatter",
+          mode: "markers",
+          marker: {
+            color: "rgba(17, 157, 255,0.5)",
+            size: 10,
+            line: {
+              color: "rgb(231, 99, 250)",
+              width: 1,
+            },
+          },
+        };
       });
     }),
   ]).then((response) => {
