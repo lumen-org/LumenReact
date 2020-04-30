@@ -3,9 +3,7 @@ import {
   DELETE_FROM_SCHEMA,
 } from "../../constants/modelActionTypes";
 
-import {
-  CHANGE_FACETS,
-} from "../../constants/facetActionTypes";
+import { CHANGE_FACETS } from "../../constants/facetActionTypes";
 
 export const defaultState = {
   specifications: {
@@ -15,27 +13,26 @@ export const defaultState = {
     Detail: new Set([]),
     Color: new Set([]),
     Shape: new Set([]),
-    Size: new Set([])
+    Size: new Set([]),
   },
-  facets:{
-    0 : {
-      "model": false,
-      "data": false,
+  facets: {
+    0: {
+      model: false,
+      data: false,
     },
-    1 : {
-      "model": false,
-      "data": true,
+    1: {
+      model: false,
+      data: true,
     },
-    2 : {
-      "model": false,
-      "data": true,
+    2: {
+      model: false,
+      data: true,
     },
     3: {
-      "model": false,
-      "data": false,
-    }
-
-  }
+      model: false,
+      data: false,
+    },
+  },
 };
 
 /*
@@ -53,14 +50,13 @@ const modelReducer = (state = defaultState, action) => {
       specifications[action.payload.key].delete(action.payload.value);
       return { ...state, specifications };
     case CHANGE_FACETS:
-      facets[action.payload.key][action.payload.type] = !facets[action.payload.key][action.payload.type];
-      return { ...state, facets};
+      facets[action.payload.key][action.payload.type] = !facets[
+        action.payload.key
+      ][action.payload.type];
+      return { ...state, facets };
     default:
       return state;
-
   }
 };
-
-
 
 export default modelReducer;

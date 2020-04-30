@@ -1,0 +1,1 @@
+export const UPDATE_PLOT_DATA = "UPDATE_PLOT_DATA";
