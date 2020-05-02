@@ -38,7 +38,7 @@ export const getPlotData = (specifications, modelName) => {
           yaxis: "y" + ind,
           marker: {
             color: "rgba(17, 157, 255,0.5)",
-            size: 10,
+            size: 5,
             line: {
               color: "rgb(231, 99, 250)",
               width: 1,

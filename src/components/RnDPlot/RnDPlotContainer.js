@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getPlotData, getLayoutInformation } from "../../utils/plotData";
+import { createNewPlot } from "../../states/plots/actions";
 import PropTypes from "prop-types";
 import RnDPlot from "./RnDPlot";
 
 class RnDPlotContainer extends React.Component {
   static propTypes = {
+    id: PropTypes.number,
     modelName: PropTypes.string,
+    specifications: PropTypes.object,
   };
   state = {
     plotData: [],
@@ -22,6 +25,7 @@ class RnDPlotContainer extends React.Component {
       prevProps.specifications !== this.props.specifications
     ) {
       const { modelName, specifications } = this.props;
+      console.log(modelName, specifications);
       getPlotData(specifications, modelName).then((payload) => {
         this.setState({
           plotData: [],
@@ -42,16 +46,13 @@ class RnDPlotContainer extends React.Component {
   render() {
     const { modelName } = this.props;
     const { plotData, layout } = this.state;
+    console.log(plotData);
     return (
       <RnDPlot modelName={modelName} plotData={plotData} layout={layout} />
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  specifications: state.model.specifications,
-});
-
-export default connect(mapStateToProps, null)(RnDPlotContainer);
+export default connect(null, null)(RnDPlotContainer);
 
 // this is a good prime example that history is not only to be retained, but also brought forward to a new age

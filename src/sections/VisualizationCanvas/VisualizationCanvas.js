@@ -5,15 +5,32 @@ import "./VisualizationCanvas.css";
 
 class VisualizationCanvas extends Component {
   static propTypes = {
-    modelName: PropTypes.string,
+    plots: PropTypes.arrayOf(
+      PropTypes.objectOf({
+        id: PropTypes.number,
+        modelName: PropTypes.string,
+        specifications: PropTypes.object,
+        plotData: PropTypes.array,
+        layout: PropTypes.object,
+      })
+    ),
   };
 
   render() {
-    const { modelName } = this.props;
-
+    const { plots } = this.props;
+    console.log(plots);
     return (
       <div className="VisualizationCanvas-container">
-        <RnDPlot modelName={modelName} />
+        {plots.map(
+          (plot) =>
+            plot.show && (
+              <RnDPlot
+                id={plot.id}
+                modelName={plot.model}
+                specifications={plot.specifications}
+              />
+            )
+        )}
       </div>
     );
   }
