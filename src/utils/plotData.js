@@ -24,7 +24,8 @@ export const getPlotData = (specifications, modelName) => {
   const Y_Axis = [...specifications.Y_Axis];
   const combinations = getPlotCombinations(X_Axis, Y_Axis);
   return Promise.all([
-    combinations.map((comb) => {
+    combinations.map((comb, ind) => {
+      ind++;
       return fetchPlotData({
         SELECT: comb,
         FROM: modelName,
@@ -33,6 +34,8 @@ export const getPlotData = (specifications, modelName) => {
           ...response,
           type: "scatter",
           mode: "markers",
+          xaxis: "x" + ind, // this is necesarry for building subplots
+          yaxis: "y" + ind,
           marker: {
             color: "rgba(17, 157, 255,0.5)",
             size: 10,
