@@ -2,7 +2,7 @@ import { CREATE_NEW_PLOT, UPDATE_PLOT_SPECIFICATIONS } from "./constants";
 
 export const defaultState = {
   plots: [],
-  currentPlotId: 1,
+  activePlotId: 1,
 };
 
 const plotsReducer = (state = defaultState, action) => {

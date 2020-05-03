@@ -18,7 +18,6 @@ class VisualizationCanvas extends Component {
 
   render() {
     const { plots } = this.props;
-    console.log(plots);
     return (
       <div className="VisualizationCanvas-container">
         {plots.map(

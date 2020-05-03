@@ -11,9 +11,12 @@ const Plot = createPlotlyComponent(Plotly);
 
 class RnDPlot extends Component {
   static propTypes = {
+    id: PropTypes.number,
     modelName: PropTypes.string,
     plotData: PropTypes.array,
     layout: PropTypes.object,
+    onActivePlotChange: PropTypes.func,
+    activePlotId: PropTypes.number,
   };
 
   state = {
@@ -23,11 +26,17 @@ class RnDPlot extends Component {
     plotWindowsPosY: 50,
   };
 
-  onDragStop = (event, dragIndex) => {
+  setNewPos = (dragIndex) => {
     this.setState({
       plotWindowsPosX: dragIndex.x,
       plotWindowsPosY: dragIndex.y,
     });
+  };
+
+  onDragStop = (event, dragIndex) => {
+    const { id, onActivePlotChange, activePlotId } = this.props;
+
+    this.setNewPos(dragIndex);
   };
 
   onResizeStop = (event, direction, ref, delta, position) => {
@@ -44,6 +53,7 @@ class RnDPlot extends Component {
 
   render() {
     const { modelName, plotData, layout } = this.props;
+    const zInd = 3;
     const {
       plotWindowsHeight,
       plotWindowsWidth,
@@ -57,6 +67,7 @@ class RnDPlot extends Component {
         onDragStop={this.onDragStop}
         onResizeStop={this.onResizeStop}
         className="RndPlot-container"
+        style={{ zIndex: { zInd } }}
       >
         <div className="RndPlot-titlebar">
           <CloseButton handleClose={this.handleClose} />

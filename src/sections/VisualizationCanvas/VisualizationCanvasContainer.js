@@ -9,24 +9,24 @@ import VisualizationCanvas from "./VisualizationCanvas";
 
 class VisualizationCanvasContainer extends React.Component {
   componentDidMount() {
-    const { plots, currentModel, specifications, createPlot } = this.props;
+    const { plots, activeModel, specifications, createPlot } = this.props;
     if (plots.length === 0) {
-      createPlot(specifications, currentModel);
+      createPlot(specifications, activeModel);
     }
   }
 
   componentDidUpdate(prevProps, preState) {
     const {
-      currentModel,
+      activeModel,
       specifications,
       createPlot,
       updateSpec,
-      currentPlotId,
+      activePlotId,
     } = this.props;
-    if (prevProps.currentModel !== currentModel) {
-      createPlot(specifications, currentModel);
+    if (prevProps.activeModel !== activeModel) {
+      createPlot(specifications, activeModel);
     } else if (prevProps.specifications !== this.props.specifications) {
-      updateSpec(currentPlotId, specifications);
+      updateSpec(activePlotId, specifications);
     }
   }
 
@@ -37,16 +37,16 @@ class VisualizationCanvasContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  currentModel: state.app.currentModel,
+  activeModel: state.app.activeModel,
   specifications: state.model.specifications,
   plots: state.plots.plots,
-  currentPlotId: state.plots.currentPlotId,
+  activePlotId: state.plots.activePlotId,
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createPlot: (specifications, currentModel) =>
-      dispatch(createNewPlot(specifications, currentModel)),
+    createPlot: (specifications, activeModel) =>
+      dispatch(createNewPlot(specifications, activeModel)),
     updateSpec: (id, newSpecifications) =>
       dispatch(updatePlotSpecifictions(id, newSpecifications)),
   };

@@ -1,9 +1,8 @@
 import {
   ADD_TO_SCHEMA,
   DELETE_FROM_SCHEMA,
-} from "../../constants/modelActionTypes";
-
-import { CHANGE_FACETS } from "../../constants/facetActionTypes";
+  UPDATE_FACET_STATE,
+} from "./constants";
 
 export const defaultState = {
   specifications: {
@@ -49,7 +48,7 @@ const modelReducer = (state = defaultState, action) => {
     case DELETE_FROM_SCHEMA:
       specifications[action.payload.key].delete(action.payload.value);
       return { ...state, specifications };
-    case CHANGE_FACETS:
+    case UPDATE_FACET_STATE:
       facets[action.payload.key][action.payload.type] = !facets[
         action.payload.key
       ][action.payload.type];
