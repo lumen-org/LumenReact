@@ -2,6 +2,7 @@ import {
   ADD_TO_SCHEMA,
   DELETE_FROM_SCHEMA,
   UPDATE_FACET_STATE,
+  CHANGE_ACTIVE_SPECIFICATIONS,
 } from "./constants";
 
 export const defaultState = {
@@ -53,6 +54,11 @@ const modelReducer = (state = defaultState, action) => {
         action.payload.key
       ][action.payload.type];
       return { ...state, facets };
+    case CHANGE_ACTIVE_SPECIFICATIONS:
+      return {
+        ...state,
+        specifications: action.payload,
+      };
     default:
       return state;
   }

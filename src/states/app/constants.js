@@ -1,1 +1,1 @@
-export const SELECT_MODEL = "SELECT_MODEL";
+export const UPDATE_ACTIVE_MODEL = "UPDATE_ACTIVE_MODEL";

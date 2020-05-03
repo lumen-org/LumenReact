@@ -1,4 +1,4 @@
-import { SELECT_MODEL } from "./constants";
+import { UPDATE_ACTIVE_MODEL } from "./constants";
 
 export const defaultState = {
   activeModel: "mcg_iris_map",
@@ -6,7 +6,7 @@ export const defaultState = {
 // TODO: add a check for default model.
 const app = (state = defaultState, action) => {
   switch (action.type) {
-    case SELECT_MODEL: {
+    case UPDATE_ACTIVE_MODEL: {
       return {
         ...state,
         activeModel: action.payload,

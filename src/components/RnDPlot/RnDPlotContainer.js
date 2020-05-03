@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getPlotData, getLayoutInformation } from "../../utils/plotData";
-import { changeActivePlot } from "../../states/plots/actions";
+import {
+  changeActivePlot,
+  updatePlotSpecifictions,
+} from "../../states/plots/actions";
+import { changeActiveSpecifications } from "../../states/model/actions";
+import { updateActiveModel } from "../../states/app/actions";
 import PropTypes from "prop-types";
 import RnDPlot from "./RnDPlot";
 
@@ -52,8 +57,16 @@ class RnDPlotContainer extends React.Component {
   }
 
   onActivePlotChange = (id) => {
-    const { changeActivePlot } = this.props;
+    const {
+      changeActivePlot,
+      changeActiveSpecifications,
+      updateActiveModel,
+      specifications,
+      modelName,
+    } = this.props;
     changeActivePlot(id);
+    changeActiveSpecifications(specifications);
+    updateActiveModel(modelName);
   };
 
   render() {
@@ -82,6 +95,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     changeActivePlot: (newActivePlotId) =>
       dispatch(changeActivePlot(newActivePlotId)),
+    changeActiveSpecifications: (newspecifictions) =>
+      dispatch(changeActiveSpecifications(newspecifictions)),
+    updateActiveModel: (newActiveModel) =>
+      dispatch(updateActiveModel(newActiveModel)),
   };
 };
 

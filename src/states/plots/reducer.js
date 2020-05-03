@@ -40,7 +40,15 @@ const plotsReducer = (state = defaultState, action) => {
           {
             id: state.plots.length + 1,
             model: action.payload.modelName,
-            specifications: action.payload.specifications,
+            specifications: {
+              X_Axis: new Set([]),
+              Y_Axis: new Set([]),
+              Filter: new Set([]),
+              Detail: new Set([]),
+              Color: new Set([]),
+              Shape: new Set([]),
+              Size: new Set([]),
+            },
             zIndex: 0,
             plotData: [],
             layout: {},
