@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getPlotData, getLayoutInformation } from "../../utils/plotData";
-import { createNewPlot } from "../../states/plots/actions";
+import { changeActivePlot } from "../../states/plots/actions";
 import PropTypes from "prop-types";
 import RnDPlot from "./RnDPlot";
 
@@ -9,6 +9,7 @@ class RnDPlotContainer extends React.Component {
   static propTypes = {
     id: PropTypes.number,
     activePlotId: PropTypes.number,
+    zIndex: PropTypes.number,
     modelName: PropTypes.string,
     specifications: PropTypes.object,
   };
@@ -50,18 +51,23 @@ class RnDPlotContainer extends React.Component {
     }
   }
 
-  onActivePlotChange = () => {};
+  onActivePlotChange = (id) => {
+    const { changeActivePlot } = this.props;
+    changeActivePlot(id);
+  };
+
   render() {
-    const { modelName, activePlotId, id } = this.props;
+    const { modelName, activePlotId, id, zIndex } = this.props;
     const { plotData, layout } = this.state;
     return (
       <RnDPlot
         modelName={modelName}
         plotData={plotData}
+        zIndex={zIndex}
         layout={layout}
         id={id}
         activePlotId={activePlotId}
-        onUpdateActivePlo={this.onActivePlotChange}
+        onActivePlotChange={this.onActivePlotChange}
       />
     );
   }
@@ -71,6 +77,14 @@ const mapStateToProps = (state) => ({
   activeModel: state.app.activeModel,
   activePlotId: state.plots.activePlotId,
 });
-export default connect(mapStateToProps, null)(RnDPlotContainer);
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeActivePlot: (newActivePlotId) =>
+      dispatch(changeActivePlot(newActivePlotId)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RnDPlotContainer);
 
 // this is a good prime example that history is not only to be retained, but also brought forward to a new age

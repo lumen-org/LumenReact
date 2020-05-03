@@ -17,6 +17,7 @@ class RnDPlot extends Component {
     layout: PropTypes.object,
     onActivePlotChange: PropTypes.func,
     activePlotId: PropTypes.number,
+    zIndex: PropTypes.number,
   };
 
   state = {
@@ -35,7 +36,9 @@ class RnDPlot extends Component {
 
   onDragStop = (event, dragIndex) => {
     const { id, onActivePlotChange, activePlotId } = this.props;
-
+    if (id !== activePlotId) {
+      onActivePlotChange(id);
+    }
     this.setNewPos(dragIndex);
   };
 
@@ -52,8 +55,8 @@ class RnDPlot extends Component {
   };
 
   render() {
-    const { modelName, plotData, layout } = this.props;
-    const zInd = 3;
+    const { modelName, plotData, layout, zIndex } = this.props;
+    console.log(zIndex);
     const {
       plotWindowsHeight,
       plotWindowsWidth,
@@ -66,8 +69,12 @@ class RnDPlot extends Component {
         position={{ x: plotWindowsPosX, y: plotWindowsPosY }}
         onDragStop={this.onDragStop}
         onResizeStop={this.onResizeStop}
-        className="RndPlot-container"
-        style={{ zIndex: { zInd } }}
+        //className="RndPlot-container"
+        style={{
+          zIndex: zIndex,
+          border: "#dbdbdb 3px solid",
+          borderRadius: "10px",
+        }}
       >
         <div className="RndPlot-titlebar">
           <CloseButton handleClose={this.handleClose} />

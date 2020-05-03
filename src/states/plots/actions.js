@@ -1,4 +1,18 @@
-import { UPDATE_PLOT_SPECIFICATIONS, CREATE_NEW_PLOT } from "./constants";
+import {
+  UPDATE_PLOT_SPECIFICATIONS,
+  CREATE_NEW_PLOT,
+  CHANGE_ACTIVE_PLOT,
+} from "./constants";
+
+export function changeActivePlot(newActivePlotId) {
+  return {
+    type: CHANGE_ACTIVE_PLOT,
+    payload: {
+      newActivePlotId: newActivePlotId,
+    },
+  };
+}
+
 export function createNewPlot(specifications, modelName) {
   return {
     type: CREATE_NEW_PLOT,

@@ -25,6 +25,7 @@ class VisualizationCanvas extends Component {
             plot.show && (
               <RnDPlot
                 id={plot.id}
+                zIndex={plot.zIndex}
                 modelName={plot.model}
                 specifications={plot.specifications}
               />
