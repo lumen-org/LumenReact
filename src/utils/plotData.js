@@ -16,7 +16,11 @@ export const nextAvaliableId = (plots) => {
 };
 
 export const nextActiveId = (plots, deletedId) => {
-  return nextAvaliableId(plots.filter((plot) => plot.id !== deletedId)) - 1;
+  return (
+    nextAvaliableId(
+      plots.filter((plot) => plot.id !== deletedId && plot.show === true)
+    ) - 1
+  );
 };
 
 export const getLayoutInformation = (specifications) => {
