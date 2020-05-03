@@ -1,8 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getPlotData, getLayoutInformation } from "../../utils/plotData";
+import {
+  getPlotData,
+  getLayoutInformation,
+  nextActiveId,
+} from "../../utils/plotData";
 import { changeActivePlot, deletePlot } from "../../states/plots/actions";
-import { changeActiveSpecifications } from "../../states/model/actions";
+import {
+  changeActiveSpecifications,
+  resetSpecifications,
+} from "../../states/model/actions";
 import { updateActiveModel } from "../../states/app/actions";
 import PropTypes from "prop-types";
 import RnDPlot from "./RnDPlot";
@@ -50,7 +57,25 @@ class RnDPlotContainer extends React.Component {
   }
 
   onPlotClose = (id) => {
-    const { deletePlot } = this.props;
+    const {
+      deletePlot,
+      plots,
+      changeActivePlot,
+      changeActiveSpecifications,
+      resetSpecifications,
+      updateActiveModel,
+    } = this.props;
+    const nextId = nextActiveId(plots, id);
+    const nextPlot = plots.filter((plot) => {
+      return plot.id === nextId;
+    });
+    changeActivePlot(nextId);
+    if (nextPlot.length === 0) {
+      resetSpecifications();
+    } else {
+      changeActiveSpecifications(nextPlot[0].specifications);
+      updateActiveModel(nextPlot[0].model);
+    }
     deletePlot(id);
   };
 
@@ -86,19 +111,23 @@ class RnDPlotContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  activeModel: state.app.activeModel,
+  plots: state.plots.plots,
   activePlotId: state.plots.activePlotId,
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeActivePlot: (newActivePlotId) =>
-      dispatch(changeActivePlot(newActivePlotId)),
-    changeActiveSpecifications: (newspecifictions) =>
-      dispatch(changeActiveSpecifications(newspecifictions)),
-    updateActiveModel: (newActiveModel) =>
-      dispatch(updateActiveModel(newActiveModel)),
+    changeActivePlot: (
+      newActivePlotId // this function change the zIndex of plot and bring it to the front
+    ) => dispatch(changeActivePlot(newActivePlotId)),
+    changeActiveSpecifications: (
+      newspecifictions // this function trigger the update of specification
+    ) => dispatch(changeActiveSpecifications(newspecifictions)),
+    updateActiveModel: (
+      newActiveModel // this function trigger the update of schema
+    ) => dispatch(updateActiveModel(newActiveModel)),
     deletePlot: (id) => dispatch(deletePlot(id)),
+    resetSpecifications: () => dispatch(resetSpecifications()),
   };
 };
 

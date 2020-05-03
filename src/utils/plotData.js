@@ -1,5 +1,24 @@
 import { fetchPlotData } from "./fetch";
 
+export const nextAvaliableId = (plots) => {
+  if (plots.length === 0) {
+    return 1;
+  } else {
+    return (
+      Math.max.apply(
+        Math,
+        plots.map((plot) => {
+          return plot.id;
+        })
+      ) + 1
+    );
+  }
+};
+
+export const nextActiveId = (plots, deletedId) => {
+  return nextAvaliableId(plots.filter((plot) => plot.id !== deletedId)) - 1;
+};
+
 export const getLayoutInformation = (specifications) => {
   const X_Axis = [...specifications.X_Axis];
   const Y_Axis = [...specifications.Y_Axis];

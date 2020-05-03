@@ -5,28 +5,10 @@ import {
   DELETE_PLOT,
 } from "./constants";
 
+import { nextActiveId, nextAvaliableId } from "../../utils/plotData";
 export const defaultState = {
   plots: [],
   activePlotId: 1,
-};
-
-const nextAvaliableId = (plots) => {
-  if (plots.length === 0) {
-    return 1;
-  } else {
-    return (
-      Math.max.apply(
-        Math,
-        plots.map((plot) => {
-          return plot.id;
-        })
-      ) + 1
-    );
-  }
-};
-
-const nextActiveId = (plots, deletedId) => {
-  return nextAvaliableId(plots.filter((plot) => plot.id !== deletedId)) - 1;
 };
 
 const plotsReducer = (state = defaultState, action) => {
@@ -88,7 +70,6 @@ const plotsReducer = (state = defaultState, action) => {
         ),
       };
     case DELETE_PLOT:
-      console.log(nextActiveId(state.plots, action.payload.id));
       return {
         ...state,
         plots: state.plots.map((plot) =>

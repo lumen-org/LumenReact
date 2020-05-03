@@ -3,6 +3,7 @@ import {
   DELETE_FROM_SCHEMA,
   UPDATE_FACET_STATE,
   CHANGE_ACTIVE_SPECIFICATIONS,
+  RESET_SPECIFICATIONS,
 } from "./constants";
 
 export const defaultState = {
@@ -58,6 +59,19 @@ const modelReducer = (state = defaultState, action) => {
       return {
         ...state,
         specifications: action.payload,
+      };
+    case RESET_SPECIFICATIONS:
+      return {
+        ...state,
+        specifications: {
+          X_Axis: new Set([]),
+          Y_Axis: new Set([]),
+          Filter: new Set([]),
+          Detail: new Set([]),
+          Color: new Set([]),
+          Shape: new Set([]),
+          Size: new Set([]),
+        },
       };
     default:
       return state;

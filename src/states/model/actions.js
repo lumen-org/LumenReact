@@ -3,6 +3,7 @@ import {
   DELETE_FROM_SCHEMA,
   UPDATE_FACET_STATE,
   CHANGE_ACTIVE_SPECIFICATIONS,
+  RESET_SPECIFICATIONS,
 } from "./constants";
 
 export function addModel(payload) {
@@ -27,9 +28,18 @@ export function updateFacetState(payload) {
 }
 
 export function changeActiveSpecifications(payload) {
-  console.log(payload);
   return {
     type: CHANGE_ACTIVE_SPECIFICATIONS,
     payload,
   };
+}
+
+export function resetSpecifications() {
+  return {
+    type: RESET_SPECIFICATIONS,
+  };
+}
+
+export function resetSchema() {
+  return {};
 }
