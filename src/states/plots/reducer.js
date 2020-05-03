@@ -2,11 +2,31 @@ import {
   CREATE_NEW_PLOT,
   UPDATE_PLOT_SPECIFICATIONS,
   CHANGE_ACTIVE_PLOT,
+  DELETE_PLOT,
 } from "./constants";
 
 export const defaultState = {
   plots: [],
   activePlotId: 1,
+};
+
+const nextAvaliableId = (plots) => {
+  if (plots.length === 0) {
+    return 1;
+  } else {
+    return (
+      Math.max.apply(
+        Math,
+        plots.map((plot) => {
+          return plot.id;
+        })
+      ) + 1
+    );
+  }
+};
+
+const nextActiveId = (plots, deletedId) => {
+  return nextAvaliableId(plots.filter((plot) => plot.id !== deletedId)) - 1;
 };
 
 const plotsReducer = (state = defaultState, action) => {
@@ -29,12 +49,13 @@ const plotsReducer = (state = defaultState, action) => {
       };
 
     case CREATE_NEW_PLOT:
+      var newId = nextAvaliableId(state.plots);
       return {
         ...state,
         plots: [
           ...state.plots,
           {
-            id: state.plots.length + 1,
+            id: newId,
             model: action.payload.modelName,
             specifications: {
               X_Axis: new Set([]),
@@ -51,7 +72,7 @@ const plotsReducer = (state = defaultState, action) => {
             show: true,
           },
         ],
-        activePlotId: state.plots.length + 1,
+        activePlotId: newId,
       };
 
     case UPDATE_PLOT_SPECIFICATIONS:
@@ -66,7 +87,21 @@ const plotsReducer = (state = defaultState, action) => {
             : plot
         ),
       };
-
+    case DELETE_PLOT:
+      console.log(nextActiveId(state.plots, action.payload.id));
+      return {
+        ...state,
+        plots: state.plots.map((plot) =>
+          plot.id === action.payload.id
+            ? {
+                id: plot.id,
+                show: false,
+                zIndex: 0,
+              }
+            : plot
+        ),
+        activePlotId: nextActiveId(state.plots, action.payload.id),
+      };
     default:
       return state;
   }

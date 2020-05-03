@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getPlotData, getLayoutInformation } from "../../utils/plotData";
-import {
-  changeActivePlot,
-  updatePlotSpecifictions,
-} from "../../states/plots/actions";
+import { changeActivePlot, deletePlot } from "../../states/plots/actions";
 import { changeActiveSpecifications } from "../../states/model/actions";
 import { updateActiveModel } from "../../states/app/actions";
 import PropTypes from "prop-types";
@@ -22,10 +19,6 @@ class RnDPlotContainer extends React.Component {
     plotData: [],
     layout: {},
   };
-  componentDidMount() {
-    const { modelName, specifications } = this.props;
-    // open a warning banner if there are no specifications
-  }
 
   setPlotData = () => {
     const { modelName, specifications } = this.props;
@@ -56,6 +49,11 @@ class RnDPlotContainer extends React.Component {
     }
   }
 
+  onPlotClose = (id) => {
+    const { deletePlot } = this.props;
+    deletePlot(id);
+  };
+
   onActivePlotChange = (id) => {
     const {
       changeActivePlot,
@@ -80,6 +78,7 @@ class RnDPlotContainer extends React.Component {
         layout={layout}
         id={id}
         activePlotId={activePlotId}
+        onPlotClose={this.onPlotClose}
         onActivePlotChange={this.onActivePlotChange}
       />
     );
@@ -99,6 +98,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(changeActiveSpecifications(newspecifictions)),
     updateActiveModel: (newActiveModel) =>
       dispatch(updateActiveModel(newActiveModel)),
+    deletePlot: (id) => dispatch(deletePlot(id)),
   };
 };
 

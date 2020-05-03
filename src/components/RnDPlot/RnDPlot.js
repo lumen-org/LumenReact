@@ -16,6 +16,7 @@ class RnDPlot extends Component {
     plotData: PropTypes.array,
     layout: PropTypes.object,
     onActivePlotChange: PropTypes.func,
+    onPlotClose: PropTypes.func,
     activePlotId: PropTypes.number,
     zIndex: PropTypes.number,
   };
@@ -50,8 +51,9 @@ class RnDPlot extends Component {
     });
   };
 
-  handleClosePlot = () => {
-    // remove the plot information from the queue here.
+  handleClose = () => {
+    const { onPlotClose, id } = this.props;
+    onPlotClose(id);
   };
 
   render() {
