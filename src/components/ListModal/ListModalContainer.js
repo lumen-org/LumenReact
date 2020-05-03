@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { updateActiveModel } from "../../states/app/actions";
+import { createNewPlot } from "../../states/plots/actions";
 import PropTypes from "prop-types";
 import ListModal from "./ListModal";
 import fetchData from "../../utils/fetch";
@@ -17,8 +18,9 @@ class ListModalContainer extends React.Component {
   };
 
   handleItemSelection = (item) => {
-    const { updateActiveModel, handleModalClose } = this.props;
+    const { updateActiveModel, handleModalClose, createPlot } = this.props;
     updateActiveModel(item);
+    createPlot(item);
     handleModalClose();
   };
 
@@ -46,6 +48,7 @@ class ListModalContainer extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     updateActiveModel: (model) => dispatch(updateActiveModel(model)),
+    createPlot: (activeModel) => dispatch(createNewPlot(activeModel)),
   };
 };
 

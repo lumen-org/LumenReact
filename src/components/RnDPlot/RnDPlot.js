@@ -56,7 +56,6 @@ class RnDPlot extends Component {
 
   render() {
     const { modelName, plotData, layout, zIndex } = this.props;
-    console.log(zIndex);
     const {
       plotWindowsHeight,
       plotWindowsWidth,

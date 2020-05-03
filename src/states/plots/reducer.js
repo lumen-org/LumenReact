@@ -20,13 +20,9 @@ const plotsReducer = (state = defaultState, action) => {
                 ...plot,
                 zIndex: 1000,
               }
-            : plot.id === state.activePlotId
-            ? {
+            : {
                 ...plot,
                 zIndex: 0,
-              }
-            : {
-                plot,
               }
         ),
         activePlotId: action.payload.newActivePlotId,

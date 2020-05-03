@@ -8,24 +8,10 @@ import PropTypes from "prop-types";
 import VisualizationCanvas from "./VisualizationCanvas";
 
 class VisualizationCanvasContainer extends React.Component {
-  componentDidMount() {
-    const { plots, activeModel, specifications, createPlot } = this.props;
-    if (plots.length === 0) {
-      createPlot(specifications, activeModel);
-    }
-  }
-
   componentDidUpdate(prevProps, preState) {
-    const {
-      activeModel,
-      specifications,
-      createPlot,
-      updateSpec,
-      activePlotId,
-    } = this.props;
-    if (prevProps.activeModel !== activeModel) {
-      createPlot(specifications, activeModel);
-    } else if (prevProps.specifications !== this.props.specifications) {
+    const { specifications, updateSpec, activePlotId } = this.props;
+
+    if (prevProps.specifications !== this.props.specifications) {
       updateSpec(activePlotId, specifications);
     }
   }
@@ -45,8 +31,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createPlot: (specifications, activeModel) =>
-      dispatch(createNewPlot(specifications, activeModel)),
+    createPlot: (activeModel) => dispatch(createNewPlot(activeModel)),
     updateSpec: (id, newSpecifications) =>
       dispatch(updatePlotSpecifictions(id, newSpecifications)),
   };
