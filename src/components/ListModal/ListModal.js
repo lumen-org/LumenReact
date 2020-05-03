@@ -12,8 +12,8 @@ const modalStyles = {
     top: "30%",
     left: "30%",
     right: "30%",
-    bottom: "30%"
-  }
+    bottom: "30%",
+  },
 };
 
 class ListModdal extends Component {
@@ -21,7 +21,7 @@ class ListModdal extends Component {
     open: PropTypes.bool.isRequired,
     handleModalClose: PropTypes.func.isRequired,
     itemList: PropTypes.array.isRequired,
-    handleItemSelection: PropTypes.func
+    handleItemSelection: PropTypes.func,
   };
 
   onCloseClick = () => {
@@ -29,7 +29,7 @@ class ListModdal extends Component {
     handleModalClose();
   };
 
-  onItemSelect = item => {
+  onItemSelect = (item) => {
     const { handleItemSelection } = this.props;
     handleItemSelection(item);
   };
