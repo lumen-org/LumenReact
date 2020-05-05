@@ -1,30 +1,45 @@
 import {
   ADD_TO_SCHEMA,
-  DELETE_FROM_SCHEMA
-} from "../../constants/modelActionTypes";
-
-import {
-  CHANGE_FACETS,
-} from "../../constants/facetActionTypes";
+  DELETE_FROM_SCHEMA,
+  UPDATE_FACET_STATE,
+  CHANGE_ACTIVE_SPECIFICATIONS,
+  RESET_SPECIFICATIONS,
+} from "./constants";
 
 export function addModel(payload) {
   return {
     type: ADD_TO_SCHEMA,
-    payload
+    payload,
   };
 }
 
 export function deleteModel(payload) {
   return {
     type: DELETE_FROM_SCHEMA,
-    payload
+    payload,
   };
 }
 
-export function changeDataFacet(payload) {
+export function updateFacetState(payload) {
   return {
-    type: CHANGE_FACETS,
-    payload
+    type: UPDATE_FACET_STATE,
+    payload,
   };
 }
 
+export function changeActiveSpecifications(payload) {
+  return {
+    type: CHANGE_ACTIVE_SPECIFICATIONS,
+    payload,
+  };
+}
+
+export function resetSpecifications() {
+  return {
+    type: RESET_SPECIFICATIONS,
+  };
+}
+
+export function resetSchema() {
+  return {};
+}

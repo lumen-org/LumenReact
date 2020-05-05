@@ -1,17 +1,43 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
+import {
+  createNewPlot,
+  updatePlotSpecifictions,
+} from "../../states/plots/actions";
 import PropTypes from "prop-types";
 import VisualizationCanvas from "./VisualizationCanvas";
 
 class VisualizationCanvasContainer extends React.Component {
+  componentDidUpdate(prevProps, preState) {
+    const { specifications, updateSpec, activePlotId } = this.props;
+
+    if (prevProps.specifications !== this.props.specifications) {
+      updateSpec(activePlotId, specifications);
+    }
+  }
+
   render() {
-    return <VisualizationCanvas modelName={this.props.modelName} />;
+    const { plots } = this.props;
+    return <VisualizationCanvas plots={plots} />;
   }
 }
 
-const mapStateToProps = state => ({
-  modelName: state.app.currentModel
+const mapStateToProps = (state) => ({
+  activeModel: state.app.activeModel,
+  specifications: state.model.specifications,
+  plots: state.plots.plots,
+  activePlotId: state.plots.activePlotId,
 });
 
-export default connect(mapStateToProps, null)(VisualizationCanvasContainer);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createPlot: (activeModel) => dispatch(createNewPlot(activeModel)),
+    updateSpec: (id, newSpecifications) =>
+      dispatch(updatePlotSpecifictions(id, newSpecifications)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(VisualizationCanvasContainer);

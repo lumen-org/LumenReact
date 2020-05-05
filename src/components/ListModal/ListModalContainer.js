@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { selectModel } from "../../states/app/actions";
+import { updateActiveModel } from "../../states/app/actions";
+import { resetSpecifications } from "../../states/model/actions";
+import { createNewPlot } from "../../states/plots/actions";
 import PropTypes from "prop-types";
 import ListModal from "./ListModal";
 import fetchData from "../../utils/fetch";
@@ -17,8 +19,15 @@ class ListModalContainer extends React.Component {
   };
 
   handleItemSelection = (item) => {
-    const { selectModel, handleModalClose } = this.props;
-    selectModel(item);
+    const {
+      updateActiveModel,
+      handleModalClose,
+      createPlot,
+      resetSpecifications,
+    } = this.props;
+    updateActiveModel(item);
+    createPlot(item);
+    resetSpecifications();
     handleModalClose();
   };
 
@@ -45,7 +54,9 @@ class ListModalContainer extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    selectModel: (model) => dispatch(selectModel(model)),
+    updateActiveModel: (model) => dispatch(updateActiveModel(model)),
+    createPlot: (activeModel) => dispatch(createNewPlot(activeModel)),
+    resetSpecifications: () => dispatch(resetSpecifications()),
   };
 };
 

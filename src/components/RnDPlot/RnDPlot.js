@@ -11,9 +11,14 @@ const Plot = createPlotlyComponent(Plotly);
 
 class RnDPlot extends Component {
   static propTypes = {
+    id: PropTypes.number,
     modelName: PropTypes.string,
-    X: PropTypes.array,
-    Y: PropTypes.array,
+    plotData: PropTypes.array,
+    layout: PropTypes.object,
+    onActivePlotChange: PropTypes.func,
+    onPlotClose: PropTypes.func,
+    activePlotId: PropTypes.number,
+    zIndex: PropTypes.number,
   };
 
   state = {
@@ -23,11 +28,19 @@ class RnDPlot extends Component {
     plotWindowsPosY: 50,
   };
 
-  onDragStop = (event, dragIndex) => {
+  setNewPos = (dragIndex) => {
     this.setState({
       plotWindowsPosX: dragIndex.x,
       plotWindowsPosY: dragIndex.y,
     });
+  };
+
+  onDragStop = (event, dragIndex) => {
+    const { id, onActivePlotChange, activePlotId } = this.props;
+    if (id !== activePlotId) {
+      onActivePlotChange(id);
+    }
+    this.setNewPos(dragIndex);
   };
 
   onResizeStop = (event, direction, ref, delta, position) => {
@@ -38,52 +51,45 @@ class RnDPlot extends Component {
     });
   };
 
-  handleClosePlot = () => {
-    // remove the plot information from the queue here.
+  handleClose = () => {
+    const { onPlotClose, id } = this.props;
+    onPlotClose(id);
   };
 
   render() {
-    const { modelName } = this.props;
-
+    const { modelName, plotData, layout, zIndex } = this.props;
     const {
       plotWindowsHeight,
       plotWindowsWidth,
       plotWindowsPosX,
       plotWindowsPosY,
     } = this.state;
-    const { X, Y } = this.props;
     return (
       <Rnd
         size={{ width: plotWindowsWidth, height: plotWindowsHeight }}
         position={{ x: plotWindowsPosX, y: plotWindowsPosY }}
         onDragStop={this.onDragStop}
         onResizeStop={this.onResizeStop}
-        className="RndPlot-container"
+        //className="RndPlot-container"
+        style={{
+          zIndex: zIndex,
+          border: "#dbdbdb 3px solid",
+          borderRadius: "10px",
+        }}
       >
         <div className="RndPlot-titlebar">
           <CloseButton handleClose={this.handleClose} />
         </div>
-
         <Plot
-          data={[
-            {
-              x: X,
-              y: Y,
-              type: "scatter",
-              mode: "markers",
-              marker: {
-                color: "rgba(17, 157, 255,0.5)",
-                size: 10,
-                line: {
-                  color: "rgb(231, 99, 250)",
-                  width: 1,
-                },
-              },
-            },
-          ]}
+          data={plotData}
           layout={{
             autosize: true,
             title: modelName,
+            grid: {
+              rows: layout.row,
+              columns: layout.column,
+              pattern: "independent",
+            },
           }}
           useResizeHandler={true}
           className="RndPlot-plot"

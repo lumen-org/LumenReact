@@ -36,6 +36,7 @@ export const fetchSchemaData = (BODY) => {
   });
 };
 
+// TODO: refractor the style specification to somewhere else
 export const fetchPlotData = (BODY) => {
   return fetchData(BASE_URL, BODY).then((response) => {
     const dataString = response["data"].split("\n");
@@ -46,8 +47,8 @@ export const fetchPlotData = (BODY) => {
       Y.push(element.split(",")[1]);
     });
     return {
-      X: X,
-      Y: Y,
+      x: X,
+      y: Y,
     };
   });
 };
