@@ -1,8 +1,8 @@
-import { SELECT_MODEL } from "../../constants/actionType";
+import { UPDATE_ACTIVE_MODEL } from "./constants";
 
-export function selectModel(payload) {
+export function updateActiveModel(payload) {
   return {
-    type: SELECT_MODEL,
+    type: UPDATE_ACTIVE_MODEL,
     payload,
   };
 }

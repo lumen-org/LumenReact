@@ -11,14 +11,14 @@ import Specification from "../Specification";
 
 class PlotSettings extends Component {
   static propTypes = {
-    currentModel: PropTypes.string.isRequired
+    activeModel: PropTypes.string.isRequired,
   };
 
   render() {
-    const { currentModel } = this.props;
+    const { activeModel } = this.props;
     const layout2 = [
       { i: "schema", x: 0, y: 0, w: 1, h: 10, static: true },
-      { i: "specification", x: 1, y: 0, w: 1, h: 10, static: true }
+      { i: "specification", x: 1, y: 0, w: 1, h: 10, static: true },
     ];
     return (
       <DndProvider backend={Backend}>
@@ -30,7 +30,7 @@ class PlotSettings extends Component {
           rowHeight={100}
         >
           <div key="schema" className="layout-schema">
-            <Schema modelName={currentModel} />
+            <Schema modelName={activeModel} />
           </div>
           <div key="specification" className="layout-specification">
             <Specification />

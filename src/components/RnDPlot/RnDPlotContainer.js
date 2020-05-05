@@ -1,55 +1,136 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchPlotData } from "../../utils/fetch";
-import { FETCH_PLOT } from "../../constants/query";
-
+import {
+  getPlotData,
+  getLayoutInformation,
+  nextActiveId,
+} from "../../utils/plotData";
+import { changeActivePlot, deletePlot } from "../../states/plots/actions";
+import {
+  changeActiveSpecifications,
+  resetSpecifications,
+} from "../../states/model/actions";
+import { updateActiveModel } from "../../states/app/actions";
 import PropTypes from "prop-types";
 import RnDPlot from "./RnDPlot";
 
 class RnDPlotContainer extends React.Component {
   static propTypes = {
+    id: PropTypes.number,
+    activePlotId: PropTypes.number,
+    zIndex: PropTypes.number,
     modelName: PropTypes.string,
+    specifications: PropTypes.object,
   };
   state = {
-    X: [],
-    Y: [],
+    plotData: [],
+    layout: {},
   };
-  componentDidMount() {
+
+  setPlotData = () => {
     const { modelName, specifications } = this.props;
-  }
+    getPlotData(specifications, modelName).then((payload) => {
+      this.setState({
+        plotData: [],
+      });
+      payload[0].map((payload) => {
+        payload.then((payload) => {
+          this.setState({
+            plotData: [...this.state.plotData, payload],
+          });
+        });
+      });
+    });
+    this.setState({
+      layout: getLayoutInformation(specifications),
+    });
+  };
+
   componentDidUpdate(prevProps, preState) {
-    // this is only an example of how it can work. We need to further discuss
-    // about how to set up branches when there are more than one element in each sections,
-    // how to handle exceptions , etc.
+    // update the plot according to the change of specifications
     if (
       prevProps.modelName !== this.props.modelName ||
       prevProps.specifications !== this.props.specifications
     ) {
-      const { modelName, specifications } = this.props;
-      const X_Axis = [...specifications.X_Axis];
-      const Y_Axis = [...specifications.Y_Axis];
-      const SELECT = [X_Axis[0], Y_Axis[0]];
-      const POST_BODY = {
-        SELECT: SELECT,
-        FROM: modelName,
-      };
-      fetchPlotData(POST_BODY).then((data) =>
-        this.setState({
-          X: data.X,
-          Y: data.Y,
-        })
-      );
+      this.setPlotData();
     }
   }
+
+  onPlotClose = (id) => {
+    const {
+      deletePlot,
+      plots,
+      changeActivePlot,
+      changeActiveSpecifications,
+      resetSpecifications,
+      updateActiveModel,
+    } = this.props;
+    const nextId = nextActiveId(plots, id);
+    const nextPlot = plots.filter((plot) => {
+      return plot.id === nextId;
+    });
+    changeActivePlot(nextId);
+    if (nextPlot.length === 0) {
+      resetSpecifications();
+    } else {
+      changeActiveSpecifications(nextPlot[0].specifications);
+      updateActiveModel(nextPlot[0].model);
+    }
+    deletePlot(id);
+  };
+
+  onActivePlotChange = (id) => {
+    const {
+      changeActivePlot,
+      changeActiveSpecifications,
+      updateActiveModel,
+      specifications,
+      modelName,
+    } = this.props;
+    changeActivePlot(id);
+    changeActiveSpecifications(specifications);
+    updateActiveModel(modelName);
+  };
+
   render() {
-    const { modelName } = this.props;
-    const { X, Y } = this.state;
-    return <RnDPlot modelName={modelName} X={X} Y={Y} />;
+    const { modelName, activePlotId, id, zIndex } = this.props;
+    const { plotData, layout } = this.state;
+    return (
+      <RnDPlot
+        modelName={modelName}
+        plotData={plotData}
+        zIndex={zIndex}
+        layout={layout}
+        id={id}
+        activePlotId={activePlotId}
+        onPlotClose={this.onPlotClose}
+        onActivePlotChange={this.onActivePlotChange}
+      />
+    );
   }
 }
 
 const mapStateToProps = (state) => ({
-  specifications: state.model.specifications,
+  plots: state.plots.plots,
+  activePlotId: state.plots.activePlotId,
 });
 
-export default connect(mapStateToProps, null)(RnDPlotContainer);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeActivePlot: (
+      newActivePlotId // this function change the zIndex of plot and bring it to the front
+    ) => dispatch(changeActivePlot(newActivePlotId)),
+    changeActiveSpecifications: (
+      newspecifictions // this function trigger the update of specification
+    ) => dispatch(changeActiveSpecifications(newspecifictions)),
+    updateActiveModel: (
+      newActiveModel // this function trigger the update of schema
+    ) => dispatch(updateActiveModel(newActiveModel)),
+    deletePlot: (id) => dispatch(deletePlot(id)),
+    resetSpecifications: () => dispatch(resetSpecifications()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RnDPlotContainer);
+
+// this is a good prime example that history is not only to be retained, but also brought forward to a new age

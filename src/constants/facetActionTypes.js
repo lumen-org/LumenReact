@@ -1,1 +1,0 @@
-export const CHANGE_FACETS = "CHANGE_FACETS";
