@@ -1,13 +1,13 @@
 .RndPlot-container {
-  border: #dbdbdb 3px solid;
-  border-radius: 10px;
+    border: #dbdbdb 3px solid;
+    border-radius: 10px;
 }
 
 .RndPlot-plot {
-  width: 95%;
-  height: 95%;
+    width: 95%;
+    height: 95%;
 }
 
 .RndPlot-titlebar {
-  display: flex;
+    display: flex;
 }

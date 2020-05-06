@@ -1,11 +1,20 @@
 import React from "react";
 import solve from "./utils/weakConstraintBasedGraphLayoutAlgorithm";
+import { Rnd } from "react-rnd";
 
 //import {CSVReader} from 'react-papaparse'
 //'use strict';
 
 /**
  * Widget component -> parent to all other operations inside
+ */
+/*
+What needs to change:
+//  TODO: network component should be from react vis js
+    TODO: how does input data look like? generate nodes and edges
+    TODO: have same configs as before
+    TODO: use Ke Lis RnDPlot?
+    TODO: what are given props? nodes, edges -> do not need the updateNodes / Edges ?
  */
 let justData;
 
@@ -86,24 +95,27 @@ class DependencyGraphComponent extends React.Component {
 
   render() {
     return (
-      <div>
-        <GraphRawLoad nodesFunc={this.updateNodes} edgesFunc={this.updateEdges}
-                      temporaryData={this.state.temporaryData} tempDataFunc={this.updateTempData}
-                      adjustFunc={this.adjustNetwork}
-        />
-        <GraphInteractionCanvas drawnState={this.state.drawn} nodes={this.state.nodes} edges={this.state.edges}
-                                network={this.state.network} adjustFunc={this.adjustNetwork}
-                                omitEdgeValue={this.state.edgesAreOmitted}
-                                omitEdgeFunc={this.updateOmitEdgesCheckbox}
-                                edgeThreshold={this.state.edgeThreshold}
-                                edgeTresholdFunc={this.updateThresholdValue}
-                                nodesFunc={this.updateNodes}
-                                keepLayout={this.state.keepLayout}
-                                keepLayoutFunc={this.updateKeepLayout}
-                                edgesFunc={this.updateEdges}
+      <Rnd>
+        <div>
+          <GraphRawLoad nodesFunc={this.updateNodes} edgesFunc={this.updateEdges}
+                        temporaryData={this.state.temporaryData} tempDataFunc={this.updateTempData}
+                        adjustFunc={this.adjustNetwork}
+          />
+          <GraphInteractionCanvas drawnState={this.state.drawn} nodes={this.state.nodes} edges={this.state.edges}
+                                  network={this.state.network} adjustFunc={this.adjustNetwork}
+                                  omitEdgeValue={this.state.edgesAreOmitted}
+                                  omitEdgeFunc={this.updateOmitEdgesCheckbox}
+                                  edgeThreshold={this.state.edgeThreshold}
+                                  edgeTresholdFunc={this.updateThresholdValue}
+                                  nodesFunc={this.updateNodes}
+                                  keepLayout={this.state.keepLayout}
+                                  keepLayoutFunc={this.updateKeepLayout}
+                                  edgesFunc={this.updateEdges}
 
-        />
-      </div>
+          />
+        </div>
+      </Rnd>
+
 
     )
   }
@@ -472,6 +484,8 @@ class GraphInteractionCanvas extends React.Component {
 
   }
 }
+
+// TODO: I think I won't be needing this part as it was for loading the csv file
 
 class GraphRawLoad extends React.Component {
   constructor(props) {
