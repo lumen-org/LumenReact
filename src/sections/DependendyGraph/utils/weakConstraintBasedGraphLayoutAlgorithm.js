@@ -183,7 +183,7 @@ function randomNodePosition(nodes, edges) { // works fine with vector changes
     node.last_distance = 0;
   }
 }
-
+/*
 function notRandomNodePosition() { // works fine with vector changes
   console.log("in function randomNodePosition");
   let alreadyANode = {};
@@ -206,7 +206,7 @@ function notRandomNodePosition() { // works fine with vector changes
     x += 1;
   }
 }
-
+*/
 /** skeleton found at sigma js example animate.html; gives each node a coordinate on a circle -> giving it an overall
  * circular layout
  *

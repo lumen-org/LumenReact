@@ -1,6 +1,7 @@
 import React from "react";
 import solve from "./utils/weakConstraintBasedGraphLayoutAlgorithm";
 import { Rnd } from "react-rnd";
+import Graph from "react-graph-vis";
 
 //import {CSVReader} from 'react-papaparse'
 //'use strict';
@@ -23,8 +24,6 @@ class DependencyGraphComponent extends React.Component {
     super(props);
     //this.state = { liked: false };
     this.state = {
-      nodes: undefined,
-      edges: undefined,
       drawn: false,
       network: undefined,
       temporaryData: undefined,
@@ -97,11 +96,7 @@ class DependencyGraphComponent extends React.Component {
     return (
       <Rnd>
         <div>
-          <GraphRawLoad nodesFunc={this.updateNodes} edgesFunc={this.updateEdges}
-                        temporaryData={this.state.temporaryData} tempDataFunc={this.updateTempData}
-                        adjustFunc={this.adjustNetwork}
-          />
-          <GraphInteractionCanvas drawnState={this.state.drawn} nodes={this.state.nodes} edges={this.state.edges}
+          <GraphInteractionCanvas drawnState={this.state.drawn} nodes={this.props.nodes} edges={this.props.edges}
                                   network={this.state.network} adjustFunc={this.adjustNetwork}
                                   omitEdgeValue={this.state.edgesAreOmitted}
                                   omitEdgeFunc={this.updateOmitEdgesCheckbox}
@@ -143,7 +138,6 @@ class GraphInteractionCanvas extends React.Component {
     this.adjustEdgeThreshold = this.adjustEdgeThreshold.bind(this);
     this.highlightAllConnectedNodes = this.highlightAllConnectedNodes.bind(this);
     this.redrawGraph = this.redrawGraph.bind(this);
-
   }
 
   /**
@@ -169,8 +163,9 @@ class GraphInteractionCanvas extends React.Component {
   /**
    * initial draw action of graph
    */
-
+// TODO do I really need this??
   drawingButtonClicked() {
+    /*
     if (typeof this.props.nodes !== "undefined" && typeof this.props.edges !== "undefined") {
       console.log(this.props.nodes, this.props.edges);
       let oldprops = this.props.network;
@@ -233,7 +228,7 @@ class GraphInteractionCanvas extends React.Component {
 
     } else {
       document.getElementById("warning").innerHTML = "No data loaded";
-    }
+    }*/
 
   }
 
@@ -256,7 +251,7 @@ class GraphInteractionCanvas extends React.Component {
 
   drawGraph(id, isLocationProvided = false, shouldStretch = false) {
     let network;
-    if (this.props.nodes !== [] && this.props.edges !== []) {
+    /*if (this.props.nodes !== [] && this.props.edges !== []) {
       console.log("inside drawGraph");
       console.log("inside drawGraph");
       document.getElementById("warning").innerHTML = "";
@@ -294,25 +289,30 @@ class GraphInteractionCanvas extends React.Component {
         "nodes": result_nodes,
         "edges": result_edges
       };
-      let parsed = vis.parseGephiNetwork(json_data, parserOptions);
+      /*let parsed = vis.parseGephiNetwork(json_data, parserOptions);
       let container = document.getElementById(id);
       let data = {
         nodes: parsed.nodes,
         edges: parsed.edges
+      };*/
+    /*let mult_factor = 1;
+    if (shouldStretch) {
+      mult_factor = 2;
+    }
+    let graph = {
+      nodes: this.props.nodes,
+      edges: this.props.edges
+    };
+
+    for (let node of graph.nodes) {
+      //node.fixed = true;
+      // TODO find a good representation -> according to density or amount of nodes
+      node.x = node.x * mult_factor;
+      node.y = node.y * mult_factor;
+      node.physics = false;
+      /*node.scaling = {
+          label: false,
       };
-      let mult_factor = 1;
-      if (shouldStretch) {
-        mult_factor = 2;
-      }
-      for (let node of data.nodes) {
-        //node.fixed = true;
-        // TODO find a good representation -> according to density or amount of nodes
-        node.x = node.x * mult_factor;
-        node.y = node.y * mult_factor;
-        node.physics = false;
-        /*node.scaling = {
-            label: false,
-        };*/
         //node.shape = "diamond";
         node.chosen = {
           node: (values, id, selected, hovering) => {
@@ -322,7 +322,7 @@ class GraphInteractionCanvas extends React.Component {
         //node.shape = 'circle';
       }
       //console.log(nodes, edges);
-      for (let edge of data.edges) {
+      for (let edge of graph.edges) {
         edge.smooth = false;
         edge.color = '#000000';
         //edge.label = edge.weight;
@@ -333,18 +333,25 @@ class GraphInteractionCanvas extends React.Component {
           }
         }
       }
-      let options = {
+      const options = {
 
           manipulation: {
             enabled: false,
             editEdge: () => this.adjustEdgeThreshold(document.getElementById()),
 
           },
+        height: "500px",
+
           /*interaction: {
                   hideEdgesOnDrag: true,
-          }*/
+          }
         }
       ;
+      const events = {
+        select: function(event) {
+          var { nodes, edges } = event;
+        }
+      };
       network = new vis.Network(container, data, options);
       console.log(data.nodes);
 
@@ -352,7 +359,7 @@ class GraphInteractionCanvas extends React.Component {
 
 
       // FIXME
-      /*network.on("selectNode", (selectedItems) =>{
+      network.on("selectNode", (selectedItems) =>{
           console.log(selectedItems);
           let nodeIDs = selectedItems.nodes;
           for (let id of nodeIDs){
@@ -383,14 +390,16 @@ class GraphInteractionCanvas extends React.Component {
 
           }
           this.redrawGraph(true);
-      });*/
+      });
 
-      return network
 
-    }
+
+    }*/
+    return network
   }
 
   highlightAllConnectedNodes(selectedItems) {
+    /*
     console.log(selectedItems);
     let nodeIDs = selectedItems.nodes;
     for (let id in nodeIDs) {
@@ -402,7 +411,7 @@ class GraphInteractionCanvas extends React.Component {
         node.color = '#f54242'
       }
     }
-    /*
+
     let connectedNodes = network.getConnectedNodes(id);
     console.log(connectedNodes);
     for (let nodeID of connectedNodes){
@@ -461,6 +470,106 @@ class GraphInteractionCanvas extends React.Component {
 
 
   render() {
+      //document.getElementById("warning").innerHTML = "";
+      let result_edges, result_nodes;
+      let isLocationProvided = true;
+      if (!isLocationProvided) {
+        let result = solve(this.props.nodes, this.props.edges);
+        result_nodes = result[0];
+        result_edges = result[1];
+        let heaviestEdgeWeight = 0;
+        let heaviedtEdgeId;
+        for (let edge of result_edges) {
+          edge.label = edge.weight;
+          if (edge.weight > heaviestEdgeWeight) {
+            heaviedtEdgeId = edge.id;
+            heaviestEdgeWeight = edge.weight;
+          }
+        }
+        //document.getElementById("threshold").max = heaviestEdgeWeight;
+      } else {
+        result_edges = this.props.edges;
+        result_nodes = this.props.nodes;
+      }
+
+
+      let parserOptions = {
+        edges: {
+          inheritColors: false,
+        },
+        nodes: {
+          fixed: true,
+          parseColor: false
+        }
+      };
+      let json_data = {
+        "nodes": result_nodes,
+        "edges": result_edges
+      };
+      /*let parsed = vis.parseGephiNetwork(json_data, parserOptions);
+      let container = document.getElementById(id);
+      let data = {
+        nodes: parsed.nodes,
+        edges: parsed.edges
+      };*/
+      let mult_factor = 1;
+      let shouldStretch = true;
+      if (shouldStretch) {
+        mult_factor = 2;
+      }
+      let graph = {
+        nodes: this.props.nodes,
+        edges: this.props.edges
+      };
+
+      for (let node of graph.nodes) {
+        //node.fixed = true;
+        // TODO find a good representation -> according to density or amount of nodes
+        node.x = node.x * mult_factor;
+        node.y = node.y * mult_factor;
+        node.physics = false;
+        /*node.scaling = {
+            label: false,
+        };*/
+        //node.shape = "diamond";
+        node.chosen = {
+          node: (values, id, selected, hovering) => {
+
+          }
+        }
+        //node.shape = 'circle';
+      }
+      //console.log(nodes, edges);
+      for (let edge of graph.edges) {
+        edge.smooth = false;
+        edge.color = '#000000';
+        //edge.label = edge.weight;
+        edge.hidden = this.props.omitEdgeValue;
+        if (this.props.omitEdgeValue === false) {
+          if (parseFloat(edge.label) < parseFloat(this.props.edgeThreshold)) {
+            edge.hidden = true;
+          }
+        }
+      }
+      const options = {
+
+          manipulation: {
+            enabled: false,
+            editEdge: () => this.adjustEdgeThreshold(document.getElementById()),
+
+          },
+          height: "500px",
+
+          /*interaction: {
+                  hideEdgesOnDrag: true,
+          }*/
+        }
+      ;
+      const events = {
+        select: function(event) {
+          var { nodes, edges } = event;
+        }
+      };
     return (
 
       <div>
@@ -476,6 +585,14 @@ class GraphInteractionCanvas extends React.Component {
         <label>Weight threshold<input type="range" id="threshold" min="0" max="3" step="0.01"
                                       onChange={() => this.adjustEdgeThreshold(document.getElementById("threshold").value)}/></label>
         <p id="warning"></p>
+        <Graph
+          graph={graph}
+          options={options}
+          events={events}
+          getNetwork={network => {
+            //  if you want access to vis.js network api you can set the state in a parent component using this property
+          }}
+        />
 
 
         <GraphDisplayCanvas style={{height: '800px'}} id={this.canvas_id}/>
@@ -484,134 +601,6 @@ class GraphInteractionCanvas extends React.Component {
 
   }
 }
-
-// TODO: I think I won't be needing this part as it was for loading the csv file
-
-class GraphRawLoad extends React.Component {
-  constructor(props) {
-    super(props);
-    this.justData = undefined;
-    this.handleFiles = this.handleFiles.bind(this);
-    this.fileInput = React.createRef();
-
-  }
-
-
-  handleFiles(files) {
-    //justData = undefined;
-    let old_justData = this.props.temporaryData;
-    let headerNames = [];
-    //let justData= this.justData;
-    let config = {
-      delimitersToGuess: [",", " ", ";"],
-      header: true,
-      transformHeader: function (h) {
-        h = h.toLowerCase();
-        return h;
-
-      },
-      complete: function (results) {
-
-        //headerNames = results.meta.fields;
-        //this.props.temporaryData = results.data;
-        justData = results.data;
-        //return justData
-
-      },
-      skipEmptyLines: true,
-      worker: false,
-
-
-    };
-
-
-    for (let i = 0; i < files.length; i++) {
-      let csvfile = document.getElementById('csvFile').files[i];
-      Papa.parse(csvfile, config);
-
-
-      //console.log("justData", justData);
-    }
-
-
-    this.props.temporaryData = justData;
-    if (old_justData !== this.props.temporaryData) {
-      this.props.tempDataFunc(this.props.temporaryData);
-      console.log("I probably did it!");
-    }
-
-    // Todo probably invoke here function to update state
-    /*this.setState((state => ({
-        temporaryData: justData,
-    })));*/
-    //this.state.temporaryData = justData;
-
-  }
-
-
-  prepareNodes() {
-    //Todo make independent from global variable
-    if (typeof justData !== 'undefined') {
-      let prepNodes = justData;//this.state.temporaryData;
-      // not very sophisticated
-      this.props.nodesFunc(prepNodes);
-      console.log("nodes prepared");
-      document.getElementById("warning").innerHTML = "";
-
-    } else {
-      document.getElementById("warning").innerHTML = "No data was loaded";
-      console.log(this.state.temporaryData);
-    }
-  }
-
-  prepareEdges() {
-    //Todo make independent from global variable
-    if (typeof justData !== 'undefined') {
-      let prepEdges = justData;//this.state.temporaryData;
-      this.props.edgesFunc(prepEdges);
-      console.log("edges prepared");
-      document.getElementById("warning").innerHTML = "";
-
-    } else {
-      document.getElementById("warning").innerHTML = "No data was loaded";
-    }
-
-
-  }
-
-  clearBoth() {
-    this.props.nodesFunc(undefined);
-    this.props.edgesFunc(undefined);
-    //this.props.adjustFunc(undefined);
-
-  }
-
-
-  render() {
-    return (
-      <div>
-
-        <input type="file" id="csvFile"
-               onChange={() => this.handleFiles(document.getElementById('csvFile').files)}/>
-        <p id="whatYouSee"></p>
-        <div id="graph"></div>
-        <p id="userDecision"></p>
-        <button
-          onClick={() => {
-            this.prepareNodes();
-          }
-          }
-        >Import as nodes!
-        </button>
-        <button onClick={() => this.prepareEdges()}>Import as edges!</button>
-        <button onClick={() => this.clearBoth()}>Clear nodes and edges!</button>
-
-
-      </div>
-    );
-  }
-}
-
 
 
 export default DependencyGraphComponent;

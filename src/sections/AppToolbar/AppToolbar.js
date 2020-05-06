@@ -24,6 +24,9 @@ class AppToolbar extends Component {
         openModal: true
       });
     }
+    else if (buttonKey === 6) {
+      // TODO: here comes command to display for dependency graph
+    }
   };
 
   state = {

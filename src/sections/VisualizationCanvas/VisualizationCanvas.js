@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import RnDPlot from "../../components/RnDPlot";
 import PropTypes from "prop-types";
 import "./VisualizationCanvas.css";
+import DependencyGraphComponent from "../DependendyGraph";
 
 class VisualizationCanvas extends Component {
   static propTypes = {
@@ -31,7 +32,9 @@ class VisualizationCanvas extends Component {
               />
             )
         )}
+        <DependencyGraphComponent />
       </div>
+
     );
   }
 }

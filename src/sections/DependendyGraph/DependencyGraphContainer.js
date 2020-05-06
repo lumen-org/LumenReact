@@ -13,6 +13,7 @@ import {
 import { updateActiveModel } from "../../states/app/actions";
 import PropTypes from "prop-types";
 import DependencyGraph from "./DependencyGraph";
+import GraphComponent from "./GraphTest";
 
 class DependencyGraphContainer extends React.Component {
   static propTypes = {
@@ -95,8 +96,25 @@ class DependencyGraphContainer extends React.Component {
   render() {
     const { modelName, activePlotId, id, zIndex } = this.props;
     const { plotData, layout } = this.state;
+    const nodes = [
+      { id: 0, label: "node 0"},
+      { id: 1, label: "node 1"},
+      { id: 2, label: "node 2"},
+      { id: 3, label: "node 3"},
+      { id: 4, label: "node 4"},
+    ];
+    const edges = [
+      {from: 0, to: 1, weight: 1},
+      {from: 1, to: 2, weight: 1},
+      {from: 2, to: 0, weight: 1},
+      {from: 0, to: 4, weight: 1},
+
+    ];
+
     return (
-      <DependencyGraph
+      <GraphComponent
+        edges={edges}
+        nodes={nodes}
         modelName={modelName}
         plotData={plotData}
         zIndex={zIndex}
@@ -105,6 +123,7 @@ class DependencyGraphContainer extends React.Component {
         activePlotId={activePlotId}
         onPlotClose={this.onPlotClose}
         onActivePlotChange={this.onActivePlotChange}
+
       />
     );
   }
