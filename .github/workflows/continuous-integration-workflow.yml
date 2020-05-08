@@ -30,13 +30,12 @@ jobs:
   codecov:
     name: Codecov
     runs-on: ubuntu-18.04
-    node-version: 14.x
     steps:
         - uses: actions/checkout@v2
-        - name: Codecov node.js node-version
+        - name: Codecov node.js 14.x
           uses: actions/setup-node@v1
           with:
-            node-version: node-version
+            node-version: 14.x
         # rm warnings befor enabling it
         # - run: npm ci
         - run: npm install
