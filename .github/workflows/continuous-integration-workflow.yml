@@ -40,4 +40,4 @@ jobs:
         # rm warnings befor enabling it
         # - run: npm ci
         - run: npm install
-        - run: npm test_coverage
+        - run: npm run-script test_coverage
