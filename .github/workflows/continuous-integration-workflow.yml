@@ -3,8 +3,7 @@ name: Tests
 on:
   push:
     branches:
-      - master
-      - test_integration
+      - '*'
     # paths:
     #  - "src/*"
   pull_request:
@@ -15,8 +14,9 @@ jobs:
   build:
     name: Unittests
     runs-on: ubuntu-18.04
-    matrix:
-      node-version: [10.x, 12.x, 14.x]
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x]
     steps:
       - uses: actions/checkout@v2
       - name: Unittests with node.js ${{ matrix.node-version }}
