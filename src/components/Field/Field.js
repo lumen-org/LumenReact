@@ -1,6 +1,6 @@
 import React  from "react";
 import TitelH2 from "../Titles/TitleH2";
-import DataList from "../DataList";
+import FieldList from "../FieldList/FieldList";
 import "./Field.css";
 import PropTypes from 'prop-types'
 
@@ -8,7 +8,7 @@ function Field({ title, data, fieldName="" }) {
   return (
     <div className={"Field"}>
       <TitelH2 value={title}/>
-      <DataList dataList={data} fieldName={fieldName}/>
+      <FieldList dataList={data} fieldName={fieldName}/>
     </div>
   );
 }
