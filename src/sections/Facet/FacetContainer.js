@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 import Facet from "./Facet";
 import { connect } from "react-redux";
 import { updateFacetState } from "../../states/model/actions";
+import { selectCurrentSpecification } from "../../states/model/selector";
 
 class FacetContainer extends React.Component {
   render() {
-    const { facets } = this.props;
+    const { facets } = this.props.specifications;
     return (
       <Facet
         facets={facets}
@@ -29,7 +30,7 @@ class FacetContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    facets: state.model.facets,
+    specifications: selectCurrentSpecification(state.model),
   };
 };
 

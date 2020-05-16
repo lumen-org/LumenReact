@@ -1,10 +1,26 @@
 import {
+  ADD_SPECIFICATION,
+  SELECT_SPECIFICATION,
   ADD_TO_SCHEMA,
   DELETE_FROM_SCHEMA,
   UPDATE_FACET_STATE,
   CHANGE_ACTIVE_SPECIFICATIONS,
   RESET_SPECIFICATIONS,
 } from "./constants";
+
+export function addSpecification(payload) {
+  return {
+    type: ADD_SPECIFICATION,
+    payload
+  }
+}
+
+export function selectSpecification(payload) {
+  return {
+    type: SELECT_SPECIFICATION,
+    payload
+  }
+}
 
 export function addModel(payload) {
   return {

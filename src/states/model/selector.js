@@ -1,10 +1,18 @@
-export const selectSpecifications = state => state.specifications;
-export const currentId = state => state.currentId;
+import { createSelector } from "reselect";
+import { defaultValues } from "./reducer";
+
+const selectSpecifications = state => state.specifications.byId;
+const currentId = state => state.currentId;
+const lastCreatedId = state => state.lastCreatedId;
 
 export const selectCurrentSpecification = createSelector(
-  selectSpecifications,
-  currentId,
-  (selectSpecifications, currentId) => selectedId !== -1 ? selectSpecifications[currentId] : null
+  [selectSpecifications, currentId],
+  (selectSpecifications, currentId) => {
+    return currentId !== -1 ? selectSpecifications.get(currentId) : defaultValues
+  }
 );
-}
-;
+
+export const selectLastCreatedId = createSelector(
+  [lastCreatedId],
+  (lastCreatedId) => lastCreatedId
+);

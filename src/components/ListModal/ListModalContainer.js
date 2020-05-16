@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { updateActiveModel } from "../../states/app/actions";
-import { resetSpecifications } from "../../states/model/actions";
+import { addSpecification, selectSpecification } from "../../states/model/actions";
 import { createNewPlot } from "../../states/plots/actions";
 import PropTypes from "prop-types";
 import ListModal from "./ListModal";
 import fetchData from "../../utils/fetch";
 import { BASE_URL, FETCH_ALL_MODEL_NAME } from "../../constants/query";
+import { selectLastCreatedId } from "../../states/model/selector";
 
 class ListModalContainer extends React.Component {
   static propTypes = {
@@ -22,12 +23,14 @@ class ListModalContainer extends React.Component {
     const {
       updateActiveModel,
       handleModalClose,
-      createPlot,
-      resetSpecifications,
+      // createPlot,
+      addSpecifications,
+      selectSpecification,
     } = this.props;
     updateActiveModel(item);
-    createPlot(item);
-    resetSpecifications();
+    // createPlot(item);
+    addSpecifications();
+    selectSpecification(this.props.lastId);
     handleModalClose();
   };
 
@@ -52,12 +55,20 @@ class ListModalContainer extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    lastId: selectLastCreatedId(state.model)
+  }
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     updateActiveModel: (model) => dispatch(updateActiveModel(model)),
-    createPlot: (activeModel) => dispatch(createNewPlot(activeModel)),
-    resetSpecifications: () => dispatch(resetSpecifications()),
+    // createPlot: (activeModel) => dispatch(createNewPlot(activeModel)),
+    // resetSpecifications: () => dispatch(resetSpecifications()),
+    addSpecifications: () => dispatch(addSpecification()),
+    selectSpecification: (id) => dispatch(selectSpecification(id))
   };
 };
 
-export default connect(null, mapDispatchToProps)(ListModalContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ListModalContainer);
