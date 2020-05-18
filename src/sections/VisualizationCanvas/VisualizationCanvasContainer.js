@@ -6,6 +6,7 @@ import {
 } from "../../states/plots/actions";
 import PropTypes from "prop-types";
 import VisualizationCanvas from "./VisualizationCanvas";
+import { selectCurrentSpecification } from "../../states/model/selector";
 
 class VisualizationCanvasContainer extends React.Component {
   componentDidUpdate(prevProps, preState) {
@@ -24,7 +25,7 @@ class VisualizationCanvasContainer extends React.Component {
 
 const mapStateToProps = (state) => ({
   activeModel: state.app.activeModel,
-  specifications: state.model.specifications,
+  specifications: selectCurrentSpecification(state.model).specification,
   plots: state.plots.plots,
   activePlotId: state.plots.activePlotId,
 });

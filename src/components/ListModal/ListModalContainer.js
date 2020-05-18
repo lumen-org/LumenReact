@@ -23,15 +23,17 @@ class ListModalContainer extends React.Component {
     const {
       updateActiveModel,
       handleModalClose,
-      // createPlot,
+      createPlot,
       addSpecifications,
       selectSpecification,
     } = this.props;
-    updateActiveModel(item);
-    // createPlot(item);
     addSpecifications();
     selectSpecification(this.props.lastId);
+    console.log(this.props.lastId);
+    createPlot(item, this.props.lastId);
+    updateActiveModel(item);
     handleModalClose();
+    console.log(this.props.lastId);
   };
 
   componentWillMount() {
@@ -64,7 +66,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     updateActiveModel: (model) => dispatch(updateActiveModel(model)),
-    // createPlot: (activeModel) => dispatch(createNewPlot(activeModel)),
+    createPlot: (activeModel, specification_id) => dispatch(createNewPlot(activeModel, specification_id)),
     // resetSpecifications: () => dispatch(resetSpecifications()),
     addSpecifications: () => dispatch(addSpecification()),
     selectSpecification: (id) => dispatch(selectSpecification(id))

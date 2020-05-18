@@ -8,7 +8,7 @@ const lastCreatedId = state => state.lastCreatedId;
 export const selectCurrentSpecification = createSelector(
   [selectSpecifications, currentId],
   (selectSpecifications, currentId) => {
-    return currentId !== -1 ? selectSpecifications.get(currentId) : defaultValues
+    return currentId !== -1 ? selectSpecifications[currentId] : defaultValues
   }
 );
 

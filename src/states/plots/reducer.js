@@ -39,15 +39,7 @@ const plotsReducer = (state = defaultState, action) => {
           {
             id: newId,
             model: action.payload.modelName,
-            specifications: {
-              X_Axis: new Set([]),
-              Y_Axis: new Set([]),
-              Filter: new Set([]),
-              Detail: new Set([]),
-              Color: new Set([]),
-              Shape: new Set([]),
-              Size: new Set([]),
-            },
+            specifications: action.payload.specification_id,
             zIndex: 0,
             plotData: [],
             layout: {},
@@ -64,7 +56,7 @@ const plotsReducer = (state = defaultState, action) => {
           plot.id === action.payload.id
             ? {
                 ...plot,
-                specifications: action.payload.newSpecifications,
+                specifications: action.payload.newSpecification_id,
               }
             : plot
         ),
