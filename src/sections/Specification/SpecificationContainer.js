@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import Specification from "./Specification";
 import { connect } from "react-redux";
-import { selectCurrentSpecification } from "../../states/model/selector";
+import { selectCurrentSpecification } from "../../states/specifications/selector";
 
 class SpecificationContainer extends React.Component {
   render() {
+    console.log(this.props);
     const { specification, facets } = this.props.specifications;
     return <Specification specifications={specification} facets={facets}/>;
   }
@@ -12,7 +13,7 @@ class SpecificationContainer extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    specifications: selectCurrentSpecification(state.model)
+    specifications: selectCurrentSpecification(state.specifications)
   };
 };
 

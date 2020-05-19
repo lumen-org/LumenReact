@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import RnDPlot from "../../components/RnDPlot";
 import PropTypes from "prop-types";
 import "./VisualizationCanvas.css";
+import { selectCurrentSpecification } from "../../states/specifications/selector";
 
 class VisualizationCanvas extends Component {
   static propTypes = {
@@ -9,15 +11,16 @@ class VisualizationCanvas extends Component {
       PropTypes.objectOf({
         id: PropTypes.number,
         modelName: PropTypes.string,
-        specifications: PropTypes.object,
+        // specifications: PropTypes.object,
         plotData: PropTypes.array,
         layout: PropTypes.object,
+        specifications: PropTypes.object
       })
     ),
   };
 
   render() {
-    const { plots } = this.props;
+    const { plots, specifications } = this.props;
     return (
       <div className="VisualizationCanvas-container">
         {plots.map(
@@ -27,7 +30,7 @@ class VisualizationCanvas extends Component {
                 id={plot.id}
                 zIndex={plot.zIndex}
                 modelName={plot.model}
-                specifications={plot.specifications}
+                specifications={specifications.byId[plot.specifications].specification}
               />
             )
         )}

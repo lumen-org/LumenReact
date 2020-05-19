@@ -2,7 +2,7 @@ import { useDrag } from "react-dnd";
 import React, { useState } from "react";
 import FieldItem from "./FieldItem";
 import { useDispatch } from "react-redux";
-import { addModel, deleteModel } from "../../states/model/actions";
+import { addModel, deleteModel } from "../../states/specifications/actions";
 import { FIELD_ITEM } from "../../constants/dragAndDropTypes";
 import FieldItemModal from "../FieldItemModal/FieldItemModal";
 
@@ -22,7 +22,7 @@ function FieldItemContainer({
     setIsOpen(!isOpen);
   };
 
-  // to hook into model actions
+  // to hook into specifications actions
   const dispatch = useDispatch();
 
   // Thats what is called a hook! ;)

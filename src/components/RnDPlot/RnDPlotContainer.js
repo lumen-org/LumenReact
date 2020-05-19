@@ -9,7 +9,7 @@ import { changeActivePlot, deletePlot } from "../../states/plots/actions";
 import {
   changeActiveSpecifications,
   resetSpecifications,
-} from "../../states/model/actions";
+} from "../../states/specifications/actions";
 import { updateActiveModel } from "../../states/app/actions";
 import PropTypes from "prop-types";
 import RnDPlot from "./RnDPlot";
@@ -46,10 +46,9 @@ class RnDPlotContainer extends React.Component {
     });
   };
 
-  componentDidUpdate(prevProps, preState) {
+  componentDidUpdate(prevProps) {
     // update the plot according to the change of specifications
     if (
-      prevProps.modelName !== this.props.modelName ||
       prevProps.specifications !== this.props.specifications
     ) {
       this.setPlotData();
@@ -65,14 +64,12 @@ class RnDPlotContainer extends React.Component {
       resetSpecifications,
       updateActiveModel,
     } = this.props;
-    const nextId = nextActiveId(plots, id);
-    const nextPlot = plots.filter((plot) => {
-      return plot.id === nextId;
+    const nextId = nextActiveId(plots.allIds);
+    const nextPlot = plots.allIds.filter((plot) => {
+      return id === nextId;
     });
     changeActivePlot(nextId);
-    if (nextPlot.length === 0) {
-      resetSpecifications();
-    } else {
+    if (nextPlot.length !== 0){
       changeActiveSpecifications(nextPlot[0].specifications);
       updateActiveModel(nextPlot[0].model);
     }
@@ -121,10 +118,10 @@ const mapDispatchToProps = (dispatch) => {
       newActivePlotId // this function change the zIndex of plot and bring it to the front
     ) => dispatch(changeActivePlot(newActivePlotId)),
     changeActiveSpecifications: (
-      newspecifictions // this function trigger the update of specification
+      newspecifictions // this function trigger the update of specifications
     ) => dispatch(changeActiveSpecifications(newspecifictions)),
     updateActiveModel: (
-      newActiveModel // this function trigger the update of schema
+      newActiveModel // this function trigger the update of schemes
     ) => dispatch(updateActiveModel(newActiveModel)),
     deletePlot: (id) => dispatch(deletePlot(id)),
     resetSpecifications: () => dispatch(resetSpecifications()),

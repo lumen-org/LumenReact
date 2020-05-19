@@ -11,8 +11,3 @@ export const selectCurrentSpecification = createSelector(
     return currentId !== -1 ? selectSpecifications[currentId] : defaultValues
   }
 );
-
-export const selectLastCreatedId = createSelector(
-  [lastCreatedId],
-  (lastCreatedId) => lastCreatedId
-);

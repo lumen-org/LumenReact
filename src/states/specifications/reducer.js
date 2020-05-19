@@ -2,15 +2,14 @@ import {
   ADD_SPECIFICATION,
   REMOVE_SPECIFICATION,
   SELECT_SPECIFICATION,
-  ADD_TO_SCHEMA,
-  DELETE_FROM_SCHEMA,
+  ADD_TO_SPECIFICATION,
+  DELETE_FROM_SPECIFICATION,
   UPDATE_FACET_STATE,
   CHANGE_ACTIVE_SPECIFICATIONS,
   RESET_SPECIFICATIONS
 } from "./constants";
 
 import update from "immutability-helper";
-import { selectLastCreatedId } from "./selector";
 
 export const defaultValues = {
   specification: {
@@ -52,12 +51,12 @@ export const defaultState = {
   }
 };
 
-const modelReducer = (state = defaultState, action) => {
+const specifications = (state = defaultState, action) => {
   let specifications = Object.assign({}, state.specifications);
   switch (action.type) {
     case ADD_SPECIFICATION:
       if (!specifications.allIds.includes(state.nextId)) {
-        specifications.byId[state.nextId] = defaultValues;
+        specifications.byId[state.nextId] = { ...defaultValues, id: state.nextId };
         specifications.allIds = [...specifications.allIds, state.nextId];
         return {
           ...state,
@@ -92,7 +91,7 @@ const modelReducer = (state = defaultState, action) => {
       return state;
 
 
-    case ADD_TO_SCHEMA:
+    case ADD_TO_SPECIFICATION:
       return {
         ...state,
         specifications: update(specifications, {
@@ -106,7 +105,7 @@ const modelReducer = (state = defaultState, action) => {
         })
       };
 
-    case DELETE_FROM_SCHEMA:
+    case DELETE_FROM_SPECIFICATION:
       return {
         ...state,
         specifications: update(specifications, {
@@ -135,15 +134,16 @@ const modelReducer = (state = defaultState, action) => {
       };
 
     case CHANGE_ACTIVE_SPECIFICATIONS:
+      console.log(action.payload);
       if (specifications.allIds.includes(action.payload)) {
         return {
           ...state,
-          currentId: action.payload
+          currentId: 0
         };
       }
       return {
         ...state,
-        currentId: selectLastCreatedId
+        currentId: state.lastCreatedId
       };
 
     // case RESET_SPECIFICATIONS:
@@ -164,4 +164,4 @@ const modelReducer = (state = defaultState, action) => {
   }
 };
 
-export default modelReducer;
+export default specifications;

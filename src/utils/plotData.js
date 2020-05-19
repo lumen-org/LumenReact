@@ -1,26 +1,33 @@
 import { fetchPlotData } from "./fetch";
 
-export const nextAvaliableId = (plots) => {
-  if (plots.length === 0) {
-    return 1;
+export const nextAvaliableId = (ids) => {
+  if (ids.length === 0) {
+    return 0;
   } else {
     return (
       Math.max.apply(
         Math,
-        plots.map((plot) => {
-          return plot.id;
+        ids.map((id) => {
+          return id;
         })
       ) + 1
     );
   }
 };
 
-export const nextActiveId = (plots, deletedId) => {
-  return (
-    nextAvaliableId(
-      plots.filter((plot) => plot.id !== deletedId && plot.show === true)
-    ) - 1
-  );
+export const nextActiveId = (ids) => {
+  if (ids.length === 0) {
+    return 0;
+  } else {
+    return (
+      Math.max.apply(
+        Math,
+        ids.map((id) => {
+          return id;
+        })
+      )
+    );
+  }
 };
 
 export const getLayoutInformation = (specifications) => {
@@ -32,12 +39,12 @@ export const getLayoutInformation = (specifications) => {
   } else if (X_Axis.length === 0 || Y_Axis.length === 0) {
     return {
       row: 1,
-      column: 1,
+      column: 1
     };
   } else {
     return {
       row: Y_Axis.length,
-      column: X_Axis.length,
+      column: X_Axis.length
     };
   }
 };
@@ -51,7 +58,7 @@ export const getPlotData = (specifications, modelName) => {
       ind++;
       return fetchPlotData({
         SELECT: comb,
-        FROM: modelName,
+        FROM: modelName
       }).then((response) => {
         return {
           ...response,
@@ -64,12 +71,12 @@ export const getPlotData = (specifications, modelName) => {
             size: 5,
             line: {
               color: "rgb(231, 99, 250)",
-              width: 1,
-            },
-          },
+              width: 1
+            }
+          }
         };
       });
-    }),
+    })
   ]).then((response) => {
     return response;
   });
