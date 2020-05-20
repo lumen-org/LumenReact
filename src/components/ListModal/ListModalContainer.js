@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { updateActiveModel } from "../../states/app/actions";
-import { addSpecification, createNewSpecification, selectSpecification } from "../../states/specifications/actions";
+import { createNewSpecification } from "../../states/specifications/actions";
 import { createNewPlot } from "../../states/plots/actions";
 import PropTypes from "prop-types";
 import ListModal from "./ListModal";
 import fetchData, { fetchSchemeData } from "../../utils/fetch";
 import { BASE_URL, FETCH_ALL_MODEL_NAME } from "../../constants/query";
-import { selectLastCreatedId } from "../../states/specifications/selector";
-import { createNewModel } from "../../states/models/actions";
-import { addScheme } from "../../states/schemes/actions";
+import { changeActiveModel, createNewModel } from "../../states/models/actions";
+import { createNewScheme } from "../../states/schemes/actions";
 
 class ListModalContainer extends React.Component {
   static propTypes = {
@@ -23,13 +22,12 @@ class ListModalContainer extends React.Component {
 
   handleItemSelection = (item) => {
     const {
-      updateActiveModel,
+      changeActiveModel,
       handleModalClose,
       createPlot,
       addSpecifications,
-      selectSpecification,
       createNewModel,
-      addScheme
+      createNewScheme
     } = this.props;
     // even though the dispatches officially are executed sequential the mapStateToProps
     // is not updating in time, that's why we need to ensure the order by
@@ -39,13 +37,12 @@ class ListModalContainer extends React.Component {
         // move into schema redux store to avoid this nested promises
         fetchSchemeData(item).then((response) => {
             console.log(response);
-            addScheme(response);
+            createNewScheme(response);
           }
         ).then(() => {
-            selectSpecification(this.props.specificationsId);
             createPlot(item, this.props.specificationsId);
-            updateActiveModel(item);
             createNewModel(item, this.props.schemeId, this.props.specificationsId, this.props.plotId);
+            changeActiveModel(this.props.lastCreatedModelId);
             handleModalClose();
           }
         )
@@ -79,7 +76,8 @@ const mapStateToProps = (state) => {
   return {
     specificationsId: state.specifications.lastCreatedId,
     plotId: state.plots.lastCreatedId,
-    schemeId: state.schemes.lastCreatedId
+    schemeId: state.schemes.lastCreatedId,
+    lastCreatedModelId: state.models.lastCreatedModelId
   };
 };
 
@@ -88,13 +86,13 @@ const mapDispatchToProps = (dispatch) => {
     createNewModel: (modelName, schemaId, specificationId, plotId) =>
       dispatch(createNewModel(modelName, schemaId, specificationId, plotId)),
     updateActiveModel: (model) => dispatch(updateActiveModel(model)),
+    changeActiveModel: (id) => dispatch(changeActiveModel(id)),
     createPlot: (activeModel, specification_id) => dispatch(createNewPlot(activeModel, specification_id)),
     // resetSpecifications: () => dispatch(resetSpecifications()),
     addSpecifications: () => {
       return dispatch(createNewSpecification());
     },
-    selectSpecification: (id) => dispatch(selectSpecification(id)),
-    addScheme: (scheme) => dispatch(addScheme(scheme))
+    createNewScheme: (scheme) => dispatch(createNewScheme(scheme))
   };
 };
 

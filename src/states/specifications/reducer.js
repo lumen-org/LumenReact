@@ -1,16 +1,18 @@
 import {
   ADD_SPECIFICATION,
   REMOVE_SPECIFICATION,
-  SELECT_SPECIFICATION,
   ADD_TO_SPECIFICATION,
   DELETE_FROM_SPECIFICATION,
   UPDATE_FACET_STATE,
-  CHANGE_ACTIVE_SPECIFICATIONS,
   RESET_SPECIFICATIONS
 } from "./constants";
 
 import update from "immutability-helper";
 
+
+/*
+maintains all existing specifications and there state
+ */
 export const defaultValues = {
   specification: {
     X_Axis: new Set([]),
@@ -43,7 +45,6 @@ export const defaultValues = {
 
 export const defaultState = {
   nextId: 0,
-  currentId: -1,
   lastCreatedId: -1,
   specifications: {
     byId: [],
@@ -62,7 +63,6 @@ const specifications = (state = defaultState, action) => {
           ...state,
           nextId: state.nextId + 1,
           lastCreatedId: state.nextId,
-          currentId: state.currentId === -1 ? state.nextId : state.currentId,
           specifications
         };
       }
@@ -81,22 +81,12 @@ const specifications = (state = defaultState, action) => {
       }
       return state;
 
-    case SELECT_SPECIFICATION:
-      if (specifications.allIds.includes(action.payload)) {
-        return {
-          ...state,
-          currentId: action.payload
-        };
-      }
-      return state;
-
-
     case ADD_TO_SPECIFICATION:
       return {
         ...state,
         specifications: update(specifications, {
           byId: {
-            [state.currentId]: {
+            [action.payload.id]: {
               specification: {
                 [action.payload.key]: { $add: [action.payload.value] }
               }
@@ -110,7 +100,7 @@ const specifications = (state = defaultState, action) => {
         ...state,
         specifications: update(specifications, {
           byId: {
-            [state.currentId]: {
+            [action.payload.id]: {
               specification: {
                 [action.payload.key]: { $remove: [action.payload.value] }
               }
@@ -124,26 +114,13 @@ const specifications = (state = defaultState, action) => {
         ...state,
         specifications: update(specifications, {
           byId: {
-            [state.currentId]: {
+            [action.payload.id]: {
               facets: {
-                [action.payload.key]: { $merge: { [action.payload.type]: !specifications.byId[state.currentId].facets[action.payload.key][action.payload.type] } }
+                [action.payload.key]: { $merge: { [action.payload.type]: !specifications.byId[action.payload.id].facets[action.payload.key][action.payload.type] } }
               }
             }
           }
         })
-      };
-
-    case CHANGE_ACTIVE_SPECIFICATIONS:
-      console.log(action.payload);
-      if (specifications.allIds.includes(action.payload)) {
-        return {
-          ...state,
-          currentId: 0
-        };
-      }
-      return {
-        ...state,
-        currentId: state.lastCreatedId
       };
 
     // case RESET_SPECIFICATIONS:

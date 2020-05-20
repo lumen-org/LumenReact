@@ -1,5 +1,8 @@
-import { ADD_SCHEME } from "./constants";
+import { CREATE_NEW_SCHEME } from "./constants";
 
+/*
+maintains a list of all schemes
+ */
 export const defaultState = {
   nextId: 0,
   lastCreatedId: -1,
@@ -11,7 +14,7 @@ export const defaultState = {
 
 const schemes = (state = defaultState, action) => {
   switch (action.type) {
-    case ADD_SCHEME:
+    case CREATE_NEW_SCHEME:
       return {
         schemes: {
           byId: [...state.schemes.byId, { ...action.payload, id: state.nextId }],

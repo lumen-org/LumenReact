@@ -1,1 +1,1 @@
-export const ADD_SCHEME = "ADD_SCHEME";
+export const CREATE_NEW_SCHEME = "CREATE_NEW_SCHEME";

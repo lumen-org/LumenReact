@@ -1,4 +1,4 @@
-import { CREATE_NEW_MODEL } from "./constants";
+import { CHANGE_ACTIVE_MODEL, CREATE_NEW_MODEL } from "./constants";
 
 export const createNewModel = (modelName, schemaId, specificationId, plotId) => {
   return {
@@ -11,3 +11,12 @@ export const createNewModel = (modelName, schemaId, specificationId, plotId) => 
     }
   }
 };
+
+export const changeActiveModel = (modelId) => {
+  return {
+    type: CHANGE_ACTIVE_MODEL,
+    payload: {
+      modelId
+    }
+  }
+}

@@ -28,21 +28,14 @@ export const addSpecification = (payload) => {
     };
 };
 
-export function selectSpecification(payload) {
-  return {
-    type: SELECT_SPECIFICATION,
-    payload
-  };
-}
-
-export function addModel(payload) {
+export function addToSpecification(payload) {
   return {
     type: ADD_TO_SPECIFICATION,
     payload
   };
 }
 
-export function deleteModel(payload) {
+export function deleteFromSpecification(payload) {
   return {
     type: DELETE_FROM_SPECIFICATION,
     payload
@@ -56,19 +49,8 @@ export function updateFacetState(payload) {
   };
 }
 
-export const changeActiveSpecifications = (payload) => {
-  return {
-    type: CHANGE_ACTIVE_SPECIFICATIONS,
-    payload
-  };
-};
-
 export function resetSpecifications() {
   return {
     type: RESET_SPECIFICATIONS
   };
-}
-
-export function resetSchema() {
-  return {};
 }

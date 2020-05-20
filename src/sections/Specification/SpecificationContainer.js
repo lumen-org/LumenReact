@@ -1,19 +1,28 @@
-import React, { Component } from "react";
+import React from "react";
 import Specification from "./Specification";
 import { connect } from "react-redux";
-import { selectCurrentSpecification } from "../../states/specifications/selector";
+import { selectActiveSpecificationId } from "../../states/models/selector";
 
 class SpecificationContainer extends React.Component {
   render() {
-    console.log(this.props);
-    const { specification, facets } = this.props.specifications;
-    return <Specification specifications={specification} facets={facets}/>;
+    const specifications = this.props.specifications.byId;
+    return (<div>
+        {
+          this.props.activeSpecification !== -1 &&
+          <Specification
+            specifications={specifications[this.props.activeSpecification].specification}
+            facets={specifications[this.props.activeSpecification].facets}
+          />
+        }
+      </div>
+    );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    specifications: selectCurrentSpecification(state.specifications)
+    specifications: state.specifications.specifications,
+    activeSpecification: selectActiveSpecificationId(state)
   };
 };
 

@@ -1,12 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import {
-  createNewPlot,
-  updatePlotSpecifictions,
-} from "../../states/plots/actions";
-import PropTypes from "prop-types";
 import VisualizationCanvas from "./VisualizationCanvas";
-import { selectCurrentSpecification } from "../../states/specifications/selector";
 
 class VisualizationCanvasContainer extends React.Component {
 
@@ -17,18 +11,11 @@ class VisualizationCanvasContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  activeModel: state.app.activeModel,
   plots: state.plots.plots.byId,
   specifications: state.specifications.specifications
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    createPlot: (activeModel) => dispatch(createNewPlot(activeModel)),
-  };
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(VisualizationCanvasContainer);

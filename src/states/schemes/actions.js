@@ -1,8 +1,8 @@
-import { ADD_SCHEME } from "./constants";
+import { CREATE_NEW_SCHEME } from "./constants";
 
-export const addScheme = (payload) => {
+export const createNewScheme = (payload) => {
   return {
-    type: ADD_SCHEME,
+    type: CREATE_NEW_SCHEME,
     payload
   };
 };

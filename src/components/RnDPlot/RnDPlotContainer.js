@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import {
   getPlotData,
@@ -6,13 +6,11 @@ import {
   nextActiveId,
 } from "../../utils/plotData";
 import { changeActivePlot, deletePlot } from "../../states/plots/actions";
-import {
-  changeActiveSpecifications,
-  resetSpecifications,
-} from "../../states/specifications/actions";
 import { updateActiveModel } from "../../states/app/actions";
 import PropTypes from "prop-types";
 import RnDPlot from "./RnDPlot";
+import { changeActiveModel } from "../../states/models/actions";
+import { selectActiveSpecificationId } from "../../states/models/selector";
 
 class RnDPlotContainer extends React.Component {
   static propTypes = {
@@ -60,9 +58,7 @@ class RnDPlotContainer extends React.Component {
       deletePlot,
       plots,
       changeActivePlot,
-      changeActiveSpecifications,
-      resetSpecifications,
-      updateActiveModel,
+      changeActiveModel,
     } = this.props;
     const nextId = nextActiveId(plots.allIds);
     const nextPlot = plots.allIds.filter((plot) => {
@@ -70,8 +66,7 @@ class RnDPlotContainer extends React.Component {
     });
     changeActivePlot(nextId);
     if (nextPlot.length !== 0){
-      changeActiveSpecifications(nextPlot[0].specifications);
-      updateActiveModel(nextPlot[0].model);
+      changeActiveModel(nextId)
     }
     deletePlot(id);
   };
@@ -79,13 +74,12 @@ class RnDPlotContainer extends React.Component {
   onActivePlotChange = (id) => {
     const {
       changeActivePlot,
-      changeActiveSpecifications,
       updateActiveModel,
-      specifications,
       modelName,
+      changeActiveModel,
     } = this.props;
+    changeActiveModel(id);
     changeActivePlot(id);
-    changeActiveSpecifications(specifications);
     updateActiveModel(modelName);
   };
 
@@ -110,21 +104,19 @@ class RnDPlotContainer extends React.Component {
 const mapStateToProps = (state) => ({
   plots: state.plots.plots,
   activePlotId: state.plots.activePlotId,
+  activeSpecification: selectActiveSpecificationId(state)
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    changeActiveModel: (newActiveModelId) => dispatch(changeActiveModel(newActiveModelId)),
     changeActivePlot: (
       newActivePlotId // this function change the zIndex of plot and bring it to the front
     ) => dispatch(changeActivePlot(newActivePlotId)),
-    changeActiveSpecifications: (
-      newspecifictions // this function trigger the update of specifications
-    ) => dispatch(changeActiveSpecifications(newspecifictions)),
     updateActiveModel: (
       newActiveModel // this function trigger the update of schemes
     ) => dispatch(updateActiveModel(newActiveModel)),
-    deletePlot: (id) => dispatch(deletePlot(id)),
-    resetSpecifications: () => dispatch(resetSpecifications()),
+    deletePlot: (id) => dispatch(deletePlot(id))
   };
 };
 

@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import RnDPlot from "../../components/RnDPlot";
 import PropTypes from "prop-types";
 import "./VisualizationCanvas.css";
-import { selectCurrentSpecification } from "../../states/specifications/selector";
 
 class VisualizationCanvas extends Component {
   static propTypes = {

@@ -12,13 +12,15 @@ class Specification extends Component {
     facets: PropTypes.object.isRequired
   };
 
-  handleDrop = item => {};
+  handleDrop = item => {
+  };
 
   render() {
     const { specifications } = this.props;
+    console.log(this.props);
     return (
       <div className="specification">
-        <TitelH1 value={"Spezification"} />
+        <TitelH1 value={"Spezification"}/>
         {Object.entries(specifications).map((item, index) => (
           <Field
             title={item[0]}
@@ -27,9 +29,9 @@ class Specification extends Component {
             onDrop={this.handleDrop}
           />
         ))}
-        <TitelH2 value={"Drop here to remove"} />
-        <TitelH1 value={"Facets"} />
-        <Facet text="Test"/>
+        <TitelH2 value={"Drop here to remove"}/>
+        <TitelH1 value={"Facets"}/>
+        <Facet text="Test" facets={this.props.facets}/>
       </div>
     );
   }
