@@ -17,19 +17,19 @@ export const defaultState = {
     Size: new Set([]),
   },
   facets: {
-    0: {
+    "prediction": {
       model: false,
       data: false,
     },
-    1: {
+    "dataPoints": {
       model: false,
       data: true,
     },
-    2: {
+    "marginals": {
       model: false,
       data: true,
     },
-    3: {
+    "density": {
       model: false,
       data: false,
     },
