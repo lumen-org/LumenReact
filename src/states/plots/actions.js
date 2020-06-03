@@ -14,11 +14,12 @@ export function changeActivePlot(newActivePlotId) {
   };
 }
 
-export function createNewPlot(modelName) {
+export function createNewPlot(modelName, specification_id) {
   return {
     type: CREATE_NEW_PLOT,
     payload: {
       modelName: modelName,
+      specification_id: specification_id
     },
   };
 }

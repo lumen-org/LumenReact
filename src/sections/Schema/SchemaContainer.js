@@ -1,53 +1,38 @@
-import React, { Component } from "react";
+import React  from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { fetchSchemaData } from "../../utils/fetch";
 import Schema from "./Schema";
-import { BASE_URL, FETCH_SCHEMA } from "../../constants/query";
+import { selectActiveSchemeId } from "../../states/models/selector";
 
 class SchemaContainer extends React.Component {
-  static propTypes = {
-    modelName: PropTypes.string.isRequired,
-  };
 
   state = {
     quantitativeFields: [],
-    categoricalFields: [],
+    categoricalFields: []
   };
 
   // TODO: CAN WE THINK OF A BETTER NAME THANK SCHEMA, AND FEILDS?
   // TODO2: Refactor this function to utils/fetch.js
 
-  fetchData = () => {
-    const { modelName } = this.props;
-    const POST_BODY = { ...FETCH_SCHEMA, FROM: modelName };
-    fetchSchemaData(POST_BODY).then((response) =>
-      this.setState({
-        categoricalFields: response.categoricalFields,
-        quantitativeFields: response.quantitativeFields,
-      })
-    );
-  };
-
-  componentDidMount() {
-    this.fetchData();
-  }
-
-  componentDidUpdate(prevProps, preState) {
-    if (prevProps.modelName !== this.props.modelName) {
-      this.fetchData();
-    }
-  }
-
   render() {
-    const { quantitativeFields, categoricalFields } = this.state;
+    const schemes = this.props.schemes.byId;
     return (
-      <Schema
-        quantitative={quantitativeFields}
-        categorical={categoricalFields}
-      />
+      <div>
+        {this.props.activeSchema !== -1 &&
+        <Schema
+          quantitative={schemes[this.props.activeSchema].quantitativeFields}
+          categorical={schemes[this.props.activeSchema].categoricalFields}
+        />
+        }
+      </div>
     );
   }
 }
 
-export default SchemaContainer;
+const mapStateToProps = state => {
+  return {
+    schemes: state.schemes.schemes,
+    activeSchema: selectActiveSchemeId(state)
+  };
+};
+
+export default connect(mapStateToProps, null)(SchemaContainer);

@@ -9,13 +9,27 @@ class Facet extends React.Component {
     facets: PropTypes.object.isRequired
   };
 
+  keyToCorrectString = key => {
+    switch(key) {
+      case 0:
+        return "prediction"
+      case 1:
+        return "dataPoints"
+      case 2:
+        return "marginals"
+      case 3:
+        return "density"
+    }
+  }
+
   handleDataClick = key => {
-    this.props.onFacetDataUpdate(key);
+    this.props.onFacetDataUpdate(this.keyToCorrectString(key));
   };
 
   handleModelClick = key => {
-    this.props.onFacetModelUpdate(key);
+    this.props.onFacetModelUpdate(this.keyToCorrectString(key));
   };
+
 
   render(){
     const { facetsActions } = specificationFacetConfig;
@@ -27,10 +41,15 @@ class Facet extends React.Component {
           <div className="facet-label">
             <div>
               <img src={item.icon} alt="" />
-              {item.name}<input type="checkbox" onClick={() => this.handleModelClick(key)}
-                                checked={facets[key].model}
-            /><input type="checkbox" onClick={() => this.handleDataClick(key)}
-                     checked={facets[key].data}
+              {item.name}<input
+              type="checkbox"
+              onClick={() => this.handleModelClick(key)}
+              checked={facets[this.keyToCorrectString(key)].model}
+            /><input
+              type="checkbox"
+              onClick={() => this.handleDataClick(key)}
+              checked={facets[this.keyToCorrectString(key)].data}
+
             />
             </div>
           </div>

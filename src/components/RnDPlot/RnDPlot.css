@@ -9,5 +9,10 @@
 }
 
 .RndPlot-titlebar {
-    display: flex;
+  display: flex;
+  background-color: white;
+}
+
+.RndPlot-continuous-white-background {
+  background-color: white;
 }

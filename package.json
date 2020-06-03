@@ -5,10 +5,10 @@
   "dependencies": {
     "@material-ui/core": "^4.9.4",
     "@material-ui/icons": "^4.9.1",
-    "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "gud": "^1.0.0",
+    "immutability-helper": "^3.0.2",
     "plotly.js": "^1.53.0",
     "react": "^16.12.0",
     "react-dnd": "^10.0.2",
@@ -21,7 +21,9 @@
     "react-redux": "^7.2.0",
     "react-rnd": "^10.1.9",
     "react-scripts": "^3.4.0",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -43,5 +45,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4"
   }
 }

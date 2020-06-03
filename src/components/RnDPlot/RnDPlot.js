@@ -65,6 +65,7 @@ class RnDPlot extends Component {
       plotWindowsPosY,
     } = this.state;
     return (
+      <div className="RndPlot-continuous-white-background">
       <Rnd
         size={{ width: plotWindowsWidth, height: plotWindowsHeight }}
         position={{ x: plotWindowsPosX, y: plotWindowsPosY }}
@@ -77,6 +78,7 @@ class RnDPlot extends Component {
           borderRadius: "10px",
         }}
       >
+
         <div className="RndPlot-titlebar">
           <CloseButton handleClose={this.handleClose} />
         </div>
@@ -94,7 +96,9 @@ class RnDPlot extends Component {
           useResizeHandler={true}
           className="RndPlot-plot"
         />
+
       </Rnd>
+  </div>
     );
   }
 }

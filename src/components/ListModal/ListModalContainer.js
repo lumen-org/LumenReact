@@ -1,34 +1,54 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { updateActiveModel } from "../../states/app/actions";
-import { resetSpecifications } from "../../states/model/actions";
+import { createNewSpecification } from "../../states/specifications/actions";
 import { createNewPlot } from "../../states/plots/actions";
 import PropTypes from "prop-types";
 import ListModal from "./ListModal";
-import fetchData from "../../utils/fetch";
+import fetchData, { fetchSchemeData } from "../../utils/fetch";
 import { BASE_URL, FETCH_ALL_MODEL_NAME } from "../../constants/query";
+import { changeActiveModel, createNewModel } from "../../states/models/actions";
+import { createNewScheme } from "../../states/schemes/actions";
 
 class ListModalContainer extends React.Component {
   static propTypes = {
     open: PropTypes.bool.isRequired,
-    handleModalClose: PropTypes.func.isRequired,
+    handleModalClose: PropTypes.func.isRequired
   };
 
   state = {
-    models: [],
+    models: []
   };
 
   handleItemSelection = (item) => {
     const {
-      updateActiveModel,
+      changeActiveModel,
       handleModalClose,
       createPlot,
-      resetSpecifications,
+      addSpecifications,
+      createNewModel,
+      createNewScheme
     } = this.props;
-    updateActiveModel(item);
-    createPlot(item);
-    resetSpecifications();
-    handleModalClose();
+    // even though the dispatches officially are executed sequential the mapStateToProps
+    // is not updating in time, that's why we need to ensure the order by
+    // making addSpecification a promise
+    // Im not sure if I did it correctly
+    addSpecifications().then(() => {
+        // move into schema redux store to avoid this nested promises
+        fetchSchemeData(item).then((response) => {
+            console.log(response);
+            createNewScheme(response);
+          }
+        ).then(() => {
+            createPlot(item, this.props.specificationsId);
+            createNewModel(item, this.props.schemeId, this.props.specificationsId, this.props.plotId);
+            changeActiveModel(this.props.lastCreatedModelId);
+            handleModalClose();
+          }
+        )
+        ;
+      }
+    );
   };
 
   componentWillMount() {
@@ -52,12 +72,28 @@ class ListModalContainer extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
   return {
-    updateActiveModel: (model) => dispatch(updateActiveModel(model)),
-    createPlot: (activeModel) => dispatch(createNewPlot(activeModel)),
-    resetSpecifications: () => dispatch(resetSpecifications()),
+    specificationsId: state.specifications.lastCreatedId,
+    plotId: state.plots.lastCreatedId,
+    schemeId: state.schemes.lastCreatedId,
+    lastCreatedModelId: state.models.lastCreatedModelId
   };
 };
 
-export default connect(null, mapDispatchToProps)(ListModalContainer);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createNewModel: (modelName, schemaId, specificationId, plotId) =>
+      dispatch(createNewModel(modelName, schemaId, specificationId, plotId)),
+    updateActiveModel: (model) => dispatch(updateActiveModel(model)),
+    changeActiveModel: (id) => dispatch(changeActiveModel(id)),
+    createPlot: (activeModel, specification_id) => dispatch(createNewPlot(activeModel, specification_id)),
+    // resetSpecifications: () => dispatch(resetSpecifications()),
+    addSpecifications: () => {
+      return dispatch(createNewSpecification());
+    },
+    createNewScheme: (scheme) => dispatch(createNewScheme(scheme))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListModalContainer);

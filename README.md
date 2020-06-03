@@ -1,3 +1,5 @@
+![Tests](https://github.com/lumen-org/LumenReact/workflows/Tests/badge.svg)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

@@ -1,0 +1,29 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - '*'
+    # paths:
+    #  - "src/*"
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Unittests
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Unittests with node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      # rm warnings befor enabling it
+      # - run: npm ci
+      - run: npm install
+      - run: npm test

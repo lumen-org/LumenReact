@@ -2,41 +2,41 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Facet from "./Facet";
 import { connect } from "react-redux";
-import { updateFacetState } from "../../states/model/actions";
+import { updateFacetState } from "../../states/specifications/actions";
+import { selectActiveSpecificationId } from "../../states/models/selector";
 
 class FacetContainer extends React.Component {
   render() {
-    const { facets } = this.props;
     return (
-      <Facet
-        facets={facets}
-        onFacetDataUpdate={this.updateFacetData}
-        onFacetModelUpdate={this.updateFacetModel}
-      />
+          <Facet
+            facets={this.props.facets}
+            onFacetDataUpdate={this.updateFacetData}
+            onFacetModelUpdate={this.updateFacetModel}
+          />
     );
   }
 
-  updateFacetData = (isBoxChecked) => {
-    const { changeFacets } = this.props;
-    changeFacets(isBoxChecked, "data");
+  updateFacetData = (key) => {
+    const { changeFacets, activeSpecification } = this.props;
+    changeFacets(activeSpecification, key, "data");
   };
 
-  updateFacetModel = (isBoxChecked) => {
-    const { changeFacets } = this.props;
-    changeFacets(isBoxChecked, "model");
+  updateFacetModel = (key) => {
+    const { changeFacets, activeSpecification } = this.props;
+    changeFacets(activeSpecification, key, "model");
   };
 }
 
 const mapStateToProps = (state) => {
   return {
-    facets: state.model.facets,
-  };
-};
+    activeSpecification: selectActiveSpecificationId(state)
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeFacets: (isBoxChecked, type) =>
-      dispatch(updateFacetState({ type: type, key: isBoxChecked })),
+    changeFacets: (id, key, type) =>
+      dispatch(updateFacetState({ id: id, type: type, key: key })),
   };
 };
 
