@@ -6,8 +6,14 @@
 .RndPlot-plot {
   width: 95%;
   height: 95%;
+
 }
 
 .RndPlot-titlebar {
   display: flex;
+  background-color: white;
+}
+
+.RndPlot-continuous-white-background {
+  background-color: white;
 }

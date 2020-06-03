@@ -1,9 +1,8 @@
 import React  from "react";
-import FieldItem from "./FieldItem";
-import "./DataList.css";
+import FieldItem from "../FieldItem";
+import "./FieldList.css";
 
-function DataList({ dataList, fieldName = "" }) {
-
+function FieldList({ dataList, fieldName = "" }) {
   const listItems = [...dataList].map((values) =>
     <FieldItem value={values} fieldName={fieldName}/>
   );
@@ -14,4 +13,4 @@ function DataList({ dataList, fieldName = "" }) {
   );
 }
 
-export default DataList;
+export default FieldList;
