@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToSpecification, deleteFromSpecification } from "../../states/specifications/actions";
 import { FIELD_ITEM } from "../../constants/dragAndDropTypes";
 import FieldItemModal from "../FieldItemModal/FieldItemModal";
-import { selectActiveSpecificationId } from "../../states/models/selector";
+import { selectActiveSpecificationId } from "../../states/visualizations/selector";
 
 function FieldItemContainer({
                               value,

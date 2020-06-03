@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import ListModal from "./ListModal";
 import fetchData, { fetchSchemeData } from "../../utils/fetch";
 import { BASE_URL, FETCH_ALL_MODEL_NAME } from "../../constants/query";
-import { changeActiveModel, createNewModel } from "../../states/models/actions";
+import { changeActiveVisualization, createNewVisualization } from "../../states/visualizations/actions";
 import { createNewScheme } from "../../states/schemes/actions";
 
 class ListModalContainer extends React.Component {
@@ -77,16 +77,16 @@ const mapStateToProps = (state) => {
     specificationsId: state.specifications.lastCreatedId,
     plotId: state.plots.lastCreatedId,
     schemeId: state.schemes.lastCreatedId,
-    lastCreatedModelId: state.models.lastCreatedModelId
+    lastCreatedModelId: state.visualizations.lastCreatedVisualizationId
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     createNewModel: (modelName, schemaId, specificationId, plotId) =>
-      dispatch(createNewModel(modelName, schemaId, specificationId, plotId)),
+      dispatch(createNewVisualization(modelName, schemaId, specificationId, plotId)),
     updateActiveModel: (model) => dispatch(updateActiveModel(model)),
-    changeActiveModel: (id) => dispatch(changeActiveModel(id)),
+    changeActiveModel: (id) => dispatch(changeActiveVisualization(id)),
     createPlot: (activeModel, specification_id) => dispatch(createNewPlot(activeModel, specification_id)),
     // resetSpecifications: () => dispatch(resetSpecifications()),
     addSpecifications: () => {

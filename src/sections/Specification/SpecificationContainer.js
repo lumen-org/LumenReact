@@ -1,7 +1,7 @@
 import React from "react";
 import Specification from "./Specification";
 import { connect } from "react-redux";
-import { selectActiveSpecificationId } from "../../states/models/selector";
+import { selectActiveSpecificationId } from "../../states/visualizations/selector";
 
 class SpecificationContainer extends React.Component {
   render() {

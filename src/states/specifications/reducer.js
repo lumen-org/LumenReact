@@ -1,5 +1,5 @@
 import {
-  ADD_SPECIFICATION,
+  CREATE_NEW_SPECIFICATION,
   REMOVE_SPECIFICATION,
   ADD_TO_SPECIFICATION,
   DELETE_FROM_SPECIFICATION,
@@ -55,7 +55,7 @@ export const defaultState = {
 const specifications = (state = defaultState, action) => {
   let specifications = Object.assign({}, state.specifications);
   switch (action.type) {
-    case ADD_SPECIFICATION:
+    case CREATE_NEW_SPECIFICATION:
       if (!specifications.allIds.includes(state.nextId)) {
         specifications.byId[state.nextId] = { ...defaultValues, id: state.nextId };
         specifications.allIds = [...specifications.allIds, state.nextId];

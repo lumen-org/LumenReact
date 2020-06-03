@@ -9,8 +9,8 @@ import { changeActivePlot, deletePlot } from "../../states/plots/actions";
 import { updateActiveModel } from "../../states/app/actions";
 import PropTypes from "prop-types";
 import RnDPlot from "./RnDPlot";
-import { changeActiveModel } from "../../states/models/actions";
-import { selectActiveSpecificationId } from "../../states/models/selector";
+import { changeActiveVisualization } from "../../states/visualizations/actions";
+import { selectActiveSpecificationId } from "../../states/visualizations/selector";
 
 class RnDPlotContainer extends React.Component {
   static propTypes = {
@@ -109,7 +109,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeActiveModel: (newActiveModelId) => dispatch(changeActiveModel(newActiveModelId)),
+    changeActiveVisualization: (newActiveModelId) => dispatch(changeActiveVisualization(newActiveModelId)),
     changeActivePlot: (
       newActivePlotId // this function change the zIndex of plot and bring it to the front
     ) => dispatch(changeActivePlot(newActivePlotId)),

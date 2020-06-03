@@ -1,7 +1,7 @@
 import React  from "react";
 import { connect } from "react-redux";
 import Schema from "./Schema";
-import { selectActiveSchemeId } from "../../states/models/selector";
+import { selectActiveSchemeId } from "../../states/visualizations/selector";
 
 class SchemaContainer extends React.Component {
 
