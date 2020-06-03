@@ -18,7 +18,7 @@ class FacetContainer extends React.Component {
 
   updateFacetData = (key) => {
     const { changeFacets, activeSpecification } = this.props;
-    changeFacets(activeSpecificaton, key, "data");
+    changeFacets(activeSpecification, key, "data");
   };
 
   updateFacetModel = (key) => {
