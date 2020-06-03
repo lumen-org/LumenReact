@@ -22,11 +22,11 @@ class ListModalContainer extends React.Component {
 
   handleItemSelection = (item) => {
     const {
-      changeActiveModel,
+      changeActiveVisualization,
       handleModalClose,
       createPlot,
       addSpecifications,
-      createNewModel,
+      createNewVisualization,
       createNewScheme
     } = this.props;
     // even though the dispatches officially are executed sequential the mapStateToProps
@@ -36,13 +36,12 @@ class ListModalContainer extends React.Component {
     addSpecifications().then(() => {
         // move into schema redux store to avoid this nested promises
         fetchSchemeData(item).then((response) => {
-            console.log(response);
             createNewScheme(response);
           }
         ).then(() => {
             createPlot(item, this.props.specificationsId);
-            createNewModel(item, this.props.schemeId, this.props.specificationsId, this.props.plotId);
-            changeActiveModel(this.props.lastCreatedModelId);
+            createNewVisualization(item, this.props.schemeId, this.props.specificationsId, this.props.plotId);
+            changeActiveVisualization(this.props.lastCreatedVisualizationId);
             handleModalClose();
           }
         )
@@ -77,16 +76,16 @@ const mapStateToProps = (state) => {
     specificationsId: state.specifications.lastCreatedId,
     plotId: state.plots.lastCreatedId,
     schemeId: state.schemes.lastCreatedId,
-    lastCreatedModelId: state.visualizations.lastCreatedVisualizationId
+    lastCreatedVisualizationId: state.visualizations.lastCreatedVisualizationId
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createNewModel: (modelName, schemaId, specificationId, plotId) =>
+    createNewVisualization: (modelName, schemaId, specificationId, plotId) =>
       dispatch(createNewVisualization(modelName, schemaId, specificationId, plotId)),
     updateActiveModel: (model) => dispatch(updateActiveModel(model)),
-    changeActiveModel: (id) => dispatch(changeActiveVisualization(id)),
+    changeActiveVisualization: (id) => dispatch(changeActiveVisualization(id)),
     createPlot: (activeModel, specification_id) => dispatch(createNewPlot(activeModel, specification_id)),
     // resetSpecifications: () => dispatch(resetSpecifications()),
     addSpecifications: () => {

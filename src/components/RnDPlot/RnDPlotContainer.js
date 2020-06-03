@@ -58,7 +58,7 @@ class RnDPlotContainer extends React.Component {
       deletePlot,
       plots,
       changeActivePlot,
-      changeActiveModel,
+      changeActiveVisualization,
     } = this.props;
     const nextId = nextActiveId(plots.allIds);
     const nextPlot = plots.allIds.filter((plot) => {
@@ -66,7 +66,7 @@ class RnDPlotContainer extends React.Component {
     });
     changeActivePlot(nextId);
     if (nextPlot.length !== 0){
-      changeActiveModel(nextId)
+      changeActiveVisualization(nextId)
     }
     deletePlot(id);
   };
@@ -76,9 +76,9 @@ class RnDPlotContainer extends React.Component {
       changeActivePlot,
       updateActiveModel,
       modelName,
-      changeActiveModel,
+      changeActiveVisualization,
     } = this.props;
-    changeActiveModel(id);
+    changeActiveVisualization(id);
     changeActivePlot(id);
     updateActiveModel(modelName);
   };
