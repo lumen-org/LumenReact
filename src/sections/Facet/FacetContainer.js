@@ -16,14 +16,14 @@ class FacetContainer extends React.Component {
     );
   }
 
-  updateFacetData = (isBoxChecked) => {
+  updateFacetData = (key) => {
     const { changeFacets, activeSpecification } = this.props;
-    changeFacets(activeSpecification, isBoxChecked, "data");
+    changeFacets(activeSpecificaton, key, "data");
   };
 
-  updateFacetModel = (isBoxChecked) => {
+  updateFacetModel = (key) => {
     const { changeFacets, activeSpecification } = this.props;
-    changeFacets(activeSpecification, isBoxChecked, "model");
+    changeFacets(activeSpecification, key, "model");
   };
 }
 
@@ -35,8 +35,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeFacets: (id, isBoxChecked, type) =>
-      dispatch(updateFacetState({ id: id, type: type, key: isBoxChecked })),
+    changeFacets: (id, key, type) =>
+      dispatch(updateFacetState({ id: id, type: type, key: key })),
   };
 };
 
