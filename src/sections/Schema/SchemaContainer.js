@@ -1,13 +1,12 @@
-import React  from "react";
+import React from "react";
 import { connect } from "react-redux";
 import Schema from "./Schema";
 import { selectActiveSchemeId } from "../../states/models/selector";
 
 class SchemaContainer extends React.Component {
-
   state = {
     quantitativeFields: [],
-    categoricalFields: []
+    categoricalFields: [],
   };
 
   // TODO: CAN WE THINK OF A BETTER NAME THANK SCHEMA, AND FEILDS?
@@ -15,23 +14,27 @@ class SchemaContainer extends React.Component {
 
   render() {
     const schemes = this.props.schemes.byId;
+    const { activeSchema } = this.props;
+    const activeSchemes = schemes[activeSchema] || [];
+    const quantitativeFields = activeSchemes.quantitativeFields || [];
+    const categoricalFields = activeSchemes.categoricalFields || [];
+    const quantitative = quantitativeFields.map((field) => field.name);
+    const categorical = categoricalFields.map((field) => field.name);
+
     return (
       <div>
-        {this.props.activeSchema !== -1 &&
-        <Schema
-          quantitative={schemes[this.props.activeSchema].quantitativeFields}
-          categorical={schemes[this.props.activeSchema].categoricalFields}
-        />
-        }
+        {this.props.activeSchema !== -1 && (
+          <Schema quantitative={quantitative} categorical={categorical} />
+        )}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     schemes: state.schemes.schemes,
-    activeSchema: selectActiveSchemeId(state)
+    activeSchema: selectActiveSchemeId(state),
   };
 };
 

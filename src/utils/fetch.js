@@ -22,23 +22,19 @@ export const fetchData = (url, body) => {
 export const _fetchSchemaData = (BODY) => {
   return fetchData(BASE_URL, BODY).then((response) => {
     return {
-      categoricalFields: response["fields"]
-        .filter((field, index) => {
-          return field.dtype === "string";
-        })
-        .map((field) => field.name),
-      quantitativeFields: response["fields"]
-        .filter((field, index) => {
-          return field.dtype === "numerical";
-        })
-        .map((field) => field.name),
+      categoricalFields: response["fields"].filter((field, index) => {
+        return field.dtype === "string";
+      }),
+      quantitativeFields: response["fields"].filter((field, index) => {
+        return field.dtype === "numerical";
+      }),
     };
   });
 };
 
 export const fetchSchemeData = (modelName) => {
   const POST_BODY = { ...FETCH_SCHEMA, FROM: modelName };
-  return _fetchSchemaData(POST_BODY)
+  return _fetchSchemaData(POST_BODY);
 };
 
 // TODO: refractor the style specifications to somewhere else
