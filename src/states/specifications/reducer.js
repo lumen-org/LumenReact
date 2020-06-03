@@ -24,22 +24,22 @@ export const defaultValues = {
     Size: new Set([])
   },
   facets: {
-    0: {
+    "prediction": {
       model: false,
-      data: false
+      data: false,
     },
-    1: {
+    "dataPoints": {
       model: false,
-      data: true
+      data: true,
     },
-    2: {
+    "marginals": {
       model: false,
-      data: true
+      data: true,
     },
-    3: {
+    "density": {
       model: false,
-      data: false
-    }
+      data: false,
+    },
   }
 };
 
