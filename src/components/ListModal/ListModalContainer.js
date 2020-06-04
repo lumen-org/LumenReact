@@ -5,10 +5,10 @@ import { createNewSpecification } from "../../states/specifications/actions";
 import { createNewPlot } from "../../states/plots/actions";
 import PropTypes from "prop-types";
 import ListModal from "./ListModal";
-import fetchData, { fetchSchemeData } from "../../utils/fetch";
+import fetchData, { fetchModelData } from "../../utils/fetch";
 import { BASE_URL, FETCH_ALL_MODEL_NAME } from "../../constants/query";
 import { changeActiveVisualization, createNewVisualization } from "../../states/visualizations/actions";
-import { createNewScheme } from "../../states/schemes/actions";
+import { createNewModel } from "../../states/models/actions";
 
 class ListModalContainer extends React.Component {
   static propTypes = {
@@ -27,7 +27,7 @@ class ListModalContainer extends React.Component {
       createPlot,
       addSpecifications,
       createNewVisualization,
-      createNewScheme
+      createNewModel
     } = this.props;
     // even though the dispatches officially are executed sequential the mapStateToProps
     // is not updating in time, that's why we need to ensure the order by
@@ -35,12 +35,12 @@ class ListModalContainer extends React.Component {
     // Im not sure if I did it correctly
     addSpecifications().then(() => {
         // move into schema redux store to avoid this nested promises
-        fetchSchemeData(item).then((response) => {
-            createNewScheme(response);
+        fetchModelData(item).then((response) => {
+            createNewModel(response);
           }
         ).then(() => {
             createPlot(item, this.props.specificationsId);
-            createNewVisualization(item, this.props.schemeId, this.props.specificationsId, this.props.plotId);
+            createNewVisualization(item, this.props.modelId, this.props.specificationsId, this.props.plotId);
             changeActiveVisualization(this.props.lastCreatedVisualizationId);
             handleModalClose();
           }
@@ -75,7 +75,7 @@ const mapStateToProps = (state) => {
   return {
     specificationsId: state.specifications.lastCreatedId,
     plotId: state.plots.lastCreatedId,
-    schemeId: state.schemes.lastCreatedId,
+    modelId: state.models.lastCreatedModelId,
     lastCreatedVisualizationId: state.visualizations.lastCreatedVisualizationId
   };
 };
@@ -91,7 +91,7 @@ const mapDispatchToProps = (dispatch) => {
     addSpecifications: () => {
       return dispatch(createNewSpecification());
     },
-    createNewScheme: (scheme) => dispatch(createNewScheme(scheme))
+    createNewModel: (model) => dispatch(createNewModel(model))
   };
 };
 

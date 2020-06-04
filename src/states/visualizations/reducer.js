@@ -22,7 +22,7 @@ const visualizations = (state = defaultState, action) => {
       if (!visualizations.allIds.includes(state.nextId)){
         visualizations.byId[state.nextId] = {
           modelName: action.payload.modelName,
-          schemeId: action.payload.schemaId,
+          modelId: action.payload.modelId,
           specificationId: action.payload.specificationId,
           plotId: action.payload.plotId,
           visualizationId: state.nextId

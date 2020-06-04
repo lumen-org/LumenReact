@@ -114,7 +114,7 @@ const mapDispatchToProps = (dispatch) => {
       newActivePlotId // this function change the zIndex of plot and bring it to the front
     ) => dispatch(changeActivePlot(newActivePlotId)),
     updateActiveModel: (
-      newActiveModel // this function trigger the update of schemes
+      newActiveModel // this function trigger the update of models
     ) => dispatch(updateActiveModel(newActiveModel)),
     deletePlot: (id) => dispatch(deletePlot(id))
   };

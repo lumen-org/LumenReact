@@ -19,7 +19,7 @@ export const fetchData = (url, body) => {
     });
 };
 
-export const _fetchSchemaData = (BODY) => {
+export const _fetchModelData = (BODY) => {
   return fetchData(BASE_URL, BODY).then((response) => {
     return {
       categoricalFields: response["fields"]
@@ -36,9 +36,9 @@ export const _fetchSchemaData = (BODY) => {
   });
 };
 
-export const fetchSchemeData = (modelName) => {
+export const fetchModelData = (modelName) => {
   const POST_BODY = { ...FETCH_SCHEMA, FROM: modelName };
-  return _fetchSchemaData(POST_BODY)
+  return _fetchModelData(POST_BODY)
 };
 
 // TODO: refractor the style specifications to somewhere else

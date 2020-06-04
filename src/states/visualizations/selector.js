@@ -24,10 +24,10 @@ export const selectActivePlotId = createSelector(
   }
 );
 
-export const selectActiveSchemeId = createSelector(
+export const selectActiveModelId = createSelector(
   [getVis, activeId],
   (selectVis, activeId) => {
-    return activeId !== -1 ? selectVis[activeId].schemeId : -1;
+    return activeId !== -1 ? selectVis[activeId].modelId : -1;
   }
 );
 
