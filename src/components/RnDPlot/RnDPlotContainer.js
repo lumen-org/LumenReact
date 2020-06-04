@@ -9,8 +9,8 @@ import { changeActivePlot, deletePlot } from "../../states/plots/actions";
 import { updateActiveModel } from "../../states/app/actions";
 import PropTypes from "prop-types";
 import RnDPlot from "./RnDPlot";
-import { changeActiveModel } from "../../states/models/actions";
-import { selectActiveSpecificationId } from "../../states/models/selector";
+import { changeActiveVisualization } from "../../states/visualizations/actions";
+import { selectActiveSpecificationId } from "../../states/visualizations/selector";
 
 class RnDPlotContainer extends React.Component {
   static propTypes = {
@@ -58,7 +58,7 @@ class RnDPlotContainer extends React.Component {
       deletePlot,
       plots,
       changeActivePlot,
-      changeActiveModel,
+      changeActiveVisualization,
     } = this.props;
     const nextId = nextActiveId(plots.allIds);
     const nextPlot = plots.allIds.filter((plot) => {
@@ -66,7 +66,7 @@ class RnDPlotContainer extends React.Component {
     });
     changeActivePlot(nextId);
     if (nextPlot.length !== 0){
-      changeActiveModel(nextId)
+      changeActiveVisualization(nextId)
     }
     deletePlot(id);
   };
@@ -76,9 +76,9 @@ class RnDPlotContainer extends React.Component {
       changeActivePlot,
       updateActiveModel,
       modelName,
-      changeActiveModel,
+      changeActiveVisualization,
     } = this.props;
-    changeActiveModel(id);
+    changeActiveVisualization(id);
     changeActivePlot(id);
     updateActiveModel(modelName);
   };
@@ -109,12 +109,12 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeActiveModel: (newActiveModelId) => dispatch(changeActiveModel(newActiveModelId)),
+    changeActiveVisualization: (newActiveModelId) => dispatch(changeActiveVisualization(newActiveModelId)),
     changeActivePlot: (
       newActivePlotId // this function change the zIndex of plot and bring it to the front
     ) => dispatch(changeActivePlot(newActivePlotId)),
     updateActiveModel: (
-      newActiveModel // this function trigger the update of schemes
+      newActiveModel // this function trigger the update of models
     ) => dispatch(updateActiveModel(newActiveModel)),
     deletePlot: (id) => dispatch(deletePlot(id))
   };

@@ -1,7 +1,7 @@
 import React  from "react";
 import { connect } from "react-redux";
 import Schema from "./Schema";
-import { selectActiveSchemeId } from "../../states/models/selector";
+import { selectActiveModelId } from "../../states/visualizations/selector";
 
 class SchemaContainer extends React.Component {
 
@@ -14,13 +14,13 @@ class SchemaContainer extends React.Component {
   // TODO2: Refactor this function to utils/fetch.js
 
   render() {
-    const schemes = this.props.schemes.byId;
+    const models = this.props.models.byId;
     return (
       <div>
-        {this.props.activeSchema !== -1 &&
+        {this.props.activeModel !== -1 &&
         <Schema
-          quantitative={schemes[this.props.activeSchema].quantitativeFields}
-          categorical={schemes[this.props.activeSchema].categoricalFields}
+          quantitative={models[this.props.activeModel].quantitativeFields}
+          categorical={models[this.props.activeModel].categoricalFields}
         />
         }
       </div>
@@ -30,8 +30,8 @@ class SchemaContainer extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    schemes: state.schemes.schemes,
-    activeSchema: selectActiveSchemeId(state)
+    models: state.models.models,
+    activeModel: selectActiveModelId(state)
   };
 };
 

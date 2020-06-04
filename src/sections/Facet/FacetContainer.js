@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Facet from "./Facet";
 import { connect } from "react-redux";
 import { updateFacetState } from "../../states/specifications/actions";
-import { selectActiveSpecificationId } from "../../states/models/selector";
+import { selectActiveSpecificationId } from "../../states/visualizations/selector";
 
 class FacetContainer extends React.Component {
   render() {

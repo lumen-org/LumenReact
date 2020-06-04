@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToSpecification, deleteFromSpecification } from "../../states/specifications/actions";
 import { FIELD_ITEM } from "../../constants/dragAndDropTypes";
 import FieldItemModal from "../FieldItemModal/FieldItemModal";
-import { selectActiveSpecificationId } from "../../states/models/selector";
+import { selectActiveSpecificationId } from "../../states/visualizations/selector";
 
 function FieldItemContainer({
                               value,
@@ -13,10 +13,10 @@ function FieldItemContainer({
                               type = FIELD_ITEM
                             }) {
   const item = { type: type };
-  const modelId = useSelector(selectActiveSpecificationId);
+  const specificationId = useSelector(selectActiveSpecificationId);
 
   function dispatchListItem() {
-    dispatch(deleteFromSpecification({ "id": modelId, "key": fieldName, "value": value }));
+    dispatch(deleteFromSpecification({ "id": specificationId, "key": fieldName, "value": value }));
   }
 
   const [isOpen, setIsOpen] = useState(false);
@@ -37,8 +37,8 @@ function FieldItemContainer({
         if (fieldName) {
           dispatchListItem();
         }
-        console.log(modelId)
-        dispatch(addToSpecification({ "id": modelId, "key": dropResult.result, "value": value }));
+        console.log(specificationId)
+        dispatch(addToSpecification({ "id": specificationId, "key": dropResult.result, "value": value }));
       } else if (fieldName) {
         dispatchListItem();
       }
