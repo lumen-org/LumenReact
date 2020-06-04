@@ -5,7 +5,7 @@ export const createNewModel = (modelName, schemaId, specificationId, plotId) => 
     type: CREATE_NEW_MODEL,
     payload: {
       modelName,
-      schemaId,
+      schemeId: schemaId,
       specificationId,
       plotId
     }

@@ -5,11 +5,12 @@ import {
   DELETE_PLOT
 } from "./constants";
 
+import update from "immutability-helper";
 import { nextActiveId, nextAvaliableId } from "../../utils/plotData";
 
 export const defaultState = {
   plots: {
-    byId: [],
+    byId: {},
     allIds: []
   },
   activePlotId: -1,
@@ -19,22 +20,22 @@ export const defaultState = {
 const plotsReducer = (state = defaultState, action) => {
   switch (action.type) {
     case CHANGE_ACTIVE_PLOT:
+       // = Object.assign({}, state.plots.byId);
+      let plots = Object.keys(state.plots.byId).map((key) =>
+        state.plots.byId[key].id === action.payload.newActivePlotId
+          ? {
+            ...state.plots.byId[key],
+            zIndex: 1
+          }
+          : {
+            ...state.plots.byId[key],
+            zIndex: 0
+          });
       return {
         ...state,
-        plots: {
-          byId: state.plots.byId.map((plot) =>
-            plot.id === action.payload.newActivePlotId
-              ? {
-                ...plot,
-                zIndex: 1000
-              }
-              : {
-                ...plot,
-                zIndex: 0
-              }
-          ),
-          allIds: [...state.plots.allIds]
-        },
+        plots: update(state.plots, {
+            byId: {$set: plots}
+        }),
         activePlotId: action.payload.newActivePlotId
       };
 
@@ -43,51 +44,32 @@ const plotsReducer = (state = defaultState, action) => {
       return {
         ...state,
         plots: {
-          byId: [ ...state.plots.byId,
+          byId: update(state.plots.byId,
             {
-              id: newId,
-              model: action.payload.modelName,
-              specifications: action.payload.specification_id,
-              zIndex: 0,
-              plotData: [],
-              layout: {},
-              show: true
-            }],
+              [newId]: {
+                $set: {
+                  id: newId,
+                  model: action.payload.modelName,
+                  specifications: action.payload.specification_id,
+                  zIndex: 0,
+                  plotData: [],
+                  layout: {},
+                  show: true
+                }
+              }
+            }),
           allIds: [...state.plots.allIds, newId]
         },
         activePlotId: newId,
         lastCreatedId: newId
       };
 
-    case UPDATE_PLOT_SPECIFICATIONS:
-      return {
-        ...state,
-        plots: state.plots.byId.map((plot) =>
-          plot.id === action.payload.id
-            ? {
-              ...plot
-              // specifications: action.payload.newSpecification_id,
-            }
-            : plot
-        )
-      };
     case DELETE_PLOT:
       return {
         ...state,
-        plots: {
-          byId: state.plots.byId.map((plot) =>
-          plot.id === action.payload.id
-            ? {
-              id: plot.id,
-              show: false,
-              zIndex: 0
-            }
-            : plot
-        ),
-          allIds: [...state.plots.allIds]
-        },
+        plots: update(state.plots, { byId: { $unset: [action.payload.id] } }),
         activePlotId: nextActiveId(state.plots.allIds)
-      }
+      };
     default:
       return state;
   }

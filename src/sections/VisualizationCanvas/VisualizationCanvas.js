@@ -22,14 +22,14 @@ class VisualizationCanvas extends Component {
     const { plots, specifications } = this.props;
     return (
       <div className="VisualizationCanvas-container">
-        {plots.map(
-          (plot) =>
-            plot.show && (
+        {Object.keys(plots).map(
+          (id) =>
+            plots[id].show && (
               <RnDPlot
-                id={plot.id}
-                zIndex={plot.zIndex}
-                modelName={plot.model}
-                specifications={specifications.byId[plot.specifications].specification}
+                id={plots[id].id}
+                zIndex={plots[id].zIndex}
+                modelName={plots[id].model}
+                specifications={specifications.byId[plots[id].specifications].specification}
               />
             )
         )}

@@ -47,7 +47,7 @@ export const defaultState = {
   nextId: 0,
   lastCreatedId: -1,
   specifications: {
-    byId: [],
+    byId: {},
     allIds: []
   }
 };
@@ -57,7 +57,7 @@ const specifications = (state = defaultState, action) => {
   switch (action.type) {
     case ADD_SPECIFICATION:
       if (!specifications.allIds.includes(state.nextId)) {
-        specifications.byId[state.nextId] = { ...defaultValues, id: state.nextId };
+        specifications.byId[state.nextId] = { ...defaultValues, id: state.nextId};
         specifications.allIds = [...specifications.allIds, state.nextId];
         return {
           ...state,
@@ -82,11 +82,13 @@ const specifications = (state = defaultState, action) => {
       return state;
 
     case ADD_TO_SPECIFICATION:
+      // specifications.byId.get(action.payload.id).specification[action.payload.key].add(action.payload.value);
       return {
         ...state,
+        // specifications: specifications
         specifications: update(specifications, {
           byId: {
-            [action.payload.id]: {
+            [action.payload.id.toString()]: {
               specification: {
                 [action.payload.key]: { $add: [action.payload.value] }
               }
