@@ -22,16 +22,12 @@ export const fetchData = (url, body) => {
 export const _fetchModelData = (BODY) => {
   return fetchData(BASE_URL, BODY).then((response) => {
     return {
-      categoricalFields: response["fields"]
-        .filter((field, index) => {
-          return field.dtype === "string";
-        })
-        .map((field) => field.name),
-      quantitativeFields: response["fields"]
-        .filter((field, index) => {
-          return field.dtype === "numerical";
-        })
-        .map((field) => field.name),
+      categoricalFields: response["fields"].filter((field, index) => {
+        return field.dtype === "string";
+      }),
+      quantitativeFields: response["fields"].filter((field, index) => {
+        return field.dtype === "numerical";
+      }),
     };
   });
 };
