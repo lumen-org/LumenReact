@@ -10,7 +10,7 @@ export const defaultState = {
   nextId: 0,
   lastCreatedVisualizationId: -1,
   visualizations: {
-    byId: [],
+    byId: {},
     allIds: []
   }
 };
@@ -41,7 +41,7 @@ const visualizations = (state = defaultState, action) => {
       return {
         ...state,
         activeVisualizationId: action.payload.visualizationId
-      }
+      };
     default:
       return state;
 

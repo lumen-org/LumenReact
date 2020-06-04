@@ -40,5 +40,4 @@ const models = (state = defaultState, action) => {
       return state;
   }
 };
-
 export default models;
