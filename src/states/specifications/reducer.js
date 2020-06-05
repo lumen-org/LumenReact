@@ -82,7 +82,6 @@ const specifications = (state = defaultState, action) => {
       return state;
 
     case ADD_TO_SPECIFICATION:
-      // specifications.byId.get(action.payload.id).specification[action.payload.key].add(action.payload.value);
       return {
         ...state,
         // specifications: specifications

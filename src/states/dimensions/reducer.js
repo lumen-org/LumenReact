@@ -1,13 +1,16 @@
 import { CREATE_NEW_DIMENSION } from "./constants";
 
 const defaultState = {
-  alleHaendeHoch: -1
+  dimensions: {}
 };
 
 const dimensions = (state = defaultState, action) => {
   switch (action.type) {
     case CREATE_NEW_DIMENSION:
-      return state;
+      return {
+        ...state,
+        action
+      };
     default:
       return state;
   }

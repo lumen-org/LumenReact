@@ -15,6 +15,18 @@ export const defaultState = {
   }
 };
 
+/**
+ * Represents a store for visualizations
+ * actions:
+ *    CREATE_NEW_VISUALIZATION
+ *        creates a new visualization
+ *        @param modelName
+ *        @param schemeId
+ *        @param specificationId
+ *        @param plotId
+ * @param state
+ * @param action
+ */
 const visualizations = (state = defaultState, action) => {
   let visualizations = Object.assign({}, state.visualizations);
   switch (action.type) {

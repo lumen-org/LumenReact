@@ -36,7 +36,7 @@ class ListModalContainer extends React.Component {
     addSpecifications().then(() => {
         // move into schema redux store to avoid this nested promises
         fetchModelData(item).then((response) => {
-            createNewModel(response);
+            createNewModel(response["Fields"]);
           }
         ).then(() => {
             createPlot(item, this.props.specificationsId);
