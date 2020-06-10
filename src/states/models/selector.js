@@ -19,19 +19,24 @@ export const selectSchemeNames = createSelector(
     // });
     // const quantitative = [];
     if (fields !== []) {
-      categoricalFields = Object.entries(fields).filter(value => {
+      categoricalFields = Object.entries(fields).filter((value) => {
         return value[1].dtype === "string";
       });
       quantitativeFields = Object.entries(fields).filter(([value, peter]) => {
-        return peter.dtype === "numerical"
+        return peter.dtype === "numerical";
       });
     }
-    const quantitative = quantitativeFields !== [] ? quantitativeFields.map(([key, field]) => field.name) : [];
-    const categorical = categoricalFields !== [] ? categoricalFields.map(([key, field]) => field.name) : [];
-    console.log(quantitativeFields);
+    const quantitative =
+      quantitativeFields !== []
+        ? quantitativeFields.map(([key, field]) => field.name)
+        : [];
+    const categorical =
+      categoricalFields !== []
+        ? categoricalFields.map(([key, field]) => field.name)
+        : [];
     return {
       quantitative,
-      categorical
+      categorical,
     };
   }
 );

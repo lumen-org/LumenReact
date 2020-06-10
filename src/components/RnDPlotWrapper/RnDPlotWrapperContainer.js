@@ -1,18 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  getPlotData,
-  getLayoutInformation,
-  nextActiveId,
-} from "../../utils/plotData";
+import { nextActiveId } from "../../utils/plotData";
 import { changeActivePlot, deletePlot } from "../../states/plots/actions";
 import { updateActiveModel } from "../../states/app/actions";
 import PropTypes from "prop-types";
-import RnDPlot from "./RnDPlot";
+import RnDPlotWrapper from "./RnDPlotWrapper";
 import { changeActiveVisualization } from "../../states/visualizations/actions";
 import { selectActiveSpecificationId } from "../../states/visualizations/selector";
 
-class RnDPlotContainer extends React.Component {
+class RnDPlotWrapperContainer extends React.Component {
+  // TODO: We need to think about a way where we could seperate modelName and specifications
+  // from this wrapper
+
   static propTypes = {
     id: PropTypes.number,
     activePlotId: PropTypes.number,
@@ -20,38 +19,6 @@ class RnDPlotContainer extends React.Component {
     modelName: PropTypes.string,
     specifications: PropTypes.object,
   };
-  state = {
-    plotData: [],
-    layout: {},
-  };
-
-  setPlotData = () => {
-    const { modelName, specifications } = this.props;
-    getPlotData(specifications, modelName).then((payload) => {
-      this.setState({
-        plotData: [],
-      });
-      payload[0].map((payload) => {
-        payload.then((payload) => {
-          this.setState({
-            plotData: [...this.state.plotData, payload],
-          });
-        });
-      });
-    });
-    this.setState({
-      layout: getLayoutInformation(specifications),
-    });
-  };
-
-  componentDidUpdate(prevProps) {
-    // update the plot according to the change of specifications
-    if (
-      prevProps.specifications !== this.props.specifications
-    ) {
-      this.setPlotData();
-    }
-  }
 
   onPlotClose = (id) => {
     const {
@@ -65,8 +32,8 @@ class RnDPlotContainer extends React.Component {
       return id === nextId;
     });
     changeActivePlot(nextId);
-    if (nextPlot.length !== 0){
-      changeActiveVisualization(nextId)
+    if (nextPlot.length !== 0) {
+      changeActiveVisualization(nextId);
     }
     deletePlot(id);
   };
@@ -84,14 +51,12 @@ class RnDPlotContainer extends React.Component {
   };
 
   render() {
-    const { modelName, activePlotId, id, zIndex } = this.props;
-    const { plotData, layout } = this.state;
+    const { modelName, activePlotId, id, zIndex, specifications } = this.props;
     return (
-      <RnDPlot
+      <RnDPlotWrapper
         modelName={modelName}
-        plotData={plotData}
+        specifications={specifications}
         zIndex={zIndex}
-        layout={layout}
         id={id}
         activePlotId={activePlotId}
         onPlotClose={this.onPlotClose}
@@ -104,22 +69,26 @@ class RnDPlotContainer extends React.Component {
 const mapStateToProps = (state) => ({
   plots: state.plots.plots,
   activePlotId: state.plots.activePlotId,
-  activeSpecification: selectActiveSpecificationId(state)
+  activeSpecification: selectActiveSpecificationId(state),
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeActiveVisualization: (newActiveModelId) => dispatch(changeActiveVisualization(newActiveModelId)),
+    changeActiveVisualization: (newActiveModelId) =>
+      dispatch(changeActiveVisualization(newActiveModelId)),
     changeActivePlot: (
       newActivePlotId // this function change the zIndex of plot and bring it to the front
     ) => dispatch(changeActivePlot(newActivePlotId)),
     updateActiveModel: (
       newActiveModel // this function trigger the update of models
     ) => dispatch(updateActiveModel(newActiveModel)),
-    deletePlot: (id) => dispatch(deletePlot(id))
+    deletePlot: (id) => dispatch(deletePlot(id)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RnDPlotContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RnDPlotWrapperContainer);
 
 // this is a good prime example that history is not only to be retained, but also brought forward to a new age

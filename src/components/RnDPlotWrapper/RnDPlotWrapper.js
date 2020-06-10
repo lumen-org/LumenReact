@@ -2,19 +2,24 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Rnd } from "react-rnd";
 import CloseButton from "../Button/CloseButton";
-import "./RnDPlot.css";
+import DifferentialMarginalPlot from "../DifferentialMarginalPlot";
+import "./RnDPlotWrapper.css";
 // We need to import Plotly in this strange way due to heap memory
 // See issue: https://github.com/plotly/react-plotly.js/issues/135
 import createPlotlyComponent from "react-plotly.js/factory";
 const Plotly = window.Plotly;
 const Plot = createPlotlyComponent(Plotly);
 
-class RnDPlot extends Component {
+/**
+ * RnDPlotWrapper is a wrapper around different kinds of plots such as:
+ * Differential Marginal Plot, Graph View of Model, Individual Conditionally Expectation Plot
+ */
+
+class RnDPlotWrapper extends Component {
   static propTypes = {
     id: PropTypes.number,
     modelName: PropTypes.string,
-    plotData: PropTypes.array,
-    layout: PropTypes.object,
+    specifications: PropTypes.object,
     onActivePlotChange: PropTypes.func,
     onPlotClose: PropTypes.func,
     activePlotId: PropTypes.number,
@@ -57,7 +62,7 @@ class RnDPlot extends Component {
   };
 
   render() {
-    const { modelName, plotData, layout, zIndex } = this.props;
+    const { modelName, specifications, zIndex } = this.props;
     const {
       plotWindowsHeight,
       plotWindowsWidth,
@@ -80,23 +85,13 @@ class RnDPlot extends Component {
         <div className="RndPlot-titlebar">
           <CloseButton handleClose={this.handleClose} />
         </div>
-        <Plot
-          data={plotData}
-          layout={{
-            autosize: true,
-            title: modelName,
-            grid: {
-              rows: layout.row,
-              columns: layout.column,
-              pattern: "independent",
-            },
-          }}
-          useResizeHandler={true}
-          className="RndPlot-plot"
+        <DifferentialMarginalPlot
+          modelName={modelName}
+          specifications={specifications}
         />
       </Rnd>
     );
   }
 }
 
-export default RnDPlot;
+export default RnDPlotWrapper;
