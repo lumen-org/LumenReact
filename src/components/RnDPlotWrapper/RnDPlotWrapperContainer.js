@@ -16,8 +16,6 @@ class RnDPlotWrapperContainer extends React.Component {
     id: PropTypes.number,
     activePlotId: PropTypes.number,
     zIndex: PropTypes.number,
-    modelName: PropTypes.string,
-    specifications: PropTypes.object,
   };
 
   onPlotClose = (id) => {
@@ -51,11 +49,9 @@ class RnDPlotWrapperContainer extends React.Component {
   };
 
   render() {
-    const { modelName, activePlotId, id, zIndex, specifications } = this.props;
+    const { activePlotId, id, zIndex } = this.props;
     return (
       <RnDPlotWrapper
-        modelName={modelName}
-        specifications={specifications}
         zIndex={zIndex}
         id={id}
         activePlotId={activePlotId}

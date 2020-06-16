@@ -1,57 +1,54 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getPlotData, getLayoutInformation } from "../../utils/plotData";
 import PropTypes from "prop-types";
+import {
+  getPlotDataById,
+  getPlotLayoutById,
+} from "../../states/plots/selector";
+import { selectActiveSpecification } from "../../states/specifications/selector.js";
 import DifferentialMarginalPlot from "./DifferentialMarginalPlot";
-
+import { fetchPlotData, fetchPlotLayout } from "../../states/plots/actions";
 class DifferentialMarginalPlotContainer extends React.Component {
   static propTypes = {
-    modelName: PropTypes.string,
-    specifications: PropTypes.object,
+    fetchPlotData: PropTypes.func,
+    fetchPlotLayout: PropTypes.func,
+    plotData: PropTypes.array,
+    layout: PropTypes.object,
+    id: PropTypes.number,
   };
 
-  state = {
-    plotData: [],
-    layout: {},
-  };
-
-  setPlotData = () => {
-    const { modelName, specifications } = this.props;
-    getPlotData(specifications, modelName).then((payload) => {
-      this.setState({
-        plotData: [],
-      });
-      payload[0].map((payload) => {
-        payload.then((payload) => {
-          this.setState({
-            plotData: [...this.state.plotData, payload],
-          });
-        });
-      });
-    });
-    this.setState({
-      layout: getLayoutInformation(specifications),
-    });
+  getPlotInfo = () => {
+    const { fetchPlotLayout, fetchPlotData, id } = this.props;
+    fetchPlotData(id);
+    fetchPlotLayout(id);
   };
 
   componentDidUpdate(prevProps) {
-    // update the plot according to the change of specifications
     if (prevProps.specifications !== this.props.specifications) {
-      this.setPlotData();
+      this.getPlotInfo();
     }
   }
 
   render() {
-    const { modelName } = this.props;
-    const { plotData, layout } = this.state;
-    return (
-      <DifferentialMarginalPlot
-        plotData={plotData}
-        layout={layout}
-        modelName={modelName}
-      />
-    );
+    const { plotData, layout } = this.props;
+    return <DifferentialMarginalPlot plotData={plotData} layout={layout} />;
   }
 }
 
-export default DifferentialMarginalPlotContainer;
+const mapDispatchToProps = {
+  fetchPlotData,
+  fetchPlotLayout,
+};
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    plotData: getPlotDataById(state, ownProps.id),
+    layout: getPlotLayoutById(state, ownProps.id),
+    specifications: selectActiveSpecification(state),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DifferentialMarginalPlotContainer);

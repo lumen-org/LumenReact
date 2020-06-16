@@ -10,24 +10,15 @@ class DifferentialMarginalPlot extends Component {
   static propTypes = {
     plotData: PropTypes.array,
     layout: PropTypes.object,
-    modelName: PropTypes.string,
   };
 
   state = {};
   render() {
-    const { plotData, layout, modelName } = this.props;
+    const { plotData, layout } = this.props;
     return (
       <Plot
         data={plotData}
-        layout={{
-          autosize: true,
-          title: modelName,
-          grid: {
-            rows: layout.row,
-            columns: layout.column,
-            pattern: "independent",
-          },
-        }}
+        layout={layout}
         useResizeHandler={true}
         className="RndPlot-plot"
       />

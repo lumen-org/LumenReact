@@ -4,11 +4,6 @@ import { Rnd } from "react-rnd";
 import CloseButton from "../Button/CloseButton";
 import DifferentialMarginalPlot from "../DifferentialMarginalPlot";
 import "./RnDPlotWrapper.css";
-// We need to import Plotly in this strange way due to heap memory
-// See issue: https://github.com/plotly/react-plotly.js/issues/135
-import createPlotlyComponent from "react-plotly.js/factory";
-const Plotly = window.Plotly;
-const Plot = createPlotlyComponent(Plotly);
 
 /**
  * RnDPlotWrapper is a wrapper around different kinds of plots such as:
@@ -18,8 +13,6 @@ const Plot = createPlotlyComponent(Plotly);
 class RnDPlotWrapper extends Component {
   static propTypes = {
     id: PropTypes.number,
-    modelName: PropTypes.string,
-    specifications: PropTypes.object,
     onActivePlotChange: PropTypes.func,
     onPlotClose: PropTypes.func,
     activePlotId: PropTypes.number,
@@ -62,7 +55,7 @@ class RnDPlotWrapper extends Component {
   };
 
   render() {
-    const { modelName, specifications, zIndex } = this.props;
+    const { zIndex, id } = this.props;
     const {
       plotWindowsHeight,
       plotWindowsWidth,
@@ -75,7 +68,6 @@ class RnDPlotWrapper extends Component {
         position={{ x: plotWindowsPosX, y: plotWindowsPosY }}
         onDragStop={this.onDragStop}
         onResizeStop={this.onResizeStop}
-        //className="RndPlot-container"
         style={{
           zIndex: zIndex,
           border: "#dbdbdb 3px solid",
@@ -85,10 +77,8 @@ class RnDPlotWrapper extends Component {
         <div className="RndPlot-titlebar">
           <CloseButton handleClose={this.handleClose} />
         </div>
-        <DifferentialMarginalPlot
-          modelName={modelName}
-          specifications={specifications}
-        />
+
+        <DifferentialMarginalPlot id={id} />
       </Rnd>
     );
   }
