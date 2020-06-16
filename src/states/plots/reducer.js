@@ -7,6 +7,7 @@ import {
 
 import update from "immutability-helper";
 import { nextActiveId, nextAvaliableId } from "../../utils/plotData";
+import { PlotStack } from "../../utils/PlotStack";
 
 export const defaultState = {
   plots: {
@@ -20,21 +21,13 @@ export const defaultState = {
 const plotsReducer = (state = defaultState, action) => {
   switch (action.type) {
     case CHANGE_ACTIVE_PLOT:
-       // = Object.assign({}, state.plots.byId);
-      let plots = Object.keys(state.plots.byId).map((key) =>
-        state.plots.byId[key].id === action.payload.newActivePlotId
-          ? {
-            ...state.plots.byId[key],
-            zIndex: 1
-          }
-          : {
-            ...state.plots.byId[key],
-            zIndex: 0
-          });
+      const newAllIds = PlotStack.moveToTop(state.plots.allIds, action.payload.newActivePlotId)
+      newAllIds.map((elem, index) => state.plots.byId[elem].zIndex = index)
       return {
         ...state,
         plots: update(state.plots, {
-            byId: {$set: plots}
+          byId: { $set: Object.assign({}, state.plots.byId) },
+          allIds: { $set: newAllIds }
         }),
         activePlotId: action.payload.newActivePlotId
       };
@@ -58,17 +51,21 @@ const plotsReducer = (state = defaultState, action) => {
                 }
               }
             }),
-          allIds: [...state.plots.allIds, newId]
+          allIds: PlotStack.push(state.plots.allIds, newId)
         },
         activePlotId: newId,
         lastCreatedId: newId
       };
 
     case DELETE_PLOT:
+      const allIds = PlotStack.pop(state.plots.allIds)
       return {
         ...state,
-        plots: update(state.plots, { byId: { $unset: [action.payload.id] } }),
-        activePlotId: nextActiveId(state.plots.allIds)
+        plots: update(state.plots, { 
+          byId: { $unset: [action.payload.id] }, 
+          allIds: {$set: allIds}
+        }),
+        activePlotId: PlotStack.peek(state.plots.allIds)
       };
     default:
       return state;

@@ -28,7 +28,6 @@ export const selectSchemeNames = createSelector(
     }
     const quantitative = quantitativeFields !== [] ? quantitativeFields.map(([key, field]) => field.name) : [];
     const categorical = categoricalFields !== [] ? categoricalFields.map(([key, field]) => field.name) : [];
-    console.log(quantitativeFields);
     return {
       quantitative,
       categorical
