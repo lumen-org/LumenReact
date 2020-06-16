@@ -5,7 +5,7 @@ import {
   getPlotDataById,
   getPlotLayoutById,
 } from "../../states/plots/selector";
-import { selectActiveSpecification } from "../../states/specifications/selector.js";
+import { getSpecById } from "../../states/specifications/selector.js";
 import DifferentialMarginalPlot from "./DifferentialMarginalPlot";
 import { fetchPlotData, fetchPlotLayout } from "../../states/plots/actions";
 class DifferentialMarginalPlotContainer extends React.Component {
@@ -44,7 +44,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     plotData: getPlotDataById(state, ownProps.id),
     layout: getPlotLayoutById(state, ownProps.id),
-    specifications: selectActiveSpecification(state),
+    specifications: getSpecById(state, ownProps.id),
   };
 };
 
