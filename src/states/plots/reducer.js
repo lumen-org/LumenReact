@@ -22,9 +22,8 @@ export const defaultState = {
 const plotsReducer = (state = defaultState, action) => {
   switch (action.type) {
     case CHANGE_ACTIVE_PLOT:
-      // = Object.assign({}, state.plots.byId);
       let plots = Object.keys(state.plots.byId).map((key) =>
-        state.plots.byId[key].id === action.payload.newActivePlotId
+        state.plots.byId[key].id === action.payload.newid
           ? {
               ...state.plots.byId[key],
               zIndex: 1,
@@ -39,7 +38,7 @@ const plotsReducer = (state = defaultState, action) => {
         plots: update(state.plots, {
           byId: { $set: plots },
         }),
-        activePlotId: action.payload.newActivePlotId,
+        activePlotId: action.payload.newid,
       };
 
     case CREATE_NEW_PLOT:

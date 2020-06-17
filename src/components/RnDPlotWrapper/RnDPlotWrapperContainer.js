@@ -9,9 +9,6 @@ import { changeActiveVisualization } from "../../states/visualizations/actions";
 import { selectActiveSpecificationId } from "../../states/visualizations/selector";
 
 class RnDPlotWrapperContainer extends React.Component {
-  // TODO: We need to think about a way where we could seperate modelName and specifications
-  // from this wrapper
-
   static propTypes = {
     id: PropTypes.number,
     activePlotId: PropTypes.number,
@@ -86,5 +83,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(RnDPlotWrapperContainer);
-
-// this is a good prime example that history is not only to be retained, but also brought forward to a new age
