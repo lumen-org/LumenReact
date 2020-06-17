@@ -29,7 +29,8 @@ class VisualizationCanvas extends Component {
                 id={plots[id].id}
                 zIndex={plots[id].zIndex}
                 modelName={plots[id].model}
-                specifications={specifications.byId[plots[id].specifications].specification}
+                specifications={specifications.byId[plots[id].specificationId].specification}
+                visualizationId={plots[id].visualizationId}
               />
             )
         )}
