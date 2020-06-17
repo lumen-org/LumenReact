@@ -7,7 +7,7 @@ class SpecificationContainer extends React.Component {
   render() {
     const specifications = this.props.specifications.byId;
     return (<div>
-        {
+        { 
           this.props.activeSpecification !== -1 &&
           <Specification
             specifications={specifications[this.props.activeSpecification].specification}

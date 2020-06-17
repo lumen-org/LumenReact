@@ -1,6 +1,7 @@
-import { CHANGE_ACTIVE_VISUALIZATION, CREATE_NEW_VISUALIZATION } from "./constants";
+import { CHANGE_ACTIVE_VISUALIZATION, CREATE_NEW_VISUALIZATION, FILL_VISUALIZATION } from "./constants";
 import update from "immutability-helper";
-import uuid;
+import { act } from "react-dom/test-utils";
+
 /*
 This reducer saves all needed ids for each visualization
 and returns them for a selected model through selectors
@@ -31,36 +32,59 @@ const visualizations = (state = defaultState, action) => {
   let visualizations = Object.assign({}, state.visualizations);
   switch (action.type) {
     case CREATE_NEW_VISUALIZATION:
-      console.log(action.payload.modelId)
+      const { modelName, id, modelId, specificationId, plotId} = action.payload;
       if (!visualizations.allIds.includes(state.nextId)){
         return {
           ...state,
           nextId: state.nextId + 1,
-          lastCreatedVisualizationId: state.nextId,
-          activeVisualizationId: state.activeVisualizationId === -1 ? state.nextId: state.activeVisualizationId,
+          lastCreatedVisualizationId: id,
           visualizations: update(state.visualizations, {
             byId: {
-              [state.nextId]: {
+              [id]: {
                 $set: {
-                  modelName: action.payload.modelName,
-                  modelId: action.payload.modelId !== -1 ? action.payload.modelId : -1,
-                  specificationId: action.payload.specificationId !== -1 ? action.payload.specificationId : -1,
-                  plotId: action.payload.plotId !== -1 ? action.payload.plotId : -1,
-                  visualizationId: state.nextId
+                  modelName: modelName,
+                  modelId: modelId,
+                  specificationId: specificationId,
+                  plotId: plotId,
+                  visualizationId: id
                 }
               }
             },
-            allIds: { $push: [state.nextId]}
+            allIds: { $push: [id]}
           })
         }
       }
       return state;
-    case ADD_PLOT:
-      return state;
-    case ADD_SECIFICATION:
-      return state;
-    case ADD_MODEL:
-      return state;
+      case FILL_VISUALIZATION:
+        const { visualizationId } = action.payload
+        if (visualizations.allIds.includes(visualizationId)
+        && !visualizations.byId[visualizationId].modelId 
+        && !visualizations.byId[visualizationId].specificationId 
+        && !visualizations.byId[visualizationId].plotId){
+          return {
+            ...state,
+            activeVisualizationId: visualizationId,
+            visualizations: update(state.visualizations, {
+              byId: {
+                [visualizationId]: {
+                  $merge: {
+                    modelId: action.payload.modelId,
+                    specificationId: action.payload.specificationId,
+                    plotId: action.payload.plotId,
+                  }
+                }
+              }
+            })
+          }
+        }
+        return state
+
+    // case ADD_PLOT:
+    //   return state;
+    // case ADD_SECIFICATION:
+    //   return state;
+    // case ADD_MODEL:
+    //   return state;
     case CHANGE_ACTIVE_VISUALIZATION:
       return {
         ...state,

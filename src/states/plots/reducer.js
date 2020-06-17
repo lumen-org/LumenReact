@@ -1,12 +1,11 @@
 import {
   CREATE_NEW_PLOT,
-  UPDATE_PLOT_SPECIFICATIONS,
   CHANGE_ACTIVE_PLOT,
   DELETE_PLOT
 } from "./constants";
 
 import update from "immutability-helper";
-import { nextActiveId, nextAvaliableId } from "../../utils/plotData";
+import { nextAvaliableId } from "../../utils/plotData";
 import { PlotStack } from "../../utils/PlotStack";
 
 export const defaultState = {
@@ -34,6 +33,7 @@ const plotsReducer = (state = defaultState, action) => {
 
     case CREATE_NEW_PLOT:
       const newId = nextAvaliableId(state.plots.allIds);
+      const { visualizationId, modelName, specificationId } = action.payload;
       return {
         ...state,
         plots: {
@@ -42,8 +42,9 @@ const plotsReducer = (state = defaultState, action) => {
               [newId]: {
                 $set: {
                   id: newId,
-                  model: action.payload.modelName,
-                  specifications: action.payload.specification_id,
+                  model: modelName,
+                  visualizationId: visualizationId,
+                  specificationId: specificationId,         
                   zIndex: 0,
                   plotData: [],
                   layout: {},

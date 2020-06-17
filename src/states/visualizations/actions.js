@@ -1,9 +1,20 @@
-import { CHANGE_ACTIVE_VISUALIZATION, CREATE_NEW_VISUALIZATION } from "./constants";
+import { CHANGE_ACTIVE_VISUALIZATION, CREATE_NEW_VISUALIZATION, FILL_VISUALIZATION } from "./constants";
+import { v4 as uuidv4 } from 'uuid';
 
-export const createNewVisualization = (modelName, modelId = -1, specificationId = -1, plotId = -1) => {
+
+export const createNewVisualization = (payload) => {
+  return dispatch => {
+    dispatch(_createNewVisualization(payload));
+    return new Promise(function(resolve, reject) {
+      resolve();
+    });
+  }
+}
+export const _createNewVisualization = (modelName, id=uuidv4(), modelId = null, specificationId = null, plotId = null) => {
   return {
     type: CREATE_NEW_VISUALIZATION,
     payload: {
+      id,
       modelName,
       modelId,
       specificationId,
@@ -17,6 +28,18 @@ export const changeActiveVisualization = (visualizationId) => {
     type: CHANGE_ACTIVE_VISUALIZATION,
     payload: {
       visualizationId
+    }
+  }
+}
+
+export const fillVisualization = (visualizationId, modelId, specificationId, plotId) => {
+  return {
+    type: FILL_VISUALIZATION,
+    payload: {
+      visualizationId,
+      modelId, 
+      specificationId,
+      plotId
     }
   }
 }
