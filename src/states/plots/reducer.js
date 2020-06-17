@@ -23,7 +23,7 @@ export const defaultState = {
 const plotsReducer = (state = defaultState, action) => {
   switch (action.type) {
     case CHANGE_ACTIVE_PLOT:
-      const newAllIds = PlotStack.moveToTop(state.plots.allIds, action.payload.newActivePlotId)
+      const newAllIds = PlotStack.moveToTop(state.plots.allIds, action.payload.newid)
       newAllIds.map((elem, index) => state.plots.byId[elem].zIndex = index)
       return {
         ...state,

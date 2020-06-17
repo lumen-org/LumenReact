@@ -8,7 +8,7 @@ export const getCurrentModel = (state) => {
 };
 
 export const getModelNameById = (state, id) => {
-  return state.visualizations.visualizations.byId[id].modelName || "";
+  return state.visualizations.visualizations.byId[state.plots.plots.byId[id].visualizationId].modelName || "";
 };
 
 export const selectCurrentModel = createSelector(
