@@ -39,7 +39,7 @@ class RnDPlotWrapperContainer extends React.Component {
       updateActiveModel,
       modelName,
       changeActiveVisualization,
-      visualizationId
+      visualizationId,
     } = this.props;
     changeActiveVisualization(visualizationId);
     changeActivePlot(id);
