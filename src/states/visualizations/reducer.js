@@ -8,7 +8,6 @@ and returns them for a selected model through selectors
  */
 export const defaultState = {
   activeVisualizationId: null,
-  nextId: 0,
   lastCreatedVisualizationId: null,
   visualizations: {
     byId: {},
@@ -33,10 +32,9 @@ const visualizations = (state = defaultState, action) => {
   switch (action.type) {
     case CREATE_NEW_VISUALIZATION:
       const { modelName, id, modelId, specificationId, plotId} = action.payload;
-      if (!visualizations.allIds.includes(state.nextId)){
+      if (!visualizations.allIds.includes(id)){
         return {
           ...state,
-          nextId: state.nextId + 1,
           lastCreatedVisualizationId: id,
           visualizations: update(state.visualizations, {
             byId: {
