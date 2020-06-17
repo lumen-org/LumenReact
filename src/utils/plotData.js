@@ -19,13 +19,11 @@ export const nextActiveId = (ids) => {
   if (ids.length === 0) {
     return 0;
   } else {
-    return (
-      Math.max.apply(
-        Math,
-        ids.map((id) => {
-          return id;
-        })
-      )
+    return Math.max.apply(
+      Math,
+      ids.map((id) => {
+        return id;
+      })
     );
   }
 };
@@ -39,17 +37,17 @@ export const getLayoutInformation = (specifications) => {
   } else if (X_Axis.length === 0 || Y_Axis.length === 0) {
     return {
       row: 1,
-      column: 1
+      column: 1,
     };
   } else {
     return {
       row: Y_Axis.length,
-      column: X_Axis.length
+      column: X_Axis.length,
     };
   }
 };
 
-export const getPlotData = (specifications, modelName) => {
+export const fetchAllPlotData = (specifications, modelName) => {
   const X_Axis = [...specifications.X_Axis];
   const Y_Axis = [...specifications.Y_Axis];
   const combinations = getPlotCombinations(X_Axis, Y_Axis);
@@ -58,8 +56,9 @@ export const getPlotData = (specifications, modelName) => {
       ind++;
       return fetchPlotData({
         SELECT: comb,
-        FROM: modelName
+        FROM: modelName,
       }).then((response) => {
+        console.log(response);
         return {
           ...response,
           type: "scatter",
@@ -71,12 +70,12 @@ export const getPlotData = (specifications, modelName) => {
             size: 5,
             line: {
               color: "rgb(231, 99, 250)",
-              width: 1
-            }
-          }
+              width: 1,
+            },
+          },
         };
       });
-    })
+    }),
   ]).then((response) => {
     return response;
   });

@@ -7,7 +7,7 @@ import {
   RESET_PLOT_DATA,
   UPDATE_PLOT_LAYOUT,
 } from "./constants";
-import { getPlotData } from "../../utils/plotData";
+import { fetchAllPlotData } from "../../utils/plotData";
 import { getSpecById } from "../specifications/selector";
 import { getModelNameById } from "../visualizations/selector";
 
@@ -77,12 +77,16 @@ export function updatePlotLayout(id, newLayout) {
     },
   };
 }
+// TO avoid this store getting super huge, we probably need to
+// deisgn a new store called " plotData " where we handle all the
+// state related to plot data: for example, interactions of facets with
+// plot data, etc.
 
 export function fetchPlotData(id) {
   return (dispatch, getState) => {
     const modelName = getModelNameById(getState(), id);
     const specification = getSpecById(getState(), id);
-    getPlotData(specification, modelName).then((payload) => {
+    fetchAllPlotData(specification, modelName).then((payload) => {
       dispatch(resetPlotData(id));
       payload[0].map((payload) => {
         payload.then((payload) => {

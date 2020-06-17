@@ -21,18 +21,18 @@ export const fetchData = (url, body) => {
 
 export const _fetchModelData = (BODY) => {
   return fetchData(BASE_URL, BODY).then((response) => {
-    return {Fields: response["fields"] };
+    return { Fields: response["fields"] };
   });
 };
 
 export const fetchModelData = (modelName) => {
   const POST_BODY = { ...FETCH_SCHEMA, FROM: modelName };
-  return _fetchModelData(POST_BODY)
+  return _fetchModelData(POST_BODY);
 };
 
-// TODO: refractor the style specifications to somewhere else
 export const fetchPlotData = (BODY) => {
   return fetchData(BASE_URL, BODY).then((response) => {
+    console.log(response);
     const dataString = response["data"].split("\n");
     const X = [];
     const Y = [];
