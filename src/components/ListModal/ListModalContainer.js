@@ -24,40 +24,34 @@ class ListModalContainer extends React.Component {
 
   handleItemSelection = (item) => {
     const {
-      changeActiveModel,
+      changeActiveVisualization,
       handleModalClose,
       createPlot,
       addSpecifications,
+      createNewVisualization,
       createNewModel,
-      createNewScheme
+      fillVisualization
     } = this.props;
     // even though the dispatches officially are executed sequential the mapStateToProps
     // is not updating in time, that's why we need to ensure the order by
     // making addSpecification a promise
     // Im not sure if I did it correctly
-    const modelname = this.props.modelName;
-    let body = {
-      "FROM": "emp-iris",
-      "PCI_GRAPH.GET": true,
-    };
-    fetchData(BASE_URL, body).then((response) => console.log(response)).catch((error) => console.log(error));
 
     createNewVisualization(item).then(() => {
       addSpecifications().then(() => {
         // move into schema redux store to avoid this nested promises
-        fetchSchemeData(item).then((response) => {
-            console.log(response);
-            createNewScheme(response);
+        fetchModelData(item).then((response) => {
+            createNewModel(response["Fields"]);
           }
         ).then(() => {
-            createPlot(item, this.props.specificationsId);
-            createNewModel(item, this.props.schemeId, this.props.specificationsId, this.props.plotId);
-            changeActiveModel(this.props.lastCreatedModelId);
-            handleModalClose();
-          });
+          createPlot(item, this.props.lastCreatedVisualizationId, this.props.specificationsId);
+          fillVisualization(this.props.lastCreatedVisualizationId, this.props.modelId, this.props.specificationsId, this.props.plotId);
+          // changeActiveVisualization(this.props.lastCreatedVisualizationId);
+          handleModalClose();
+        });
       });
-  });
-  }
+    });
+  };
 
   componentWillMount() {
     fetchData(BASE_URL, FETCH_ALL_MODEL_NAME).then((response) =>
@@ -84,23 +78,25 @@ const mapStateToProps = (state) => {
   return {
     specificationsId: state.specifications.lastCreatedId,
     plotId: state.plots.lastCreatedId,
-    schemeId: state.schemes.lastCreatedId,
-    lastCreatedModelId: state.models.lastCreatedModelId
+    modelId: state.models.lastCreatedModelId,
+    lastCreatedVisualizationId: state.visualizations.lastCreatedVisualizationId
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createNewModel: (modelName, schemaId, specificationId, plotId) =>
-      dispatch(createNewModel(modelName, schemaId, specificationId, plotId)),
+    createNewVisualization: (modelName, schemaId, specificationId, plotId) =>
+      dispatch(createNewVisualization(modelName, schemaId, specificationId, plotId)),
     updateActiveModel: (model) => dispatch(updateActiveModel(model)),
-    changeActiveModel: (id) => dispatch(changeActiveModel(id)),
-    createPlot: (activeModel, specification_id) => dispatch(createNewPlot(activeModel, specification_id)),
+    changeActiveVisualization: (id) => dispatch(changeActiveVisualization(id)),
+    createPlot: (activeModel, visualizationId, specification_id) => dispatch(createNewPlot(activeModel, visualizationId, specification_id)),
     // resetSpecifications: () => dispatch(resetSpecifications()),
     addSpecifications: () => {
       return dispatch(createNewSpecification());
     },
-    createNewScheme: (scheme) => dispatch(createNewScheme(scheme))
+    createNewModel: (model) => dispatch(createNewModel(model)),
+    fillVisualization: (visualizationId, modelId, specificationId, plotId) =>
+      dispatch(fillVisualization(visualizationId, modelId, specificationId, plotId))
   };
 };
 

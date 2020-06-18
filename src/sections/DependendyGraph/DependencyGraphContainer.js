@@ -9,9 +9,11 @@ import {
   //changeActiveSpecifications,
   resetSpecifications,
 } from "../../states/specifications/actions";
+import { getModelNameById } from "../../states/visualizations/selector";
 import { updateActiveModel } from "../../states/app/actions";
 import PropTypes from "prop-types";
 import DependencyGraph from "./DependencyGraph";
+import { mockData } from "./mockdata";
 import GraphComponent from "./GraphTest";
 import fetchData from "../../utils/fetch";
 import { BASE_URL } from "../../constants/query";
@@ -43,20 +45,57 @@ class DependencyGraphContainer extends React.Component {
 
   };
 
+  componentDidMount() {
+    const modelname = getModelNameById(this.props.activePlotId);
+    console.log(modelname);
+    let body = {
+      "FROM": modelname,
+      'PCI_GRAPH.GET': true,
+    };
+    fetchData(BASE_URL, body).then(response => this.transformGraphData(response), error => console.log("Something went wrong: "+ error));
+  }
+
   componentDidUpdate(prevProps, preState) {
     // update the plot according to the change of specifications
+    console.log(this.props.modelName);
     if (
-      prevProps.modelName !== this.props.modelName ||
-      prevProps.specifications !== this.props.specifications
+      prevProps.modelName !== this.props.modelName
     ) {
       // here should be stuff that fetches the data from the backend
-      const modelname = this.props.modelName;
+      const modelname = getModelNameById(this.props.activePlotId);
+      console.log(modelname);
       let body = {
         "FROM": modelname,
         'PCI_GRAPH.GET': true,
       };
-      fetchData(BASE_URL, body).then((response) => console.log(response)).catch((error) => console.log(error));
+      fetchData(BASE_URL, body).then(response => this.transformGraphData(response), error => console.log("Something went wrong: "+ error));
     }
+  }
+
+  transformGraphData(graphData){
+    let graph = graphData;
+    if (!graphData){
+      // load mock data
+      graph = mockData;
+    }
+    else {
+      console.log(graph);
+      let id = 0;
+      for (let node of graph.nodes){
+          node.id = id;
+          id++;
+      }
+      for (let edge of graph.edges){
+        edge.to = graph.nodes[edge.source].id;
+        edge.from = graph.nodes[edge.target].id;
+      }
+    }
+    console.log(graph.nodes, graph.edges);
+    this.setState({
+      nodes: graph.nodes,
+      edges: graph.edges,
+    });
+
   }
 
   onPlotClose = (id) => {
