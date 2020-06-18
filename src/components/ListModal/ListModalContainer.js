@@ -5,10 +5,12 @@ import { createNewSpecification } from "../../states/specifications/actions";
 import { createNewPlot } from "../../states/plots/actions";
 import PropTypes from "prop-types";
 import ListModal from "./ListModal";
-import fetchData, { fetchSchemeData } from "../../utils/fetch";
+import fetchData, { fetchModelData } from "../../utils/fetch";
 import { BASE_URL, FETCH_ALL_MODEL_NAME } from "../../constants/query";
-import { changeActiveModel, createNewModel } from "../../states/models/actions";
-import { createNewScheme } from "../../states/schemes/actions";
+import { changeActiveVisualization, createNewVisualization, fillVisualization } from "../../states/visualizations/actions";
+import { createNewModel } from "../../states/models/actions";
+import visualizations from "../../states/visualizations/reducer";
+import { plot } from "plotly.js";
 
 class ListModalContainer extends React.Component {
   static propTypes = {
@@ -33,6 +35,13 @@ class ListModalContainer extends React.Component {
     // is not updating in time, that's why we need to ensure the order by
     // making addSpecification a promise
     // Im not sure if I did it correctly
+    const modelname = this.props.modelName;
+    let body = {
+      "FROM": "emp-iris",
+      "PCI_GRAPH.GET": true,
+    };
+    fetchData(BASE_URL, body).then((response) => console.log(response)).catch((error) => console.log(error));
+
     createNewVisualization(item).then(() => {
       addSpecifications().then(() => {
         // move into schema redux store to avoid this nested promises
@@ -45,12 +54,10 @@ class ListModalContainer extends React.Component {
             createNewModel(item, this.props.schemeId, this.props.specificationsId, this.props.plotId);
             changeActiveModel(this.props.lastCreatedModelId);
             handleModalClose();
-          }
-        )
-        ;
-      }
-    );
-  };
+          });
+      });
+  });
+  }
 
   componentWillMount() {
     fetchData(BASE_URL, FETCH_ALL_MODEL_NAME).then((response) =>

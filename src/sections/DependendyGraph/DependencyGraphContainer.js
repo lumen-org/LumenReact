@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
-  getPlotData,
   getLayoutInformation,
   nextActiveId,
 } from "../../utils/plotData";
@@ -42,25 +41,6 @@ class DependencyGraphContainer extends React.Component {
       {from: 0, to: 4, weight: 1},
     ]
 
-  };
-
-  setPlotData = () => {
-    const { modelName, specifications } = this.props;
-    getPlotData(specifications, modelName).then((payload) => {
-      this.setState({
-        plotData: [],
-      });
-      payload[0].map((payload) => {
-        payload.then((payload) => {
-          this.setState({
-            plotData: [...this.state.plotData, payload],
-          });
-        });
-      });
-    });
-    this.setState({
-      layout: getLayoutInformation(specifications),
-    });
   };
 
   componentDidUpdate(prevProps, preState) {
