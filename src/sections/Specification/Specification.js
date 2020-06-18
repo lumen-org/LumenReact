@@ -17,7 +17,6 @@ class Specification extends Component {
 
   render() {
     const { specifications } = this.props;
-    console.log(this.props);
     return (
       <div className="specification">
         <TitelH1 value={"Spezification"}/>

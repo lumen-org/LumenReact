@@ -1,5 +1,5 @@
 import {
-  ADD_SPECIFICATION,
+  CREATE_NEW_SPECIFICATION,
   SELECT_SPECIFICATION,
   ADD_TO_SPECIFICATION,
   DELETE_FROM_SPECIFICATION,
@@ -14,16 +14,16 @@ export const createNewSpecification = (payload) => {
   // is not updating in time, that's why we need to ensure the order by
   // making addSpecification a promise
   return dispatch => {
-    dispatch(addSpecification(payload));
+    dispatch(_createNewSpecification(payload));
     return new Promise(function(resolve, reject) {
       resolve();
     });
   }
 };
 
-export const addSpecification = (payload) => {
+export const _createNewSpecification = (payload) => {
   return {
-      type: ADD_SPECIFICATION,
+      type: CREATE_NEW_SPECIFICATION,
       payload
     };
 };

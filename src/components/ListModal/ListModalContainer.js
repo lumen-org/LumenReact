@@ -33,13 +33,8 @@ class ListModalContainer extends React.Component {
     // is not updating in time, that's why we need to ensure the order by
     // making addSpecification a promise
     // Im not sure if I did it correctly
-    const modelname = this.props.modelName;
-    let body = {
-      "FROM": "emp-iris",
-      "PCI_GRAPH.GET": true,
-    };
-    fetchData(BASE_URL, body).then((response) => console.log(response)).catch((error) => console.log(error));
-    addSpecifications().then(() => {
+    createNewVisualization(item).then(() => {
+      addSpecifications().then(() => {
         // move into schema redux store to avoid this nested promises
         fetchSchemeData(item).then((response) => {
             console.log(response);

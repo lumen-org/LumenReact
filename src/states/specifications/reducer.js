@@ -1,5 +1,5 @@
 import {
-  ADD_SPECIFICATION,
+  CREATE_NEW_SPECIFICATION,
   REMOVE_SPECIFICATION,
   ADD_TO_SPECIFICATION,
   DELETE_FROM_SPECIFICATION,
@@ -24,22 +24,22 @@ export const defaultValues = {
     Size: new Set([])
   },
   facets: {
-    "prediction": {
+    0: {
       model: false,
-      data: false,
+      data: false
     },
-    "dataPoints": {
+    1: {
       model: false,
-      data: true,
+      data: true
     },
-    "marginals": {
+    2: {
       model: false,
-      data: true,
+      data: true
     },
-    "density": {
+    3: {
       model: false,
-      data: false,
-    },
+      data: false
+    }
   }
 };
 
@@ -47,7 +47,7 @@ export const defaultState = {
   nextId: 0,
   lastCreatedId: -1,
   specifications: {
-    byId: [],
+    byId: {},
     allIds: []
   }
 };
@@ -55,9 +55,9 @@ export const defaultState = {
 const specifications = (state = defaultState, action) => {
   let specifications = Object.assign({}, state.specifications);
   switch (action.type) {
-    case ADD_SPECIFICATION:
+    case CREATE_NEW_SPECIFICATION:
       if (!specifications.allIds.includes(state.nextId)) {
-        specifications.byId[state.nextId] = { ...defaultValues, id: state.nextId };
+        specifications.byId[state.nextId] = { ...defaultValues, id: state.nextId};
         specifications.allIds = [...specifications.allIds, state.nextId];
         return {
           ...state,
@@ -84,9 +84,10 @@ const specifications = (state = defaultState, action) => {
     case ADD_TO_SPECIFICATION:
       return {
         ...state,
+        // specifications: specifications
         specifications: update(specifications, {
           byId: {
-            [action.payload.id]: {
+            [action.payload.id.toString()]: {
               specification: {
                 [action.payload.key]: { $add: [action.payload.value] }
               }

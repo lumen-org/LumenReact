@@ -2,19 +2,17 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Rnd } from "react-rnd";
 import CloseButton from "../Button/CloseButton";
-import "./RnDPlot.css";
-// We need to import Plotly in this strange way due to heap memory
-// See issue: https://github.com/plotly/react-plotly.js/issues/135
-import createPlotlyComponent from "react-plotly.js/factory";
-const Plotly = window.Plotly;
-const Plot = createPlotlyComponent(Plotly);
+import DifferentialMarginalPlot from "../DifferentialMarginalPlot";
+import "./RnDPlotWrapper.css";
 
-class RnDPlot extends Component {
+/**
+ * RnDPlotWrapper is a wrapper around different kinds of plots such as:
+ * Differential Marginal Plot, Graph View of Model, Individual Conditionally Expectation Plot
+ */
+
+class RnDPlotWrapper extends Component {
   static propTypes = {
     id: PropTypes.number,
-    modelName: PropTypes.string,
-    plotData: PropTypes.array,
-    layout: PropTypes.object,
     onActivePlotChange: PropTypes.func,
     onPlotClose: PropTypes.func,
     activePlotId: PropTypes.number,
@@ -57,7 +55,7 @@ class RnDPlot extends Component {
   };
 
   render() {
-    const { modelName, plotData, layout, zIndex } = this.props;
+    const { zIndex, id } = this.props;
     const {
       plotWindowsHeight,
       plotWindowsWidth,
@@ -65,42 +63,25 @@ class RnDPlot extends Component {
       plotWindowsPosY,
     } = this.state;
     return (
-      <div className="RndPlot-continuous-white-background">
       <Rnd
         size={{ width: plotWindowsWidth, height: plotWindowsHeight }}
         position={{ x: plotWindowsPosX, y: plotWindowsPosY }}
         onDragStop={this.onDragStop}
         onResizeStop={this.onResizeStop}
-        //className="RndPlot-container"
         style={{
           zIndex: zIndex,
           border: "#dbdbdb 3px solid",
           borderRadius: "10px",
         }}
       >
-
         <div className="RndPlot-titlebar">
           <CloseButton handleClose={this.handleClose} />
         </div>
-        <Plot
-          data={plotData}
-          layout={{
-            autosize: true,
-            title: modelName,
-            grid: {
-              rows: layout.row,
-              columns: layout.column,
-              pattern: "independent",
-            },
-          }}
-          useResizeHandler={true}
-          className="RndPlot-plot"
-        />
 
+        <DifferentialMarginalPlot id={id} />
       </Rnd>
-  </div>
     );
   }
 }
 
-export default RnDPlot;
+export default RnDPlotWrapper;
