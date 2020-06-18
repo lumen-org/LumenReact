@@ -7,13 +7,15 @@ import {
 } from "../../utils/plotData";
 import { changeActivePlot, deletePlot } from "../../states/plots/actions";
 import {
-  changeActiveSpecifications,
+  //changeActiveSpecifications,
   resetSpecifications,
-} from "../../states/model/actions";
+} from "../../states/specifications/actions";
 import { updateActiveModel } from "../../states/app/actions";
 import PropTypes from "prop-types";
 import DependencyGraph from "./DependencyGraph";
 import GraphComponent from "./GraphTest";
+import fetchData from "../../utils/fetch";
+import { BASE_URL } from "../../constants/query";
 
 class DependencyGraphContainer extends React.Component {
   static propTypes = {
@@ -26,6 +28,20 @@ class DependencyGraphContainer extends React.Component {
   state = {
     plotData: [],
     layout: {},
+    nodes: [
+      { id: 0, label: "node 0"},
+      { id: 1, label: "node 1"},
+      { id: 2, label: "node 2"},
+      { id: 3, label: "node 3"},
+      { id: 4, label: "node 4"},
+    ],
+    edges: [
+      {from: 0, to: 1, weight: 1},
+      {from: 1, to: 2, weight: 1},
+      {from: 2, to: 0, weight: 1},
+      {from: 0, to: 4, weight: 1},
+    ]
+
   };
 
   setPlotData = () => {
@@ -53,7 +69,13 @@ class DependencyGraphContainer extends React.Component {
       prevProps.modelName !== this.props.modelName ||
       prevProps.specifications !== this.props.specifications
     ) {
-      this.setPlotData();
+      // here should be stuff that fetches the data from the backend
+      const modelname = this.props.modelName;
+      let body = {
+        "FROM": modelname,
+        'PCI_GRAPH.GET': true,
+      };
+      fetchData(BASE_URL, body).then((response) => console.log(response)).catch((error) => console.log(error));
     }
   }
 
@@ -62,7 +84,7 @@ class DependencyGraphContainer extends React.Component {
       deletePlot,
       plots,
       changeActivePlot,
-      changeActiveSpecifications,
+      //changeActiveSpecifications,
       resetSpecifications,
       updateActiveModel,
     } = this.props;
@@ -74,7 +96,7 @@ class DependencyGraphContainer extends React.Component {
     if (nextPlot.length === 0) {
       resetSpecifications();
     } else {
-      changeActiveSpecifications(nextPlot[0].specifications);
+      //changeActiveSpecifications(nextPlot[0].specifications);
       updateActiveModel(nextPlot[0].model);
     }
     deletePlot(id);
@@ -83,33 +105,21 @@ class DependencyGraphContainer extends React.Component {
   onActivePlotChange = (id) => {
     const {
       changeActivePlot,
-      changeActiveSpecifications,
+      //changeActiveSpecifications,
       updateActiveModel,
       specifications,
       modelName,
     } = this.props;
     changeActivePlot(id);
-    changeActiveSpecifications(specifications);
+    //changeActiveSpecifications(specifications);
     updateActiveModel(modelName);
   };
 
   render() {
     const { modelName, activePlotId, id, zIndex } = this.props;
     const { plotData, layout } = this.state;
-    const nodes = [
-      { id: 0, label: "node 0"},
-      { id: 1, label: "node 1"},
-      { id: 2, label: "node 2"},
-      { id: 3, label: "node 3"},
-      { id: 4, label: "node 4"},
-    ];
-    const edges = [
-      {from: 0, to: 1, weight: 1},
-      {from: 1, to: 2, weight: 1},
-      {from: 2, to: 0, weight: 1},
-      {from: 0, to: 4, weight: 1},
-
-    ];
+    const nodes = this.state.nodes;
+    const edges = this.state.edges;
 
     return (
       <GraphComponent
@@ -139,9 +149,9 @@ const mapDispatchToProps = (dispatch) => {
     changeActivePlot: (
       newActivePlotId // this function change the zIndex of plot and bring it to the front
     ) => dispatch(changeActivePlot(newActivePlotId)),
-    changeActiveSpecifications: (
+    /*changeActiveSpecifications: (
       newspecifictions // this function trigger the update of specification
-    ) => dispatch(changeActiveSpecifications(newspecifictions)),
+    ) => dispatch(changeActiveSpecifications(newspecifictions)),*/
     updateActiveModel: (
       newActiveModel // this function trigger the update of schema
     ) => dispatch(updateActiveModel(newActiveModel)),

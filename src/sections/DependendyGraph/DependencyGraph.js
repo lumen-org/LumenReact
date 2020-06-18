@@ -16,7 +16,7 @@ What needs to change:
     TODO: have same configs as before
     TODO: use Ke Lis RnDPlot?
     TODO: what are given props? nodes, edges -> do not need the updateNodes / Edges ?
- */
+*/
 let justData;
 
 class DependencyGraphComponent extends React.Component {
@@ -470,106 +470,106 @@ class GraphInteractionCanvas extends React.Component {
 
 
   render() {
-      //document.getElementById("warning").innerHTML = "";
-      let result_edges, result_nodes;
-      let isLocationProvided = true;
-      if (!isLocationProvided) {
-        let result = solve(this.props.nodes, this.props.edges);
-        result_nodes = result[0];
-        result_edges = result[1];
-        let heaviestEdgeWeight = 0;
-        let heaviedtEdgeId;
-        for (let edge of result_edges) {
-          edge.label = edge.weight;
-          if (edge.weight > heaviestEdgeWeight) {
-            heaviedtEdgeId = edge.id;
-            heaviestEdgeWeight = edge.weight;
-          }
+    //document.getElementById("warning").innerHTML = "";
+    let result_edges, result_nodes;
+    let isLocationProvided = true;
+    if (!isLocationProvided) {
+      let result = solve(this.props.nodes, this.props.edges);
+      result_nodes = result[0];
+      result_edges = result[1];
+      let heaviestEdgeWeight = 0;
+      let heaviedtEdgeId;
+      for (let edge of result_edges) {
+        edge.label = edge.weight;
+        if (edge.weight > heaviestEdgeWeight) {
+          heaviedtEdgeId = edge.id;
+          heaviestEdgeWeight = edge.weight;
         }
-        //document.getElementById("threshold").max = heaviestEdgeWeight;
-      } else {
-        result_edges = this.props.edges;
-        result_nodes = this.props.nodes;
       }
+      //document.getElementById("threshold").max = heaviestEdgeWeight;
+    } else {
+      result_edges = this.props.edges;
+      result_nodes = this.props.nodes;
+    }
 
 
-      let parserOptions = {
-        edges: {
-          inheritColors: false,
-        },
-        nodes: {
-          fixed: true,
-          parseColor: false
-        }
-      };
-      let json_data = {
-        "nodes": result_nodes,
-        "edges": result_edges
-      };
-      /*let parsed = vis.parseGephiNetwork(json_data, parserOptions);
-      let container = document.getElementById(id);
-      let data = {
-        nodes: parsed.nodes,
-        edges: parsed.edges
+    let parserOptions = {
+      edges: {
+        inheritColors: false,
+      },
+      nodes: {
+        fixed: true,
+        parseColor: false
+      }
+    };
+    let json_data = {
+      "nodes": result_nodes,
+      "edges": result_edges
+    };
+    /*let parsed = vis.parseGephiNetwork(json_data, parserOptions);
+    let container = document.getElementById(id);
+    let data = {
+      nodes: parsed.nodes,
+      edges: parsed.edges
+    };*/
+    let mult_factor = 1;
+    let shouldStretch = true;
+    if (shouldStretch) {
+      mult_factor = 2;
+    }
+    let graph = {
+      nodes: this.props.nodes,
+      edges: this.props.edges
+    };
+
+    for (let node of graph.nodes) {
+      //node.fixed = true;
+      // TODO find a good representation -> according to density or amount of nodes
+      node.x = node.x * mult_factor;
+      node.y = node.y * mult_factor;
+      node.physics = false;
+      /*node.scaling = {
+          label: false,
       };*/
-      let mult_factor = 1;
-      let shouldStretch = true;
-      if (shouldStretch) {
-        mult_factor = 2;
-      }
-      let graph = {
-        nodes: this.props.nodes,
-        edges: this.props.edges
-      };
+      //node.shape = "diamond";
+      node.chosen = {
+        node: (values, id, selected, hovering) => {
 
-      for (let node of graph.nodes) {
-        //node.fixed = true;
-        // TODO find a good representation -> according to density or amount of nodes
-        node.x = node.x * mult_factor;
-        node.y = node.y * mult_factor;
-        node.physics = false;
-        /*node.scaling = {
-            label: false,
-        };*/
-        //node.shape = "diamond";
-        node.chosen = {
-          node: (values, id, selected, hovering) => {
-
-          }
-        }
-        //node.shape = 'circle';
-      }
-      //console.log(nodes, edges);
-      for (let edge of graph.edges) {
-        edge.smooth = false;
-        edge.color = '#000000';
-        //edge.label = edge.weight;
-        edge.hidden = this.props.omitEdgeValue;
-        if (this.props.omitEdgeValue === false) {
-          if (parseFloat(edge.label) < parseFloat(this.props.edgeThreshold)) {
-            edge.hidden = true;
-          }
         }
       }
-      const options = {
-
-          manipulation: {
-            enabled: false,
-            editEdge: () => this.adjustEdgeThreshold(document.getElementById()),
-
-          },
-          height: "500px",
-
-          /*interaction: {
-                  hideEdgesOnDrag: true,
-          }*/
+      //node.shape = 'circle';
+    }
+    //console.log(nodes, edges);
+    for (let edge of graph.edges) {
+      edge.smooth = false;
+      edge.color = '#000000';
+      //edge.label = edge.weight;
+      edge.hidden = this.props.omitEdgeValue;
+      if (this.props.omitEdgeValue === false) {
+        if (parseFloat(edge.label) < parseFloat(this.props.edgeThreshold)) {
+          edge.hidden = true;
         }
-      ;
-      const events = {
-        select: function(event) {
-          var { nodes, edges } = event;
-        }
-      };
+      }
+    }
+    const options = {
+
+        manipulation: {
+          enabled: false,
+          editEdge: () => this.adjustEdgeThreshold(document.getElementById()),
+
+        },
+        height: "500px",
+
+        /*interaction: {
+                hideEdgesOnDrag: true,
+        }*/
+      }
+    ;
+    const events = {
+      select: function(event) {
+        var { nodes, edges } = event;
+      }
+    };
     return (
 
       <div>
