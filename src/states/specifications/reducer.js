@@ -8,6 +8,7 @@ import {
 } from "./constants";
 
 import update from "immutability-helper";
+import { EMPTY } from "../constants";
 
 
 /*
@@ -45,7 +46,7 @@ export const defaultValues = {
 
 export const defaultState = {
   nextId: 0,
-  lastCreatedId: -1,
+  lastCreatedId: EMPTY,
   specifications: {
     byId: {},
     allIds: []
