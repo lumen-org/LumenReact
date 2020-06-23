@@ -3,49 +3,14 @@ import {
   REMOVE_SPECIFICATION,
   ADD_TO_SPECIFICATION,
   DELETE_FROM_SPECIFICATION,
-  UPDATE_FACET_STATE,
-  RESET_SPECIFICATIONS
+  UPDATE_FACET_STATE
 } from "./constants";
 
 import update from "immutability-helper";
 import { EMPTY } from "../constants";
 
-
-/*
-maintains all existing specifications and there state
- */
-export const defaultValues = {
-  specification: {
-    X_Axis: new Set([]),
-    Y_Axis: new Set([]),
-    Filter: new Set([]),
-    Detail: new Set([]),
-    Color: new Set([]),
-    Shape: new Set([]),
-    Size: new Set([])
-  },
-  facets: {
-    0: {
-      model: false,
-      data: false
-    },
-    1: {
-      model: false,
-      data: true
-    },
-    2: {
-      model: false,
-      data: true
-    },
-    3: {
-      model: false,
-      data: false
-    }
-  }
-};
-
 export const defaultState = {
-  nextId: 0,
+  currentId: EMPTY,
   lastCreatedId: EMPTY,
   specifications: {
     byId: {},
@@ -57,13 +22,14 @@ const specifications = (state = defaultState, action) => {
   let specifications = Object.assign({}, state.specifications);
   switch (action.type) {
     case CREATE_NEW_SPECIFICATION:
-      if (!specifications.allIds.includes(state.nextId)) {
-        specifications.byId[state.nextId] = { ...defaultValues, id: state.nextId};
-        specifications.allIds = [...specifications.allIds, state.nextId];
+      const { defaultValues, id } = action.payload;
+      if (!specifications.allIds.includes(id)) {
+        specifications.byId[id] = { ...defaultValues, id: id };
+        specifications.allIds = [...specifications.allIds, id];
         return {
           ...state,
-          nextId: state.nextId + 1,
-          lastCreatedId: state.nextId,
+          currentId: id,
+          lastCreatedId: id,
           specifications
         };
       }
