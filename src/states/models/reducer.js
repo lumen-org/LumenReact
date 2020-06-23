@@ -33,7 +33,7 @@ const models = (state = defaultState, action) => {
               }
             }
           },
-          allIds: { $set: [state.nextId + 1] }
+          allIds: { $set: [state.nextId] }
         }),
         nextId: state.nextId + 1,
         lastCreatedModelId: state.nextId
