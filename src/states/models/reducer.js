@@ -1,13 +1,14 @@
 import { CREATE_NEW_MODEL } from "./constants";
 
 import update from "immutability-helper";
+import { EMPTY } from "../constants";
 
 /*
 maintains a list of all models
  */
 export const defaultState = {
   nextId: 0,
-  lastCreatedModelId: -1,
+  lastCreatedModelId: EMPTY,
   models: {
     byId: {},
     allIds: []

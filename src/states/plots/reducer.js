@@ -10,21 +10,22 @@ import {
 import update from "immutability-helper";
 import { nextAvaliableId } from "../../utils/plotData";
 import { PlotStack } from "../../utils/PlotStack";
+import { EMPTY } from "../constants";
 
 export const defaultState = {
   plots: {
     byId: {},
     allIds: [],
   },
-  activePlotId: -1,
-  lastCreatedId: -1,
+  activePlotId: EMPTY,
+  lastCreatedId: EMPTY,
 };
 
 const plotsReducer = (state = defaultState, action) => {
   switch (action.type) {
     case CHANGE_ACTIVE_PLOT:
-      const newAllIds = PlotStack.moveToTop(state.plots.allIds, action.payload.newid)
-      newAllIds.map((elem, index) => state.plots.byId[elem].zIndex = index)
+      const newAllIds = PlotStack.moveToTop(state.plots.allIds, action.payload.newid);
+      newAllIds.map((elem, index) => state.plots.byId[elem].zIndex = index);
       return {
         ...state,
         plots: update(state.plots, {
