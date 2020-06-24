@@ -2,13 +2,14 @@ import React from "react";
 import Specification from "./Specification";
 import { connect } from "react-redux";
 import { selectActiveSpecificationId } from "../../states/visualizations/selector";
+import { EMPTY } from "../../states/constants";
 
 class SpecificationContainer extends React.Component {
   render() {
     const specifications = this.props.specifications.byId;
     return (<div>
         { 
-          this.props.activeSpecification !== -1 &&
+          this.props.activeSpecification !== EMPTY &&
           <Specification
             specifications={specifications[this.props.activeSpecification].specification}
             facets={specifications[this.props.activeSpecification].facets}

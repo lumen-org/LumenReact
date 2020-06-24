@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Schema from "./Schema";
 import { selectActiveModelId } from "../../states/visualizations/selector";
 import { selectSchemeNames } from "../../states/models/selector";
+import { EMPTY } from "../../states/constants";
 
 class SchemaContainer extends React.Component {
 
@@ -14,7 +15,7 @@ class SchemaContainer extends React.Component {
     const { schemeNames } = this.props;
     return (
       <div>
-        {this.props.activeModel !== -1 && (
+        {this.props.activeModel !== EMPTY && (
           <Schema
             quantitative={schemeNames.quantitative}
             categorical={schemeNames.categorical}
