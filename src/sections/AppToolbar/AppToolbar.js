@@ -25,12 +25,16 @@ class AppToolbar extends Component {
       });
     }
     else if (buttonKey === 6) {
-      // TODO: here comes command to display for dependency graph
+      this.setState({
+        pciDisplayed: true
+      });
+      console.log("pressed button key");
     }
   };
 
   state = {
-    openModal: false
+    openModal: false,
+    pciDisplayed: false,
   };
 
   handleModalClose = () => {

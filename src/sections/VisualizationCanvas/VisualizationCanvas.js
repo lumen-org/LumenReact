@@ -35,7 +35,7 @@ class VisualizationCanvas extends Component {
               />
             )
         )}
-        <DependencyGraphComponent />
+        <DependencyGraphComponent pciDisplayed={this.props.pciDisplayed}/>
       </div>
 
     );

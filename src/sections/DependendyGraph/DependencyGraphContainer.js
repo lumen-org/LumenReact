@@ -23,12 +23,9 @@ class DependencyGraphContainer extends React.Component {
     id: PropTypes.number,
     activePlotId: PropTypes.number,
     zIndex: PropTypes.number,
-    modelName: PropTypes.string,
-    specifications: PropTypes.object,
   };
+
   state = {
-    plotData: [],
-    layout: {},
     nodes: [
       { id: 0, label: "node 0"},
       { id: 1, label: "node 1"},
@@ -44,7 +41,7 @@ class DependencyGraphContainer extends React.Component {
     ]
 
   };
-
+/*
   componentDidMount() {
     const modelname = getModelNameById(this.props.activePlotId);
     console.log(modelname);
@@ -53,22 +50,29 @@ class DependencyGraphContainer extends React.Component {
       'PCI_GRAPH.GET': true,
     };
     fetchData(BASE_URL, body).then(response => this.transformGraphData(response), error => console.log("Something went wrong: "+ error));
-  }
+  }*/
 
   componentDidUpdate(prevProps, preState) {
     // update the plot according to the change of specifications
-    console.log(this.props.modelName);
+    console.log(this.props.activePlotId);
     if (
-      prevProps.modelName !== this.props.modelName
+      prevProps.activePlotId !== this.props.activePlotId
     ) {
       // here should be stuff that fetches the data from the backend
-      const modelname = getModelNameById(this.props.activePlotId);
-      console.log(modelname);
-      let body = {
-        "FROM": modelname,
-        'PCI_GRAPH.GET': true,
-      };
-      fetchData(BASE_URL, body).then(response => this.transformGraphData(response), error => console.log("Something went wrong: "+ error));
+      try {
+        const modelname = getModelNameById(this.props.activePlotId);
+        console.log(modelname);
+        let body = {
+          "FROM": modelname,
+          'PCI_GRAPH.GET': true,
+        };
+        fetchData(BASE_URL, body).then(response => this.transformGraphData(response), error => console.log("Something went wrong: "+ error));
+      }
+      catch (e) {
+        console.log(e);
+        this.transformGraphData(false);
+      }
+
     }
   }
 
@@ -78,64 +82,72 @@ class DependencyGraphContainer extends React.Component {
       // load mock data
       graph = mockData;
     }
-    else {
-      console.log(graph);
-      let id = 0;
-      for (let node of graph.nodes){
-          node.id = id;
-          id++;
-      }
-      for (let edge of graph.edges){
-        edge.to = graph.nodes[edge.source].id;
-        edge.from = graph.nodes[edge.target].id;
-      }
+
+    console.log(graph);
+    let lut = {};
+    for (let i = 0; i< graph._nodes.length; i++){
+      console.log(graph._nodes[i])
+      graph._nodes[i].id = i;
+      lut[graph._nodes[i].label] = i;
     }
-    console.log(graph.nodes, graph.edges);
+    console.log(lut);
+    for (let edge of graph._edges){
+      edge.to = lut[edge.source];
+      edge.from = lut[edge.target];
+    }
+
+    console.log(graph._nodes, graph._edges);
     this.setState({
-      nodes: graph.nodes,
-      edges: graph.edges,
+      nodes: graph._nodes,
+      edges: graph._edges,
     });
 
   }
 
   onPlotClose = (id) => {
+    /*
     const {
       deletePlot,
       plots,
       changeActivePlot,
-      //changeActiveSpecifications,
-      resetSpecifications,
-      updateActiveModel,
+      changeActiveVisualization,
     } = this.props;
-    const nextId = nextActiveId(plots, id);
-    const nextPlot = plots.filter((plot) => {
-      return plot.id === nextId;
+    const nextId = nextActiveId(plots.allIds);
+    const nextPlot = plots.allIds.filter((plot) => {
+      return id === nextId;
     });
     changeActivePlot(nextId);
-    if (nextPlot.length === 0) {
-      resetSpecifications();
-    } else {
-      //changeActiveSpecifications(nextPlot[0].specifications);
-      updateActiveModel(nextPlot[0].model);
+    if (nextPlot.length !== 0) {
+      changeActiveVisualization(nextId);
     }
-    deletePlot(id);
+    deletePlot(id);*/
+    this.setState({
+      nodes: null,
+      edges: null,
+      }
+    )
   };
 
   onActivePlotChange = (id) => {
-    const {
-      changeActivePlot,
-      //changeActiveSpecifications,
-      updateActiveModel,
-      specifications,
-      modelName,
-    } = this.props;
-    changeActivePlot(id);
-    //changeActiveSpecifications(specifications);
-    updateActiveModel(modelName);
+    try {
+      const modelname = getModelNameById(this.props.activePlotId);
+      console.log(modelname);
+      let body = {
+        "FROM": modelname,
+        'PCI_GRAPH.GET': true,
+      };
+      fetchData(BASE_URL, body).then(response => this.transformGraphData(response), error => console.log("Something went wrong: "+ error));
+    }
+    catch (e) {
+      console.log(e);
+      this.transformGraphData(false);
+    }
   };
 
+
+
   render() {
-    const { modelName, activePlotId, id, zIndex } = this.props;
+    const { activePlotId, id, zIndex } = this.props;
     const { plotData, layout } = this.state;
     const nodes = this.state.nodes;
     const edges = this.state.edges;
@@ -144,7 +156,6 @@ class DependencyGraphContainer extends React.Component {
       <GraphComponent
         edges={edges}
         nodes={nodes}
-        modelName={modelName}
         plotData={plotData}
         zIndex={zIndex}
         layout={layout}
@@ -152,7 +163,6 @@ class DependencyGraphContainer extends React.Component {
         activePlotId={activePlotId}
         onPlotClose={this.onPlotClose}
         onActivePlotChange={this.onActivePlotChange}
-
       />
     );
   }
@@ -161,6 +171,7 @@ class DependencyGraphContainer extends React.Component {
 const mapStateToProps = (state) => ({
   plots: state.plots.plots,
   activePlotId: state.plots.activePlotId,
+  //modelname: state.models.
 });
 
 const mapDispatchToProps = (dispatch) => {

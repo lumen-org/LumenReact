@@ -71,6 +71,9 @@ class GraphComponent extends React.Component {
       plotWindowsPosX,
       plotWindowsPosY,
     } = this.state;
+    if(!this.props.nodes||!this.props.edges){
+      return null;
+    }
   return (
     <Rnd
       size={{ width: plotWindowsWidth, height: plotWindowsHeight }}
