@@ -10,7 +10,7 @@ import {
 import { fetchAllPlotData } from "../../utils/plotData";
 import { getSpecById } from "../specifications/selector";
 import { getSpecificationId } from "../plots/selector";
-import { getModelNameById } from "../visualizations/selector";
+import { getModelNameById } from "../models/selector";
 
 export function changeActivePlot(newid) {
   return {

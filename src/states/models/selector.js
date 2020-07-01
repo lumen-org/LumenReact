@@ -4,6 +4,11 @@ import { selectActiveModelId } from "../visualizations/selector";
 const getModel = (state) => state.models.models.byId;
 const getActiveId = (state) => selectActiveModelId(state);
 
+/// not sure if that is correct now...
+export const getModelNameById = (state, id) => {
+  return state.models.models.byId[state.plots.plots.byId[id].visualizationId].modelName || "";
+};
+
 export const selectSchemeNames = createSelector(
   [getModel, getActiveId],
   (models, activeId) => {

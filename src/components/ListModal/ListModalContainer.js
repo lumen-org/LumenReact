@@ -43,7 +43,7 @@ class ListModalContainer extends React.Component {
       addSpecifications().then(() => {
         // move into schema redux store to avoid this nested promises
         fetchModelData(item).then((response) => {
-          createNewModel(response["Fields"]);
+          createNewModel(item.modelName, response["Fields"]);
         }
         ).then(() => {
           createPlot(item, this.props.lastCreatedVisualizationId, this.props.specificationId);
@@ -97,7 +97,7 @@ const mapDispatchToProps = (dispatch) => {
     addSpecifications: () => {
       return dispatch(createNewSpecification());
     },
-    createNewModel: (model) => dispatch(createNewModel(model)),
+    createNewModel: (modelName, model) => dispatch(createNewModel(modelName, model)),
     fillVisualization: (visualizationId, modelId, specificationId, plotId) => 
       dispatch(fillVisualization(visualizationId, modelId, specificationId, plotId))
   };
