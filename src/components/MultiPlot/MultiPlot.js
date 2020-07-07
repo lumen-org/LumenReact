@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import "./StandardPlot.css";
+import "./MultiPlot.css";
 // We need to import Plotly in this strange way due to heap memory
 // See issue: https://github.com/plotly/react-plotly.js/issues/135
 import createPlotlyComponent from "react-plotly.js/factory";
 const Plotly = window.Plotly;
 const Plot = createPlotlyComponent(Plotly);
 
-var specification_example: {
+var specification: {
     X_Axis: [],
     Y_Axis: [],
     Filter: [],
@@ -113,68 +113,13 @@ var layout = {
     domain: [0.85, 1],
   },
 };
-class StandardPlot extends Component {
+class MultiPlot extends Component {
   static propTypes = {
     plotData: PropTypes.array,
-    specification: PropTypes.object,
+    layout: PropTypes.object,
   };
 
-  state = {
-    layout: {
-      autosize: true,
-    },
-    scatterTrace: {
-      x: [],
-      y: [],
-      type: "scatter",
-      mode: "markers",
-      xaxis: "x",
-      yaxis: "y",
-      marker: {
-        color: "rgba(17, 157, 255,0.5)",
-        size: 5,
-        line: {
-          color: "rgb(231, 99, 250)",
-          width: 1,
-        },
-      },
-    },
-
-    histogramDataYTrace: {
-      y: [],
-      name: "data density",
-      marker: {
-        color: "rgb(207,207,207)",
-        opacity: 0.75,
-        line: {
-          color: "rgb(97,97,97)",
-          width: 1.5,
-        },
-        xbins: {
-          size: 0.06,
-        },
-      },
-      xaxis: "x2",
-      type: "histogram",
-    },
-
-    histogramDataXTrace: {
-      x: [],
-      name: "data density",
-      marker: {
-        color: "rgb(207, 207, 207)",
-        opacity: 0.75,
-        line: {
-          color: "rgb(97, 97, 97)",
-          width: 1.5,
-        },
-      },
-      yaxis: "y2",
-      type: "histogram",
-    },
-    data: [],
-  };
-
+  state = {};
   render() {
     //const { plotData, layout } = this.props;
 
@@ -183,10 +128,10 @@ class StandardPlot extends Component {
         data={data}
         layout={layout}
         useResizeHandler={true}
-        className="DmpPlot-plot"
+        className="MultiPlot-plot"
       />
     );
   }
 }
 
-export default StandardPlot;
+export default MultiPlot;

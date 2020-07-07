@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Rnd } from "react-rnd";
 import CloseButton from "../Button/CloseButton";
-import DifferentialMarginalPlot from "../DifferentialMarginalPlot";
+import MultiPlot from "../MultiPlot";
+import StandardPlot from "../StandardPlot";
+
 import "./RnDPlotWrapper.css";
 
 /**
@@ -77,7 +79,7 @@ class RnDPlotWrapper extends Component {
         <div className="RndPlot-titlebar">
           <CloseButton handleClose={this.handleClose} />
         </div>
-        <DifferentialMarginalPlot id={id} />
+        <StandardPlot id={id} />
       </Rnd>
     );
   }

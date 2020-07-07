@@ -8,6 +8,7 @@ import {
   UPDATE_PLOT_LAYOUT,
 } from "./constants";
 import { fetchAllPlotData } from "../../utils/plotData";
+import { fetchPlotData } from "../../utils/fetch";
 import { getSpecById } from "../specifications/selector";
 import { getModelNameById } from "../visualizations/selector";
 
@@ -79,10 +80,32 @@ export function updatePlotLayout(id, newLayout) {
   };
 }
 
+// TODO: Make sure that only one dimension allowed for each specification
+// for standard plot
 export function fetchStandardPlotData(id) {
   return (dispatch, getState) => {
     const modelName = getModelNameById(getState(), id);
     const specification = getSpecById(getState(), id);
+    const X_Axis = [...specification.X_Axis];
+    const Y_Axis = [...specification.Y_Axis];
+    var SELECT;
+    if (X_Axis.length === 0 && Y_Axis.length > 0) {
+      SELECT = [X_Axis[0]];
+    } else if (Y_Axis.length === 0 && X_Axis.length > 0) {
+      SELECT = [Y_Axis[0]];
+    } else if (Y_Axis.length === 0 && X_Axis.length === 0) {
+      SELECT = [];
+    } else {
+      SELECT = [X_Axis[0], Y_Axis[0]];
+    }
+    console.log(SELECT);
+    const BODY = {
+      SELECT,
+      FROM: modelName,
+    };
+    fetchPlotData(BODY).then((payload) => {
+      dispatch(updatePlotData(id, payload));
+    });
   };
 }
 
@@ -91,7 +114,7 @@ export function fetchStandardPlotData(id) {
 // state related to plot data: for example, interactions of facets with
 // plot data, etc.
 
-export function fetchPlotData(id) {
+export function fetchMultiPlotData(id) {
   return (dispatch, getState) => {
     const modelName = getModelNameById(getState(), id);
     const specification = getSpecById(getState(), id);
@@ -106,7 +129,7 @@ export function fetchPlotData(id) {
   };
 }
 
-export function fetchPlotLayout(id) {
+export function fetchMultiPlotLayout(id) {
   return (dispatch, getState) => {
     const specification = getSpecById(getState(), id);
     const modelName = getModelNameById(getState(), id);

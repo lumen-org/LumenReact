@@ -1,1 +1,1 @@
-export { default } from "./DifferentialMarginalPlotContainer";
+export { default } from "./StandardPlotContainer";

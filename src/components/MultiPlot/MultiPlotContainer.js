@@ -6,20 +6,24 @@ import {
   getPlotLayoutById,
 } from "../../states/plots/selector";
 import { getSpecById } from "../../states/specifications/selector.js";
-import StandardPlot from "./StandardPlot";
-import { fetchStandardPlotData } from "../../states/plots/actions";
-class StandardPlotContainer extends React.Component {
+import StandardPlot from "./MultiPlot";
+import {
+  fetchMultiPlotData,
+  fetchMultiPlotLayout,
+} from "../../states/plots/actions";
+class MultiPlotContainer extends React.Component {
   static propTypes = {
-    fetchStandardPlotData: PropTypes.func,
+    fetchPlotData: PropTypes.func,
+    fetchPlotLayout: PropTypes.func,
     plotData: PropTypes.array,
-    specifications: PropTypes.object,
     layout: PropTypes.object,
     id: PropTypes.number,
   };
 
   getPlotInfo = () => {
-    const { fetchStandardPlotData, id } = this.props;
-    fetchStandardPlotData(id);
+    const { fetchMultiPlotLayout, fetchMultiPlotData, id } = this.props;
+    fetchMultiPlotData(id);
+    fetchMultiPlotLayout(id);
   };
 
   componentDidUpdate(prevProps) {
@@ -29,24 +33,22 @@ class StandardPlotContainer extends React.Component {
   }
 
   render() {
-    const { plotData } = this.props;
-    console.log(plotData);
-    return <StandardPlot plotData={plotData} />;
+    const { plotData, layout } = this.props;
+    return <StandardPlot plotData={plotData} layout={layout} />;
   }
 }
 
 const mapDispatchToProps = {
-  fetchStandardPlotData,
+  fetchMultiPlotData,
+  fetchMultiPlotLayout,
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
     plotData: getPlotDataById(state, ownProps.id),
+    layout: getPlotLayoutById(state, ownProps.id),
     specifications: getSpecById(state, ownProps.id),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(StandardPlotContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(MultiPlotContainer);
