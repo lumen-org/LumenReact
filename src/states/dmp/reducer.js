@@ -11,7 +11,7 @@ to plots store.
 It has to listen to the changes from specifications store.
  */
 
-const defaultPlotData = {
+const DefaultScatterTrace = {
   x: [],
   y: [],
   type: "scatter",
@@ -27,6 +27,19 @@ const defaultPlotData = {
     },
   },
 };
+
+const DefaultXhistogramTrace = {
+  x: [],
+  type: "histogram",
+  xaxis: "x",
+};
+
+const DefaultYhistogramTrace = {
+  y: [],
+  type: "histogram",
+  xaxis: "y",
+};
+
 const defaultLayout = {
   autosize: true,
   title: "",
@@ -35,6 +48,17 @@ const defaultLayout = {
     columns: 0,
     pattern: "independent",
   },
+};
+
+const defaultDensityTrace = {
+  x: [],
+  y: [],
+  name: "density",
+  ncontours: 20,
+  colorscale: "Hot",
+  reversescale: true,
+  showscale: false,
+  type: "histogram2dcontour",
 };
 
 export const defaultState = {

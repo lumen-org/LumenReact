@@ -26,7 +26,7 @@ export function createNewPlot(modelName, visualizationId, specificationId) {
     payload: {
       modelName: modelName,
       specificationId: specificationId,
-      visualizationId: visualizationId
+      visualizationId: visualizationId,
     },
   };
 }
@@ -78,6 +78,14 @@ export function updatePlotLayout(id, newLayout) {
     },
   };
 }
+
+export function fetchStandardPlotData(id) {
+  return (dispatch, getState) => {
+    const modelName = getModelNameById(getState(), id);
+    const specification = getSpecById(getState(), id);
+  };
+}
+
 // TO avoid this store getting super huge, we probably need to
 // deisgn a new store called " plotData " where we handle all the
 // state related to plot data: for example, interactions of facets with

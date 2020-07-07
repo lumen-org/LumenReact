@@ -77,7 +77,6 @@ class RnDPlotWrapper extends Component {
         <div className="RndPlot-titlebar">
           <CloseButton handleClose={this.handleClose} />
         </div>
-
         <DifferentialMarginalPlot id={id} />
       </Rnd>
     );

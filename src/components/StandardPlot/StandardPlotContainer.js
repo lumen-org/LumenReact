@@ -6,9 +6,9 @@ import {
   getPlotLayoutById,
 } from "../../states/plots/selector";
 import { getSpecById } from "../../states/specifications/selector.js";
-import DifferentialMarginalPlot from "./DifferentialMarginalPlot";
+import StandardPlot from "./StandardPlot";
 import { fetchPlotData, fetchPlotLayout } from "../../states/plots/actions";
-class DifferentialMarginalPlotContainer extends React.Component {
+class StandardPlotContainer extends React.Component {
   static propTypes = {
     fetchPlotData: PropTypes.func,
     fetchPlotLayout: PropTypes.func,
@@ -31,7 +31,7 @@ class DifferentialMarginalPlotContainer extends React.Component {
 
   render() {
     const { plotData, layout } = this.props;
-    return <DifferentialMarginalPlot plotData={plotData} layout={layout} />;
+    return <StandardPlot plotData={plotData} layout={layout} />;
   }
 }
 
@@ -51,4 +51,4 @@ const mapStateToProps = (state, ownProps) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DifferentialMarginalPlotContainer);
+)(StandardPlotContainer);
