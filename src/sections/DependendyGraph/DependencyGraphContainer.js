@@ -9,7 +9,7 @@ import {
   //changeActiveSpecifications,
   resetSpecifications,
 } from "../../states/specifications/actions";
-import { getModelNameById } from "../../states/visualizations/selector";
+import { getModelNameById } from "../../states/models/selector";
 import { updateActiveModel } from "../../states/app/actions";
 import PropTypes from "prop-types";
 import DependencyGraph from "./DependencyGraph";
