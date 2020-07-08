@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import {
-  getPlotDataById,
-  getPlotLayoutById,
-} from "../../states/plots/selector";
+import { getStandardPlotDataById } from "../../states/plots/selector";
 import {
   getSpecById,
   getFacetById,
@@ -34,6 +31,7 @@ class StandardPlotContainer extends React.Component {
 
   render() {
     const { plotData, specification, facets } = this.props;
+    console.log(plotData);
     return (
       <StandardPlot
         plotData={plotData}
@@ -50,7 +48,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    plotData: getPlotDataById(state, ownProps.id),
+    plotData: getStandardPlotDataById(state, ownProps.id),
     specification: getSpecById(state, ownProps.id),
     facets: getFacetById(state, ownProps.id),
   };

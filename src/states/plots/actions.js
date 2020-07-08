@@ -3,8 +3,9 @@ import {
   CREATE_NEW_PLOT,
   CHANGE_ACTIVE_PLOT,
   DELETE_PLOT,
-  UPDATE_PLOT_DATA,
-  RESET_PLOT_DATA,
+  UPDATE_MULTI_PLOT_DATA,
+  UPDATE_STANDARD_PLOT_DATA,
+  RESET_MULTI_PLOT_DATA,
   UPDATE_PLOT_LAYOUT,
 } from "./constants";
 import { fetchAllPlotData } from "../../utils/plotData";
@@ -51,9 +52,9 @@ export function updatePlotSpecifictions(id, newSpecifications) {
   };
 }
 
-export function updatePlotData(id, newPlotData) {
+export function updateMultiPlotData(id, newPlotData) {
   return {
-    type: UPDATE_PLOT_DATA,
+    type: UPDATE_MULTI_PLOT_DATA,
     payload: {
       id: id,
       newPlotData: newPlotData,
@@ -61,9 +62,19 @@ export function updatePlotData(id, newPlotData) {
   };
 }
 
+export function updateStandardPlotData(id, newStandardPlotData) {
+  return {
+    type: UPDATE_STANDARD_PLOT_DATA,
+    payload: {
+      id: id,
+      newStandardPlotData: newStandardPlotData,
+    },
+  };
+}
+
 export function resetPlotData(id) {
   return {
-    type: RESET_PLOT_DATA,
+    type: RESET_MULTI_PLOT_DATA,
     payload: {
       id: id,
     },
@@ -103,7 +114,7 @@ export function fetchStandardPlotData(id) {
       FROM: modelName,
     };
     fetchPlotData(BODY).then((payload) => {
-      dispatch(updatePlotData(id, payload));
+      dispatch(updateStandardPlotData(id, payload));
     });
   };
 }
@@ -121,7 +132,7 @@ export function fetchMultiPlotData(id) {
       dispatch(resetPlotData(id));
       payload[0].map((payload) => {
         payload.then((payload) => {
-          dispatch(updatePlotData(id, payload));
+          dispatch(updateMultiPlotData(id, payload));
         });
       });
     });

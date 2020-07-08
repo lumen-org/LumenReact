@@ -1,122 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./StandardPlot.css";
+import { defaultPlotTraces } from "./defaultPlotTraces";
 // We need to import Plotly in this strange way due to heap memory
 // See issue: https://github.com/plotly/react-plotly.js/issues/135
 import createPlotlyComponent from "react-plotly.js/factory";
 const Plotly = window.Plotly;
 const Plot = createPlotlyComponent(Plotly);
 
-var specification_example: {
-    X_Axis: [],
-    Y_Axis: [],
-    Filter: [],
-    Detail: [],
-    Color: [],
-    Shape: [],
-    Size: [],
-  },
-  facets: {
-    0: {
-      model: false,
-      data: false,
-    },
-    1: {
-      model: false,
-      data: true,
-    },
-    2: {
-      model: false,
-      data: true,
-    },
-    3: {
-      model: false,
-      data: false,
-    },
-  };
-
-function generate100RandomData() {
-  var x = [];
-
-  for (var i = 0; i < 100; i++) {
-    x.push(Math.random());
-  }
-  return x;
-}
-
-const xval = generate100RandomData();
-const yval = generate100RandomData();
-
-var scatterTrace = {
-  x: xval,
-  y: yval,
-  type: "scatter",
-  mode: "markers",
-  xaxis: "x",
-  yaxis: "y",
-  marker: {
-    color: "rgba(17, 157, 255,0.5)",
-    size: 5,
-    line: {
-      color: "rgb(231, 99, 250)",
-      width: 1,
-    },
-  }, // TODO: CUSTOMIZED MARKERS COLOR SCHEME
-};
-
-var histogramDataXTrace = {
-  x: xval,
-  name: "data density",
-  marker: {
-    color: "rgb(207, 207, 207)",
-    opacity: 0.75,
-    line: {
-      color: "rgb(97, 97, 97)",
-      width: 1.5,
-    },
-  },
-  yaxis: "y2",
-  type: "histogram",
-};
-
-var histogramDataYTrace = {
-  y: yval,
-  name: "data density",
-  marker: {
-    color: "rgb(207,207,207)",
-    opacity: 0.75,
-    line: {
-      color: "rgb(97,97,97)",
-      width: 1.5,
-    },
-    xbins: {
-      size: 0.06,
-    },
-  },
-  xaxis: "x2",
-  type: "histogram",
-};
-var data2 = [scatterTrace, histogramDataXTrace, histogramDataYTrace];
-
-var layout2 = {
-  autosize: true,
-  xaxis: {
-    domain: [0, 0.85],
-  },
-  yaxis: {
-    domain: [0, 0.85],
-  },
-  xaxis2: {
-    domain: [0.85, 1],
-  },
-  yaxis2: {
-    domain: [0.85, 1],
-  },
-};
 class StandardPlot extends Component {
   static propTypes = {
     plotData: PropTypes.array,
-    // TODO: refractor the fetch function so that we don't need specification here
     specification: PropTypes.object,
     facets: PropTypes.object,
   };
@@ -124,80 +18,106 @@ class StandardPlot extends Component {
   state = {
     layout: {
       autosize: true,
-    },
-    scatterTrace: {
-      x: [],
-      y: [],
-      type: "scatter",
-      mode: "markers",
-      xaxis: "x",
-      yaxis: "y",
-      marker: {
-        color: "rgba(17, 157, 255,0.5)",
-        size: 5,
-        line: {
-          color: "rgb(231, 99, 250)",
-          width: 1,
-        },
+      xaxis: {
+        domain: [0, 0.85],
+      },
+      yaxis: {
+        domain: [0, 0.85],
+      },
+      xaxis2: {
+        domain: [0.85, 1],
+      },
+      yaxis2: {
+        domain: [0.85, 1],
       },
     },
-
-    histogramDataYTrace: {
-      y: [],
-      name: "data density",
-      marker: {
-        color: "rgb(207,207,207)",
-        opacity: 0.75,
-        line: {
-          color: "rgb(97,97,97)",
-          width: 1.5,
-        },
-        xbins: {
-          size: 0.06,
-        },
+    data: [
+      {
+        x: [],
+        y: [],
+        from: "data",
+        ...defaultPlotTraces.scatterTrace,
       },
-      xaxis: "x2",
-      type: "histogram",
-    },
-
-    histogramDataXTrace: {
-      x: [],
-      name: "data density",
-      marker: {
-        color: "rgb(207, 207, 207)",
-        opacity: 0.75,
-        line: {
-          color: "rgb(97, 97, 97)",
-          width: 1.5,
-        },
+      {
+        y: [],
+        from: "data",
+        ...defaultPlotTraces.yHistogramTrace,
       },
-      yaxis: "y2",
-      type: "histogram",
-    },
-    data: [],
+      {
+        x: [],
+        from: "data",
+        ...defaultPlotTraces.xHistogramTrace,
+      },
+      {
+        x: [],
+        y: [],
+        from: "model",
+        ...defaultPlotTraces.scatterTrace,
+      },
+      {
+        y: [],
+        from: "model",
+        ...defaultPlotTraces.yHistogramTrace,
+      },
+      {
+        x: [],
+        from: "model",
+        ...defaultPlotTraces.xHistogramTrace,
+      },
+    ],
   };
 
+  setDefaultPlotState = () => {
+    const { plotData } = this.props;
+    const { data } = this.state;
+    console.log("plotData:", plotData);
+    const newScatterTrace = {
+      ...data[0],
+      x: plotData.x,
+      y: plotData.y,
+    };
+
+    const newYHistogramTrace = {
+      ...data[1],
+      y: plotData.y,
+    };
+    const newXHistogramTrace = {
+      ...data[2],
+      x: plotData.x,
+    };
+    this.setState({
+      data: [
+        newScatterTrace,
+        newYHistogramTrace,
+        newXHistogramTrace,
+        ...this.state.data.slice(3),
+      ],
+    });
+  };
+
+  // TODO: implement a callback so that the plot state are saved in the store
+
   componentDidMount() {
-    const { specification, facets, plotData } = this.props;
-    console.log("specification", specification);
+    // set the initial state according to the default state in facets
+    this.setDefaultPlotState();
   }
 
   componentDidUpdate(prevProps) {
     if (
+      prevProps.plotData !== this.props.plotData ||
       prevProps.specification !== this.props.specification ||
       prevProps.facets !== this.props.facets
     ) {
-      // SET STATE...
+      this.setDefaultPlotState();
     }
   }
 
   render() {
     const { layout, data } = this.state;
-
     return (
       <Plot
-        data={data2}
-        layout={layout2}
+        data={data}
+        layout={layout}
         useResizeHandler={true}
         className="StandardPlot-plot"
       />

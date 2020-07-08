@@ -2,8 +2,9 @@ import {
   CREATE_NEW_PLOT,
   CHANGE_ACTIVE_PLOT,
   DELETE_PLOT,
-  UPDATE_PLOT_DATA,
-  RESET_PLOT_DATA,
+  UPDATE_STANDARD_PLOT_DATA,
+  UPDATE_MULTI_PLOT_DATA,
+  RESET_MULTI_PLOT_DATA,
   UPDATE_PLOT_LAYOUT,
 } from "./constants";
 
@@ -24,13 +25,16 @@ export const defaultState = {
 const plotsReducer = (state = defaultState, action) => {
   switch (action.type) {
     case CHANGE_ACTIVE_PLOT:
-      const newAllIds = PlotStack.moveToTop(state.plots.allIds, action.payload.newid);
-      newAllIds.map((elem, index) => state.plots.byId[elem].zIndex = index);
+      const newAllIds = PlotStack.moveToTop(
+        state.plots.allIds,
+        action.payload.newid
+      );
+      newAllIds.map((elem, index) => (state.plots.byId[elem].zIndex = index));
       return {
         ...state,
         plots: update(state.plots, {
           byId: { $set: Object.assign({}, state.plots.byId) },
-          allIds: { $set: newAllIds }
+          allIds: { $set: newAllIds },
         }),
         activePlotId: action.payload.newid,
       };
@@ -41,28 +45,28 @@ const plotsReducer = (state = defaultState, action) => {
       return {
         ...state,
         plots: {
-          byId: update(state.plots.byId,
-            {
-              [newId]: {
-                $set: {
-                  id: newId,
-                  model: modelName,
-                  visualizationId: visualizationId,
-                  specificationId: specificationId,
-                  zIndex: 0,
-                  plotData: [],
-                  layout: {},
-                  show: true
-                }
-              }
-            }),
-          allIds: PlotStack.push(state.plots.allIds, newId)
+          byId: update(state.plots.byId, {
+            [newId]: {
+              $set: {
+                id: newId,
+                model: modelName,
+                visualizationId: visualizationId,
+                specificationId: specificationId,
+                zIndex: 0,
+                multiPlotData: [],
+                standardPlotData: {},
+                layout: {},
+                show: true,
+              },
+            },
+          }),
+          allIds: PlotStack.push(state.plots.allIds, newId),
         },
         activePlotId: newId,
         lastCreatedId: newId,
       };
 
-    case UPDATE_PLOT_DATA:
+    case UPDATE_MULTI_PLOT_DATA:
       return {
         ...state,
         plots: {
@@ -70,9 +74,9 @@ const plotsReducer = (state = defaultState, action) => {
           byId: update(state.plots.byId, {
             [action.payload.id]: {
               $merge: {
-                plotData: [
-                  ...state.plots.byId[action.payload.id].plotData,
-                  action.payload.newPlotData,
+                multiPlotData: [
+                  ...state.plots.byId[action.payload.id].multiPlotData,
+                  action.payload.newmultiPlotData,
                 ],
               },
             },
@@ -95,7 +99,7 @@ const plotsReducer = (state = defaultState, action) => {
         },
       };
 
-    case RESET_PLOT_DATA:
+    case RESET_MULTI_PLOT_DATA:
       return {
         ...state,
         plots: {
@@ -103,7 +107,22 @@ const plotsReducer = (state = defaultState, action) => {
           byId: update(state.plots.byId, {
             [action.payload.id]: {
               $merge: {
-                plotData: [],
+                multiPlotData: [],
+              },
+            },
+          }),
+        },
+      };
+
+    case UPDATE_STANDARD_PLOT_DATA:
+      return {
+        ...state,
+        plots: {
+          ...state.plots,
+          byId: update(state.plots.byId, {
+            [action.payload.id]: {
+              $merge: {
+                standardPlotData: action.payload.newStandardPlotData,
               },
             },
           }),
@@ -111,14 +130,14 @@ const plotsReducer = (state = defaultState, action) => {
       };
 
     case DELETE_PLOT:
-      const allIds = PlotStack.pop(state.plots.allIds)
+      const allIds = PlotStack.pop(state.plots.allIds);
       return {
         ...state,
         plots: update(state.plots, {
           byId: { $unset: [action.payload.id] },
-          allIds: {$set: allIds}
+          allIds: { $set: allIds },
         }),
-        activePlotId: PlotStack.peek(state.plots.allIds)
+        activePlotId: PlotStack.peek(state.plots.allIds),
       };
     default:
       return state;

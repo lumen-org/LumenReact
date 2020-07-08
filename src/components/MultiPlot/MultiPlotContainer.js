@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
-  getPlotDataById,
+  getMultiPlotDataById,
   getPlotLayoutById,
 } from "../../states/plots/selector";
 import { getSpecById } from "../../states/specifications/selector.js";
@@ -45,7 +45,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    plotData: getPlotDataById(state, ownProps.id),
+    plotData: getMultiPlotDataById(state, ownProps.id),
     layout: getPlotLayoutById(state, ownProps.id),
     specifications: getSpecById(state, ownProps.id),
   };
