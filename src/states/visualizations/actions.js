@@ -1,4 +1,9 @@
-import { CHANGE_ACTIVE_VISUALIZATION, CREATE_NEW_VISUALIZATION, FILL_VISUALIZATION } from "./constants";
+import {
+  CHANGE_ACTIVE_VISUALIZATION,
+  CREATE_NEW_VISUALIZATION,
+  DELETE_VISUALIZATION,
+  FILL_VISUALIZATION
+} from "./constants";
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -15,11 +20,19 @@ export const _createNewVisualization = (modelName, id=uuidv4(), modelId = null, 
     type: CREATE_NEW_VISUALIZATION,
     payload: {
       id,
-      modelName,
       modelId,
       specificationId,
       plotId
     }
+  }
+};
+
+export const deleteVisualization = (visualizationId) => {
+  return {
+    type: DELETE_VISUALIZATION,
+     payload:  {
+      visualizationId
+     }
   }
 };
 
@@ -30,7 +43,7 @@ export const changeActiveVisualization = (visualizationId) => {
       visualizationId
     }
   }
-}
+};
 
 export const fillVisualization = (visualizationId, modelId, specificationId, plotId) => {
   return {

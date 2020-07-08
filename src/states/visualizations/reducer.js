@@ -1,14 +1,20 @@
-import { CHANGE_ACTIVE_VISUALIZATION, CREATE_NEW_VISUALIZATION, FILL_VISUALIZATION } from "./constants";
+import {
+  CHANGE_ACTIVE_VISUALIZATION,
+  CREATE_NEW_VISUALIZATION,
+  DELETE_VISUALIZATION,
+  FILL_VISUALIZATION
+} from "./constants";
 import update from "immutability-helper";
 import { act } from "react-dom/test-utils";
+import { EMPTY } from "../constants";
 
 /*
 This reducer saves all needed ids for each visualization
 and returns them for a selected model through selectors
  */
 export const defaultState = {
-  activeVisualizationId: null,
-  lastCreatedVisualizationId: null,
+  activeVisualizationId: EMPTY,
+  lastCreatedVisualizationId: EMPTY,
   visualizations: {
     byId: {},
     allIds: []
@@ -31,8 +37,8 @@ const visualizations = (state = defaultState, action) => {
   let visualizations = Object.assign({}, state.visualizations);
   switch (action.type) {
     case CREATE_NEW_VISUALIZATION:
-      const { modelName, id, modelId, specificationId, plotId} = action.payload;
-      if (!visualizations.allIds.includes(id)){
+      const { id, modelId, specificationId, plotId } = action.payload;
+      if (!visualizations.allIds.includes(id)) {
         return {
           ...state,
           lastCreatedVisualizationId: id,
@@ -40,7 +46,6 @@ const visualizations = (state = defaultState, action) => {
             byId: {
               [id]: {
                 $set: {
-                  modelName: modelName,
                   modelId: modelId,
                   specificationId: specificationId,
                   plotId: plotId,
@@ -48,34 +53,50 @@ const visualizations = (state = defaultState, action) => {
                 }
               }
             },
-            allIds: { $push: [id]}
+            allIds: { $push: [id] }
           })
-        }
+        };
       }
       return state;
-      case FILL_VISUALIZATION:
-        const { visualizationId } = action.payload
-        if (visualizations.allIds.includes(visualizationId)
-        && !visualizations.byId[visualizationId].modelId 
-        && !visualizations.byId[visualizationId].specificationId 
-        && !visualizations.byId[visualizationId].plotId){
-          return {
-            ...state,
-            activeVisualizationId: visualizationId,
-            visualizations: update(state.visualizations, {
-              byId: {
-                [visualizationId]: {
-                  $merge: {
-                    modelId: action.payload.modelId,
-                    specificationId: action.payload.specificationId,
-                    plotId: action.payload.plotId,
-                  }
+    case FILL_VISUALIZATION: {
+      const { visualizationId } = action.payload;
+      if (visualizations.allIds.includes(visualizationId)
+        && !visualizations.byId[visualizationId].modelId
+        && !visualizations.byId[visualizationId].specificationId
+        && !visualizations.byId[visualizationId].plotId) {
+        return {
+          ...state,
+          activeVisualizationId: visualizationId,
+          visualizations: update(state.visualizations, {
+            byId: {
+              [visualizationId]: {
+                $merge: {
+                  modelId: action.payload.modelId,
+                  specificationId: action.payload.specificationId,
+                  plotId: action.payload.plotId
                 }
               }
-            })
+            }
+          })
+        };
+      }
+      return state;
+    }
+    case DELETE_VISUALIZATION:{
+      const { visualizationId } = action.payload;
+      return {
+        ...state,
+        visualizations: update(state.visualizations, {
+          byId: {
+            $unset: [visualizationId]
+          },
+          allIds: {
+            $splice: [[state.visualizations.allIds.indexOf(visualizationId), 1]]
           }
-        }
-        return state
+        }),
+        activeVisualizationId: state.activeVisualizationId === visualizationId ? EMPTY : state.activeVisualizationId
+      };
+    }
 
     // case ADD_PLOT:
     //   return state;
@@ -94,4 +115,4 @@ const visualizations = (state = defaultState, action) => {
   }
 };
 
-export default visualizations
+export default visualizations;

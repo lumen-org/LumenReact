@@ -7,7 +7,40 @@ import {
   CHANGE_ACTIVE_SPECIFICATIONS,
   RESET_SPECIFICATIONS
 } from "./constants";
+import { v4 as uuidv4 } from "uuid";
 
+/*
+maintains all existing specifications and there state
+ */
+const defaultValues = {
+  specification: {
+    X_Axis: new Set([]),
+    Y_Axis: new Set([]),
+    Filter: new Set([]),
+    Detail: new Set([]),
+    Color: new Set([]),
+    Shape: new Set([]),
+    Size: new Set([])
+  },
+  facets: {
+    0: {
+      model: false,
+      data: false
+    },
+    1: {
+      model: false,
+      data: true
+    },
+    2: {
+      model: false,
+      data: true
+    },
+    3: {
+      model: false,
+      data: false
+    }
+  }
+};
 
 export const createNewSpecification = (payload) => {
   // even though the dispatches are run sequential the mapStateToProps
@@ -18,14 +51,17 @@ export const createNewSpecification = (payload) => {
     return new Promise(function(resolve, reject) {
       resolve();
     });
-  }
+  };
 };
 
-export const _createNewSpecification = (payload) => {
+export const _createNewSpecification = (initValues=null, id=uuidv4()) => {
   return {
-      type: CREATE_NEW_SPECIFICATION,
-      payload
-    };
+    type: CREATE_NEW_SPECIFICATION,
+    payload: {
+      defaultValues: initValues ? initValues : defaultValues,
+      id: id
+    }
+  };
 };
 
 export function addToSpecification(payload) {

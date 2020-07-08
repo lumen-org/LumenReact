@@ -1,13 +1,13 @@
 import { CREATE_NEW_MODEL } from "./constants";
 
 import update from "immutability-helper";
+import { EMPTY } from "../constants";
 
 /*
 maintains a list of all models
  */
 export const defaultState = {
-  nextId: 0,
-  lastCreatedModelId: -1,
+  lastCreatedModelId: EMPTY,
   models: {
     byId: {},
     allIds: []
@@ -18,24 +18,25 @@ export const defaultState = {
 const models = (state = defaultState, action) => {
   switch (action.type) {
     case CREATE_NEW_MODEL:
+      const { modelName, model, id } = action.payload;
       let fields = {};
-      action.payload.forEach(o => {
+      model.forEach(o => {
         fields[o.name] = o;
       });
       return {
         models: update(state.models, {
           byId: {
-            [state.nextId]: {
+            [id]: {
               $set: {
+                modelName: modelName,
                 fields: fields,
-                id: state.nextId
+                id: id
               }
             }
           },
-          allIds: { $set: [state.nextId + 1] }
+          allIds: { $set: [id] }
         }),
-        nextId: state.nextId + 1,
-        lastCreatedModelId: state.nextId
+        lastCreatedModelId: id
       };
     default:
       return state;
