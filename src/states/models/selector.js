@@ -7,7 +7,7 @@ const getActiveId = (state) => selectActiveModelId(state);
 /// not sure if that is correct now...
 export const getModelNameById = (state, id) => {
   //return state.models.models.byId[id].modelName || "";
-  return state.models.models.byId[state.plots.plots.byId[id].visualizationId].modelName || "";
+  return state.models.models.byId[state.visualizations.visualizations.byId[state.plots.plots.byId[id].visualizationId].modelId].modelName || "";
 
 };
 
