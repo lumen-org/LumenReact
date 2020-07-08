@@ -1,12 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  getLayoutInformation,
-  nextActiveId,
-} from "../../utils/plotData";
 import { changeActivePlot, deletePlot } from "../../states/plots/actions";
 import {
-  //changeActiveSpecifications,
   resetSpecifications,
 } from "../../states/specifications/actions";
 import { getModelNameById } from "../../states/models/selector";
@@ -105,22 +100,6 @@ class PCIGraphContainer extends React.Component {
   }
 
   onPlotClose = (id) => {
-    /*
-    const {
-      deletePlot,
-      plots,
-      changeActivePlot,
-      changeActiveVisualization,
-    } = this.props;
-    const nextId = nextActiveId(plots.allIds);
-    const nextPlot = plots.allIds.filter((plot) => {
-      return id === nextId;
-    });
-    changeActivePlot(nextId);
-    if (nextPlot.length !== 0) {
-      changeActiveVisualization(nextId);
-    }
-    deletePlot(id);*/
     this.setState({
       nodes: null,
       edges: null,
@@ -129,19 +108,7 @@ class PCIGraphContainer extends React.Component {
   };
 
   onActivePlotChange = (id) => {
-    try {
-      const modelname = getModelNameById(this.props.activePlotId);
-      console.log(modelname);
-      let body = {
-        "FROM": modelname,
-        'PCI_GRAPH.GET': true,
-      };
-      fetchData(BASE_URL, body).then(response => this.transformGraphData(response), error => console.log("Something went wrong: "+ error));
-    }
-    catch (e) {
-      console.log(e);
-      this.transformGraphData(false);
-    }
+    //this.componentDidUpdate();
   };
 
 
@@ -171,7 +138,6 @@ class PCIGraphContainer extends React.Component {
 const mapStateToProps = (state) => ({
   plots: state.plots.plots,
   activePlotId: state.plots.activePlotId,
-  //modelname: state.models.
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -179,9 +145,6 @@ const mapDispatchToProps = (dispatch) => {
     changeActivePlot: (
       newActivePlotId // this function change the zIndex of plot and bring it to the front
     ) => dispatch(changeActivePlot(newActivePlotId)),
-    /*changeActiveSpecifications: (
-      newspecifictions // this function trigger the update of specification
-    ) => dispatch(changeActiveSpecifications(newspecifictions)),*/
     updateActiveModel: (
       newActiveModel // this function trigger the update of schema
     ) => dispatch(updateActiveModel(newActiveModel)),
