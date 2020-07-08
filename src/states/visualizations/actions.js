@@ -20,7 +20,6 @@ export const _createNewVisualization = (modelName, id=uuidv4(), modelId = null, 
     type: CREATE_NEW_VISUALIZATION,
     payload: {
       id,
-      modelName,
       modelId,
       specificationId,
       plotId

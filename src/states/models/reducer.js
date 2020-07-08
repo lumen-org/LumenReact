@@ -18,7 +18,7 @@ export const defaultState = {
 const models = (state = defaultState, action) => {
   switch (action.type) {
     case CREATE_NEW_MODEL:
-      const { model, id } = action.payload;
+      const { modelName, model, id } = action.payload;
       let fields = {};
       model.forEach(o => {
         fields[o.name] = o;
@@ -28,6 +28,7 @@ const models = (state = defaultState, action) => {
           byId: {
             [id]: {
               $set: {
+                modelName: modelName,
                 fields: fields,
                 id: id
               }

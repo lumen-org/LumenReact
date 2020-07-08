@@ -43,7 +43,7 @@ class ListModalContainer extends React.Component {
       addSpecifications().then(() => {
         // move into schema redux store to avoid this nested promises
         fetchModelData(item).then((response) => {
-          createNewModel(response["Fields"]);
+          createNewModel(item, response["Fields"]);
         }
         ).then(() => {
           createPlot(item, this.props.lastCreatedVisualizationId, this.props.specificationId);
@@ -78,7 +78,7 @@ class ListModalContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    specificationsId: state.specifications.lastCreatedId,
+    specificationId: state.specifications.lastCreatedId,
     plotId: state.plots.lastCreatedId,
     modelId: state.models.lastCreatedModelId,
     lastCreatedVisualizationId: state.visualizations.lastCreatedVisualizationId
@@ -91,14 +91,14 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(createNewVisualization(modelName, schemaId, specificationId, plotId)),
     updateActiveModel: (model) => dispatch(updateActiveModel(model)),
     changeActiveVisualization: (id) => dispatch(changeActiveVisualization(id)),
-    createPlot: (activeModel, visualizationId, specificationId) =>
+    createPlot: (activeModel, visualizationId, specificationId) => 
     dispatch(createNewPlot(activeModel, visualizationId, specificationId)),
     // resetSpecifications: () => dispatch(resetSpecifications()),
     addSpecifications: () => {
       return dispatch(createNewSpecification());
     },
-    createNewModel: (model) => dispatch(createNewModel(model)),
-    fillVisualization: (visualizationId, modelId, specificationId, plotId) =>
+    createNewModel: (modelName, model) => dispatch(createNewModel(modelName, model)),
+    fillVisualization: (visualizationId, modelId, specificationId, plotId) => 
       dispatch(fillVisualization(visualizationId, modelId, specificationId, plotId))
   };
 };
