@@ -12,13 +12,13 @@ import {
 import { getModelNameById } from "../../states/models/selector";
 import { updateActiveModel } from "../../states/app/actions";
 import PropTypes from "prop-types";
-import DependencyGraph from "./DependencyGraph";
+import DependencyGraph from "./PCIGraph";
 import { mockData } from "./mockdata";
 import GraphComponent from "./GraphTest";
 import fetchData from "../../utils/fetch";
 import { BASE_URL } from "../../constants/query";
 
-class DependencyGraphContainer extends React.Component {
+class PCIGraphContainer extends React.Component {
   static propTypes = {
     id: PropTypes.number,
     activePlotId: PropTypes.number,
@@ -190,7 +190,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DependencyGraphContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(PCIGraphContainer);
 
 // this is a good prime example that history is not only to be retained, but also brought forward to a new age
 

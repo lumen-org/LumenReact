@@ -7,7 +7,7 @@
 import React from "react";
 let justData;
 
-class DependencyGraphComponent extends React.Component {
+class PCIGraphComponent extends React.Component {
   constructor(props) {
     super(props);
     //this.state = { liked: false };
@@ -594,5 +594,5 @@ class GraphRawLoad extends React.Component {
 }
 
 ReactDOM.render(
-  <DependencyGraphComponent/>,
+  <PCIGraphComponent/>,
   document.getElementById('graph-network'));

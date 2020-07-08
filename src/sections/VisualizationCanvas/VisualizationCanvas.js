@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import RnDPlot from "../../components/RnDPlotWrapper";
 import PropTypes from "prop-types";
 import "./VisualizationCanvas.css";
-import DependencyGraphComponent from "../DependendyGraph";
+import DependencyGraphComponent from "../PCIGraph";
 
 class VisualizationCanvas extends Component {
   static propTypes = {
