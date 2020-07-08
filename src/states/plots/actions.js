@@ -98,7 +98,6 @@ export function fetchStandardPlotData(id) {
     } else {
       SELECT = [X_Axis[0], Y_Axis[0]];
     }
-    console.log(SELECT);
     const BODY = {
       SELECT,
       FROM: modelName,

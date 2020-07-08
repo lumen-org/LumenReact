@@ -96,9 +96,9 @@ var histogramDataYTrace = {
   xaxis: "x2",
   type: "histogram",
 };
-var data = [scatterTrace, histogramDataXTrace, histogramDataYTrace];
+var data2 = [scatterTrace, histogramDataXTrace, histogramDataYTrace];
 
-var layout = {
+var layout2 = {
   autosize: true,
   xaxis: {
     domain: [0, 0.85],
@@ -116,7 +116,9 @@ var layout = {
 class StandardPlot extends Component {
   static propTypes = {
     plotData: PropTypes.array,
+    // TODO: refractor the fetch function so that we don't need specification here
     specification: PropTypes.object,
+    facets: PropTypes.object,
   };
 
   state = {
@@ -175,15 +177,29 @@ class StandardPlot extends Component {
     data: [],
   };
 
+  componentDidMount() {
+    const { specification, facets, plotData } = this.props;
+    console.log("specification", specification);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.specification !== this.props.specification ||
+      prevProps.facets !== this.props.facets
+    ) {
+      // SET STATE...
+    }
+  }
+
   render() {
-    //const { plotData, layout } = this.props;
+    const { layout, data } = this.state;
 
     return (
       <Plot
-        data={data}
-        layout={layout}
+        data={data2}
+        layout={layout2}
         useResizeHandler={true}
-        className="DmpPlot-plot"
+        className="StandardPlot-plot"
       />
     );
   }

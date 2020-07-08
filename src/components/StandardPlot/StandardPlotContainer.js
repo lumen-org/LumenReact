@@ -5,14 +5,18 @@ import {
   getPlotDataById,
   getPlotLayoutById,
 } from "../../states/plots/selector";
-import { getSpecById } from "../../states/specifications/selector.js";
+import {
+  getSpecById,
+  getFacetById,
+} from "../../states/specifications/selector.js";
 import StandardPlot from "./StandardPlot";
 import { fetchStandardPlotData } from "../../states/plots/actions";
 class StandardPlotContainer extends React.Component {
   static propTypes = {
     fetchStandardPlotData: PropTypes.func,
     plotData: PropTypes.array,
-    specifications: PropTypes.object,
+    specification: PropTypes.object,
+    facets: PropTypes.object,
     layout: PropTypes.object,
     id: PropTypes.number,
   };
@@ -23,15 +27,20 @@ class StandardPlotContainer extends React.Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (prevProps.specifications !== this.props.specifications) {
+    if (prevProps.specification !== this.props.specification) {
       this.getPlotInfo();
     }
   }
 
   render() {
-    const { plotData } = this.props;
-    console.log(plotData);
-    return <StandardPlot plotData={plotData} />;
+    const { plotData, specification, facets } = this.props;
+    return (
+      <StandardPlot
+        plotData={plotData}
+        specification={specification}
+        facets={facets}
+      />
+    );
   }
 }
 
@@ -42,7 +51,8 @@ const mapDispatchToProps = {
 const mapStateToProps = (state, ownProps) => {
   return {
     plotData: getPlotDataById(state, ownProps.id),
-    specifications: getSpecById(state, ownProps.id),
+    specification: getSpecById(state, ownProps.id),
+    facets: getFacetById(state, ownProps.id),
   };
 };
 

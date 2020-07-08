@@ -54,7 +54,6 @@ export const fetchAllPlotData = (specifications, modelName) => {
   return Promise.all([
     combinations.map((comb, ind) => {
       ind++;
-      console.log(comb);
       return fetchPlotData({
         SELECT: comb,
         FROM: modelName,
