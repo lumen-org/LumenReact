@@ -22,17 +22,22 @@ class PCIGraphContainer extends React.Component {
 
   state = {
     nodes: [
-      { id: 0, label: "node 0"},
-      { id: 1, label: "node 1"},
-      { id: 2, label: "node 2"},
-      { id: 3, label: "node 3"},
-      { id: 4, label: "node 4"},
+      { id: 0, label: "survived"},
+      { id: 1, label: "pclass"},
+      { id: 2, label: "sex"},
+      { id: 3, label: "embarked"},
+      { id: 4, label: "age"},
+      { id: 5, label: "fare"}
     ],
     edges: [
-      {from: 0, to: 1, weight: 1},
-      {from: 1, to: 2, weight: 1},
-      {from: 2, to: 0, weight: 1},
-      {from: 0, to: 4, weight: 1},
+      {from: 0, to: 4, weight: 0.148},
+      {from: 1, to: 3, weight: 0.182},
+      {from: 5, to: 3, weight: 0.251},
+      {from: 1, to: 4, weight: 0.719},
+      {from: 0, to: 1, weight: 0.844},
+      {from: 3, to: 1, weight: 0.844},
+      {from: 0, to: 2, weight: 1.87},
+      {from: 1, to: 5, weight: 2.08},
     ]
 
   };
