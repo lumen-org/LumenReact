@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import AppToolbar from "./AppToolbar";
+import { connect } from "react-redux";
 
 class AppToolbarContainer extends React.Component {
   handleQueryClick = () => {
@@ -52,4 +53,12 @@ class AppToolbarContainer extends React.Component {
   }
 }
 
-export default AppToolbarContainer;
+const mapStateToProps = (state) => ({
+  models: state.models.models.byId,
+});
+
+export default connect(
+  mapStateToProps,
+  null
+)(AppToolbarContainer);
+

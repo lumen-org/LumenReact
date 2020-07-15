@@ -24,10 +24,6 @@ class GraphComponent extends React.Component {
   };
 
   onDragStop = (event, dragIndex) => {
-    const { id, onActivePlotChange, activePlotId } = this.props;
-    if (id !== activePlotId) {
-      onActivePlotChange(id);
-    }
     this.setNewPos(dragIndex);
   };
 

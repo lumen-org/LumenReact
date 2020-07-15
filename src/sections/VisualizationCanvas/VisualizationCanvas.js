@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import RnDPlot from "../../components/RnDPlotWrapper";
 import PropTypes from "prop-types";
 import "./VisualizationCanvas.css";
-import DependencyGraphComponent from "../PCIGraph";
+import PCIGraphContainer from "../PCIGraph";
 
 class VisualizationCanvas extends Component {
   static propTypes = {
@@ -20,7 +20,7 @@ class VisualizationCanvas extends Component {
   };
 
   render() {
-    const { plots, specifications } = this.props;
+    const { plots, specifications, models } = this.props;
     return (
       <div className="VisualizationCanvas-container">
         {Object.keys(plots).map(
@@ -35,7 +35,14 @@ class VisualizationCanvas extends Component {
               />
             )
         )}
-        <DependencyGraphComponent pciDisplayed={this.props.pciDisplayed}/>
+        {
+          Object.keys(models).map(
+          (id) =>
+            models[id].show_pci_graph && (
+              <PCIGraphContainer modelId={id} />
+            )
+          )
+        }
       </div>
 
     );

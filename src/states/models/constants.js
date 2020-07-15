@@ -1,1 +1,2 @@
 export const CREATE_NEW_MODEL = "CREATE_NEW_MODEL";
+export const SHOW_PCI_GRAPH = "SHOW_PCI_GRAPH";

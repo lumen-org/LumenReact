@@ -1,5 +1,4 @@
-import { CREATE_NEW_MODEL } from "./constants";
-
+import { CREATE_NEW_MODEL, SHOW_PCI_GRAPH } from "./constants";
 import update from "immutability-helper";
 import { EMPTY } from "../constants";
 
@@ -18,7 +17,7 @@ export const defaultState = {
 const models = (state = defaultState, action) => {
   switch (action.type) {
     case CREATE_NEW_MODEL:
-      const { modelName, model, id } = action.payload;
+      let { modelName, model, id } = action.payload;
       let fields = {};
       model.forEach(o => {
         fields[o.name] = o;
@@ -30,7 +29,8 @@ const models = (state = defaultState, action) => {
               $set: {
                 modelName: modelName,
                 fields: fields,
-                id: id
+                id: id,
+                show_pci_graph: false,
               }
             }
           },
@@ -38,6 +38,22 @@ const models = (state = defaultState, action) => {
         }),
         lastCreatedModelId: id
       };
+    case SHOW_PCI_GRAPH:
+      id = action.payload;
+      return {
+        models: update(state.models, {
+          byId: {
+            [id]: {
+              $merge: {
+                show_pci_graph: true,
+              }
+            }
+          },
+          ...state.allIds,
+        }),
+        ...state.lastCreatedModelId,
+      };
+
     default:
       return state;
   }

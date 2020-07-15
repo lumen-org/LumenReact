@@ -112,15 +112,9 @@ class PCIGraphContainer extends React.Component {
     )
   };
 
-  onActivePlotChange = (id) => {
-    //this.componentDidUpdate();
-  };
-
-
 
   render() {
     const { activePlotId, id, zIndex } = this.props;
-    const { plotData, layout } = this.state;
     const nodes = this.state.nodes;
     const edges = this.state.edges;
 
@@ -128,11 +122,7 @@ class PCIGraphContainer extends React.Component {
       <GraphComponent
         edges={edges}
         nodes={nodes}
-        plotData={plotData}
-        zIndex={zIndex}
-        layout={layout}
         id={id}
-        activePlotId={activePlotId}
         onPlotClose={this.onPlotClose}
         onActivePlotChange={this.onActivePlotChange}
       />
