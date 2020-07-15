@@ -63,7 +63,6 @@ class RnDPlotWrapper extends Component {
       plotWindowsPosY,
     } = this.state;
     return (
-      <div className="RndPlot-container">
       <Rnd
         size={{ width: plotWindowsWidth, height: plotWindowsHeight }}
         position={{ x: plotWindowsPosX, y: plotWindowsPosY }}
@@ -81,7 +80,6 @@ class RnDPlotWrapper extends Component {
 
         <DifferentialMarginalPlot id={id} />
       </Rnd>
-      </div>
     );
   }
 }
