@@ -35,6 +35,11 @@ class PCIGraphContainer extends React.Component {
 
   };
 
+  /**
+   * From the react life cycle
+   * @param prevProps
+   * @param preState
+   */
   componentDidUpdate(prevProps, preState) {
     // update the plot according to the change of specifications
     console.log(this.props.activePlotId);
