@@ -1,6 +1,7 @@
 .RndPlot-container {
   border: #dbdbdb 3px solid;
   border-radius: 10px;
+  background-color: white;
 }
 
 .RndPlot-plot {
@@ -10,4 +11,6 @@
 
 .RndPlot-titlebar {
   display: flex;
+  background-color: white;
 }
+
