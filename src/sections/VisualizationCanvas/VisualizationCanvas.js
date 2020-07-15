@@ -38,7 +38,7 @@ class VisualizationCanvas extends Component {
         {
           Object.keys(models).map(
           (id) =>
-            models[id].show_pci_graph && (
+            models[id].showPCIGraph && (
               <PCIGraphContainer modelId={id} />
             )
           )

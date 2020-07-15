@@ -25,6 +25,7 @@ class AppToolbar extends Component {
       });
     }
     else if (buttonKey === 6) {
+      const { models } = this.props;
       this.setState({
         pciDisplayed: true
       });

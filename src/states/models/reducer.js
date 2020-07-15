@@ -30,7 +30,7 @@ const models = (state = defaultState, action) => {
                 modelName: modelName,
                 fields: fields,
                 id: id,
-                show_pci_graph: false,
+                showPCIGraph: false,
               }
             }
           },
@@ -45,7 +45,7 @@ const models = (state = defaultState, action) => {
           byId: {
             [id]: {
               $merge: {
-                show_pci_graph: true,
+                showPCIGraph: true,
               }
             }
           },
