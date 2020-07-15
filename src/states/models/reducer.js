@@ -1,4 +1,4 @@
-import { CREATE_NEW_MODEL, SHOW_PCI_GRAPH } from "./constants";
+import { CREATE_NEW_MODEL, SHOW_PCI_GRAPH, HIDE_PCI_GRAPH } from "./constants";
 import update from "immutability-helper";
 import { EMPTY } from "../constants";
 
@@ -46,6 +46,22 @@ const models = (state = defaultState, action) => {
             [id]: {
               $merge: {
                 showPCIGraph: true,
+              }
+            }
+          },
+          ...state.allIds,
+        }),
+        ...state.lastCreatedModelId,
+      };
+
+    case HIDE_PCI_GRAPH:
+      id = action.payload;
+      return {
+        models: update(state.models, {
+          byId: {
+            [id]: {
+              $merge: {
+                showPCIGraph: false,
               }
             }
           },

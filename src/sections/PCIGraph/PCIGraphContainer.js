@@ -12,6 +12,7 @@ import { mockData } from "./mockdata";
 import GraphComponent from "./GraphTest";
 import fetchData from "../../utils/fetch";
 import { BASE_URL } from "../../constants/query";
+import { hidePCIGraph } from "../../states/models/actions";
 
 class PCIGraphContainer extends React.Component {
   static propTypes = {
@@ -109,7 +110,8 @@ class PCIGraphContainer extends React.Component {
       nodes: null,
       edges: null,
       }
-    )
+    );
+    hidePCIGraph(id);
   };
 
 
@@ -135,8 +137,11 @@ const mapStateToProps = (state) => ({
   activePlotId: state.plots.activePlotId,
 });
 
+// TODO fix with hidePCIGraph
 const mapDispatchToProps = (dispatch) => {
   return {
+    hidePCIGraph: (id) =>
+      dispatch(hidePCIGraph(id)),
     changeActivePlot: (
       newActivePlotId // this function change the zIndex of plot and bring it to the front
     ) => dispatch(changeActivePlot(newActivePlotId)),

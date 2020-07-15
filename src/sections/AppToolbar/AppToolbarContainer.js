@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import AppToolbar from "./AppToolbar";
 import { connect } from "react-redux";
+import { changeActivePlot, deletePlot } from "../../states/plots/actions";
+import { showPCIGraph } from "../../states/models/actions";
+import { selectActiveModelId } from "../../states/visualizations/selector";
 
 class AppToolbarContainer extends React.Component {
   handleQueryClick = () => {
@@ -9,10 +12,6 @@ class AppToolbarContainer extends React.Component {
   };
 
   handleCloneClick = () => {
-    console.log("query...");
-  };
-
-  handleQueryClick = () => {
     console.log("query...");
   };
 
@@ -32,7 +31,8 @@ class AppToolbarContainer extends React.Component {
     console.log("query...");
   };
   handleGraphClick = () => {
-    console.log("query...");
+    const { activeModelId } = this.props;
+    showPCIGraph(activeModelId);
   };
   handleSyncModelClick = () => {
     console.log("query...");
@@ -45,7 +45,6 @@ class AppToolbarContainer extends React.Component {
         handleConfigClick={this.handleConfigClick}
         handleQueryClick={this.handleQueryClick}
         handleGraphClick={this.handleGraphClick}
-        handleQueryClick={this.handleQueryClick}
         handleRedoClick={this.handleSyncModelClick}
         handleUndoClick={this.handleUndoClick}
       />
@@ -55,10 +54,18 @@ class AppToolbarContainer extends React.Component {
 
 const mapStateToProps = (state) => ({
   models: state.models.models.byId,
+  activeModelId: selectActiveModelId,
 });
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    showPCIGraph: (
+      modelId
+    ) => dispatch(showPCIGraph(modelId)),
+  };
+};
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(AppToolbarContainer);
 
