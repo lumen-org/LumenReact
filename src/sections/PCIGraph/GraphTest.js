@@ -36,8 +36,8 @@ class GraphComponent extends React.Component {
   };
 
   handleClose = () => {
-    const { onPlotClose, id } = this.props;
-    onPlotClose(id);
+    const { onPlotClose } = this.props;
+    onPlotClose();
   };
   render() {
 

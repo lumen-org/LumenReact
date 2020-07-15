@@ -19,7 +19,7 @@ export const showPCIGraph = (id) => {
       id
     }
   }
-}
+};
 
 export const hidePCIGraph = (id) => {
   return {
@@ -28,4 +28,4 @@ export const hidePCIGraph = (id) => {
       id
     }
   }
-}
+};

@@ -1,26 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { changeActivePlot, deletePlot } from "../../states/plots/actions";
-import {
-  resetSpecifications,
-} from "../../states/specifications/actions";
 import { getModelNameById } from "../../states/models/selector";
-import { updateActiveModel } from "../../states/app/actions";
-import PropTypes from "prop-types";
-import DependencyGraph from "./PCIGraph";
 import { mockData } from "./mockdata";
 import GraphComponent from "./GraphTest";
 import fetchData from "../../utils/fetch";
 import { BASE_URL } from "../../constants/query";
 import { hidePCIGraph } from "../../states/models/actions";
+import { selectActiveModelId } from "../../states/visualizations/selector";
 
+/**
+ * Container class for communicating to the models store.
+ * It has as state the nodes and edges which are taken from the store.
+ */
 class PCIGraphContainer extends React.Component {
-  static propTypes = {
-    id: PropTypes.number,
-    activePlotId: PropTypes.number,
-    zIndex: PropTypes.number,
-  };
-
   state = {
     nodes: [
       { id: 0, label: "survived"},
@@ -42,16 +34,6 @@ class PCIGraphContainer extends React.Component {
     ]
 
   };
-/*
-  componentDidMount() {
-    const modelname = getModelNameById(this.props.activePlotId);
-    console.log(modelname);
-    let body = {
-      "FROM": modelname,
-      'PCI_GRAPH.GET': true,
-    };
-    fetchData(BASE_URL, body).then(response => this.transformGraphData(response), error => console.log("Something went wrong: "+ error));
-  }*/
 
   componentDidUpdate(prevProps, preState) {
     // update the plot according to the change of specifications
@@ -105,18 +87,18 @@ class PCIGraphContainer extends React.Component {
 
   }
 
-  onPlotClose = (id) => {
+  onPlotClose = () => {
     this.setState({
       nodes: null,
       edges: null,
       }
     );
-    hidePCIGraph(id);
+    const { modelId } = this.props;
+    hidePCIGraph(modelId);
   };
 
 
   render() {
-    const { activePlotId, id, zIndex } = this.props;
     const nodes = this.state.nodes;
     const edges = this.state.edges;
 
@@ -124,9 +106,7 @@ class PCIGraphContainer extends React.Component {
       <GraphComponent
         edges={edges}
         nodes={nodes}
-        id={id}
         onPlotClose={this.onPlotClose}
-        onActivePlotChange={this.onActivePlotChange}
       />
     );
   }
@@ -135,26 +115,16 @@ class PCIGraphContainer extends React.Component {
 const mapStateToProps = (state) => ({
   plots: state.plots.plots,
   activePlotId: state.plots.activePlotId,
+  activeModelId: selectActiveModelId(state),
 });
 
-// TODO fix with hidePCIGraph
 const mapDispatchToProps = (dispatch) => {
   return {
     hidePCIGraph: (id) =>
       dispatch(hidePCIGraph(id)),
-    changeActivePlot: (
-      newActivePlotId // this function change the zIndex of plot and bring it to the front
-    ) => dispatch(changeActivePlot(newActivePlotId)),
-    updateActiveModel: (
-      newActiveModel // this function trigger the update of schema
-    ) => dispatch(updateActiveModel(newActiveModel)),
-    deletePlot: (id) => dispatch(deletePlot(id)),
-    resetSpecifications: () => dispatch(resetSpecifications()),
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PCIGraphContainer);
-
-// this is a good prime example that history is not only to be retained, but also brought forward to a new age
 
 

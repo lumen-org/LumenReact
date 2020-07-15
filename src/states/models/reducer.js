@@ -40,6 +40,7 @@ const models = (state = defaultState, action) => {
       };
     case SHOW_PCI_GRAPH:
       id = action.payload;
+      console.log("inside show-pci-graph")
       return {
         models: update(state.models, {
           byId: {
