@@ -1,11 +1,10 @@
 .MainWindows-Container {
-  display: flex;
-  flex-direction: row;
-  background-color: #e3e4e6;
+  margin-top: 50px;
+  z-index: 0;
 }
 
 .MainWindows-MainContainer {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
   background-color: #e3e4e6;
 }

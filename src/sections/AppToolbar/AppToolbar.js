@@ -40,23 +40,28 @@ class AppToolbar extends Component {
     const { items } = toolbarConfig;
     const { openModal } = this.state;
     return (
-      <div className="appToolbar-container ">
+      <div className="navbar navbar-dark navbar-expand fixed-top">
         <ListModal open={openModal} handleModalClose={this.handleModalClose} />
 
-        {items.map((item, key) => (
-          <div className="appToolbar-buttonContainer">
-            <Button
+        <a class="navbar-brand">
+          Lumen
+        </a>
+        <ul className="navbar-nav mr-auto">
+          {items.map((item, key) => (
+            <li className="nav-item appToolbar-buttonContainer">
+              <Button
               variant={item.variant || "outlined"}
               color={item.color || "default"}
               endIcon={<img src={item.icon} alt="" />}
               size="small"
               key={key}
               onClick={() => this.onButtonClick(key)}
-            >
-              {item.name}
-            </Button>
-          </div>
-        ))}
+              >
+                {item.name}
+              </Button>
+            </li>
+          ))}
+        </ul>
       </div>
     );
   }

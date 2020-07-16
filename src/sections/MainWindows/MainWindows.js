@@ -28,12 +28,15 @@ class MainWindows extends Component {
 
     return (
       <div className="MainWindows-MainContainer">
-        <AppToolbar />
+        <AppToolbar/>
         <ListModal open={openModal} handleModalClose={this.handleModalClose} />
-
-        <div className="MainWindows-Container">
-          <PlotSettings />
-          <VisualizationCanvas />
+        <div className="row MainWindows-Container">
+          <div className="col-12 col-sm-3 mr-0 pt-2 pb-1 h-100">
+            <PlotSettings  />
+          </div>
+          <div className="col-12 col-sm-9 ml-0 pt-2 pb-1 h-100">
+            <VisualizationCanvas />
+          </div>
         </div>
       </div>
     );

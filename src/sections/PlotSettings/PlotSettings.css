@@ -1,29 +1,29 @@
 .layout-schema {
-  margin: 0.3em;
   background-color: white;
   border: #dbdbdb 1px solid;
   border-radius: 10px;
   box-sizing: border-box;
+  /*
   position: relative;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: hidden; */
 }
 
 .layout-specification {
-  margin: 0.3em;
   background-color: white;
   border: #dbdbdb 1px solid;
   border-radius: 10px;
   box-sizing: border-box;
+  /* 
   position: relative;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: hidden; */
 }
 
 .plotSettings-container {
-  width: 400px;
+  /* width: 400px; */
 
   user-select: none; /* supported by Chrome and Opera */
   -webkit-user-select: none; /* Safari */
