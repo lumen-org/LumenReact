@@ -1,4 +1,5 @@
 .MainWindows-Container {
+  height: 100%;
   margin-top: 50px;
   z-index: 0;
 }
@@ -6,5 +7,6 @@
 .MainWindows-MainContainer {
   /* display: flex;
   flex-direction: column; */
+  height: 100%;
   background-color: #e3e4e6;
 }

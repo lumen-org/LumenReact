@@ -23,8 +23,7 @@
 }
 
 .plotSettings-container {
-  /* width: 400px; */
-
+  height: 100%;
   user-select: none; /* supported by Chrome and Opera */
   -webkit-user-select: none; /* Safari */
   -khtml-user-select: none; /* Konqueror HTML */

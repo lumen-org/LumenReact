@@ -21,7 +21,7 @@ class PlotSettings extends Component {
       { i: "specification", x: 1, y: 0, w: 1, h: 10, static: true },
     ];
     return (
-      <div className="row">
+      <div className="row plotSettings-container">
       <DndProvider backend={Backend}>
           <div key="schema" className="col-6 layout-schema">
             <Schema modelName={activeModel} />
