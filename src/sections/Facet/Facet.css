@@ -9,3 +9,23 @@
 .specifications-facets-item {
   margin: 10px;
 }
+
+.custom-control-label:before {
+  background-color: red;
+}
+
+.custom-control-label:after {
+  border-color: #a1a4c8;
+}
+
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before{
+  background-color: #a1a4c8;
+  border-color: #a1a4c8;
+}
+
+/** focus shadow pinkish **/
+.custom-checkbox .custom-control-input:focus~.custom-control-label::before{
+  box-shadow: 0 0 0 1px #a1a4c8, 0 0 0 0.2rem rgba(161, 164, 200, 0.25);
+  border-color: #a1a4c8 !important;
+
+}

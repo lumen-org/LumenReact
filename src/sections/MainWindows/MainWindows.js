@@ -31,10 +31,10 @@ class MainWindows extends Component {
         <AppToolbar/>
         <ListModal open={openModal} handleModalClose={this.handleModalClose} />
         <div className="row MainWindows-Container">
-          <div className="col-12 col-sm-3 mr-0 pr-2 pt-2 pb-1">
+          <div className="col-12 col-xl-3 col-sm-6 mr-0 pr-2 pt-2 pb-1">
             <PlotSettings  />
           </div>
-          <div className="col-12 col-sm-9 ml-0 pl-2 pt-2 pb-1">
+          <div className="col-12 col-xl-9 col-sm-6 ml-0 pl-2 pt-2 pb-1">
             <VisualizationCanvas />
           </div>
         </div>
