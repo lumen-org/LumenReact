@@ -52,9 +52,7 @@ const models = (state = defaultState, action) => {
               }
             }
           },
-          ...state.allIds,
         }),
-        ...state.lastCreatedModelId,
       };
 
     case HIDE_PCI_GRAPH:
@@ -69,9 +67,7 @@ const models = (state = defaultState, action) => {
               }
             }
           },
-          ...state.allIds,
         }),
-        ...state.lastCreatedModelId,
       };
 
     default:

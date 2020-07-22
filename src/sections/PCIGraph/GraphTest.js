@@ -1,12 +1,7 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import Graph from "react-graph-vis";
 import { Rnd } from "react-rnd";
 import CloseButton from "../../components/Button/CloseButton";
-
-//import "./styles.css";
-// need to import the vis network css in order to show tooltip
-//import "./network.css";
 
 class GraphComponent extends React.Component {
   state = {
@@ -48,12 +43,18 @@ class GraphComponent extends React.Component {
 
   const options = {
     layout: {
-      hierarchical: true
+      hierarchical: false,
+      improvedLayout: false,
+    },
+    physics: {
+      enabled: false,
+      //solver: 'myOwnSolver',
+
     },
     edges: {
       color: "#000000"
     },
-    height: "300px"
+    //height: "300px"
   };
 
   const events = {
@@ -76,12 +77,14 @@ class GraphComponent extends React.Component {
       position={{ x: plotWindowsPosX, y: plotWindowsPosY }}
       onDragStop={this.onDragStop}
       onResizeStop={this.onResizeStop}
-      //className="RndPlot-container"
+      className="RndPlot-container"
       style={{
         border: "#dbdbdb 3px solid",
         borderRadius: "10px",
       }}>
-      <CloseButton handleClose={this.handleClose} />
+      <div className={"RndPlot-titlebar"}>
+        <CloseButton handleClose={this.handleClose} />
+      </div>
     <Graph
       graph={graph}
       options={options}

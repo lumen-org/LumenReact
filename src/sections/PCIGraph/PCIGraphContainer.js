@@ -17,24 +17,8 @@ class PCIGraphContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      nodes: [
-        { id: 0, label: "survived"},
-        { id: 1, label: "pclass"},
-        { id: 2, label: "sex"},
-        { id: 3, label: "embarked"},
-        { id: 4, label: "age"},
-        { id: 5, label: "fare"}
-      ],
-      edges: [
-        {source: 0, target: 4, weight: 0.148},
-        {source: 1, target: 3, weight: 0.182},
-        {source: 5, target: 3, weight: 0.251},
-        {source: 1, target: 4, weight: 0.719},
-        {source: 0, target: 1, weight: 0.844},
-        {source: 3, target: 1, weight: 0.844},
-        {source: 0, target: 2, weight: 1.87},
-        {source: 1, target: 5, weight: 2.08},
-      ]
+      nodes: null,
+      edges: null,
     }
   }
 
@@ -42,7 +26,7 @@ class PCIGraphContainer extends React.Component {
    * From the react life cycle
    */
   componentDidMount() {
-      // here should be stuff that fetches the data from the backend
+    // here should be stuff that fetches the data from the backend
     let graph;
     try {
       const modelname = getModelNameById(this.props.activePlotId);
@@ -70,14 +54,14 @@ class PCIGraphContainer extends React.Component {
    * If graphData is false, the mock data is used (values are from the pci graph based on the titanic data set), it was created to mimic
    * how real data would look like.
    * The data comes as string labels for each node and the edges' sources and targets are described with string labels, too. But the used graph
-   * layout algorithms needs them to be integer values.
+   * layout algorithms needs them to be integer values. This function maps the correct integer value to each label string.
    * @param graphData is either a false if there is no available data in the backend or returns an object containing nodes and edges.
    */
   transformGraphData(graphData){
     let graph = graphData;
     if (!graphData){
       // load mock data
-      graph = mockData;
+      graph = JSON.parse(JSON.stringify(mockData));
     }
 
     console.log(graph);
@@ -93,6 +77,7 @@ class PCIGraphContainer extends React.Component {
       graph._edges[i].from = graph._edges[i].source;
       graph._edges[i].target = lut[graph._edges[i].target];
       graph._edges[i].to = graph._edges[i].target;
+      graph._edges[i].label = graph._edges[i].weight.toString();
     }
 
     console.log(graph._nodes, graph._edges);
@@ -100,21 +85,9 @@ class PCIGraphContainer extends React.Component {
       nodes: graph._nodes,
       edges: graph._edges
     };
-    /*
-    this.setState({
-      nodes: graph._nodes,
-      edges: graph._edges,
-    });*/
-
   }
 
   onPlotClose = () => {
-    // probably unnecessary
-    this.setState({
-      nodes: null,
-      edges: null,
-      }
-    );
     const { modelId, hideThisPCIGraph } = this.props;
     hideThisPCIGraph(modelId);
   };

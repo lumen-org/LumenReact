@@ -28,14 +28,14 @@ import Vector from "./vectorclass";
  * @param overallChangePercentage {number} convergence criterion -> relative change to node position in the iteration before
  * @returns Array[] returns Array containing the altered nodes and edges. All the nodes now have positions that should satisfy the weak constraints and avoid edge cluttering and node overlapping
  */
-function solve(nodes, edges, DGA_coolingRate = 0.99, DGA_constraintSatisfactionDegree = 20, DGA_proximityRatio = 0.9, overallChangePercentage = 0.00001, maxIteration = 100000, DGA_temperature = 1,
+function solve(nodes, edges, DGA_coolingRate = 0.99, DGA_constraintSatisfactionDegree = 20, DGA_proximityRatio = 0.3, overallChangePercentage = 0.00001, maxIteration = 100000, DGA_temperature = 1,
                DGA_strengthOfRepulsiveForce = 10, DGA_timestep = 0.5, DGA_damping = 0.95) {
   console.log("parameters used:");
   console.log(DGA_proximityRatio, overallChangePercentage, DGA_coolingRate, DGA_constraintSatisfactionDegree, maxIteration);
   let t1 = performance.now();
   // line 1-4 with initializing node positions and previous positions; node accelerations are set to 0
   console.log("solving_csv_vector");
-  randomNodePosition(nodes, edges);
+  randomNodePosition(nodes);
   let round = 0;
   let changeNotRelevant = false;
   // line 5 initialize experimentally established constants
@@ -142,7 +142,7 @@ function solve(nodes, edges, DGA_coolingRate = 0.99, DGA_constraintSatisfactionD
  * Because there are needed within the layout algorithm this is also the part where each node is assigned multiple vectors for position (pos), previous position (ppos) and acceleration (a)
  *
  */
-function randomNodePosition(nodes, edges) { // works fine with vector changes
+function randomNodePosition(nodes) { // works fine with vector changes
   console.log("in function randomNodePosition");
   let alreadyANode = {};
   //I need to do something about the size of the node coordinates
@@ -181,62 +181,6 @@ function randomNodePosition(nodes, edges) { // works fine with vector changes
     node.change = 1;
     node.size = 1;
     node.last_distance = 0;
-  }
-}
-/*
-function notRandomNodePosition() { // works fine with vector changes
-  console.log("in function randomNodePosition");
-  let alreadyANode = {};
-  //I need to do something about the size of the node coordinates
-  let coordinates = Math.floor(Math.sqrt(prepNodes.length));
-  let x = 0;
-  let y = 0;
-  console.log("coordinates", coordinates);
-  for (let node of prepNodes) {
-    if (x > coordinates) {
-      x = 0;
-      y += 1;
-    }
-    node.pos = new Vector(x, y);
-    node.ppos = new Vector(x, y);
-    node.a = new Vector(0, 0);
-    node.change = 1;
-    node.size = 1;
-    node.last_distance = 0;
-    x += 1;
-  }
-}
-*/
-/** skeleton found at sigma js example animate.html; gives each node a coordinate on a circle -> giving it an overall
- * circular layout
- *
- * @param nodes: nodes used in calculation
- * @param edges edges used in calculation
- */
-function circularLayout(nodes, edges) { // works fine with vector changes
-
-  console.log("in function randomNodePosition");
-  //I need to do something about the size of the node coordinates
-  let L = 10, N = nodes.length;
-  for (let node of nodes) {
-    let i = node.id;
-    let x = L * Math.cos(Math.PI * 2 * i / N - Math.PI / 2);
-    let y = L * Math.sin(Math.PI * 2 * i / N - Math.PI / 2);
-
-    node.pos = new Vector(x, y);
-    node.ppos = new Vector(x, y);
-    node.a = new Vector(0, 0);
-    x += 1;
-
-
-    node.change = 1;
-    node.size = 1;
-    node.times_force_applied = 0;
-    ///x+=1;
-  }
-  for (let edge of edges) {
-    edge.length_ = 0;
-
   }
 }
 
