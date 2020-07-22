@@ -83,7 +83,9 @@ class PCIGraphContainer extends React.Component {
     for (let i = 0; i< graph._edges.length; i++){
       graph._edges[i].id = i;
       graph._edges[i].source = lut[graph._edges[i].source];
+      graph._edges[i].from = graph._edges[i].source;
       graph._edges[i].target = lut[graph._edges[i].target];
+      graph._edges[i].to = graph._edges[i].target;
     }
 
     console.log(graph._nodes, graph._edges);
