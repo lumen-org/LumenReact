@@ -1,16 +1,20 @@
 export const mockData = {
   _nodes: [
-    {label: "node 0"},
-    {label: "node 1"},
-    {label: "node 2"},
-    {label: "node 3"},
-    {label: "node 4"},
+    {label: "survived"},
+    {label: "pclass"},
+    {label: "sex"},
+    {label: "embarked"},
+    {label: "age"},
+    {label: "fare"}
   ],
   _edges: [
-    {source: "node 0", target: "node 1", weight: 1},
-    {source: "node 1", target: "node 2", weight: 1},
-    {source: "node 2", target: "node 0", weight: 1},
-    {source: "node 0", target: "node 4", weight: 1},
-    {source: "node 3", target: "node 4", weight: 2}
+    {source: "survived", target: "age", weight: 0.148},
+    {source: "pclass", target: "embarked", weight: 0.182},
+    {source: "fare", target: "embarked", weight: 0.251},
+    {source: "pclass", target: "age", weight: 0.719},
+    {source: "survived", target: "pclass", weight: 0.844},
+    {source: "embarked", target: "pclass", weight: 0.844},
+    {source: "survived", target: "sex", weight: 1.87},
+    {source: "pclass", target: "fare", weight: 2.08},
   ]
 }
