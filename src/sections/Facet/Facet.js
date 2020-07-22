@@ -28,13 +28,13 @@ class Facet extends React.Component {
               {item.name}
               <input
                 type="checkbox"
-                onClick={() => this.handleModelClick(key)}
-                checked={facets[key].model}
+                onClick={() => this.handleModelClick(item.name)}
+                checked={facets[item.name].model}
               />
               <input
                 type="checkbox"
-                onClick={() => this.handleDataClick(key)}
-                checked={facets[key].data}
+                onClick={() => this.handleDataClick(item.name)}
+                checked={facets[item.name].data}
               />
             </div>
           </div>

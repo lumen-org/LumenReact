@@ -17,7 +17,7 @@ export const defaultPlotTraces = {
         width: 1.5,
       },
       xbins: {
-        size: 0.06,
+        size: 0.08,
       },
     },
     xaxis: "x2",
@@ -30,6 +30,9 @@ export const defaultPlotTraces = {
       line: {
         color: "rgb(97, 97, 97)",
         width: 1.5,
+      },
+      xbins: {
+        size: 0.08,
       },
     },
     yaxis: "y2",

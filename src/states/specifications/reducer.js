@@ -4,12 +4,11 @@ import {
   ADD_TO_SPECIFICATION,
   DELETE_FROM_SPECIFICATION,
   UPDATE_FACET_STATE,
-  RESET_SPECIFICATIONS
+  RESET_SPECIFICATIONS,
 } from "./constants";
 
 import update from "immutability-helper";
 import { EMPTY } from "../constants";
-
 
 /*
 maintains all existing specifications and there state
@@ -22,26 +21,26 @@ export const defaultValues = {
     Detail: new Set([]),
     Color: new Set([]),
     Shape: new Set([]),
-    Size: new Set([])
+    Size: new Set([]),
   },
   facets: {
-    0: {
+    Prediction: {
       model: false,
-      data: false
+      data: false,
     },
-    1: {
+    "Data Points": {
       model: false,
-      data: true
+      data: true,
     },
-    2: {
+    Marginals: {
       model: false,
-      data: true
+      data: true,
     },
-    3: {
+    Density: {
       model: false,
-      data: false
-    }
-  }
+      data: false,
+    },
+  },
 };
 
 export const defaultState = {
@@ -49,8 +48,8 @@ export const defaultState = {
   lastCreatedId: EMPTY,
   specifications: {
     byId: {},
-    allIds: []
-  }
+    allIds: [],
+  },
 };
 
 const specifications = (state = defaultState, action) => {
@@ -58,13 +57,16 @@ const specifications = (state = defaultState, action) => {
   switch (action.type) {
     case CREATE_NEW_SPECIFICATION:
       if (!specifications.allIds.includes(state.nextId)) {
-        specifications.byId[state.nextId] = { ...defaultValues, id: state.nextId};
+        specifications.byId[state.nextId] = {
+          ...defaultValues,
+          id: state.nextId,
+        };
         specifications.allIds = [...specifications.allIds, state.nextId];
         return {
           ...state,
           nextId: state.nextId + 1,
           lastCreatedId: state.nextId,
-          specifications
+          specifications,
         };
       }
       return state;
@@ -77,7 +79,7 @@ const specifications = (state = defaultState, action) => {
         });
         return {
           ...state,
-          specifications
+          specifications,
         };
       }
       return state;
@@ -90,11 +92,11 @@ const specifications = (state = defaultState, action) => {
           byId: {
             [action.payload.id.toString()]: {
               specification: {
-                [action.payload.key]: { $add: [action.payload.value] }
-              }
-            }
-          }
-        })
+                [action.payload.key]: { $add: [action.payload.value] },
+              },
+            },
+          },
+        }),
       };
 
     case DELETE_FROM_SPECIFICATION:
@@ -104,11 +106,11 @@ const specifications = (state = defaultState, action) => {
           byId: {
             [action.payload.id]: {
               specification: {
-                [action.payload.key]: { $remove: [action.payload.value] }
-              }
-            }
-          }
-        })
+                [action.payload.key]: { $remove: [action.payload.value] },
+              },
+            },
+          },
+        }),
       };
 
     case UPDATE_FACET_STATE:
@@ -118,26 +120,19 @@ const specifications = (state = defaultState, action) => {
           byId: {
             [action.payload.id]: {
               facets: {
-                [action.payload.key]: { $merge: { [action.payload.type]: !specifications.byId[action.payload.id].facets[action.payload.key][action.payload.type] } }
-              }
-            }
-          }
-        })
+                [action.payload.key]: {
+                  $merge: {
+                    [action.payload.type]: !specifications.byId[
+                      action.payload.id
+                    ].facets[action.payload.key][action.payload.type],
+                  },
+                },
+              },
+            },
+          },
+        }),
       };
 
-    // case RESET_SPECIFICATIONS:
-    //   return {
-    //     ...state,
-    //     specifications: {
-    //       X_Axis: new Set([]),
-    //       Y_Axis: new Set([]),
-    //       Filter: new Set([]),
-    //       Detail: new Set([]),
-    //       Color: new Set([]),
-    //       Shape: new Set([]),
-    //       Size: new Set([])
-    //     }
-    //   };
     default:
       return state;
   }
