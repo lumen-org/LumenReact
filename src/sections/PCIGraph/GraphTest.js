@@ -2,6 +2,7 @@ import React from "react";
 import Graph from "react-graph-vis";
 import { Rnd } from "react-rnd";
 import CloseButton from "../../components/Button/CloseButton";
+import ThresholdBar from "../../components/ThresholdBar";
 
 class GraphComponent extends React.Component {
   state = {
@@ -85,6 +86,7 @@ class GraphComponent extends React.Component {
       <div className={"RndPlot-titlebar"}>
         <CloseButton handleClose={this.handleClose} />
       </div>
+      <ThresholdBar onThresholdChange={() => console.log("3")} maxValue={4} />
     <Graph
       graph={graph}
       options={options}

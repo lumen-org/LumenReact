@@ -9,7 +9,7 @@ export const mockData = {
   ],
   _edges: [
     {source: "survived", target: "age", weight: 0.148},
-    {source: "pclass", target: "embarked", weight: 0.182},
+    {source: "survived", target: "embarked", weight: 0.182},
     {source: "fare", target: "embarked", weight: 0.251},
     {source: "pclass", target: "age", weight: 0.719},
     {source: "survived", target: "pclass", weight: 0.844},
