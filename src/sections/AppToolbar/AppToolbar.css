@@ -1,4 +1,4 @@
-.appToolbar-container {
+/* .appToolbar-container {
   border: #dbdbdb 1px solid;
   border-radius: 10px;
   background-color: #a1a3a6;
@@ -9,8 +9,12 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-}
+} */
 
 .appToolbar-buttonContainer {
   margin-left: 10px;
+}
+
+.navbar-dark {
+  background-color: #6465a1;
 }

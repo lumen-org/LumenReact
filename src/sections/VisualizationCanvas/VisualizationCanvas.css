@@ -1,11 +1,16 @@
 .VisualizationCanvas-container {
-  min-width: 70%;
+    /* 
+  min-width: 60%;
+
   max-width: 100%;
-  display: flex;
-  background-color: white;
+  display: flex;*/
+  height: 100%;
+  background-color: white; 
   border: #dbdbdb 1px solid;
-  width: -moz-available;
+  padding: 0;
+  margin: 0;
+  /* width: -moz-available;
   margin: 0.3em;
-  margin-top: 15px;
+  margin-top: 15px;*/
   border-radius: 10px;
 }

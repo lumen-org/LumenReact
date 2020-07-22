@@ -21,22 +21,16 @@ class PlotSettings extends Component {
       { i: "specification", x: 1, y: 0, w: 1, h: 10, static: true },
     ];
     return (
+      <div className="row plotSettings-container">
       <DndProvider backend={Backend}>
-        <GridLayout
-          className="plotSettings-container"
-          layout={layout2}
-          width={400}
-          cols={2}
-          rowHeight={100}
-        >
-          <div key="schema" className="layout-schema">
+          <div key="schema" className="col-6 layout-schema">
             <Schema modelName={activeModel} />
           </div>
-          <div key="specification" className="layout-specification">
+          <div key="specification" className=" col-6 layout-specification">
             <Specification />
           </div>
-        </GridLayout>
       </DndProvider>
+      </div>
     );
   }
 }
