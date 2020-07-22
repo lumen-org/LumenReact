@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import AppToolbar from "./AppToolbar";
 import { connect } from "react-redux";
 import { changeActivePlot, deletePlot } from "../../states/plots/actions";
-import { showPCIGraph } from "../../states/models/actions";
 import { selectActiveModelId } from "../../states/visualizations/selector";
+import { showPCIGraph } from "../../states/models/actions";
 
 class AppToolbarContainer extends React.Component {
   handleQueryClick = () => {
@@ -31,9 +31,9 @@ class AppToolbarContainer extends React.Component {
     console.log("query...");
   };
   handleGraphClick = () => {
-    const { activeModelId } = this.props;
+    const { activeModelId, showThisPCIGraph } = this.props;
     console.log(activeModelId);
-    showPCIGraph(activeModelId);
+    showThisPCIGraph(activeModelId);
   };
   handleSyncModelClick = () => {
     console.log("query...");
@@ -60,7 +60,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    showPCIGraph: (
+    showThisPCIGraph: (
       modelId
     ) => dispatch(showPCIGraph(modelId)),
   };

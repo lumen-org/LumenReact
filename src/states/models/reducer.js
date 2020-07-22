@@ -15,9 +15,11 @@ export const defaultState = {
 
 
 const models = (state = defaultState, action) => {
+  let id;
   switch (action.type) {
     case CREATE_NEW_MODEL:
-      let { modelName, model, id } = action.payload;
+      let modelName, model;
+      ({ modelName, model, id } = action.payload);
       let fields = {};
       model.forEach(o => {
         fields[o.name] = o;
@@ -39,7 +41,7 @@ const models = (state = defaultState, action) => {
         lastCreatedModelId: id
       };
     case SHOW_PCI_GRAPH:
-      id = action.payload;
+      ({ id }= action.payload);
       console.log("inside show-pci-graph")
       return {
         models: update(state.models, {
@@ -56,7 +58,8 @@ const models = (state = defaultState, action) => {
       };
 
     case HIDE_PCI_GRAPH:
-      id = action.payload;
+      ({ id }= action.payload);
+      console.log("inside show-hide-graph")
       return {
         models: update(state.models, {
           byId: {

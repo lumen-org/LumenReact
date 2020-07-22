@@ -98,8 +98,8 @@ class PCIGraphContainer extends React.Component {
       edges: null,
       }
     );
-    const { modelId } = this.props;
-    hidePCIGraph(modelId);
+    const { modelId, hideThisPCIGraph } = this.props;
+    hideThisPCIGraph(modelId);
   };
 
 
@@ -125,7 +125,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    hidePCIGraph: (id) =>
+    hideThisPCIGraph: (id) =>
       dispatch(hidePCIGraph(id)),
   };
 };
