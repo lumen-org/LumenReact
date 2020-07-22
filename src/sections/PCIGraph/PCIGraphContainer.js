@@ -7,6 +7,7 @@ import fetchData from "../../utils/fetch";
 import { BASE_URL } from "../../constants/query";
 import { hidePCIGraph } from "../../states/models/actions";
 import { selectActiveModelId } from "../../states/visualizations/selector";
+import solve from "./utils/weakConstraintBasedGraphLayoutAlgorithm";
 
 /**
  * Container class for communicating to the models store.
@@ -42,19 +43,25 @@ class PCIGraphContainer extends React.Component {
    */
   componentDidMount() {
       // here should be stuff that fetches the data from the backend
-      try {
-        const modelname = getModelNameById(this.props.activePlotId);
-        console.log(modelname);
-        let body = {
-          "FROM": modelname,
-          'PCI_GRAPH.GET': true,
-        };
-        fetchData(BASE_URL, body).then(response => this.transformGraphData(response), error => console.log("Something went wrong: "+ error));
-      }
-      catch (e) {
-        console.log(e);
-        this.transformGraphData(false);
-      }
+    let graph;
+    try {
+      const modelname = getModelNameById(this.props.activePlotId);
+      console.log(modelname);
+      let body = {
+        "FROM": modelname,
+        'PCI_GRAPH.GET': true,
+      };
+      fetchData(BASE_URL, body).then(response => graph = this.transformGraphData(response), error => console.log("Something went wrong: "+ error));
+    }
+    catch (e) {
+      console.log(e);
+      graph = this.transformGraphData(false);
+    }
+    let result = solve(graph.nodes, graph.edges);
+    this.setState({
+      nodes: result[0],
+      edges: result[1],
+    })
   }
 
   /**
@@ -79,7 +86,7 @@ class PCIGraphContainer extends React.Component {
       graph._nodes[i].id = i;
       lut[graph._nodes[i].label] = i;
     }
-    console.log(lut);
+    //console.log(lut);
     for (let i = 0; i< graph._edges.length; i++){
       graph._edges[i].id = i;
       graph._edges[i].source = lut[graph._edges[i].source];
@@ -89,14 +96,20 @@ class PCIGraphContainer extends React.Component {
     }
 
     console.log(graph._nodes, graph._edges);
+    return {
+      nodes: graph._nodes,
+      edges: graph._edges
+    };
+    /*
     this.setState({
       nodes: graph._nodes,
       edges: graph._edges,
-    });
+    });*/
 
   }
 
   onPlotClose = () => {
+    // probably unnecessary
     this.setState({
       nodes: null,
       edges: null,
