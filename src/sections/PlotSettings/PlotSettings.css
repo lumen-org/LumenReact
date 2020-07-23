@@ -2,24 +2,12 @@
   background-color: white;
   border: #dbdbdb 1px solid;
   border-radius: 10px;
-  box-sizing: border-box;
-  /*
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden; */
 }
 
 .layout-specification {
   background-color: white;
   border: #dbdbdb 1px solid;
   border-radius: 10px;
-  box-sizing: border-box;
-  /* 
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden; */
 }
 
 .plotSettings-container {

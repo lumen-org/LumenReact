@@ -66,6 +66,7 @@ class RnDPlotWrapper extends Component {
       <Rnd
         size={{ width: plotWindowsWidth, height: plotWindowsHeight }}
         position={{ x: plotWindowsPosX, y: plotWindowsPosY }}
+        style={{zIndex: zIndex}}
         onDragStop={this.onDragStop}
         onResizeStop={this.onResizeStop}
         className="RndPlot-container"
