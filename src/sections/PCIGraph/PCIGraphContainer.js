@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getModelNameById } from "../../states/models/selector";
-import { mockData } from "./mockdata";
-import GraphComponent from "./GraphTest";
+import { mockData } from "./utils/mockdata";
+import PCIGraph from "./PCIGraph";
 import fetchData from "../../utils/fetch";
 import { BASE_URL } from "../../constants/query";
 import { hidePCIGraph } from "../../states/models/actions";
@@ -79,7 +79,6 @@ class PCIGraphContainer extends React.Component {
       graph._edges[i].to = graph._edges[i].target;
       graph._edges[i].label = graph._edges[i].weight.toString();
     }
-
     console.log(graph._nodes, graph._edges);
     return {
       nodes: graph._nodes,
@@ -87,18 +86,24 @@ class PCIGraphContainer extends React.Component {
     };
   }
 
+  /**
+   * gets the hideThisPCIGraph Function from the store to make the state correction accordingly
+   */
   onPlotClose = () => {
     const { modelId, hideThisPCIGraph } = this.props;
     hideThisPCIGraph(modelId);
   };
 
-
+  /**
+   *  render function -> returns the PCIGraph
+   * @returns {React.Component}
+   */
   render() {
     const nodes = this.state.nodes;
     const edges = this.state.edges;
 
     return (
-      <GraphComponent
+      <PCIGraph
         edges={edges}
         nodes={nodes}
         onPlotClose={this.onPlotClose}
