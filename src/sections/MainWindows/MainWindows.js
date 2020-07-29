@@ -4,7 +4,7 @@ import PlotSettings from "../PlotSettings";
 import VisualizationCanvas from "../VisualizationCanvas";
 import AppToolbar from "../AppToolbar";
 import ListModal from "../../components/ListModal";
-import "./MainWindows.css";
+import "./MainWindows.scss";
 
 // TODO: Make it responsive according to tablet size
 class MainWindows extends Component {
@@ -27,13 +27,16 @@ class MainWindows extends Component {
     const { openModal } = this.state;
 
     return (
-      <div className="MainWindows-MainContainer">
-        <AppToolbar />
+      <div className="container-fluid MainWindows-MainContainer">
+        <AppToolbar/>
         <ListModal open={openModal} handleModalClose={this.handleModalClose} />
-
-        <div className="MainWindows-Container">
-          <PlotSettings />
-          <VisualizationCanvas />
+        <div className="row MainWindows-Container">
+          <div className="col-12 col-xl-3 col-sm-6 pr-2 pt-2 pb-1">
+            <PlotSettings  />
+          </div>
+          <div className="col-12 col-xl-9 col-sm-6 pl-2 pt-2 pb-1 pr-1">
+            <VisualizationCanvas />
+          </div>
         </div>
       </div>
     );

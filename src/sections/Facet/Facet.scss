@@ -1,0 +1,33 @@
+@import "src/assets/styles/colors";
+
+.facet-bar {
+}
+
+.specifications-facets-img {
+  height: 20px;
+  width: auto;
+  vertical-align: middle;
+}
+.specifications-facets-item {
+  margin: 10px;
+}
+
+.custom-control-label:before {
+  background-color: red;
+}
+
+.custom-control-label:after {
+  border-color: $checkbox;
+}
+
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before{
+  background-color: $checkbox;
+  border-color: $checkbox;
+}
+
+/** focus shadow pinkish **/
+.custom-checkbox .custom-control-input:focus~.custom-control-label::before{
+  box-shadow: 0 0 0 1px $checkbox, 0 0 0 0.2rem rgba(161, 164, 200, 0.25);
+  border-color: $checkbox !important;
+
+}

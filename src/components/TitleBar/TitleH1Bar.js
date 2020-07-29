@@ -1,5 +1,5 @@
 import React from "react";
-import "./TitleH1Bar.css";
+import "./TitleH1Bar.scss";
 import CloseButton from "../Button/CloseButton";
 import TitelH1 from "../Titles/TitelH1";
 

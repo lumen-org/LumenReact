@@ -14,6 +14,9 @@ const modalStyles = {
     right: "30%",
     bottom: "30%",
   },
+  overlay: {
+    zIndex: 1000
+  }
 };
 
 class ListModdal extends Component {
