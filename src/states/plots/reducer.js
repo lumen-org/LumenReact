@@ -79,7 +79,7 @@ const plotsReducer = (state = defaultState, action) => {
               $merge: {
                 multiPlotData: [
                   ...state.plots.byId[action.payload.id].multiPlotData,
-                  action.payload.newmultiPlotData,
+                  action.payload.newPlotData,
                 ],
               },
             },
