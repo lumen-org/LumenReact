@@ -8,8 +8,6 @@ import createPlotlyComponent from "react-plotly.js/factory";
 const Plotly = window.Plotly;
 const Plot = createPlotlyComponent(Plotly);
 
-var xf = Array.from({ length: 50 }, () => Math.random() * (8 - 4 + 1) + 4);
-var yf = Array.from({ length: 50 }, () => Math.random() * (8 - 2 + 1) + 2);
 class StandardPlot extends Component {
   static propTypes = {
     plotData: PropTypes.array,
@@ -26,8 +24,8 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.scatterTrace,
-      x: plotData.x,
-      y: plotData.y,
+      x: plotData.training.x,
+      y: plotData.training.y,
     };
   };
 
@@ -35,7 +33,7 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.xHistogramTrace,
-      x: plotData.x,
+      x: plotData.training.x,
     };
   };
 
@@ -43,7 +41,7 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.yHistogramTrace,
-      y: plotData.y,
+      y: plotData.training.y,
     };
   };
 
@@ -51,18 +49,17 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.densityTrace,
-      x: plotData.x,
-      y: plotData.y,
+      x: plotData.training.x,
+      y: plotData.training.y,
     };
   };
-  // TODO: query prediction data, now there are just fake data
 
   getNewModelScatterTrace = () => {
     const { plotData } = this.props;
     return {
       ...defaultPlot.modelScatterTrace,
-      x: xf,
-      y: yf,
+      x: plotData.model.x,
+      y: plotData.model.y,
     };
   };
 
@@ -83,6 +80,12 @@ class StandardPlot extends Component {
       }
       if (traceinfo.name === "Data Points" && traceinfo.from === "model") {
         data.push(this.getNewModelScatterTrace());
+      }
+      if (traceinfo.name === "Density" && traceinfo.from === "model") {
+        // TODO
+      }
+      if (traceinfo.name === "Marginals" && traceinfo.from === "model") {
+        // TODO
       }
     });
 

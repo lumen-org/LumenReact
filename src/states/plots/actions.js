@@ -8,7 +8,8 @@ import {
   RESET_MULTI_PLOT_DATA,
   UPDATE_PLOT_LAYOUT,
 } from "./constants";
-import { fetchAllPlotData } from "../../utils/plotData";
+import { fetchAllPlotData, getSelectFieldArray } from "../../utils/plotData";
+import queryTemplates from "../../utils/queryTemplates";
 import { fetchPlotData } from "../../utils/fetch";
 import { getSpecById } from "../specifications/selector";
 import { getModelNameById } from "../visualizations/selector";
@@ -99,27 +100,32 @@ export function fetchStandardPlotData(id) {
     const specification = getSpecById(getState(), id);
     const X_Axis = [...specification.X_Axis];
     const Y_Axis = [...specification.Y_Axis];
-    var SELECT;
-    var PREDICT;
-    if (X_Axis.length === 0 && Y_Axis.length > 0) {
-      SELECT = [X_Axis[0]];
-      PREDICT = [X_Axis[0]];
-    } else if (Y_Axis.length === 0 && X_Axis.length > 0) {
-      SELECT = [Y_Axis[0]];
-    } else if (Y_Axis.length === 0 && X_Axis.length === 0) {
-      SELECT = [];
-      PREDICT = [];
-    } else {
-      SELECT = [X_Axis[0], Y_Axis[0]];
-      PREDICT = [];
-    }
-    const BODY = {
+    const SELECT = getSelectFieldArray(X_Axis, Y_Axis);
+    const trainingDataQueryBody = {
+      ...queryTemplates.trainingDataPoints,
       SELECT,
       FROM: modelName,
     };
-    fetchPlotData(BODY).then((payload) => {
-      dispatch(updateStandardPlotData(id, payload));
-    });
+    const modelDataQueryBody = {
+      ...queryTemplates.modelDataPoints,
+      SELECT,
+      FROM: modelName,
+    };
+    Promise.all([
+      fetchPlotData(trainingDataQueryBody).then((payload) => {
+        return payload;
+      }),
+      fetchPlotData(modelDataQueryBody).then((payload) => {
+        return payload;
+      }),
+    ]).then((response) =>
+      dispatch(
+        updateStandardPlotData(id, {
+          training: response[0],
+          model: response[1],
+        })
+      )
+    );
   };
 }
 

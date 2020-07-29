@@ -47,6 +47,23 @@ export const getLayoutInformation = (specifications) => {
   }
 };
 
+// TODO: This function can be deleted if we restrict the number of entries
+// for each field in specification
+export const getSelectFieldArray = (X_Axis, Y_Axis) => {
+  var SELECT;
+  if (X_Axis.length === 0 && Y_Axis.length > 0) {
+    SELECT = [X_Axis[0]];
+  } else if (Y_Axis.length === 0 && X_Axis.length > 0) {
+    SELECT = [Y_Axis[0]];
+  } else if (Y_Axis.length === 0 && X_Axis.length === 0) {
+    SELECT = [];
+  } else {
+    SELECT = [X_Axis[0], Y_Axis[0]];
+  }
+  return SELECT;
+};
+
+// TODO: refractor this to action or fetch
 export const fetchAllPlotData = (specifications, modelName) => {
   const X_Axis = [...specifications.X_Axis];
   const Y_Axis = [...specifications.Y_Axis];

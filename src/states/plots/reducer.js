@@ -54,7 +54,10 @@ const plotsReducer = (state = defaultState, action) => {
                 specificationId: specificationId,
                 zIndex: 0,
                 multiPlotData: [],
-                standardPlotData: {},
+                standardPlotData: {
+                  training: { x: [], y: [] },
+                  model: { x: [], y: [] },
+                },
                 layout: {},
                 show: true,
               },
