@@ -34,7 +34,6 @@ function solve(nodes, edges, DGA_coolingRate = 0.99, DGA_constraintSatisfactionD
   console.log(DGA_proximityRatio, overallChangePercentage, DGA_coolingRate, DGA_constraintSatisfactionDegree, maxIteration);
   let t1 = performance.now();
   // line 1-4 with initializing node positions and previous positions; node accelerations are set to 0
-  console.log("solving_csv_vector");
   randomNodePosition(nodes);
   let round = 0;
   let changeNotRelevant = false;
@@ -122,8 +121,6 @@ function solve(nodes, edges, DGA_coolingRate = 0.99, DGA_constraintSatisfactionD
 
 
   }
-  console.log(nodes);
-  console.log(edges);
   //drawGraph(nodes, edges, s);
   let t2 = performance.now();
   console.log("Time:" + (t2 - t1) + " ms");
@@ -132,7 +129,6 @@ function solve(nodes, edges, DGA_coolingRate = 0.99, DGA_constraintSatisfactionD
     node.x = node.pos.x *100;
     node.y = node.pos.y *100;
   }
-  console.log("Temperature: ", DGA_temperature);
   return [nodes, edges]
 }
 
@@ -143,11 +139,9 @@ function solve(nodes, edges, DGA_coolingRate = 0.99, DGA_constraintSatisfactionD
  *
  */
 function randomNodePosition(nodes) { // works fine with vector changes
-  console.log("in function randomNodePosition");
   let alreadyANode = {};
   //I need to do something about the size of the node coordinates
   let coordinates = nodes.length;
-  console.log("coordinates", coordinates);
   for (let node of nodes) {
     let x = 0;
     let y = 0;

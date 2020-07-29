@@ -30,7 +30,6 @@ class PCIGraphContainer extends React.Component {
     let graph;
     try {
       const modelname = getModelNameById(this.props.activePlotId);
-      console.log(modelname);
       let body = {
         "FROM": modelname,
         'PCI_GRAPH.GET': true,
@@ -63,14 +62,11 @@ class PCIGraphContainer extends React.Component {
       // load mock data
       graph = JSON.parse(JSON.stringify(mockdataPCI));
     }
-
-    console.log(graph);
     let lut = {};
     for (let i = 0; i< graph._nodes.length; i++){
       graph._nodes[i].id = i;
       lut[graph._nodes[i].label] = i;
     }
-    //console.log(lut);
     for (let i = 0; i< graph._edges.length; i++){
       graph._edges[i].id = i;
       graph._edges[i].source = lut[graph._edges[i].source];
@@ -79,7 +75,6 @@ class PCIGraphContainer extends React.Component {
       graph._edges[i].to = graph._edges[i].target;
       graph._edges[i].label = graph._edges[i].weight.toString();
     }
-    console.log(graph._nodes, graph._edges);
     return {
       nodes: graph._nodes,
       edges: graph._edges
