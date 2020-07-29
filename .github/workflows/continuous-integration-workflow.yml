@@ -11,7 +11,7 @@ on:
       - master
 
 jobs:
-  build:
+  unittests:
     name: Unittests
     runs-on: ubuntu-18.04
     strategy:
@@ -27,3 +27,21 @@ jobs:
       # - run: npm ci
       - run: npm install
       - run: npm test
+  codecov:
+    name: Codecov
+    runs-on: ubuntu-18.04
+    steps:
+        - uses: actions/checkout@v2
+        - name: Codecov node.js 14.x
+          uses: actions/setup-node@v1
+          with:
+            node-version: 14.x
+        # rm warnings befor enabling it
+        # - run: npm ci
+        - run: npm install
+        - run: npm run-script test_coverage
+        - name: Upload coverage to Codecov
+          uses: codecov/codecov-action@v1
+          with:
+            file:
+            flags: unittests

@@ -1,3 +1,5 @@
+@import "src/assets/styles/colors";
+
 .facet-bar {
 }
 
@@ -15,17 +17,17 @@
 }
 
 .custom-control-label:after {
-  border-color: #a1a4c8;
+  border-color: $checkbox;
 }
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before{
-  background-color: #a1a4c8;
-  border-color: #a1a4c8;
+  background-color: $checkbox;
+  border-color: $checkbox;
 }
 
 /** focus shadow pinkish **/
 .custom-checkbox .custom-control-input:focus~.custom-control-label::before{
-  box-shadow: 0 0 0 1px #a1a4c8, 0 0 0 0.2rem rgba(161, 164, 200, 0.25);
-  border-color: #a1a4c8 !important;
+  box-shadow: 0 0 0 1px $checkbox, 0 0 0 0.2rem rgba(161, 164, 200, 0.25);
+  border-color: $checkbox !important;
 
 }

@@ -1,26 +1,15 @@
+@import "src/assets/styles/colors";
+
 .MainWindows-Container {
   height: 100%;
   margin-top: 50px;
   z-index: 0;
+  overflow: hidden;
 }
 
 .MainWindows-MainContainer {
   /* display: flex;
   flex-direction: column; */
   height: 100%;
-  background-color: #e3e4e6;
-}
-
-.page {
-  display: table;
-  width: 100%;
-}
-
-.sidebar {
-  display: table-cell;
-}
-
-.plot-settings {
-  display: table-cell;
-  min-width: 450px
+  background-color: $main-window-background-color;
 }

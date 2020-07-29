@@ -1,5 +1,5 @@
 import React, {useRef} from "react";
-import "./FielItem.css";
+import "./FielItem.scss";
 import CloseButton from "../Button/CloseButton";
 import FieldItemModal from "../FieldItemModal/FieldItemModal";
 

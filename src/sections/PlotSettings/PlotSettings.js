@@ -5,7 +5,7 @@ import GridLayout from "react-grid-layout";
 import { DndProvider } from "react-dnd";
 import Backend from "react-dnd-html5-backend";
 
-import "./PlotSettings.css";
+import "./PlotSettings.scss";
 import Schema from "../Schema";
 import Specification from "../Specification";
 

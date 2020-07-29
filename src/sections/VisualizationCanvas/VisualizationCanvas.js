@@ -4,6 +4,7 @@ import RnDPlot from "../../components/RnDPlotWrapper";
 import PropTypes from "prop-types";
 import "./VisualizationCanvas.css";
 import PCIGraph from "../PCIGraph";
+import "./VisualizationCanvas.scss";
 
 class VisualizationCanvas extends Component {
   static propTypes = {
@@ -28,7 +29,7 @@ class VisualizationCanvas extends Component {
             plots[id].show && (
               <RnDPlot
                 id={plots[id].id}
-                zIndex={plots[id].zIndex}
+                zIndex={plots[id].zIndex + 10}
                 modelName={plots[id].model}
                 specifications={specifications.byId[plots[id].specificationId].specification}
                 visualizationId={plots[id].visualizationId}

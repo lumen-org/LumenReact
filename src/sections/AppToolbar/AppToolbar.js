@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import ListModal from "../../components/ListModal";
 
 import toolbarConfig from "../../configs/appToolbar";
-import "./AppToolbar.css";
+import "./AppToolbar.scss";
 
 class AppToolbar extends Component {
   static propTypes = {

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Rnd } from "react-rnd";
 import CloseButton from "../Button/CloseButton";
 import DifferentialMarginalPlot from "../DifferentialMarginalPlot";
-import "./RnDPlotWrapper.css";
+import "./RnDPlotWrapper.scss";
 
 /**
  * RnDPlotWrapper is a wrapper around different kinds of plots such as:
@@ -66,6 +66,7 @@ class RnDPlotWrapper extends Component {
       <Rnd
         size={{ width: plotWindowsWidth, height: plotWindowsHeight }}
         position={{ x: plotWindowsPosX, y: plotWindowsPosY }}
+        style={{zIndex: zIndex}}
         onDragStop={this.onDragStop}
         onResizeStop={this.onResizeStop}
         className="RndPlot-container"

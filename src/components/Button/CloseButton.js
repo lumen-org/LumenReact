@@ -1,5 +1,5 @@
 import React from "react";
-import "./CloseButton.css";
+import "./CloseButton.scss";
 
 function CloseButton({ handleClose }) {
   return <div class="close-container" onClick={handleClose}>
