@@ -47,6 +47,14 @@ class StandardPlot extends Component {
     };
   };
 
+  getNewDataDensityTrace = () => {
+    const { plotData } = this.props;
+    return {
+      ...defaultPlot.densityTrace,
+      x: plotData.x,
+      y: plotData.y,
+    };
+  };
   // TODO: query prediction data, now there are just fake data
 
   getNewModelScatterTrace = () => {
@@ -66,12 +74,15 @@ class StandardPlot extends Component {
       if (traceinfo.name === "Data Points" && traceinfo.from === "data") {
         data.push(this.getNewDataScatterTrace());
       }
-      if (traceinfo.name === "Data Points" && traceinfo.from === "model") {
-        data.push(this.getNewModelScatterTrace());
+      if (traceinfo.name === "Density" && traceinfo.from === "data") {
+        data.push(this.getNewDataDensityTrace());
       }
       if (traceinfo.name === "Marginals" && traceinfo.from === "data") {
         data.push(this.getNewDataXHistogramTrace());
         data.push(this.getNewDataYHistogramTrace());
+      }
+      if (traceinfo.name === "Data Points" && traceinfo.from === "model") {
+        data.push(this.getNewModelScatterTrace());
       }
     });
 

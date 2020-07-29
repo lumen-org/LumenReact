@@ -23,13 +23,6 @@ export const defaultPlot = {
     yaxis: "y",
     marker: plotStyle.scatterMarker,
   },
-  modelScatterTrace: {
-    type: "scatter",
-    mode: "markers",
-    xaxis: "x",
-    yaxis: "y",
-    marker: plotStyle.modelScatterMarker,
-  },
   yHistogramTrace: {
     marker: {
       color: "rgb(207,207,207)",
@@ -59,5 +52,20 @@ export const defaultPlot = {
     },
     yaxis: "y2",
     type: "histogram",
+  },
+  densityTrace: {
+    name: "density",
+    ncontours: 20,
+    colorscale: "Blues",
+    reversescale: true,
+    showscale: false,
+    type: "histogram2dcontour",
+  },
+  modelScatterTrace: {
+    type: "scatter",
+    mode: "markers",
+    xaxis: "x",
+    yaxis: "y",
+    marker: plotStyle.modelScatterMarker,
   },
 };
