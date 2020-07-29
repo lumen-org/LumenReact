@@ -1,0 +1,22 @@
+@import "src/assets/styles/colors";
+
+.layout-schema {
+  background-color: white;
+  border: $plot-border-color 1px solid;
+  border-radius: 10px;
+}
+
+.layout-specification {
+  background-color: white;
+  border: $plot-border-color 1px solid;
+  border-radius: 10px;
+}
+
+.plotSettings-container {
+  height: 100%;
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}

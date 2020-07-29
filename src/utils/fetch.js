@@ -1,4 +1,4 @@
-import { BASE_URL } from "../constants/query";
+import { BASE_URL, FETCH_SCHEMA } from "../constants/query";
 
 export const fetchData = (url, body) => {
   return fetch(url, {
@@ -19,26 +19,20 @@ export const fetchData = (url, body) => {
     });
 };
 
-export const fetchSchemaData = (BODY) => {
+export const _fetchModelData = (BODY) => {
   return fetchData(BASE_URL, BODY).then((response) => {
-    return {
-      categoricalFields: response["fields"]
-        .filter((field, index) => {
-          return field.dtype === "string";
-        })
-        .map((field) => field.name),
-      quantitativeFields: response["fields"]
-        .filter((field, index) => {
-          return field.dtype === "numerical";
-        })
-        .map((field) => field.name),
-    };
+    return { Fields: response["fields"] };
   });
 };
 
-// TODO: refractor the style specification to somewhere else
+export const fetchModelData = (modelName) => {
+  const POST_BODY = { ...FETCH_SCHEMA, FROM: modelName };
+  return _fetchModelData(POST_BODY);
+};
+
 export const fetchPlotData = (BODY) => {
   return fetchData(BASE_URL, BODY).then((response) => {
+    console.log(response);
     const dataString = response["data"].split("\n");
     const X = [];
     const Y = [];

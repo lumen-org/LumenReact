@@ -1,87 +1,124 @@
 import {
   CREATE_NEW_PLOT,
-  UPDATE_PLOT_SPECIFICATIONS,
   CHANGE_ACTIVE_PLOT,
   DELETE_PLOT,
+  UPDATE_PLOT_DATA,
+  RESET_PLOT_DATA,
+  UPDATE_PLOT_LAYOUT,
 } from "./constants";
 
-import { nextActiveId, nextAvaliableId } from "../../utils/plotData";
+import update from "immutability-helper";
+import { nextAvaliableId } from "../../utils/plotData";
+import { PlotStack } from "../../utils/PlotStack";
+import { EMPTY } from "../constants";
+
 export const defaultState = {
-  plots: [],
-  activePlotId: 1,
+  plots: {
+    byId: {},
+    allIds: [],
+  },
+  activePlotId: EMPTY,
+  lastCreatedId: EMPTY,
 };
 
 const plotsReducer = (state = defaultState, action) => {
   switch (action.type) {
     case CHANGE_ACTIVE_PLOT:
+      const newAllIds = PlotStack.moveToTop(state.plots.allIds, action.payload.newid);
+      newAllIds.map((elem, index) => state.plots.byId[elem].zIndex = index);
       return {
         ...state,
-        plots: state.plots.map((plot) =>
-          plot.id === action.payload.newActivePlotId
-            ? {
-                ...plot,
-                zIndex: 1000,
-              }
-            : {
-                ...plot,
-                zIndex: 0,
-              }
-        ),
-        activePlotId: action.payload.newActivePlotId,
+        plots: update(state.plots, {
+          byId: { $set: Object.assign({}, state.plots.byId) },
+          allIds: { $set: newAllIds }
+        }),
+        activePlotId: action.payload.newid,
       };
 
     case CREATE_NEW_PLOT:
-      var newId = nextAvaliableId(state.plots);
+      const newId = nextAvaliableId(state.plots.allIds);
+      const { modelName, visualizationId, specificationId } = action.payload;
       return {
         ...state,
-        plots: [
-          ...state.plots,
-          {
-            id: newId,
-            model: action.payload.modelName,
-            specifications: {
-              X_Axis: new Set([]),
-              Y_Axis: new Set([]),
-              Filter: new Set([]),
-              Detail: new Set([]),
-              Color: new Set([]),
-              Shape: new Set([]),
-              Size: new Set([]),
-            },
-            zIndex: 0,
-            plotData: [],
-            layout: {},
-            show: true,
-          },
-        ],
+        plots: {
+          byId: update(state.plots.byId,
+            {
+              [newId]: {
+                $set: {
+                  id: newId,
+                  model: modelName,
+                  visualizationId: visualizationId,
+                  specificationId: specificationId,
+                  zIndex: 0,
+                  plotData: [],
+                  layout: {},
+                  show: true
+                }
+              }
+            }),
+          allIds: PlotStack.push(state.plots.allIds, newId)
+        },
         activePlotId: newId,
+        lastCreatedId: newId,
       };
 
-    case UPDATE_PLOT_SPECIFICATIONS:
+    case UPDATE_PLOT_DATA:
       return {
         ...state,
-        plots: state.plots.map((plot) =>
-          plot.id === action.payload.id
-            ? {
-                ...plot,
-                specifications: action.payload.newSpecifications,
-              }
-            : plot
-        ),
+        plots: {
+          ...state.plots,
+          byId: update(state.plots.byId, {
+            [action.payload.id]: {
+              $merge: {
+                plotData: [
+                  ...state.plots.byId[action.payload.id].plotData,
+                  action.payload.newPlotData,
+                ],
+              },
+            },
+          }),
+        },
       };
-    case DELETE_PLOT:
+
+    case UPDATE_PLOT_LAYOUT:
       return {
         ...state,
-        plots: state.plots.map((plot) =>
-          plot.id === action.payload.id
-            ? {
-                id: plot.id,
-                show: false,
-                zIndex: 0,
-              }
-            : plot
-        ),
-        activePlotId: nextActiveId(state.plots, action.payload.id),
+        plots: {
+          ...state.plots,
+          byId: update(state.plots.byId, {
+            [action.payload.id]: {
+              $merge: {
+                layout: action.payload.newLayout,
+              },
+            },
+          }),
+        },
+      };
+
+    case RESET_PLOT_DATA:
+      return {
+        ...state,
+        plots: {
+          ...state.plots,
+          byId: update(state.plots.byId, {
+            [action.payload.id]: {
+              $merge: {
+                plotData: [],
+              },
+            },
+          }),
+        },
+      };
+
+    case DELETE_PLOT:
+      const allIds = PlotStack.pop(state.plots.allIds)
+      return {
+        ...state,
+        plots: update(state.plots, {
+          byId: { $unset: [action.payload.id] },
+          allIds: {$set: allIds}
+        }),
+        activePlotId: PlotStack.peek(state.plots.allIds)
       };
     default:
       return state;

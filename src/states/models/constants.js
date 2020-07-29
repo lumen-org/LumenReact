@@ -1,0 +1,1 @@
+export const CREATE_NEW_MODEL = "CREATE_NEW_MODEL";

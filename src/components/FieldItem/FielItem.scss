@@ -1,0 +1,32 @@
+@import "src/assets/styles/colors";
+
+.field-item {
+    flex: 1;
+    padding: 0.1rem;
+    margin: 0;
+    height:inherit;
+    width: auto;
+    overflow:hidden;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.field-item-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+    flex-flow: row wrap;
+
+    background-color: $field-item-background-color;
+    border: 1px solid $field-item-border;
+    margin: 0.4rem;
+
+    box-shadow: 0 0 3px $field-item-box-shadow;
+    overflow: hidden;
+    padding: 0;
+}
+
+.draggable {
+    cursor: pointer;
+}

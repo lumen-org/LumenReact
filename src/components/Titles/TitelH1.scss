@@ -1,0 +1,17 @@
+@import "src/assets/styles/colors";
+
+.title-h1 {
+    z-index: 1;
+    margin: 0;
+    padding: 0.2em 0 0;
+    position: sticky;
+    top: 0;
+    text-align: center;
+    background-color: white;
+    border-bottom: 2px solid #d5d5d5;
+    box-sizing: border-box;
+
+    font-family: Roboto, sans-serif;
+    font-size: x-large;
+    font-weight: lighter;
+}

@@ -1,0 +1,15 @@
+@import "src/assets/styles/colors";
+
+.MainWindows-Container {
+  height: 100%;
+  margin-top: 50px;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.MainWindows-MainContainer {
+  /* display: flex;
+  flex-direction: column; */
+  height: 100%;
+  background-color: $main-window-background-color;
+}

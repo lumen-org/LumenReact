@@ -1,20 +1,27 @@
 import { useDrag } from "react-dnd";
 import React, { useState } from "react";
 import FieldItem from "./FieldItem";
-import { useDispatch } from "react-redux";
-import { addModel, deleteModel } from "../../states/model/actions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToSpecification,
+  deleteFromSpecification,
+} from "../../states/specifications/actions";
 import { FIELD_ITEM } from "../../constants/dragAndDropTypes";
 import FieldItemModal from "../FieldItemModal/FieldItemModal";
+import { selectActiveSpecificationId } from "../../states/visualizations/selector";
 
-function FieldItemContainer({
-                              value,
-                              fieldName = "",
-                              type = FIELD_ITEM
-                            }) {
+function FieldItemContainer({ value, fieldName = "", type = FIELD_ITEM }) {
   const item = { type: type };
+  const specificationId = useSelector(selectActiveSpecificationId);
 
   function dispatchListItem() {
-    dispatch(deleteModel({ "key": fieldName, "value": value }));
+    dispatch(
+      deleteFromSpecification({
+        id: specificationId,
+        key: fieldName,
+        value: value,
+      })
+    );
   }
 
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +29,7 @@ function FieldItemContainer({
     setIsOpen(!isOpen);
   };
 
-  // to hook into model actions
+  // to hook into specifications actions
   const dispatch = useDispatch();
 
   // Thats what is called a hook! ;)
@@ -35,22 +42,33 @@ function FieldItemContainer({
         if (fieldName) {
           dispatchListItem();
         }
-        dispatch(addModel({ "key": dropResult.result, "value": value }));
+        dispatch(
+          addToSpecification({
+            id: specificationId,
+            key: dropResult.result,
+            value: value,
+          })
+        );
       } else if (fieldName) {
         dispatchListItem();
       }
-    }
+    },
   });
 
   return (
     <div ref={drag}>
       {fieldName ? (
-        <FieldItem value={value} handleClose={() => dispatchListItem()} handleClick={handleModal}
-                   isOpen={isOpen} handleModal={handleModal}/>
+        <FieldItem
+          value={value}
+          handleClose={() => dispatchListItem()}
+          handleClick={handleModal}
+          isOpen={isOpen}
+          handleModal={handleModal}
+        />
       ) : (
-        <FieldItem value={value}/>
+        <FieldItem value={value} />
       )}
-      <FieldItemModal/>
+      <FieldItemModal />
     </div>
   );
 }

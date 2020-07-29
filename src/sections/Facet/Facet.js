@@ -1,6 +1,6 @@
-import React from "react"
+import React from "react";
 import specificationFacetConfig from "../../configs/specificationFacetsConfig";
-import "./Facet.css"
+import "./Facet.scss";
 import PropTypes from "prop-types";
 
 class Facet extends React.Component {
@@ -9,54 +9,65 @@ class Facet extends React.Component {
     facets: PropTypes.object.isRequired
   };
 
-  keyToCorrectString = key => {
-    switch(key) {
-      case 0:
-        return "prediction"
-      case 1:
-        return "dataPoints"
-      case 2:
-        return "marginals"
-      case 3:
-        return "density"
-    }
-  }
-
   handleDataClick = key => {
-    this.props.onFacetDataUpdate(this.keyToCorrectString(key));
+    this.props.onFacetDataUpdate(key);
   };
 
   handleModelClick = key => {
-    this.props.onFacetModelUpdate(this.keyToCorrectString(key));
+    this.props.onFacetModelUpdate(key);
   };
 
-
-  render(){
+  render() {
     const { facetsActions } = specificationFacetConfig;
     const { facets } = this.props;
     const { openModal } = true;
     return (
-      <div className="facet-bar ">
+      <table className="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col"> </th>
+            <th scope="col">Data</th>
+            <th scope="col">Prediction</th>
+          </tr>
+        </thead>
+        <tbody>
         {facetsActions.map((item, key) => (
-          <div className="facet-label">
-            <div>
-              <img src={item.icon} alt="" />
-              {item.name}<input
-              type="checkbox"
-              onClick={() => this.handleModelClick(key)}
-              checked={facets[this.keyToCorrectString(key)].model}
-            /><input
-              type="checkbox"
-              onClick={() => this.handleDataClick(key)}
-              checked={facets[this.keyToCorrectString(key)].data}
+          <tr>
+            <th scope="row">
+                <img src={item.icon} alt=""/>
+                <div className="d-none d-m-block">
+                  {item.name}
+                </div>
+            </th>
+            <td className="text-center">
+              <div className="custom-control custom-checkbox">
+                <input className="custom-control-input" type="checkbox" onClick={() => this.handleModelClick(key)}
+                       checked={facets[key].model} id={item.name + "data"}/>
+                  <label className="custom-control-label" htmlFor={item.name + "data"}>
+                  </label>
+              </div>
+              {/*<div className="custom-control custom-checkbox">*/}
+              {/*  <input className="custom-control-input" type="checkbox" onClick={() => this.handleModelClick(key)}*/}
+              {/*         checked={facets[key].model}/>*/}
+              {/*</div>*/}
+            </td>
+            <td className="text-center">
 
-            />
-            </div>
-          </div>
-        ))}
-      </div>
-    )
+              <div className="custom-control custom-checkbox">
+                <input className="custom-control-input" type="checkbox" onClick={() => this.handleDataClick(key)}
+                       checked={facets[key].data} id={item.name + "prediction"}/>
+                {/*<input type="checkbox" className="custom-control-input" id={item.name + "prediction"}/>*/}
+                <label className="custom-control-label" htmlFor={item.name + "prediction"}>
+                </label>
+              </div>
+            </td>
+          </tr>
+          ))}
+        </tbody>
+      </table>
+    );
   }
 
 }
+
 export default Facet;

@@ -35,7 +35,7 @@ const toolbarConfig = {
       icon: require("../assets/icons/linear_scale-24px.svg"),
     },
     {
-      name: "sync models",
+      name: "sync visualizations",
       icon: require("../assets/icons/sync-24px.svg"),
     },
   ],
