@@ -98,23 +98,19 @@ class PCIGraphContainer extends React.Component {
    *
    */
   updateEdges = (thresholdValue) => {
-    if(thresholdValue != undefined){
+    if(thresholdValue){
       let edges = this.state.edges;
-      console.log(thresholdValue);
       for (let i = 0; i< edges.length; i++) {
         if (parseFloat(edges[i].label) < parseFloat(thresholdValue)) {
           edges[i].hidden = true;
         }
-        console.log(parseFloat(edges[i].label));
-        console.log(parseFloat(thresholdValue));
-        console.log("somethings smaller");
       }
-
-      console.log(edges);
+      console.log("inside update edges");
       if (edges !== this.state.edges){
         this.setState({
           edges: edges
         })
+        console.log("state set");
       }
     }
 

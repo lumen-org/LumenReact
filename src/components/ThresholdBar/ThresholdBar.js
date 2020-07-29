@@ -12,20 +12,25 @@ class ThresholdBar extends Component {
   state = {};
 
   getValue = () => {
-    return document.getElementsByName(this.props.name).value
+    const { onThresholdChange, name } = this.props;
+    onThresholdChange(document.getElementById(name).value);
   }
 
   render() {
+    const {
+      maxValue,
+      onThresholdChange,
+      name,
+    } = this.props;
     return <div className={"thresholdBar"}>
-      <label about="threshold">Weight threshold </label>
+      <label about={name}>Weight threshold </label>
       <input
         type="range"
-        name={this.props.name}
+        id={name}
         min="0"
-        value={this.value}
-        max={this.props.maxValue.toString()}
+        max={maxValue.toString()}
         step="0.01"
-        onChange={() => this.props.onThresholdChange(this.getValue())}/>
+        onChange={this.getValue}/>
     </div>
   }
 }

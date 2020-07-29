@@ -99,6 +99,10 @@ class PCIGraph extends React.Component {
       plotWindowsPosX,
       plotWindowsPosY,
     } = this.state;
+    const {
+      updateEdges,
+      modelId,
+    } = this.props;
     if(!this.props.nodes||!this.props.edges){
       return null;
     }
@@ -117,8 +121,8 @@ class PCIGraph extends React.Component {
         <CloseButton handleClose={this.handleClose} />
       </div>
         <ThresholdBar
-          name={this.modelId+"pciThreshold"}
-          onThresholdChange={() => this.props.updateEdges()}
+          name={modelId+"pciThreshold"}
+          onThresholdChange={updateEdges}
           maxValue={this.findMaxEdgeValue()}
         />
         <Graph
