@@ -1,9 +1,0 @@
-.field {
-    border: solid 2px #0000;
-    position: relative;
-    margin: 0.2rem;
-}
-
-.is-hover {
-    background: aqua;
-}

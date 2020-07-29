@@ -1,0 +1,19 @@
+@import "src/assets/styles/colors";
+
+.RndPlot-container {
+  border: $rnd-container-border 3px solid;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: $rnd-container-background-color;
+}
+
+.RndPlot-plot {
+  width: 95%;
+  height: 95%;
+}
+
+.RndPlot-titlebar {
+  display: flex;
+  overflow: hidden;
+}
+

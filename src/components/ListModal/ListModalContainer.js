@@ -30,7 +30,10 @@ class ListModalContainer extends React.Component {
       addSpecifications,
       createNewVisualization,
       createNewModel,
-      fillVisualization
+      fillVisualization,
+      lastCreatedVisualizationId,
+      specificationId,
+      modelId
     } = this.props;
     // even though the dispatches officially are executed sequential the mapStateToProps
     // is not updating in time, that's why we need to ensure the order by
@@ -40,12 +43,12 @@ class ListModalContainer extends React.Component {
       addSpecifications().then(() => {
         // move into schema redux store to avoid this nested promises
         fetchModelData(item).then((response) => {
-          createNewModel(response["Fields"]);
+          createNewModel(item, response["Fields"]);
         }
         ).then(() => {
-          createPlot(item, this.props.lastCreatedVisualizationId, this.props.specificationsId);
-          fillVisualization(this.props.lastCreatedVisualizationId, this.props.modelId, this.props.specificationsId, this.props.plotId);
-          // changeActiveVisualization(this.props.lastCreatedVisualizationId);
+          createPlot(item, this.props.lastCreatedVisualizationId, this.props.specificationId);
+          fillVisualization(this.props.lastCreatedVisualizationId, this.props.modelId, this.props.specificationId, this.props.plotId);
+          changeActiveVisualization(this.props.lastCreatedVisualizationId);
           handleModalClose();
         });
       });
@@ -75,7 +78,7 @@ class ListModalContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    specificationsId: state.specifications.lastCreatedId,
+    specificationId: state.specifications.lastCreatedId,
     plotId: state.plots.lastCreatedId,
     modelId: state.models.lastCreatedModelId,
     lastCreatedVisualizationId: state.visualizations.lastCreatedVisualizationId
@@ -88,13 +91,14 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(createNewVisualization(modelName, schemaId, specificationId, plotId)),
     updateActiveModel: (model) => dispatch(updateActiveModel(model)),
     changeActiveVisualization: (id) => dispatch(changeActiveVisualization(id)),
-    createPlot: (activeModel, visualizationId, specification_id) => dispatch(createNewPlot(activeModel, visualizationId, specification_id)),
+    createPlot: (activeModel, visualizationId, specificationId) => 
+    dispatch(createNewPlot(activeModel, visualizationId, specificationId)),
     // resetSpecifications: () => dispatch(resetSpecifications()),
     addSpecifications: () => {
       return dispatch(createNewSpecification());
     },
-    createNewModel: (model) => dispatch(createNewModel(model)),
-      fillVisualization: (visualizationId, modelId, specificationId, plotId) => 
+    createNewModel: (modelName, model) => dispatch(createNewModel(modelName, model)),
+    fillVisualization: (visualizationId, modelId, specificationId, plotId) => 
       dispatch(fillVisualization(visualizationId, modelId, specificationId, plotId))
   };
 };

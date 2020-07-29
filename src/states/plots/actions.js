@@ -12,7 +12,8 @@ import { fetchAllPlotData, getSelectFieldArray } from "../../utils/plotData";
 import queryTemplates from "../../utils/queryTemplates";
 import { fetchPlotData } from "../../utils/fetch";
 import { getSpecById } from "../specifications/selector";
-import { getModelNameById } from "../visualizations/selector";
+import { getSpecificationId } from "../plots/selector";
+import { getModelNameById } from "../models/selector";
 
 export function changeActivePlot(newid) {
   return {
@@ -137,7 +138,7 @@ export function fetchStandardPlotData(id) {
 export function fetchMultiPlotData(id) {
   return (dispatch, getState) => {
     const modelName = getModelNameById(getState(), id);
-    const specification = getSpecById(getState(), id);
+    const specification = getSpecById(getState(), getSpecificationId(getState(),id));
     fetchAllPlotData(specification, modelName).then((payload) => {
       dispatch(resetPlotData(id));
       payload[0].map((payload) => {
@@ -151,7 +152,7 @@ export function fetchMultiPlotData(id) {
 
 export function fetchMultiPlotLayout(id) {
   return (dispatch, getState) => {
-    const specification = getSpecById(getState(), id);
+    const specification = getSpecById(getState(), getSpecificationId(getState(),id));
     const modelName = getModelNameById(getState(), id);
     const { X_Axis, Y_Axis } = specification;
     const defaultLayout = {

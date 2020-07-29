@@ -68,13 +68,10 @@ class RnDPlotWrapper extends Component {
       <Rnd
         size={{ width: plotWindowsWidth, height: plotWindowsHeight }}
         position={{ x: plotWindowsPosX, y: plotWindowsPosY }}
+        style={{zIndex: zIndex}}
         onDragStop={this.onDragStop}
         onResizeStop={this.onResizeStop}
-        style={{
-          zIndex: zIndex,
-          border: "#dbdbdb 3px solid",
-          borderRadius: "10px",
-        }}
+        className="RndPlot-container"
       >
         <div className="RndPlot-titlebar">
           <CloseButton handleClose={this.handleClose} />

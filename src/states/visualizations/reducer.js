@@ -37,7 +37,7 @@ const visualizations = (state = defaultState, action) => {
   let visualizations = Object.assign({}, state.visualizations);
   switch (action.type) {
     case CREATE_NEW_VISUALIZATION:
-      const { modelName, id, modelId, specificationId, plotId } = action.payload;
+      const { id, modelId, specificationId, plotId } = action.payload;
       if (!visualizations.allIds.includes(id)) {
         return {
           ...state,
@@ -46,7 +46,6 @@ const visualizations = (state = defaultState, action) => {
             byId: {
               [id]: {
                 $set: {
-                  modelName: modelName,
                   modelId: modelId,
                   specificationId: specificationId,
                   plotId: plotId,

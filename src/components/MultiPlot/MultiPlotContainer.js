@@ -12,6 +12,9 @@ import {
   fetchMultiPlotLayout,
 } from "../../states/plots/actions";
 class MultiPlotContainer extends React.Component {
+import { getSpecificationId } from "../../states/plots/selector.js";
+
+class DifferentialMarginalPlotContainer extends React.Component {
   static propTypes = {
     fetchPlotData: PropTypes.func,
     fetchPlotLayout: PropTypes.func,
@@ -47,7 +50,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     plotData: getMultiPlotDataById(state, ownProps.id),
     layout: getPlotLayoutById(state, ownProps.id),
-    specifications: getSpecById(state, ownProps.id),
+    specifications: getSpecById(state, getSpecificationId(state, ownProps.id)),
   };
 };
 

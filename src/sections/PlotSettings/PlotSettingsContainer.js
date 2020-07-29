@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 class PlotSettingsContainer extends Component {
   render() {
     const { modelName } = this.props;
-    return <PlotSettings activeModel={modelName} />;
+    return <PlotSettings class="jumbotron" activeModel={modelName} />;
   }
 }
 const mapStateToProps = (state) => ({
