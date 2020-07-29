@@ -1,4 +1,4 @@
-export const mockData = {
+export const mockdataPCI = {
   _nodes: [
     {label: "survived"},
     {label: "pclass"},

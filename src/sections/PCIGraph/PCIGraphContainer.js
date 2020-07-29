@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getModelNameById } from "../../states/models/selector";
-import { mockData } from "./utils/mockdata";
+import { mockdataPCI } from "../../mockdata/mockdataPCI";
 import PCIGraph from "./PCIGraph";
 import fetchData from "../../utils/fetch";
 import { BASE_URL } from "../../constants/query";
@@ -49,7 +49,7 @@ class PCIGraphContainer extends React.Component {
   }
 
   /**
-   * This function prepares the data given by the backend (or from the mockdata.js file if the backend is not able to provide sufficient
+   * This function prepares the data given by the backend (or from the mockdataPCI.js file if the backend is not able to provide sufficient
    * data) to be used later.
    * If graphData is false, the mock data is used (values are from the pci graph based on the titanic data set), it was created to mimic
    * how real data would look like.
@@ -61,7 +61,7 @@ class PCIGraphContainer extends React.Component {
     let graph = graphData;
     if (!graphData){
       // load mock data
-      graph = JSON.parse(JSON.stringify(mockData));
+      graph = JSON.parse(JSON.stringify(mockdataPCI));
     }
 
     console.log(graph);
