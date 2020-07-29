@@ -8,6 +8,7 @@ import { BASE_URL } from "../../constants/query";
 import { hidePCIGraph } from "../../states/models/actions";
 import { selectActiveModelId } from "../../states/visualizations/selector";
 import solve from "./utils/weakConstraintBasedGraphLayoutAlgorithm";
+import PropTypes from "prop-types";
 
 /**
  * Container class for communicating to the models store.
@@ -21,6 +22,9 @@ class PCIGraphContainer extends React.Component {
       edges: null,
     }
   }
+  static propTypes = {
+    modelId: PropTypes.string,
+  };
 
   /**
    * From the react life cycle
@@ -74,6 +78,7 @@ class PCIGraphContainer extends React.Component {
       graph._edges[i].target = lut[graph._edges[i].target];
       graph._edges[i].to = graph._edges[i].target;
       graph._edges[i].label = graph._edges[i].weight.toString();
+      graph._edges[i].hidden = false;
     }
     return {
       nodes: graph._nodes,
@@ -90,6 +95,33 @@ class PCIGraphContainer extends React.Component {
   };
 
   /**
+   *
+   */
+  updateEdges = (thresholdValue) => {
+    if(thresholdValue != undefined){
+      let edges = this.state.edges;
+      console.log(thresholdValue);
+      for (let i = 0; i< edges.length; i++) {
+        if (parseFloat(edges[i].label) < parseFloat(thresholdValue)) {
+          edges[i].hidden = true;
+        }
+        console.log(parseFloat(edges[i].label));
+        console.log(parseFloat(thresholdValue));
+        console.log("somethings smaller");
+      }
+
+      console.log(edges);
+      if (edges !== this.state.edges){
+        this.setState({
+          edges: edges
+        })
+      }
+    }
+
+
+  }
+
+  /**
    *  render function -> returns the PCIGraph
    * @returns {React.Component}
    */
@@ -102,6 +134,8 @@ class PCIGraphContainer extends React.Component {
         edges={edges}
         nodes={nodes}
         onPlotClose={this.onPlotClose}
+        updateEdges={this.updateEdges}
+        modelId={this.state.activeModelId}
       />
     );
   }

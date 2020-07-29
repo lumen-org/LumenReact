@@ -39,12 +39,11 @@ class VisualizationCanvas extends Component {
           Object.keys(models).map(
           (id) =>
             models[id].showPCIGraph && (
-              <PCIGraph modelId={id} />
+              <PCIGraph modelId={id}/>
             )
           )
         }
       </div>
-
     );
   }
 }

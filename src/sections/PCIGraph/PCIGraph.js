@@ -3,13 +3,23 @@ import Graph from "react-graph-vis";
 import { Rnd } from "react-rnd";
 import CloseButton from "../../components/Button/CloseButton";
 import ThresholdBar from "../../components/ThresholdBar";
+import PropTypes from "prop-types";
 
 class PCIGraph extends React.Component {
+  static propTypes = {
+    onPlotClose: PropTypes.func,
+    updateEdges: PropTypes.func,
+    nodes: PropTypes.array,
+    edges: PropTypes.array,
+    modelId: PropTypes.string,
+  };
+
   state = {
     plotWindowsWidth: 500,
     plotWindowsHeight: 500,
     plotWindowsPosX: 100,
     plotWindowsPosY: 100,
+    network: {},
   };
 
   setNewPos = (dragIndex) => {
@@ -29,15 +39,29 @@ class PCIGraph extends React.Component {
       plotWindowsHeight: ref.style.height,
       ...position,
     });
+    this.state.network.fit(ref.style.width, ref.style.height)
   };
 
   /**
-   *
+   *  handles the plot closing
    */
   handleClose = () => {
     const { onPlotClose } = this.props;
     onPlotClose();
   };
+
+  /*
+    function that finds the highest edge value for display at the threshold bar
+   */
+  findMaxEdgeValue(){
+    let heaviestEdgeWeight = 0;
+    for (let edge of this.props.edges) {
+      if (edge.weight > heaviestEdgeWeight) {
+        heaviestEdgeWeight = edge.weight;
+      }
+    }
+    return heaviestEdgeWeight;
+  }
 
   /**
    *
@@ -57,13 +81,11 @@ class PCIGraph extends React.Component {
     },
     physics: {
       enabled: false,
-      //solver: 'myOwnSolver',
-
     },
     edges: {
       color: "#000000"
     },
-    //height: "300px"
+    autoResize: false,
   };
 
   const events = {
@@ -94,18 +116,20 @@ class PCIGraph extends React.Component {
       <div className={"RndPlot-titlebar"}>
         <CloseButton handleClose={this.handleClose} />
       </div>
-
-
-        <ThresholdBar onThresholdChange={() => console.log("3")} maxValue={4} />
+        <ThresholdBar
+          name={this.modelId+"pciThreshold"}
+          onThresholdChange={() => this.props.updateEdges()}
+          maxValue={this.findMaxEdgeValue()}
+        />
         <Graph
           graph={graph}
           options={options}
           events={events}
           getNetwork={network => {
             //  if you want access to vis.js network api you can set the state in a parent component using this property
-          }}
-        />
+                this.setState({network }) }}
 
+        />
     </Rnd>
   );
   }
