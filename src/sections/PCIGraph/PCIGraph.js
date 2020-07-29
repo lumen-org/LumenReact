@@ -68,6 +68,7 @@ class PCIGraph extends React.Component {
    * @returns {null|*}
    */
   render() {
+    console.log("render PCI Component")
 
   const graph = {
     nodes: this.props.nodes,
