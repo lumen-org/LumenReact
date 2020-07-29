@@ -17,7 +17,7 @@ class PCIGraph extends React.Component {
   state = {
     plotWindowsWidth: 500,
     plotWindowsHeight: 500,
-    plotWindowsPosX: 100,
+    plotWindowsPosX: 600,
     plotWindowsPosY: 100,
     network: {},
   };
@@ -64,6 +64,33 @@ class PCIGraph extends React.Component {
   }
 
   /**
+   * updates the edge visibility based on the selected edge threshold
+   * @param {number}thresholdValue current slider position
+   */
+  updateEdgesBasedOnThreshold = (thresholdValue) => {
+    const { nodes, edges} = this.props;
+    const { network } = this.state;
+    if(thresholdValue) {
+      let shouldRender = false;
+      for (let i = 0; i < edges.length; i++) {
+        if (parseFloat(edges[i].label) < parseFloat(thresholdValue)) {
+          if (!edges[i].hidden) {
+            shouldRender = true;
+          }
+          edges[i].hidden = true;
+        } else {
+          if (edges[i].hidden) {
+            shouldRender = true;
+          }
+          edges[i].hidden = false;
+        }
+      }
+    }
+    network.setData({nodes: nodes, edges: edges});
+    network.redraw();
+  }
+
+  /**
    *
    * @returns {null|*}
    */
@@ -91,7 +118,7 @@ class PCIGraph extends React.Component {
 
   const events = {
     select: function(event) {
-      var { nodes, edges } = event;
+      let { nodes, edges } = event;
     }
   };
     const {
@@ -101,7 +128,6 @@ class PCIGraph extends React.Component {
       plotWindowsPosY,
     } = this.state;
     const {
-      updateEdges,
       modelId,
     } = this.props;
     if(!this.props.nodes||!this.props.edges){
@@ -123,7 +149,7 @@ class PCIGraph extends React.Component {
       </div>
         <ThresholdBar
           name={modelId+"pciThreshold"}
-          onThresholdChange={updateEdges}
+          onThresholdChange={this.updateEdgesBasedOnThreshold}
           maxValue={this.findMaxEdgeValue()}
         />
         <Graph
@@ -132,8 +158,7 @@ class PCIGraph extends React.Component {
           events={events}
           getNetwork={network => {
             //  if you want access to vis.js network api you can set the state in a parent component using this property
-                this.setState({network }) }}
-
+                this.setState({ network: network }) }}
         />
     </Rnd>
   );

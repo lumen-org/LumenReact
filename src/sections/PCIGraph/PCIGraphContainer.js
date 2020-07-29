@@ -79,6 +79,8 @@ class PCIGraphContainer extends React.Component {
       graph._edges[i].to = graph._edges[i].target;
       graph._edges[i].label = graph._edges[i].weight.toString();
       graph._edges[i].hidden = false;
+      graph._edges[i].type = "undirected";
+      graph._edges[i].arrow = false;
     }
     return {
       nodes: graph._nodes,
@@ -93,35 +95,6 @@ class PCIGraphContainer extends React.Component {
     const { modelId, hideThisPCIGraph } = this.props;
     hideThisPCIGraph(modelId);
   };
-
-  /**
-   *
-   */
-  updateEdges = (thresholdValue) => {
-    const oldprops = this.state.edges;
-    if(thresholdValue){
-      let shouldRender = false;
-      let edges = this.state.edges;
-      for (let i = 0; i< edges.length; i++) {
-        if (parseFloat(edges[i].label) < parseFloat(thresholdValue)) {
-          if (!edges[i].hidden){
-            shouldRender = true;
-          }
-          edges[i].hidden = true;
-        }
-      }
-      console.log("inside update edges");
-
-      if (shouldRender){
-        this.setState({
-          edges: edges
-        })
-        console.log("state set");
-      }
-    }
-
-
-  }
 
   /**
    *  render function -> returns the PCIGraph

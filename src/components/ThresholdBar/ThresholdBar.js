@@ -11,6 +11,9 @@ class ThresholdBar extends Component {
   };
   state = {};
 
+  /**
+   * gets the current threshold selected
+   */
   getValue = () => {
     const { onThresholdChange, name } = this.props;
     onThresholdChange(document.getElementById(name).value);
@@ -19,7 +22,6 @@ class ThresholdBar extends Component {
   render() {
     const {
       maxValue,
-      onThresholdChange,
       name,
     } = this.props;
     return <div className={"thresholdBar"}>
