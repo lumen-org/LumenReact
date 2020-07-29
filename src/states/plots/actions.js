@@ -3,11 +3,14 @@ import {
   CREATE_NEW_PLOT,
   CHANGE_ACTIVE_PLOT,
   DELETE_PLOT,
-  UPDATE_PLOT_DATA,
-  RESET_PLOT_DATA,
+  UPDATE_MULTI_PLOT_DATA,
+  UPDATE_STANDARD_PLOT_DATA,
+  RESET_MULTI_PLOT_DATA,
   UPDATE_PLOT_LAYOUT,
 } from "./constants";
-import { fetchAllPlotData } from "../../utils/plotData";
+import { fetchAllPlotData, getSelectFieldArray } from "../../utils/plotData";
+import queryTemplates from "../../utils/queryTemplates";
+import { fetchPlotData } from "../../utils/fetch";
 import { getSpecById } from "../specifications/selector";
 import { getSpecificationId } from "../plots/selector";
 import { getModelNameById } from "../models/selector";
@@ -27,7 +30,7 @@ export function createNewPlot(modelName, visualizationId, specificationId) {
     payload: {
       modelName: modelName,
       specificationId: specificationId,
-      visualizationId: visualizationId
+      visualizationId: visualizationId,
     },
   };
 }
@@ -51,9 +54,9 @@ export function updatePlotSpecifictions(id, newSpecifications) {
   };
 }
 
-export function updatePlotData(id, newPlotData) {
+export function updateMultiPlotData(id, newPlotData) {
   return {
-    type: UPDATE_PLOT_DATA,
+    type: UPDATE_MULTI_PLOT_DATA,
     payload: {
       id: id,
       newPlotData: newPlotData,
@@ -61,9 +64,19 @@ export function updatePlotData(id, newPlotData) {
   };
 }
 
+export function updateStandardPlotData(id, newStandardPlotData) {
+  return {
+    type: UPDATE_STANDARD_PLOT_DATA,
+    payload: {
+      id: id,
+      newStandardPlotData: newStandardPlotData,
+    },
+  };
+}
+
 export function resetPlotData(id) {
   return {
-    type: RESET_PLOT_DATA,
+    type: RESET_MULTI_PLOT_DATA,
     payload: {
       id: id,
     },
@@ -79,29 +92,73 @@ export function updatePlotLayout(id, newLayout) {
     },
   };
 }
+
+// TODO: Make sure that only one dimension allowed for each specification
+// for standard plot
+export function fetchStandardPlotData(id) {
+  return (dispatch, getState) => {
+    const modelName = getModelNameById(getState(), id);
+    const specification = getSpecById(
+      getState(),
+      getSpecificationId(getState(), id)
+    );
+    const X_Axis = [...specification.X_Axis];
+    const Y_Axis = [...specification.Y_Axis];
+    const SELECT = getSelectFieldArray(X_Axis, Y_Axis);
+    const trainingDataQueryBody = {
+      ...queryTemplates.trainingDataPoints,
+      SELECT,
+      FROM: modelName,
+    };
+    const modelDataQueryBody = {
+      ...queryTemplates.modelDataPoints,
+      SELECT,
+      FROM: modelName,
+    };
+    Promise.all([
+      fetchPlotData(trainingDataQueryBody).then((payload) => {
+        return payload;
+      }),
+      fetchPlotData(modelDataQueryBody).then((payload) => {
+        return payload;
+      }),
+    ]).then((response) =>
+      dispatch(
+        updateStandardPlotData(id, {
+          training: response[0],
+          model: response[1],
+        })
+      )
+    );
+  };
+}
+
 // TO avoid this store getting super huge, we probably need to
 // deisgn a new store called " plotData " where we handle all the
 // state related to plot data: for example, interactions of facets with
 // plot data, etc.
 
-export function fetchPlotData(id) {
+export function fetchMultiPlotData(id) {
   return (dispatch, getState) => {
     const modelName = getModelNameById(getState(), id);
-    const specification = getSpecById(getState(), getSpecificationId(getState(),id));
+    const specId = getSpecificationId(getState(), id);
+    const specification = getSpecById(getState(), specId);
     fetchAllPlotData(specification, modelName).then((payload) => {
       dispatch(resetPlotData(id));
       payload[0].map((payload) => {
         payload.then((payload) => {
-          dispatch(updatePlotData(id, payload));
+          dispatch(updateMultiPlotData(id, payload));
         });
       });
     });
   };
 }
 
-export function fetchPlotLayout(id) {
+export function fetchMultiPlotLayout(id) {
   return (dispatch, getState) => {
-    const specification = getSpecById(getState(), getSpecificationId(getState(),id));
+    const specId = getSpecificationId(getState(), id);
+
+    const specification = getSpecById(getState(), specId);
     const modelName = getModelNameById(getState(), id);
     const { X_Axis, Y_Axis } = specification;
     const defaultLayout = {

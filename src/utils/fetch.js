@@ -32,7 +32,6 @@ export const fetchModelData = (modelName) => {
 
 export const fetchPlotData = (BODY) => {
   return fetchData(BASE_URL, BODY).then((response) => {
-    console.log(response);
     const dataString = response["data"].split("\n");
     const X = [];
     const Y = [];

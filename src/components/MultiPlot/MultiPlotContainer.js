@@ -2,15 +2,19 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
-  getPlotDataById,
+  getMultiPlotDataById,
   getPlotLayoutById,
 } from "../../states/plots/selector";
 import { getSpecById } from "../../states/specifications/selector.js";
 import { getSpecificationId } from "../../states/plots/selector.js";
-import DifferentialMarginalPlot from "./DifferentialMarginalPlot";
-import { fetchPlotData, fetchPlotLayout } from "../../states/plots/actions";
 
-class DifferentialMarginalPlotContainer extends React.Component {
+import StandardPlot from "./MultiPlot";
+import {
+  fetchMultiPlotData,
+  fetchMultiPlotLayout,
+} from "../../states/plots/actions";
+
+class MultiPlotContainer extends React.Component {
   static propTypes = {
     fetchPlotData: PropTypes.func,
     fetchPlotLayout: PropTypes.func,
@@ -20,9 +24,9 @@ class DifferentialMarginalPlotContainer extends React.Component {
   };
 
   getPlotInfo = () => {
-    const { fetchPlotLayout, fetchPlotData, id } = this.props;
-    fetchPlotData(id);
-    fetchPlotLayout(id);
+    const { fetchMultiPlotLayout, fetchMultiPlotData, id } = this.props;
+    fetchMultiPlotData(id);
+    fetchMultiPlotLayout(id);
   };
 
   componentDidUpdate(prevProps) {
@@ -33,24 +37,21 @@ class DifferentialMarginalPlotContainer extends React.Component {
 
   render() {
     const { plotData, layout } = this.props;
-    return <DifferentialMarginalPlot plotData={plotData} layout={layout} />;
+    return <StandardPlot plotData={plotData} layout={layout} />;
   }
 }
 
 const mapDispatchToProps = {
-  fetchPlotData,
-  fetchPlotLayout,
+  fetchMultiPlotData,
+  fetchMultiPlotLayout,
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    plotData: getPlotDataById(state, ownProps.id),
+    plotData: getMultiPlotDataById(state, ownProps.id),
     layout: getPlotLayoutById(state, ownProps.id),
     specifications: getSpecById(state, getSpecificationId(state, ownProps.id)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DifferentialMarginalPlotContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(MultiPlotContainer);
