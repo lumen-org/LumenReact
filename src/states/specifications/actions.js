@@ -5,7 +5,7 @@ import {
   DELETE_FROM_SPECIFICATION,
   UPDATE_FACET_STATE,
   CHANGE_ACTIVE_SPECIFICATIONS,
-  RESET_SPECIFICATIONS
+  RESET_SPECIFICATIONS,
 } from "./constants";
 import { v4 as uuidv4 } from "uuid";
 
@@ -20,73 +20,73 @@ const defaultValues = {
     Detail: new Set([]),
     Color: new Set([]),
     Shape: new Set([]),
-    Size: new Set([])
+    Size: new Set([]),
   },
   facets: {
-    0: {
+    Prediction: {
       model: false,
-      data: false
+      data: false,
     },
-    1: {
+    "Data Points": {
       model: false,
-      data: true
+      data: true,
     },
-    2: {
+    Marginals: {
       model: false,
-      data: true
+      data: true,
     },
-    3: {
+    Density: {
       model: false,
-      data: false
-    }
-  }
+      data: false,
+    },
+  },
 };
 
 export const createNewSpecification = (payload) => {
   // even though the dispatches are run sequential the mapStateToProps
   // is not updating in time, that's why we need to ensure the order by
   // making addSpecification a promise
-  return dispatch => {
+  return (dispatch) => {
     dispatch(_createNewSpecification(payload));
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       resolve();
     });
   };
 };
 
-export const _createNewSpecification = (initValues=null, id=uuidv4()) => {
+export const _createNewSpecification = (initValues = null, id = uuidv4()) => {
   return {
     type: CREATE_NEW_SPECIFICATION,
     payload: {
       defaultValues: initValues ? initValues : defaultValues,
-      id: id
-    }
+      id: id,
+    },
   };
 };
 
 export function addToSpecification(payload) {
   return {
     type: ADD_TO_SPECIFICATION,
-    payload
+    payload,
   };
 }
 
 export function deleteFromSpecification(payload) {
   return {
     type: DELETE_FROM_SPECIFICATION,
-    payload
+    payload,
   };
 }
 
 export function updateFacetState(payload) {
   return {
     type: UPDATE_FACET_STATE,
-    payload
+    payload,
   };
 }
 
 export function resetSpecifications() {
   return {
-    type: RESET_SPECIFICATIONS
+    type: RESET_SPECIFICATIONS,
   };
 }

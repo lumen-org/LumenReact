@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Rnd } from "react-rnd";
 import CloseButton from "../Button/CloseButton";
-import DifferentialMarginalPlot from "../DifferentialMarginalPlot";
+import MultiPlot from "../MultiPlot";
+import StandardPlot from "../StandardPlot";
+
 import "./RnDPlotWrapper.scss";
 
 /**
@@ -66,7 +68,7 @@ class RnDPlotWrapper extends Component {
       <Rnd
         size={{ width: plotWindowsWidth, height: plotWindowsHeight }}
         position={{ x: plotWindowsPosX, y: plotWindowsPosY }}
-        style={{zIndex: zIndex}}
+        style={{ zIndex: zIndex }}
         onDragStop={this.onDragStop}
         onResizeStop={this.onResizeStop}
         className="RndPlot-container"
@@ -74,8 +76,7 @@ class RnDPlotWrapper extends Component {
         <div className="RndPlot-titlebar">
           <CloseButton handleClose={this.handleClose} />
         </div>
-
-        <DifferentialMarginalPlot id={id} />
+        <StandardPlot id={id} />
       </Rnd>
     );
   }

@@ -3,19 +3,53 @@ import {
   REMOVE_SPECIFICATION,
   ADD_TO_SPECIFICATION,
   DELETE_FROM_SPECIFICATION,
-  UPDATE_FACET_STATE
+  UPDATE_FACET_STATE,
+  RESET_SPECIFICATIONS,
 } from "./constants";
 
 import update from "immutability-helper";
 import { EMPTY } from "../constants";
+
+/*
+maintains all existing specifications and there state
+ */
+export const defaultValues = {
+  specification: {
+    X_Axis: new Set([]),
+    Y_Axis: new Set([]),
+    Filter: new Set([]),
+    Detail: new Set([]),
+    Color: new Set([]),
+    Shape: new Set([]),
+    Size: new Set([]),
+  },
+  facets: {
+    Prediction: {
+      model: false,
+      data: false,
+    },
+    "Data Points": {
+      model: false,
+      data: true,
+    },
+    Marginals: {
+      model: false,
+      data: true,
+    },
+    Density: {
+      model: false,
+      data: false,
+    },
+  },
+};
 
 export const defaultState = {
   currentId: EMPTY,
   lastCreatedId: EMPTY,
   specifications: {
     byId: {},
-    allIds: []
-  }
+    allIds: [],
+  },
 };
 
 const specifications = (state = defaultState, action) => {
@@ -30,7 +64,7 @@ const specifications = (state = defaultState, action) => {
           ...state,
           currentId: id,
           lastCreatedId: id,
-          specifications
+          specifications,
         };
       }
       return state;
@@ -43,7 +77,7 @@ const specifications = (state = defaultState, action) => {
         });
         return {
           ...state,
-          specifications
+          specifications,
         };
       }
       return state;
@@ -56,11 +90,11 @@ const specifications = (state = defaultState, action) => {
           byId: {
             [action.payload.id.toString()]: {
               specification: {
-                [action.payload.key]: { $add: [action.payload.value] }
-              }
-            }
-          }
-        })
+                [action.payload.key]: { $add: [action.payload.value] },
+              },
+            },
+          },
+        }),
       };
 
     case DELETE_FROM_SPECIFICATION:
@@ -70,11 +104,11 @@ const specifications = (state = defaultState, action) => {
           byId: {
             [action.payload.id]: {
               specification: {
-                [action.payload.key]: { $remove: [action.payload.value] }
-              }
-            }
-          }
-        })
+                [action.payload.key]: { $remove: [action.payload.value] },
+              },
+            },
+          },
+        }),
       };
 
     case UPDATE_FACET_STATE:
@@ -84,26 +118,19 @@ const specifications = (state = defaultState, action) => {
           byId: {
             [action.payload.id]: {
               facets: {
-                [action.payload.key]: { $merge: { [action.payload.type]: !specifications.byId[action.payload.id].facets[action.payload.key][action.payload.type] } }
-              }
-            }
-          }
-        })
+                [action.payload.key]: {
+                  $merge: {
+                    [action.payload.type]: !specifications.byId[
+                      action.payload.id
+                    ].facets[action.payload.key][action.payload.type],
+                  },
+                },
+              },
+            },
+          },
+        }),
       };
 
-    // case RESET_SPECIFICATIONS:
-    //   return {
-    //     ...state,
-    //     specifications: {
-    //       X_Axis: new Set([]),
-    //       Y_Axis: new Set([]),
-    //       Filter: new Set([]),
-    //       Detail: new Set([]),
-    //       Color: new Set([]),
-    //       Shape: new Set([]),
-    //       Size: new Set([])
-    //     }
-    //   };
     default:
       return state;
   }
