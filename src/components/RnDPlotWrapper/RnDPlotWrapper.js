@@ -5,7 +5,7 @@ import CloseButton from "../Button/CloseButton";
 import MultiPlot from "../MultiPlot";
 import StandardPlot from "../StandardPlot";
 
-import "./RnDPlotWrapper.css";
+import "./RnDPlotWrapper.scss";
 
 /**
  * RnDPlotWrapper is a wrapper around different kinds of plots such as:
@@ -68,7 +68,7 @@ class RnDPlotWrapper extends Component {
       <Rnd
         size={{ width: plotWindowsWidth, height: plotWindowsHeight }}
         position={{ x: plotWindowsPosX, y: plotWindowsPosY }}
-        style={{zIndex: zIndex}}
+        style={{ zIndex: zIndex }}
         onDragStop={this.onDragStop}
         onResizeStop={this.onResizeStop}
         className="RndPlot-container"

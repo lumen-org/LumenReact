@@ -14,6 +14,7 @@ export const plotStyle = {
       color: "rgba(231, 99, 250,0.5)",
       width: 2,
     },
+    symbol: "square",
   },
   histogramMarker: {
     color: "rgb(207, 207, 207)",

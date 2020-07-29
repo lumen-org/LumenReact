@@ -98,7 +98,10 @@ export function updatePlotLayout(id, newLayout) {
 export function fetchStandardPlotData(id) {
   return (dispatch, getState) => {
     const modelName = getModelNameById(getState(), id);
-    const specification = getSpecById(getState(), id);
+    const specification = getSpecById(
+      getState(),
+      getSpecificationId(getState(), id)
+    );
     const X_Axis = [...specification.X_Axis];
     const Y_Axis = [...specification.Y_Axis];
     const SELECT = getSelectFieldArray(X_Axis, Y_Axis);
@@ -138,7 +141,10 @@ export function fetchStandardPlotData(id) {
 export function fetchMultiPlotData(id) {
   return (dispatch, getState) => {
     const modelName = getModelNameById(getState(), id);
-    const specification = getSpecById(getState(), getSpecificationId(getState(),id));
+    const specification = getSpecById(
+      getState(),
+      getSpecificationId(getState(), id)
+    );
     fetchAllPlotData(specification, modelName).then((payload) => {
       dispatch(resetPlotData(id));
       payload[0].map((payload) => {
@@ -152,7 +158,10 @@ export function fetchMultiPlotData(id) {
 
 export function fetchMultiPlotLayout(id) {
   return (dispatch, getState) => {
-    const specification = getSpecById(getState(), getSpecificationId(getState(),id));
+    const specification = getSpecById(
+      getState(),
+      getSpecificationId(getState(), id)
+    );
     const modelName = getModelNameById(getState(), id);
     const { X_Axis, Y_Axis } = specification;
     const defaultLayout = {

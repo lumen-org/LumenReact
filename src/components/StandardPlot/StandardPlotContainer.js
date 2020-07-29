@@ -6,6 +6,7 @@ import {
   getSpecById,
   getFacetById,
 } from "../../states/specifications/selector.js";
+import { getSpecificationId } from "../../states/plots/selector.js";
 import StandardPlot from "./StandardPlot";
 import { fetchStandardPlotData } from "../../states/plots/actions";
 class StandardPlotContainer extends React.Component {
@@ -96,8 +97,8 @@ const mapDispatchToProps = {
 const mapStateToProps = (state, ownProps) => {
   return {
     plotData: getStandardPlotDataById(state, ownProps.id),
-    specification: getSpecById(state, ownProps.id),
-    facets: getFacetById(state, ownProps.id),
+    specification: getSpecById(state, getSpecificationId(state, ownProps.id)),
+    facets: getFacetById(state, getSpecificationId(state, ownProps.id)),
   };
 };
 

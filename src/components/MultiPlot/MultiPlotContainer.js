@@ -6,15 +6,15 @@ import {
   getPlotLayoutById,
 } from "../../states/plots/selector";
 import { getSpecById } from "../../states/specifications/selector.js";
+import { getSpecificationId } from "../../states/plots/selector.js";
+
 import StandardPlot from "./MultiPlot";
 import {
   fetchMultiPlotData,
   fetchMultiPlotLayout,
 } from "../../states/plots/actions";
-class MultiPlotContainer extends React.Component {
-import { getSpecificationId } from "../../states/plots/selector.js";
 
-class DifferentialMarginalPlotContainer extends React.Component {
+class MultiPlotContainer extends React.Component {
   static propTypes = {
     fetchPlotData: PropTypes.func,
     fetchPlotLayout: PropTypes.func,

@@ -3,7 +3,7 @@ import {
   REMOVE_SPECIFICATION,
   ADD_TO_SPECIFICATION,
   DELETE_FROM_SPECIFICATION,
-  UPDATE_FACET_STATE
+  UPDATE_FACET_STATE,
   RESET_SPECIFICATIONS,
 } from "./constants";
 
@@ -48,8 +48,8 @@ export const defaultState = {
   lastCreatedId: EMPTY,
   specifications: {
     byId: {},
-    allIds: []
-  }
+    allIds: [],
+  },
 };
 
 const specifications = (state = defaultState, action) => {
@@ -64,7 +64,7 @@ const specifications = (state = defaultState, action) => {
           ...state,
           currentId: id,
           lastCreatedId: id,
-          specifications
+          specifications,
         };
       }
       return state;
@@ -77,7 +77,7 @@ const specifications = (state = defaultState, action) => {
         });
         return {
           ...state,
-          specifications
+          specifications,
         };
       }
       return state;
@@ -90,11 +90,11 @@ const specifications = (state = defaultState, action) => {
           byId: {
             [action.payload.id.toString()]: {
               specification: {
-                [action.payload.key]: { $add: [action.payload.value] }
-              }
-            }
-          }
-        })
+                [action.payload.key]: { $add: [action.payload.value] },
+              },
+            },
+          },
+        }),
       };
 
     case DELETE_FROM_SPECIFICATION:
@@ -104,11 +104,11 @@ const specifications = (state = defaultState, action) => {
           byId: {
             [action.payload.id]: {
               specification: {
-                [action.payload.key]: { $remove: [action.payload.value] }
-              }
-            }
-          }
-        })
+                [action.payload.key]: { $remove: [action.payload.value] },
+              },
+            },
+          },
+        }),
       };
 
     case UPDATE_FACET_STATE:
@@ -118,11 +118,17 @@ const specifications = (state = defaultState, action) => {
           byId: {
             [action.payload.id]: {
               facets: {
-                [action.payload.key]: { $merge: { [action.payload.type]: !specifications.byId[action.payload.id].facets[action.payload.key][action.payload.type] } }
-              }
-            }
-          }
-        })
+                [action.payload.key]: {
+                  $merge: {
+                    [action.payload.type]: !specifications.byId[
+                      action.payload.id
+                    ].facets[action.payload.key][action.payload.type],
+                  },
+                },
+              },
+            },
+          },
+        }),
       };
 
     default:
