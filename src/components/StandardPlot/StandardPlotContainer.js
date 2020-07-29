@@ -18,25 +18,72 @@ class StandardPlotContainer extends React.Component {
     id: PropTypes.number,
   };
 
+  state = {
+    displayTraces: [
+      {
+        name: "Data Points",
+        from: "data",
+      },
+      {
+        name: "Marginals",
+        from: "data",
+      },
+    ],
+  };
+
   getPlotInfo = () => {
     const { fetchStandardPlotData, id } = this.props;
     fetchStandardPlotData(id);
   };
 
+  // refractor this to utility? This function filter the facets and return of an array
+  // of items that the plot should display.
+  getDisplayTraces = () => {
+    const { facets } = this.props;
+    var displayTraces = [];
+    const keys = Object.keys(facets);
+
+    keys.map((key, ind) => {
+      if (facets[key]["data"] === true) {
+        displayTraces.push({
+          name: key,
+          from: "data",
+        });
+      }
+      if (facets[key]["model"] === true) {
+        displayTraces.push({
+          name: key,
+          from: "model",
+        });
+      }
+    });
+    this.setState({
+      displayTraces,
+    });
+  };
+
   componentDidUpdate(prevProps) {
     if (prevProps.specification !== this.props.specification) {
       this.getPlotInfo();
+      this.getDisplayTraces();
+    }
+
+    if (
+      prevProps.facets !== this.props.facets ||
+      prevProps.specification !== this.props.specification
+    ) {
+      this.getDisplayTraces();
     }
   }
 
   render() {
-    const { plotData, specification, facets } = this.props;
-    console.log(plotData);
+    const { plotData, specification } = this.props;
+    const { displayTraces } = this.state;
     return (
       <StandardPlot
         plotData={plotData}
+        displayTraces={displayTraces}
         specification={specification}
-        facets={facets}
       />
     );
   }

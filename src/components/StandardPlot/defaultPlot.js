@@ -1,12 +1,34 @@
 import { plotStyle } from "./plotStyle";
 
-export const defaultPlotTraces = {
+export const defaultPlot = {
+  layout: {
+    autosize: true,
+    xaxis: {
+      domain: [0, 0.85],
+    },
+    yaxis: {
+      domain: [0, 0.85],
+    },
+    xaxis2: {
+      domain: [0.85, 1],
+    },
+    yaxis2: {
+      domain: [0.85, 1],
+    },
+  },
   scatterTrace: {
     type: "scatter",
     mode: "markers",
     xaxis: "x",
     yaxis: "y",
     marker: plotStyle.scatterMarker,
+  },
+  modelScatterTrace: {
+    type: "scatter",
+    mode: "markers",
+    xaxis: "x",
+    yaxis: "y",
+    marker: plotStyle.modelScatterMarker,
   },
   yHistogramTrace: {
     marker: {

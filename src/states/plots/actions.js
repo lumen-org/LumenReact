@@ -100,14 +100,18 @@ export function fetchStandardPlotData(id) {
     const X_Axis = [...specification.X_Axis];
     const Y_Axis = [...specification.Y_Axis];
     var SELECT;
+    var PREDICT;
     if (X_Axis.length === 0 && Y_Axis.length > 0) {
       SELECT = [X_Axis[0]];
+      PREDICT = [X_Axis[0]];
     } else if (Y_Axis.length === 0 && X_Axis.length > 0) {
       SELECT = [Y_Axis[0]];
     } else if (Y_Axis.length === 0 && X_Axis.length === 0) {
       SELECT = [];
+      PREDICT = [];
     } else {
       SELECT = [X_Axis[0], Y_Axis[0]];
+      PREDICT = [];
     }
     const BODY = {
       SELECT,
