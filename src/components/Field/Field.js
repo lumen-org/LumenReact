@@ -1,7 +1,7 @@
 import React  from "react";
 import TitelH2 from "../Titles/TitleH2";
 import FieldList from "../FieldList/FieldList";
-import "./Field.css";
+import "./Field.scss";
 import PropTypes from 'prop-types'
 
 function Field({ title, data, fieldName="" }) {

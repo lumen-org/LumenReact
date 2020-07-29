@@ -1,6 +1,6 @@
 import React from "react";
 import specificationFacetConfig from "../../configs/specificationFacetsConfig";
-import "./Facet.css";
+import "./Facet.scss";
 import PropTypes from "prop-types";
 
 class Facet extends React.Component {

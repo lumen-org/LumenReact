@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import RnDPlot from "../../components/RnDPlotWrapper";
 import PropTypes from "prop-types";
-import "./VisualizationCanvas.css";
+import "./VisualizationCanvas.scss";
 
 class VisualizationCanvas extends Component {
   static propTypes = {

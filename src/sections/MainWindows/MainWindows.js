@@ -4,7 +4,7 @@ import PlotSettings from "../PlotSettings";
 import VisualizationCanvas from "../VisualizationCanvas";
 import AppToolbar from "../AppToolbar";
 import ListModal from "../../components/ListModal";
-import "./MainWindows.css";
+import "./MainWindows.scss";
 
 // TODO: Make it responsive according to tablet size
 class MainWindows extends Component {

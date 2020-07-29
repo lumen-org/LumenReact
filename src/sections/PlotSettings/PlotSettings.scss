@@ -1,12 +1,14 @@
+@import "src/assets/styles/colors";
+
 .layout-schema {
   background-color: white;
-  border: #dbdbdb 1px solid;
+  border: $plot-border-color 1px solid;
   border-radius: 10px;
 }
 
 .layout-specification {
   background-color: white;
-  border: #dbdbdb 1px solid;
+  border: $plot-border-color 1px solid;
   border-radius: 10px;
 }
 

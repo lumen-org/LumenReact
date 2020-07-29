@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Rnd } from "react-rnd";
 import CloseButton from "../Button/CloseButton";
 import DifferentialMarginalPlot from "../DifferentialMarginalPlot";
-import "./RnDPlotWrapper.css";
+import "./RnDPlotWrapper.scss";
 
 /**
  * RnDPlotWrapper is a wrapper around different kinds of plots such as:

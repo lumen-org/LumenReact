@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./TitelH1.css"
+import "./TitelH1.scss"
 
 function TitelH1(props) {
   return (
