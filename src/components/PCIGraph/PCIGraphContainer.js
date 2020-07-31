@@ -103,7 +103,6 @@ class PCIGraphContainer extends React.Component {
   render() {
     const nodes = this.state.nodes;
     const edges = this.state.edges;
-    console.log(edges);
     return (
       <PCIGraph
         edges={edges}

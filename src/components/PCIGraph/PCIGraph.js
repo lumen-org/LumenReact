@@ -1,8 +1,8 @@
 import React from "react";
 import Graph from "react-graph-vis";
 import { Rnd } from "react-rnd";
-import CloseButton from "../../components/Button/CloseButton";
-import ThresholdBar from "../../components/ThresholdBar";
+import CloseButton from "../Button/CloseButton";
+import ThresholdBar from "../ThresholdBar";
 import PropTypes from "prop-types";
 
 class PCIGraph extends React.Component {
@@ -95,8 +95,6 @@ class PCIGraph extends React.Component {
    * @returns {null|*}
    */
   render() {
-    console.log("render PCI Component")
-
   const graph = {
     nodes: this.props.nodes,
     edges: this.props.edges,

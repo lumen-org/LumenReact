@@ -30,8 +30,8 @@ import Vector from "./vectorclass";
  */
 function solve(nodes, edges, DGA_coolingRate = 0.99, DGA_constraintSatisfactionDegree = 20, DGA_proximityRatio = 0.3, overallChangePercentage = 0.00001, maxIteration = 100000, DGA_temperature = 1,
                DGA_strengthOfRepulsiveForce = 10, DGA_timestep = 0.5, DGA_damping = 0.95) {
-  console.log("parameters used:");
-  console.log(DGA_proximityRatio, overallChangePercentage, DGA_coolingRate, DGA_constraintSatisfactionDegree, maxIteration);
+  //console.log("parameters used:");
+  //console.log(DGA_proximityRatio, overallChangePercentage, DGA_coolingRate, DGA_constraintSatisfactionDegree, maxIteration);
   let t1 = performance.now();
   // line 1-4 with initializing node positions and previous positions; node accelerations are set to 0
   randomNodePosition(nodes);
@@ -123,8 +123,8 @@ function solve(nodes, edges, DGA_coolingRate = 0.99, DGA_constraintSatisfactionD
   }
   //drawGraph(nodes, edges, s);
   let t2 = performance.now();
-  console.log("Time:" + (t2 - t1) + " ms");
-  console.log("Iterations:", round - 1);
+  //console.log("Time:" + (t2 - t1) + " ms");
+  //console.log("Iterations:", round - 1);
   for (let node of nodes) {
     node.x = node.pos.x *100;
     node.y = node.pos.y *100;
