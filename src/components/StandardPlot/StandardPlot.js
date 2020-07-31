@@ -63,6 +63,31 @@ class StandardPlot extends Component {
     };
   };
 
+  getNewModelXHistogramTrace = () => {
+    const { plotData } = this.props;
+    return {
+      ...defaultPlot.modelXHistogramTrace,
+      x: plotData.model.x,
+    };
+  };
+
+  getNewModelYHistogramTrace = () => {
+    const { plotData } = this.props;
+    return {
+      ...defaultPlot.modelYHistogramTrace,
+      y: plotData.model.y,
+    };
+  };
+
+  getNewModelDensityTrace = () => {
+    const { plotData } = this.props;
+    return {
+      ...defaultPlot.modelDensityTrace,
+      x: plotData.model.x,
+      y: plotData.model.y,
+    };
+  };
+
   // TODO: implement a callback so that the plot state are saved in the store
   setPlotData = () => {
     const { displayTraces } = this.props;
@@ -82,10 +107,11 @@ class StandardPlot extends Component {
         data.push(this.getNewModelScatterTrace());
       }
       if (traceinfo.name === "Density" && traceinfo.from === "model") {
-        // TODO
+        data.push(this.getNewModelDensityTrace());
       }
       if (traceinfo.name === "Marginals" && traceinfo.from === "model") {
-        // TODO
+        data.push(this.getNewModelXHistogramTrace());
+        data.push(this.getNewModelYHistogramTrace());
       }
     });
 
