@@ -62,7 +62,6 @@ function deletePlotInStore(id) {
 export function deletePlot(id) {
   return (dispatch, getState) => {
     const plotType = getPlotTypeById(getState(), id);
-    console.log(plotType);
     if (plotType === STANDARD_PLOT) {
       dispatch(deleteStandardPlot(id));
     }
