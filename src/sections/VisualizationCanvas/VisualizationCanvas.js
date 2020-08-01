@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import RnDPlot from "../../components/RnDPlotWrapper";
 import PropTypes from "prop-types";
+import PCIGraph from "../../components/PCIGraph";
 import "./VisualizationCanvas.scss";
 
 class VisualizationCanvas extends Component {
@@ -19,7 +20,7 @@ class VisualizationCanvas extends Component {
   };
 
   render() {
-    const { plots, specifications } = this.props;
+    const { plots, specifications, models } = this.props;
     return (
       <div className="VisualizationCanvas-container">
         {Object.keys(plots).map(
@@ -34,6 +35,14 @@ class VisualizationCanvas extends Component {
               />
             )
         )}
+        {
+          Object.keys(models).map(
+          (id) =>
+            models[id].showPCIGraph && (
+              <PCIGraph modelId={id}/>
+            )
+          )
+        }
       </div>
     );
   }
