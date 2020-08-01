@@ -4,6 +4,9 @@ import { EMPTY } from "../constants";
 const getVis = (state) => state.visualizations.visualizations.byId;
 const activeId = (state) => state.visualizations.activeVisualizationId;
 
+export const getPlotIdByVisId = (state, visId) => {
+  return state.visualizations.visualizations.byId[visId].plotId;
+};
 
 export const selectCurrentModel = createSelector(
   [getVis, activeId],
@@ -23,6 +26,13 @@ export const selectActivePlotId = createSelector(
   [getVis, activeId],
   (selectVis, activeId) => {
     return activeId !== EMPTY ? selectVis[activeId].plotId : EMPTY;
+  }
+);
+
+export const selectActivePlotType = createSelector(
+  [getVis, activeId],
+  (selectVis, activeId) => {
+    return activeId !== EMPTY ? selectVis[activeId].plotType : EMPTY;
   }
 );
 

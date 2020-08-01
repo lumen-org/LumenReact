@@ -41,7 +41,12 @@ const plotsReducer = (state = defaultState, action) => {
 
     case CREATE_NEW_PLOT:
       const newId = nextAvaliableId(state.plots.allIds);
-      const { modelName, visualizationId, specificationId } = action.payload;
+      const {
+        modelName,
+        visualizationId,
+        specificationId,
+        plotType,
+      } = action.payload;
       return {
         ...state,
         plots: {
@@ -52,6 +57,7 @@ const plotsReducer = (state = defaultState, action) => {
                 model: modelName,
                 visualizationId: visualizationId,
                 specificationId: specificationId,
+                plotType: plotType,
                 zIndex: 0,
                 multiPlotData: [],
                 standardPlotData: {

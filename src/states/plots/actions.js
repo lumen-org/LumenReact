@@ -8,12 +8,24 @@ import {
   RESET_MULTI_PLOT_DATA,
   UPDATE_PLOT_LAYOUT,
 } from "./constants";
+import {
+  STANDARD_PLOT,
+  PCI_PLOT,
+  MULTI_PLOT,
+  DIFFERENTIAL_MARGINAL_PLOT,
+} from "../../constants/plotTypes";
+import {
+  createNewStandardPlot,
+  deleteStandardPlot,
+} from "../standardplots/actions";
+
 import { fetchAllPlotData, getSelectFieldArray } from "../../utils/plotData";
 import queryTemplates from "../../utils/queryTemplates";
 import { fetchPlotData } from "../../utils/fetch";
 import { getSpecById } from "../specifications/selector";
 import { getSpecificationId } from "../plots/selector";
 import { getModelNameById } from "../models/selector";
+import { defaultPlot } from "../../components/StandardPlot/defaultPlot";
 
 export function changeActivePlot(newid) {
   return {
@@ -24,23 +36,47 @@ export function changeActivePlot(newid) {
   };
 }
 
-export function createNewPlot(modelName, visualizationId, specificationId) {
+export function createNewPlot(
+  modelName,
+  visualizationId,
+  specificationId,
+  plotType
+) {
+  return (dispatch, getState) => {
+    if (plotType === STANDARD_PLOT) {
+      dispatch(createNewStandardPlot());
+    }
+    dispatch(createPlot(modelName, visualizationId, specificationId, plotType));
+  };
+}
+
+function createPlot(modelName, visualizationId, specificationId, plotType) {
   return {
     type: CREATE_NEW_PLOT,
     payload: {
       modelName: modelName,
       specificationId: specificationId,
       visualizationId: visualizationId,
+      plotType: plotType,
     },
   };
 }
 
-export function deletePlot(id) {
+function deletePlotInStore(id) {
   return {
     type: DELETE_PLOT,
     payload: {
       id: id,
     },
+  };
+}
+
+export function deletePlot(id, plotType) {
+  return (dispatch, getState) => {
+    if (plotType === STANDARD_PLOT) {
+      dispatch(deleteStandardPlot());
+    }
+    dispatch(deletePlotInStore(id));
   };
 }
 

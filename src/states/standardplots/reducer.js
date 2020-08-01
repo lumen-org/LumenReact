@@ -17,7 +17,7 @@ import {
   FETCH_MODEL_DENSITY_SUCCESS,
   FETCH_MODEL_DENSITY_PENDING,
   FETCH_MODEL_DENSITY_ERROR,
-  CREATE_NEW_STANDARD_PLOT,
+  INITIALIZE_NEW_STANDARD_PLOT,
   DELETE_STANDARD_PLOT,
 } from "./constants";
 
@@ -29,11 +29,12 @@ maintains all existing standardPlots and their state
 
 export const defaultState = {
   standardPlots: {},
+  status: "ok",
 };
 
 const standardPlots = (state = defaultState, action) => {
   switch (action.type) {
-    case CREATE_NEW_STANDARD_PLOT:
+    case INITIALIZE_NEW_STANDARD_PLOT:
       const { id } = action.payload;
 
       return {
@@ -41,12 +42,11 @@ const standardPlots = (state = defaultState, action) => {
         standardPlots: update(state.standardPlots, {
           [id]: {
             $set: {
-              id: id,
-              trainingScatterData: {
+              training: {
                 x: [],
                 y: [],
               },
-              modelScatterData: {
+              model: {
                 x: [],
                 y: [],
               },
@@ -55,6 +55,24 @@ const standardPlots = (state = defaultState, action) => {
         }),
       };
 
+    case DELETE_STANDARD_PLOT:
+      return {
+        ...state,
+        standardPlots: update(state.standardPlots, {
+          $unset: [action.payload.id],
+        }),
+      };
+
+    case FETCH_MODEL_DATA_SUCCESS:
+      return {
+        ...state,
+        standardPlots: update(state.standardPlots, {
+          [action.payload.id]: {
+            $set: action.payload.newStandardPlotData,
+          },
+        }),
+        status: "ok",
+      };
     default:
       return state;
   }
