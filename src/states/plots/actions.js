@@ -9,6 +9,7 @@ import {
   createNewStandardPlot,
   deleteStandardPlot,
 } from "../standardplots/actions";
+import { getPlotTypeById } from "./selector";
 import { createNewMultiPlot, deleteMultiPlot } from "../multiplots/actions";
 
 export function changeActivePlot(newid) {
@@ -58,8 +59,10 @@ function deletePlotInStore(id) {
   };
 }
 
-export function deletePlot(id, plotType) {
+export function deletePlot(id) {
   return (dispatch, getState) => {
+    const plotType = getPlotTypeById(getState(), id);
+    console.log(plotType);
     if (plotType === STANDARD_PLOT) {
       dispatch(deleteStandardPlot(id));
     }

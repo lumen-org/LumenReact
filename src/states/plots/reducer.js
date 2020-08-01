@@ -51,8 +51,6 @@ const plotsReducer = (state = defaultState, action) => {
                 specificationId: specificationId,
                 plotType: plotType,
                 zIndex: 0,
-                multiPlotData: [],
-                layout: {},
                 show: true,
               },
             },

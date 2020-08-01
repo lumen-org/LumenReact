@@ -68,7 +68,7 @@ const standardPlots = (state = defaultState, action) => {
         ...state,
         standardPlots: update(state.standardPlots, {
           [action.payload.id]: {
-            $set: action.payload.newStandardPlotData,
+            $merge: action.payload.newStandardPlotData,
           },
         }),
         status: "ok",

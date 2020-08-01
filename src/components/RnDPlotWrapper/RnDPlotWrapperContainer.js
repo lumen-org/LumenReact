@@ -9,17 +9,12 @@ import {
   changeActiveVisualization,
   deleteVisualization,
 } from "../../states/visualizations/actions";
-import {
-  selectActiveSpecificationId,
-  selectActivePlotType,
-} from "../../states/visualizations/selector";
-import { getPlotTypeById } from "../../states/plots/selector";
+import { selectActiveSpecificationId } from "../../states/visualizations/selector";
 
 class RnDPlotWrapperContainer extends React.Component {
   static propTypes = {
     id: PropTypes.number, // refractor needed, change id to visId
     activePlotId: PropTypes.number,
-    activePlotType: PropTypes.string,
     zIndex: PropTypes.number,
   };
 
@@ -30,14 +25,13 @@ class RnDPlotWrapperContainer extends React.Component {
       changeActivePlot,
       changeActiveVisualization,
       deleteVisualization,
-      activePlotType,
     } = this.props;
     const nextId = plots.allIds[0];
     const getVisualizationId = (plotId) => plots.byId[plotId].visualizationId;
     changeActiveVisualization(getVisualizationId(nextId));
     // deleteSpecification(getVisualizationId(id));
     // deleteModel(id);
-    deletePlot(id, activePlotType);
+    deletePlot(id);
     deleteVisualization(getVisualizationId(id));
   };
 
@@ -75,7 +69,6 @@ const mapStateToProps = (state, ownProps) => ({
   plots: state.plots.plots,
   activePlotId: state.plots.activePlotId,
   activeSpecification: selectActiveSpecificationId(state),
-  activePlotType: selectActivePlotType(state),
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -89,8 +82,7 @@ const mapDispatchToProps = (dispatch) => {
       newActiveModel // this function trigger the update of models
     ) => dispatch(updateActiveModel(newActiveModel)),
     deleteVisualization: (id) => dispatch(deleteVisualization(id)),
-    deletePlot: (id, activePlotType) =>
-      dispatch(deletePlot(id, activePlotType)),
+    deletePlot: (id) => dispatch(deletePlot(id)),
   };
 };
 
