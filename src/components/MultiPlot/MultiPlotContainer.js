@@ -12,7 +12,7 @@ import StandardPlot from "./MultiPlot";
 import {
   fetchMultiPlotData,
   fetchMultiPlotLayout,
-} from "../../states/plots/actions";
+} from "../../states/multiplots/actions";
 
 class MultiPlotContainer extends React.Component {
   static propTypes = {

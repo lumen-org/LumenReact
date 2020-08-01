@@ -1,12 +1,4 @@
-import {
-  CREATE_NEW_PLOT,
-  CHANGE_ACTIVE_PLOT,
-  DELETE_PLOT,
-  UPDATE_STANDARD_PLOT_DATA,
-  UPDATE_MULTI_PLOT_DATA,
-  RESET_MULTI_PLOT_DATA,
-  UPDATE_PLOT_LAYOUT,
-} from "./constants";
+import { CREATE_NEW_PLOT, CHANGE_ACTIVE_PLOT, DELETE_PLOT } from "./constants";
 
 import update from "immutability-helper";
 import { nextAvaliableId } from "../../utils/plotData";
@@ -60,10 +52,6 @@ const plotsReducer = (state = defaultState, action) => {
                 plotType: plotType,
                 zIndex: 0,
                 multiPlotData: [],
-                standardPlotData: {
-                  training: { x: [], y: [] },
-                  model: { x: [], y: [] },
-                },
                 layout: {},
                 show: true,
               },
@@ -73,69 +61,6 @@ const plotsReducer = (state = defaultState, action) => {
         },
         activePlotId: newId,
         lastCreatedId: newId,
-      };
-
-    case UPDATE_MULTI_PLOT_DATA:
-      return {
-        ...state,
-        plots: {
-          ...state.plots,
-          byId: update(state.plots.byId, {
-            [action.payload.id]: {
-              $merge: {
-                multiPlotData: [
-                  ...state.plots.byId[action.payload.id].multiPlotData,
-                  action.payload.newPlotData,
-                ],
-              },
-            },
-          }),
-        },
-      };
-
-    case UPDATE_PLOT_LAYOUT:
-      return {
-        ...state,
-        plots: {
-          ...state.plots,
-          byId: update(state.plots.byId, {
-            [action.payload.id]: {
-              $merge: {
-                layout: action.payload.newLayout,
-              },
-            },
-          }),
-        },
-      };
-
-    case RESET_MULTI_PLOT_DATA:
-      return {
-        ...state,
-        plots: {
-          ...state.plots,
-          byId: update(state.plots.byId, {
-            [action.payload.id]: {
-              $merge: {
-                multiPlotData: [],
-              },
-            },
-          }),
-        },
-      };
-
-    case UPDATE_STANDARD_PLOT_DATA:
-      return {
-        ...state,
-        plots: {
-          ...state.plots,
-          byId: update(state.plots.byId, {
-            [action.payload.id]: {
-              $merge: {
-                standardPlotData: action.payload.newStandardPlotData,
-              },
-            },
-          }),
-        },
       };
 
     case DELETE_PLOT:
