@@ -1,18 +1,39 @@
-![Tests](https://github.com/lumen-org/LumenReact/workflows/Tests/badge.svg)
+![Tests](https://github.com/lumen-org/LumenReact/workflows/Tests/badge.svg)https://github.com/lumen-org/lumen
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Under Development
+Please note this application is still under development.
+If you want to try out Lumen, we recommended that you use [the other front-end](https://github.com/lumen-org/lumen) instead.
 
-## Prerequirements
+----
 
-Run befor building the app: <br />
+# Lumen
 
+This is the web-application and visual-interactive front-end of the Lumen project.   
+
+  
+# Setup and Running
+
+We yarn as a package manager to resolve the external dependencies. If you'd like to use npm instead, it should work by replacing 'yarn' with 'npm' in the commands below. 
+
+## Install & Setup
+
+1. Clone/download the repo to a local folder.
+
+2. Install all dependencies: 
 ### `yarn install` 
 
-Installs all dependencies needed to run the app
+## Building
 
-## Available Scripts
+### `yarn build`
 
-In the project directory, you can run with eather `yarn xxx` or `npm xxx`:
+Builds the app for production to the `build` folder. It correctly bundles React in production mode and optimizes the build for the best performance. 
+The build is minified and the filenames include hashes. Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## Running 
+
+In the project directory you can start the application with `yarn xxx`:
 
 ### `yarn start`
 
@@ -20,22 +41,18 @@ Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+You will also see any linter errors in the console.
 
 ### `yarn test`
 
 Launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+## More on React
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+To learn React, check out the [React documentation](https://reactjs.org/).
 
 ### `yarn eject`
 
@@ -46,12 +63,6 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
 
 ### Code Splitting
 
