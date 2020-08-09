@@ -29,8 +29,6 @@ class RnDPlotWrapperContainer extends React.Component {
     const nextId = plots.allIds[0];
     const getVisualizationId = (plotId) => plots.byId[plotId].visualizationId;
     changeActiveVisualization(getVisualizationId(nextId));
-    // deleteSpecification(getVisualizationId(id));
-    // deleteModel(id);
     deletePlot(id);
     deleteVisualization(getVisualizationId(id));
   };

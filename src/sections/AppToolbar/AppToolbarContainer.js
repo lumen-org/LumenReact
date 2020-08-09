@@ -32,7 +32,6 @@ class AppToolbarContainer extends React.Component {
   };
   handleGraphClick = () => {
     const { activeModelId, showThisPCIGraph } = this.props;
-    console.log(activeModelId);
     showThisPCIGraph(activeModelId);
   };
   handleSyncModelClick = () => {
@@ -60,13 +59,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    showThisPCIGraph: (
-      modelId
-    ) => dispatch(showPCIGraph(modelId)),
+    showThisPCIGraph: (modelId) => dispatch(showPCIGraph(modelId)),
   };
 };
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AppToolbarContainer);
-

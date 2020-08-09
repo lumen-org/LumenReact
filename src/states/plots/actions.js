@@ -9,8 +9,9 @@ import {
   createNewStandardPlot,
   deleteStandardPlot,
 } from "../standardplots/actions";
-import { getPlotTypeById } from "./selector";
+import { getPlotTypeById, getPlotAllIds } from "./selector";
 import { createNewMultiPlot, deleteMultiPlot } from "../multiplots/actions";
+import { nextAvaliableId } from "../../utils/plotData";
 
 export function changeActivePlot(newid) {
   return {
@@ -28,6 +29,8 @@ export function createNewPlot(
   plotType
 ) {
   return (dispatch, getState) => {
+    const newId = nextAvaliableId(getPlotAllIds(getState()));
+
     if (plotType === STANDARD_PLOT) {
       dispatch(createNewStandardPlot());
     }
@@ -35,6 +38,7 @@ export function createNewPlot(
       dispatch(createNewMultiPlot());
     }
     dispatch(createPlot(modelName, visualizationId, specificationId, plotType));
+    dispatch(changeActivePlot(newId));
   };
 }
 
