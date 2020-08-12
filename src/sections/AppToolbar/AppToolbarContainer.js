@@ -32,8 +32,9 @@ class AppToolbarContainer extends React.Component {
   };
   handleGraphClick = () => {
     const { activeModelId, showThisPCIGraph } = this.props;
-    console.log(activeModelId);
-    showThisPCIGraph(activeModelId);
+    if (activeModelId != null) {
+      showThisPCIGraph(activeModelId);
+    }
   };
   handleSyncModelClick = () => {
     console.log("query...");

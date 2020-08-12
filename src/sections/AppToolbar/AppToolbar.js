@@ -20,14 +20,12 @@ class AppToolbar extends Component {
 
   onButtonClick = buttonKey => {
     if (buttonKey === 0) {
-      console.log("pressed modal key");
       this.setState({
         openModal: true
       });
     }
     else if (buttonKey === 7) {
       this.props.handleGraphClick();
-      console.log("pressed graph key");
     }
   };
 
