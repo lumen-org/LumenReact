@@ -11,7 +11,7 @@ Edges ought to have a source and target node, no double edges with exactly the s
 
 "use strict";
 
-import Vector from "./vectorclass";thub
+import Vector from "./vectorclass";
 /**
  * @param {array} nodes An array containing objects of different nodes. Those objects ought to have an (globally) unique id
  * @param {array} edges An array containing objects of different edges. They ought to have an (globally) unique id, value (weight of the edge), a source and target node specified by the node id, also there should be no double edges
