@@ -43,7 +43,6 @@ const models = (state = defaultState, action) => {
 
     case SHOW_PCI_GRAPH:
       ({ id }= action.payload);
-      console.log("inside show-pci-graph")
       return {
         ...state,
         models: update(state.models, {
@@ -59,7 +58,6 @@ const models = (state = defaultState, action) => {
 
     case HIDE_PCI_GRAPH:
       ({ id }= action.payload);
-      console.log("inside show-hide-graph")
       return {
         ...state,
         models: update(state.models, {
