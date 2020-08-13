@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import AppToolbar from "./AppToolbar";
 import { connect } from "react-redux";
+import { changeActivePlot, deletePlot } from "../../states/plots/actions";
 import { selectActiveModelId } from "../../states/visualizations/selector";
 import { showPCIGraph } from "../../states/models/actions";
 
@@ -28,10 +30,11 @@ class AppToolbarContainer extends React.Component {
   handleConfigClick = () => {
     console.log("query...");
   };
-
   handleGraphClick = () => {
     const { activeModelId, showThisPCIGraph } = this.props;
-    showThisPCIGraph(activeModelId);
+    if (activeModelId != null) {
+      showThisPCIGraph(activeModelId);
+    }
   };
 
   handleNewPlotClick = () => {};
