@@ -20,11 +20,9 @@ class PlotMenuContainer extends React.Component {
   };
 
   onCreateStandardPlot = () => {
-    console.log("createStandardPlot click...");
     this.createNewPlot(STANDARD_PLOT);
   };
   onCreateMultiPlot = () => {
-    console.log("createMultiplot click...");
     this.createNewPlot(MULTI_PLOT);
   };
 
@@ -40,7 +38,7 @@ class PlotMenuContainer extends React.Component {
     createNewVisualization().then(() => {
       addSpecifications().then(() => {
         createPlot(
-          "...",
+          "...", // supposed to be modelId, probably not useful here.
           this.props.lastCreatedVisualizationId,
           this.props.specificationId,
           plotType

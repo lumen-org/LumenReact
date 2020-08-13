@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 import {
   getMultiPlotDataById,
   getPlotLayoutById,
-} from "../../states/plots/selector";
+} from "../../states/multiplots/selector";
 import { getSpecById } from "../../states/specifications/selector.js";
 import { getSpecificationId } from "../../states/plots/selector.js";
 
-import StandardPlot from "./MultiPlot";
+import MultiPlot from "./MultiPlot";
 import {
   fetchMultiPlotData,
   fetchMultiPlotLayout,
@@ -37,7 +37,8 @@ class MultiPlotContainer extends React.Component {
 
   render() {
     const { plotData, layout } = this.props;
-    return <StandardPlot plotData={plotData} layout={layout} />;
+    console.log(layout);
+    return <MultiPlot plotData={plotData} layout={layout} />;
   }
 }
 
