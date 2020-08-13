@@ -16,6 +16,7 @@ class RnDPlotWrapperContainer extends React.Component {
     id: PropTypes.number, // refractor needed, change id to visId
     activePlotId: PropTypes.number,
     zIndex: PropTypes.number,
+    plotType: PropTypes.string,
   };
 
   onPlotClose = (id) => {
@@ -47,10 +48,8 @@ class RnDPlotWrapperContainer extends React.Component {
     updateActiveModel(modelName);
   };
 
-  componentDidMount() {}
-
   render() {
-    const { activePlotId, id, zIndex } = this.props;
+    const { activePlotId, id, zIndex, plotType } = this.props;
     return (
       <RnDPlotWrapper
         zIndex={zIndex}
@@ -58,6 +57,7 @@ class RnDPlotWrapperContainer extends React.Component {
         activePlotId={activePlotId}
         onPlotClose={this.onPlotClose}
         onActivePlotChange={this.onActivePlotChange}
+        plotType={plotType}
       />
     );
   }

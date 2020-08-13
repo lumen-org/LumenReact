@@ -14,16 +14,15 @@ import {
   fillVisualization,
 } from "../../states/visualizations/actions";
 import { createNewModel } from "../../states/models/actions";
-import { createNewStandardPlot } from "../../states/standardplots/actions";
-import visualizations from "../../states/visualizations/reducer";
-import { plot } from "plotly.js";
-import { defaultPlot } from "../StandardPlot/defaultPlot";
-
 const defaultPlotType = STANDARD_PLOT; // Haha, we will certainly refractor this, right?
 class ListModalContainer extends React.Component {
   static propTypes = {
     open: PropTypes.bool.isRequired,
     handleModalClose: PropTypes.func.isRequired,
+    specificationId: PropTypes.number,
+    plotId: PropTypes.number,
+    modelId: PropTypes.number,
+    lastCreatedVisualizationId: PropTypes.number,
   };
 
   state = {
@@ -39,10 +38,6 @@ class ListModalContainer extends React.Component {
       createNewVisualization,
       createNewModel,
       fillVisualization,
-      //createNewStandardPlot,
-      lastCreatedVisualizationId,
-      specificationId,
-      modelId,
     } = this.props;
     // even though the dispatches officially are executed sequential the mapStateToProps
     // is not updating in time, that's why we need to ensure the order by
@@ -122,8 +117,6 @@ const mapDispatchToProps = (dispatch) => {
           defaultPlotType
         )
       ),
-    //createNewStandardPlot: () => dispatch(createNewStandardPlot()),
-    // resetSpecifications: () => dispatch(resetSpecifications()),
     addSpecifications: () => {
       return dispatch(createNewSpecification());
     },
