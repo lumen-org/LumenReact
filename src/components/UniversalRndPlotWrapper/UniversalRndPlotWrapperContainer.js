@@ -4,7 +4,7 @@ import { nextActiveId } from "../../utils/plotData";
 import { changeActivePlot, deletePlot } from "../../states/plots/actions";
 import { updateActiveModel } from "../../states/app/actions";
 import PropTypes from "prop-types";
-import RnDPlotWrapper from "./RnDPlotWrapper";
+import RnDPlotWrapper from "./UniversalRndPlotWrapper";
 import { changeActiveVisualization, deleteVisualization } from "../../states/visualizations/actions";
 import { selectActiveSpecificationId } from "../../states/visualizations/selector";
 
@@ -13,46 +13,21 @@ class RnDPlotWrapperContainer extends React.Component {
     id: PropTypes.number,
     activePlotId: PropTypes.number,
     zIndex: PropTypes.number,
+    onPlotClose: PropTypes.func,
+    onActivePlotChange: PropTypes.func,
+    component: PropTypes.func,
   };
 
-  onPlotClose = (id) => {
-    const {
-      deletePlot,
-      plots,
-      changeActivePlot,
-      changeActiveVisualization,
-      deleteVisualization,
-    } = this.props;
-    const nextId = plots.allIds[0];
-    const getVisualizationId = plotId => plots.byId[plotId].visualizationId;
-    changeActiveVisualization(getVisualizationId(nextId));
-    deletePlot(id);
-    deleteVisualization(getVisualizationId(id));
-  };
-
-  onActivePlotChange = (id) => {
-    const {
-      changeActivePlot,
-      updateActiveModel,
-      modelName,
-      deleteVisualization,
-      changeActiveVisualization,
-      visualizationId,
-    } = this.props;
-    changeActiveVisualization(visualizationId);
-    changeActivePlot(id);
-    updateActiveModel(modelName);
-  };
 
   render() {
-    const { activePlotId, id, zIndex } = this.props;
+    const { activePlotId, id, zIndex, onPlotClose, onActivePlotChange} = this.props;
     return (
       <RnDPlotWrapper
         zIndex={zIndex}
         id={id}
         activePlotId={activePlotId}
-        onPlotClose={this.onPlotClose}
-        onActivePlotChange={this.onActivePlotChange}
+        onPlotClose={onPlotClose}
+        onActivePlotChange={onActivePlotChange}
       />
     );
   }
