@@ -11,10 +11,9 @@ class VisualizationCanvas extends Component {
       PropTypes.objectOf({
         id: PropTypes.number,
         modelName: PropTypes.string,
-        // specifications: PropTypes.object,
         plotData: PropTypes.array,
         layout: PropTypes.object,
-        specifications: PropTypes.object
+        specifications: PropTypes.object,
       })
     ),
   };
@@ -30,19 +29,17 @@ class VisualizationCanvas extends Component {
                 id={plots[id].id}
                 zIndex={plots[id].zIndex + 10}
                 modelName={plots[id].model}
-                specifications={specifications.byId[plots[id].specificationId].specification}
+                specifications={
+                  specifications.byId[plots[id].specificationId].specification
+                }
                 visualizationId={plots[id].visualizationId}
+                plotType={plots[id].plotType}
               />
             )
         )}
-        {
-          Object.keys(models).map(
-          (id) =>
-            models[id].showPCIGraph && (
-              <PCIGraph modelId={id}/>
-            )
-          )
-        }
+        {Object.keys(models).map(
+          (id) => models[id].showPCIGraph && <PCIGraph modelId={id} />
+        )}
       </div>
     );
   }

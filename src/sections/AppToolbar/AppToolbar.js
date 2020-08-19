@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import ListModal from "../../components/ListModal";
-
+import PlotMenu from "../../components/PlotMenu";
 import toolbarConfig from "../../configs/appToolbar";
+
 import "./AppToolbar.scss";
 
 class AppToolbar extends Component {
@@ -15,19 +16,16 @@ class AppToolbar extends Component {
     handleClearClick: PropTypes.func,
     handleConfigClick: PropTypes.func,
     handleGraphClick: PropTypes.func,
-    handleSyncModelClick: PropTypes.func
+    handleNewPlotClick: PropTypes.func,
   };
 
-  onButtonClick = buttonKey => {
+  onButtonClick = (buttonKey) => {
     if (buttonKey === 0) {
-      console.log("pressed modal key");
       this.setState({
-        openModal: true
+        openModal: true,
       });
-    }
-    else if (buttonKey === 7) {
+    } else if (buttonKey === 7) {
       this.props.handleGraphClick();
-      console.log("pressed graph key");
     }
   };
 
@@ -37,7 +35,7 @@ class AppToolbar extends Component {
 
   handleModalClose = () => {
     this.setState({
-      openModal: false
+      openModal: false,
     });
   };
 
@@ -48,24 +46,25 @@ class AppToolbar extends Component {
       <div className="navbar navbar-dark navbar-expand fixed-top">
         <ListModal open={openModal} handleModalClose={this.handleModalClose} />
 
-        <a class="navbar-brand">
-          Lumen
-        </a>
+        <a class="navbar-brand">Lumen</a>
         <ul className="navbar-nav mr-auto">
           {items.map((item, key) => (
             <li className="nav-item appToolbar-buttonContainer">
               <Button
-              variant={item.variant || "outlined"}
-              color={item.color || "default"}
-              endIcon={<img src={item.icon} alt="" />}
-              size="small"
-              key={key}
-              onClick={() => this.onButtonClick(key)}
+                variant={item.variant || "outlined"}
+                color={item.color || "default"}
+                endIcon={<img src={item.icon} alt="" />}
+                size="small"
+                key={key}
+                onClick={() => this.onButtonClick(key)}
               >
                 {item.name}
               </Button>
             </li>
           ))}
+          <li className="nav-item appToolbar-buttonContainer">
+            <PlotMenu />
+          </li>
         </ul>
       </div>
     );

@@ -5,14 +5,18 @@ import { changeActivePlot, deletePlot } from "../../states/plots/actions";
 import { updateActiveModel } from "../../states/app/actions";
 import PropTypes from "prop-types";
 import RnDPlotWrapper from "./RnDPlotWrapper";
-import { changeActiveVisualization, deleteVisualization } from "../../states/visualizations/actions";
+import {
+  changeActiveVisualization,
+  deleteVisualization,
+} from "../../states/visualizations/actions";
 import { selectActiveSpecificationId } from "../../states/visualizations/selector";
 
 class RnDPlotWrapperContainer extends React.Component {
   static propTypes = {
-    id: PropTypes.number,
+    id: PropTypes.number, // refractor needed, change id to visId
     activePlotId: PropTypes.number,
     zIndex: PropTypes.number,
+    plotType: PropTypes.string,
   };
 
   onPlotClose = (id) => {
@@ -24,7 +28,7 @@ class RnDPlotWrapperContainer extends React.Component {
       deleteVisualization,
     } = this.props;
     const nextId = plots.allIds[0];
-    const getVisualizationId = plotId => plots.byId[plotId].visualizationId;
+    const getVisualizationId = (plotId) => plots.byId[plotId].visualizationId;
     changeActiveVisualization(getVisualizationId(nextId));
     deletePlot(id);
     deleteVisualization(getVisualizationId(id));
@@ -45,7 +49,7 @@ class RnDPlotWrapperContainer extends React.Component {
   };
 
   render() {
-    const { activePlotId, id, zIndex } = this.props;
+    const { activePlotId, id, zIndex, plotType } = this.props;
     return (
       <RnDPlotWrapper
         zIndex={zIndex}
@@ -53,12 +57,13 @@ class RnDPlotWrapperContainer extends React.Component {
         activePlotId={activePlotId}
         onPlotClose={this.onPlotClose}
         onActivePlotChange={this.onActivePlotChange}
+        plotType={plotType}
       />
     );
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownProps) => ({
   plots: state.plots.plots,
   activePlotId: state.plots.activePlotId,
   activeSpecification: selectActiveSpecificationId(state),
@@ -74,8 +79,8 @@ const mapDispatchToProps = (dispatch) => {
     updateActiveModel: (
       newActiveModel // this function trigger the update of models
     ) => dispatch(updateActiveModel(newActiveModel)),
+    deleteVisualization: (id) => dispatch(deleteVisualization(id)),
     deletePlot: (id) => dispatch(deletePlot(id)),
-    deleteVisualization: (id) => dispatch(deleteVisualization(id))
   };
 };
 
