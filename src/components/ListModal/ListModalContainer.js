@@ -10,7 +10,7 @@ import { BASE_URL, FETCH_ALL_MODEL_NAME } from "../../constants/query";
 import { changeActiveVisualization, createNewVisualization, fillVisualization } from "../../states/visualizations/actions";
 import { createNewModel } from "../../states/models/actions";
 import visualizations from "../../states/visualizations/reducer";
-import { plot } from "plotly.js";
+import { generateId } from "../../utils/idGenerator";
 
 class ListModalContainer extends React.Component {
   static propTypes = {
@@ -19,10 +19,11 @@ class ListModalContainer extends React.Component {
   };
 
   state = {
-    models: []
+    models: [],
+    currentModel: null
   };
 
-  handleItemSelection = (item) => {
+  getModelData = async (item) => {
     const {
       changeActiveVisualization,
       handleModalClose,
@@ -35,15 +36,11 @@ class ListModalContainer extends React.Component {
       specificationId,
       modelId
     } = this.props;
-    // even though the dispatches officially are executed sequential the mapStateToProps
-    // is not updating in time, that's why we need to ensure the order by
-    // making addSpecification a promise
-    // Im not sure if I did it correctly
     createNewVisualization(item).then(() => {
       addSpecifications().then(() => {
         // move into schema redux store to avoid this nested promises
         fetchModelData(item).then((response) => {
-          createNewModel(item, response["Fields"]);
+          createNewModel(item.modelName, response["Fields"]);
         }
         ).then(() => {
           createPlot(item, this.props.lastCreatedVisualizationId, this.props.specificationId);
@@ -53,6 +50,29 @@ class ListModalContainer extends React.Component {
         });
       });
     });
+  }
+
+  handleItemSelection = async (item) => {
+    const {
+      changeActiveVisualization,
+      handleModalClose,
+      createPlot,
+      createNewSpecification,
+      createNewVisualization,
+      createNewModel
+    } = this.props;
+    const model = await fetchModelData(item);
+    const { Fields, id } = model;
+    // todo: check if model exists and handle appropriatly
+    const specId = generateId();
+    const plotId = generateId();
+    const visId = generateId();
+    createNewVisualization(visId, id, specId, plotId)
+    createNewSpecification(specId)
+    createNewModel(item, Fields)
+    createPlot(item, visId, specId)
+    changeActiveVisualization(visId)
+    handleModalClose();
   };
 
   componentWillMount() {
@@ -87,18 +107,18 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createNewVisualization: (modelName, schemaId, specificationId, plotId) =>
-      dispatch(createNewVisualization(modelName, schemaId, specificationId, plotId)),
+    createNewVisualization: (id, modelId, specificationId, plotId) =>
+      dispatch(createNewVisualization(id, modelId, specificationId, plotId)),
     updateActiveModel: (model) => dispatch(updateActiveModel(model)),
     changeActiveVisualization: (id) => dispatch(changeActiveVisualization(id)),
-    createPlot: (activeModel, visualizationId, specificationId) => 
-    dispatch(createNewPlot(activeModel, visualizationId, specificationId)),
+    createPlot: (activeModel, visualizationId, specificationId) =>
+      dispatch(createNewPlot(activeModel, visualizationId, specificationId)),
     // resetSpecifications: () => dispatch(resetSpecifications()),
-    addSpecifications: () => {
-      return dispatch(createNewSpecification());
+    createNewSpecification: (specId) => {
+      return dispatch(createNewSpecification(specId));
     },
     createNewModel: (modelName, model) => dispatch(createNewModel(modelName, model)),
-    fillVisualization: (visualizationId, modelId, specificationId, plotId) => 
+    fillVisualization: (visualizationId, modelId, specificationId, plotId) =>
       dispatch(fillVisualization(visualizationId, modelId, specificationId, plotId))
   };
 };

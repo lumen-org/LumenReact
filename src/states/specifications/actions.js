@@ -41,6 +41,7 @@ const defaultValues = {
     },
   },
 };
+/* 
 
 export const createNewSpecification = (payload) => {
   // even though the dispatches are run sequential the mapStateToProps
@@ -52,9 +53,9 @@ export const createNewSpecification = (payload) => {
       resolve();
     });
   };
-};
+}; */
 
-export const _createNewSpecification = (initValues = null, id = uuidv4()) => {
+export const createNewSpecification = (id = uuidv4(), initValues = null) => {
   return {
     type: CREATE_NEW_SPECIFICATION,
     payload: {

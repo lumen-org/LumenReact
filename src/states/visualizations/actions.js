@@ -7,15 +7,15 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 
 
-export const createNewVisualization = (payload) => {
+/* export const createNewVisualization = (payload) => {
   return dispatch => {
     dispatch(_createNewVisualization(payload));
     return new Promise(function(resolve, reject) {
       resolve();
     });
   }
-}
-export const _createNewVisualization = (modelName, id=uuidv4(), modelId = null, specificationId = null, plotId = null) => {
+} */
+export const createNewVisualization = (id=uuidv4(), modelId = null, specificationId = null, plotId = null) => {
   return {
     type: CREATE_NEW_VISUALIZATION,
     payload: {

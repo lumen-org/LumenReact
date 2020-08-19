@@ -1,4 +1,5 @@
 import { BASE_URL, FETCH_SCHEMA } from "../constants/query";
+import { generateId } from "./idGenerator";
 
 export const fetchData = (url, body) => {
   return fetch(url, {
@@ -21,7 +22,7 @@ export const fetchData = (url, body) => {
 
 export const _fetchModelData = (BODY) => {
   return fetchData(BASE_URL, BODY).then((response) => {
-    return { Fields: response["fields"] };
+    return { Fields: response["fields"], id: response["id"] ? response["id"] : generateId() };
   });
 };
 
