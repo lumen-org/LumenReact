@@ -37,14 +37,17 @@ class VisualizationCanvas extends Component {
                 }
                 visualizationId={plots[id].visualizationId}
                 plotType={plots[id].plotType}
-              >
-                {plots[id].plotType === STANDARD_PLOT ? (
-                  <StandardPlot id={id} />
+                plotShit={plots[id].plotType === STANDARD_PLOT ? (
+                  <div className="cancel"><StandardPlot id={id} /></div>
                 ) : plots[id].plotType === MULTI_PLOT ? (
                   <MultiPlot id={id} />
                 ) : plots[id].plotType === PCI_PLOT ? (
                   <PCIGraph id={id} />
                 ) : null}
+              >
+                <div className="cancel">
+                  001
+                </div>
               </RnDPlot>
             )
         )}

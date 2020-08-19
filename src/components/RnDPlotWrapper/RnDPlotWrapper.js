@@ -64,7 +64,7 @@ class RnDPlotWrapper extends Component {
   };
 
   render() {
-    const { zIndex, id, plotType } = this.props;
+    const { zIndex, id, plotType, plotShit } = this.props;
     const {
       plotWindowsHeight,
       plotWindowsWidth,
@@ -76,6 +76,7 @@ class RnDPlotWrapper extends Component {
       <Rnd
         size={{ width: plotWindowsWidth, height: plotWindowsHeight }}
         position={{ x: plotWindowsPosX, y: plotWindowsPosY }}
+        cancel=".cancel"
         style={{ zIndex: zIndex }}
         onDragStop={this.onDragStop}
         onResizeStop={this.onResizeStop}
@@ -84,6 +85,16 @@ class RnDPlotWrapper extends Component {
         <div className="RndPlot-titlebar">
           <CloseButton handleClose={this.handleClose} />
         </div>
+        <div className="cancel">
+          {plotType === STANDARD_PLOT ? (
+            <StandardPlot id={id} />
+          ) : plotType === MULTI_PLOT ? (
+            <MultiPlot id={id} />
+          ) : plotType === PCI_PLOT ? (
+            <PCIGraph id={id} />
+          ) : null}
+        </div>
+
       </Rnd>
     );
   }
