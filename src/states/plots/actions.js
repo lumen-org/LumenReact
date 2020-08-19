@@ -12,6 +12,8 @@ import {
 import { getPlotTypeById, getPlotAllIds } from "./selector";
 import { createNewMultiPlot, deleteMultiPlot } from "../multiplots/actions";
 import { nextAvaliableId } from "../../utils/plotData";
+import { hidePCIGraph, showPCIGraph } from "../models/actions";
+import { selectActiveModelId } from "../visualizations/selector";
 
 export function changeActivePlot(newid) {
   return {
@@ -36,6 +38,10 @@ export function createNewPlot(
     }
     if (plotType === MULTI_PLOT) {
       dispatch(createNewMultiPlot());
+    }
+    if (plotType === PCI_PLOT) {
+      dispatch(showPCIGraph(selectActiveModelId(getState())));
+      return;
     }
     dispatch(createPlot(modelName, visualizationId, specificationId, plotType));
     dispatch(changeActivePlot(newId));
@@ -71,6 +77,9 @@ export function deletePlot(id) {
     }
     if (plotType === MULTI_PLOT) {
       dispatch(deleteMultiPlot(id));
+    }
+    if (plotType === PCI_PLOT) {
+      dispatch(hidePCIGraph(id))
     }
     dispatch(deletePlotInStore(id));
   };

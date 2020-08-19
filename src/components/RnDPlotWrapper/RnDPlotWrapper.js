@@ -4,6 +4,7 @@ import { Rnd } from "react-rnd";
 import CloseButton from "../Button/CloseButton";
 import MultiPlot from "../MultiPlot";
 import StandardPlot from "../StandardPlot";
+import PCIGraph from "../PCIGraph";
 import {
   STANDARD_PLOT,
   MULTI_PLOT,
@@ -87,6 +88,8 @@ class RnDPlotWrapper extends Component {
           <StandardPlot id={id} />
         ) : plotType === MULTI_PLOT ? (
           <MultiPlot id={id} />
+        ) : plotType === PCI_PLOT ? (
+          <PCIGraph id={id} />
         ) : null}
       </Rnd>
     );
