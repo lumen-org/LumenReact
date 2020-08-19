@@ -4,6 +4,9 @@ import RnDPlot from "../../components/RnDPlotWrapper";
 import PropTypes from "prop-types";
 import PCIGraph from "../../components/PCIGraph";
 import "./VisualizationCanvas.scss";
+import { MULTI_PLOT, PCI_PLOT, STANDARD_PLOT } from "../../constants/plotTypes";
+import StandardPlot from "../../components/StandardPlot/StandardPlotContainer";
+import MultiPlot from "../../components/MultiPlot/MultiPlotContainer";
 
 class VisualizationCanvas extends Component {
   static propTypes = {
@@ -34,7 +37,15 @@ class VisualizationCanvas extends Component {
                 }
                 visualizationId={plots[id].visualizationId}
                 plotType={plots[id].plotType}
-              />
+              >
+                {plots[id].plotType === STANDARD_PLOT ? (
+                  <StandardPlot id={id} />
+                ) : plots[id].plotType === MULTI_PLOT ? (
+                  <MultiPlot id={id} />
+                ) : plots[id].plotType === PCI_PLOT ? (
+                  <PCIGraph id={id} />
+                ) : null}
+              </RnDPlot>
             )
         )}
         {Object.keys(models).map(

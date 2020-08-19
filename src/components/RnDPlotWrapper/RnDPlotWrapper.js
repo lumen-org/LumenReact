@@ -84,13 +84,6 @@ class RnDPlotWrapper extends Component {
         <div className="RndPlot-titlebar">
           <CloseButton handleClose={this.handleClose} />
         </div>
-        {plotType === STANDARD_PLOT ? (
-          <StandardPlot id={id} />
-        ) : plotType === MULTI_PLOT ? (
-          <MultiPlot id={id} />
-        ) : plotType === PCI_PLOT ? (
-          <PCIGraph id={id} />
-        ) : null}
       </Rnd>
     );
   }
