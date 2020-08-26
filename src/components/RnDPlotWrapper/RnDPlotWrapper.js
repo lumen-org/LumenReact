@@ -42,11 +42,14 @@ class RnDPlotWrapper extends Component {
     });
   };
 
-  onDragStop = (event, dragIndex) => {
+  onDragStart = (event) => {
     const { id, onActivePlotChange, activePlotId } = this.props;
     if (id !== activePlotId) {
       onActivePlotChange(id);
     }
+  }
+
+  onDragStop = (event, dragIndex) => {
     this.setNewPos(dragIndex);
   };
 
@@ -79,6 +82,7 @@ class RnDPlotWrapper extends Component {
         cancel=".cancel"
         style={{ zIndex: zIndex }}
         onDragStop={this.onDragStop}
+        onDragStart={this.onDragStart}
         onResizeStop={this.onResizeStop}
         className="RndPlot-container"
       >
