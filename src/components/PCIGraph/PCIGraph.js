@@ -99,6 +99,8 @@ class PCIGraph extends React.Component {
       color: "#000000"
     },
     autoResize: false,
+    height: this.props.plotWindowsHeight,
+    width: this.props.plotWindowsWidth
   };
 
   const events = {

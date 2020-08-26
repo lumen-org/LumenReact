@@ -110,6 +110,8 @@ class PCIGraphContainer extends React.Component {
         onPlotClose={this.onPlotClose}
         updateEdges={this.updateEdges}
         modelId={this.state.activeModelId}
+        plotWindowsHeight={this.props.plotWindowsHeight}
+        plotWindowsWidth={this.props.plotWindowsWidth}
       />
     );
   }

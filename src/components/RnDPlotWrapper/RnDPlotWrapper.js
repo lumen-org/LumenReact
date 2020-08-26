@@ -91,7 +91,10 @@ class RnDPlotWrapper extends Component {
           ) : plotType === MULTI_PLOT ? (
             <MultiPlot id={id} />
           ) : plotType === PCI_PLOT ? (
-            <PCIGraph id={id} />
+            <PCIGraph id={id}
+                      plotWindowsHeight={plotWindowsHeight}
+                      plotWindowsWidth={plotWindowsWidth}
+            />
           ) : null}
         </div>
       </Rnd>
