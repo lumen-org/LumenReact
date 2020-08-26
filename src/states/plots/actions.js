@@ -41,7 +41,7 @@ export function createNewPlot(
     }
     if (plotType === PCI_PLOT) {
       dispatch(showPCIGraph(selectActiveModelId(getState())));
-      return;
+      //return;
     }
     dispatch(createPlot(modelName, visualizationId, specificationId, plotType));
     dispatch(changeActivePlot(newId));

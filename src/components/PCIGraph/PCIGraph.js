@@ -22,16 +22,6 @@ class PCIGraph extends React.Component {
     network: {},
   };
 
-  setNewPos = (dragIndex) => {
-    this.setState({
-      plotWindowsPosX: dragIndex.x,
-      plotWindowsPosY: dragIndex.y,
-    });
-  };
-
-  onDragStop = (event, dragIndex) => {
-    this.setNewPos(dragIndex);
-  };
 
   onResizeStop = (event, direction, ref, delta, position) => {
     this.setState({
@@ -129,19 +119,7 @@ class PCIGraph extends React.Component {
       return null;
     }
   return (
-    <Rnd
-      size={{ width: plotWindowsWidth, height: plotWindowsHeight }}
-      position={{ x: plotWindowsPosX, y: plotWindowsPosY }}
-      onDragStop={this.onDragStop}
-      onResizeStop={this.onResizeStop}
-      className="RndPlot-container"
-      style={{
-        border: "#dbdbdb 3px solid",
-        borderRadius: "10px",
-      }}>
-      <div className={"RndPlot-titlebar"}>
-        <CloseButton handleClose={this.handleClose} />
-      </div>
+    <div>
         <ThresholdBar
           name={modelId+"pciThreshold"}
           onThresholdChange={this.updateEdgesBasedOnThreshold}
@@ -155,7 +133,7 @@ class PCIGraph extends React.Component {
             //  if you want access to vis.js network api you can set the state in a parent component using this property
                 this.setState({ network: network }) }}
         />
-    </Rnd>
+    </div>
   );
   }
 }

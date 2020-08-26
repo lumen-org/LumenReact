@@ -94,7 +94,6 @@ class RnDPlotWrapper extends Component {
             <PCIGraph id={id} />
           ) : null}
         </div>
-
       </Rnd>
     );
   }
