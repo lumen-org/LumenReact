@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { nextActiveId } from "../../utils/plotData";
 import { changeActivePlot, deletePlot } from "../../states/plots/actions";
 import { updateActiveModel } from "../../states/app/actions";
 import PropTypes from "prop-types";
@@ -23,7 +22,6 @@ class RnDPlotWrapperContainer extends React.Component {
     const {
       deletePlot,
       plots,
-      changeActivePlot,
       changeActiveVisualization,
       deleteVisualization,
     } = this.props;
@@ -39,7 +37,6 @@ class RnDPlotWrapperContainer extends React.Component {
       changeActivePlot,
       updateActiveModel,
       modelName,
-      deleteVisualization,
       changeActiveVisualization,
       visualizationId,
     } = this.props;

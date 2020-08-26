@@ -7,6 +7,7 @@ class PlotMenu extends Component {
   static propTypes = {
     onCreateStandardPlot: PropTypes.func,
     onCreateMultiPlot: PropTypes.func,
+    onCreatePCIPlot: PropTypes.func,
   };
 
   render() {

@@ -1,12 +1,9 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import AppToolbar from "./AppToolbar";
 import { connect } from "react-redux";
 import { changeActivePlot, createNewPlot, deletePlot } from "../../states/plots/actions";
 import { selectActiveModelId } from "../../states/visualizations/selector";
-import { showPCIGraph } from "../../states/models/actions";
 import { PCI_PLOT } from "../../constants/plotTypes";
-import { getModelNameById } from "../../states/models/selector";
 
 class AppToolbarContainer extends React.Component {
   handleQueryClick = () => {
@@ -62,7 +59,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    showThisPCIGraph: (modelId) => dispatch(createNewPlot(getModelNameById(modelId), null,null, PCI_PLOT)),
+    showThisPCIGraph: (modelId) => dispatch(createNewPlot(modelId, null,null, PCI_PLOT)),
   };
 };
 export default connect(

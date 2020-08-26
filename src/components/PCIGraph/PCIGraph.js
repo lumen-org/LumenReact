@@ -1,7 +1,5 @@
 import React from "react";
 import Graph from "react-graph-vis";
-import { Rnd } from "react-rnd";
-import CloseButton from "../Button/CloseButton";
 import ThresholdBar from "../ThresholdBar";
 import PropTypes from "prop-types";
 
@@ -12,13 +10,11 @@ class PCIGraph extends React.Component {
     nodes: PropTypes.array,
     edges: PropTypes.array,
     modelId: PropTypes.string,
+    plotWindowsHeight: PropTypes.number,
+    plotWindowsWidth: PropTypes.number,
   };
 
   state = {
-    plotWindowsWidth: 500,
-    plotWindowsHeight: 500,
-    plotWindowsPosX: 600,
-    plotWindowsPosY: 100,
     network: {},
   };
 
@@ -29,7 +25,7 @@ class PCIGraph extends React.Component {
       plotWindowsHeight: ref.style.height,
       ...position,
     });
-    this.state.network.fit(ref.style.width, ref.style.height)
+    this.state.network.fit(ref.style.width*0.9, ref.style.height*0.9)
   };
 
   /**
@@ -99,8 +95,8 @@ class PCIGraph extends React.Component {
       color: "#000000"
     },
     autoResize: false,
-    height: this.props.plotWindowsHeight,
-    width: this.props.plotWindowsWidth
+    height: this.props.plotWindowsHeight.toString(),
+    width:  this.props.plotWindowsWidth.toString(),
   };
 
   const events = {
@@ -108,12 +104,6 @@ class PCIGraph extends React.Component {
       let { nodes, edges } = event;
     }
   };
-    const {
-      plotWindowsHeight,
-      plotWindowsWidth,
-      plotWindowsPosX,
-      plotWindowsPosY,
-    } = this.state;
     const {
       modelId,
     } = this.props;

@@ -41,7 +41,7 @@ class PlotMenuContainer extends React.Component {
     createNewVisualization().then(() => {
       addSpecifications().then(() => {
         createPlot(
-          "...", // supposed to be modelId, probably not useful here.
+          this.props.modelId, // Needed for pci plot deletion
           this.props.lastCreatedVisualizationId,
           this.props.specificationId,
           plotType

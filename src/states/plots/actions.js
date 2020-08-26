@@ -78,8 +78,10 @@ export function deletePlot(id) {
     if (plotType === MULTI_PLOT) {
       dispatch(deleteMultiPlot(id));
     }
-    if (plotType === PCI_PLOT) {
-      dispatch(hidePCIGraph(id))
+    if (plotType === PCI_PLOT){
+      console.log(id);
+      let modelId = getState().plots.plots.byId[id].model;
+      dispatch(hidePCIGraph(modelId))
     }
     dispatch(deletePlotInStore(id));
   };

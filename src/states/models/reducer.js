@@ -56,6 +56,7 @@ const models = (state = defaultState, action) => {
       };
 
     case HIDE_PCI_GRAPH:
+
       ({ id } = action.payload);
       return {
         ...state,
