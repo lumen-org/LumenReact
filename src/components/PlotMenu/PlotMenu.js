@@ -30,7 +30,7 @@ function PlotMenu(props) {
         variant="contained"
         color="primary"
         size="small"
-        >
+      >
         New Plot
         </Button>
       <Menu
@@ -40,20 +40,14 @@ function PlotMenu(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={() => this.props.onCreateStandardPlot()}>
+          Standard Plot
+        </MenuItem>
+        <MenuItem onClick={() => this.props.onCreateMultiPlot()}>
+          {" "}
+          Multi Plot</MenuItem>
       </Menu>
     </div>
-    // <DropdownButton variant="flat" className="plotMenu" title="New Plot" key="secondary" size="sm">
-    //   <Dropdown.Item  onClick={() => this.props.onCreateStandardPlot()}>
-    //     Standard Plot
-    //   </Dropdown.Item>
-    //   <Dropdown.Item onClick={() => this.props.onCreateMultiPlot()}>
-    //     {" "}
-    //     Multi Plot
-    //   </Dropdown.Item>
-    // </DropdownButton>
   );
 }
 
