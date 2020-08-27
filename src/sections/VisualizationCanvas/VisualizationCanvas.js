@@ -8,6 +8,7 @@ import { MULTI_PLOT, PCI_PLOT, STANDARD_PLOT } from "../../constants/plotTypes";
 import StandardPlot from "../../components/StandardPlot/StandardPlotContainer";
 import MultiPlot from "../../components/MultiPlot/MultiPlotContainer";
 
+
 class VisualizationCanvas extends Component {
   static propTypes = {
     plots: PropTypes.arrayOf(
@@ -21,13 +22,23 @@ class VisualizationCanvas extends Component {
     ),
   };
 
+  state = {
+    plotWindowsWidth: 500,
+    plotWindowsHeight: 500
+  }
+
   render() {
     const { plots, specifications, models } = this.props;
+    const {
+      plotWindowsHeight,
+      plotWindowsWidth
+    } = this.state;
     return (
       <div className="VisualizationCanvas-container">
         {Object.keys(plots).map(
-          (id) =>
-            plots[id].show && (
+          (id) => {
+            const plotType = plots[id].plotType;
+            return plots[id].show && (
               <RnDPlot
                 id={plots[id].id}
                 zIndex={plots[id].zIndex + 10}
@@ -36,10 +47,20 @@ class VisualizationCanvas extends Component {
                   specifications.byId[plots[id].specificationId].specification
                 }
                 visualizationId={plots[id].visualizationId}
-                plotType={plots[id].plotType}
               >
+                {plotType === STANDARD_PLOT ? (
+                  <StandardPlot id={id} />
+                ) : plotType === MULTI_PLOT ? (
+                  <MultiPlot id={id} />
+                ) : plotType === PCI_PLOT ? (
+                  <PCIGraph id={id}
+                    // plotWindowsHeight={plotWindowsHeight}
+                    // plotWindowsWidth={plotWindowsWidth}
+                  />
+                ) : null}
               </RnDPlot>
             )
+          }
         )}
       </div>
     );

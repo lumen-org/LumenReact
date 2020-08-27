@@ -55,7 +55,9 @@ class RnDPlotWrapperContainer extends React.Component {
         onPlotClose={this.onPlotClose}
         onActivePlotChange={this.onActivePlotChange}
         plotType={plotType}
-      />
+      >
+        {this.props.children}
+      </RnDPlotWrapper>
     );
   }
 }

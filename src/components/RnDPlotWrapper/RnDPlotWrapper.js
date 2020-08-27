@@ -2,15 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Rnd } from "react-rnd";
 import CloseButton from "../Button/CloseButton";
-import MultiPlot from "../MultiPlot";
-import StandardPlot from "../StandardPlot";
-import PCIGraph from "../PCIGraph";
-import {
-  STANDARD_PLOT,
-  MULTI_PLOT,
-  PCI_PLOT,
-  DIFFERENTIAL_MARGINAL_PLOT,
-} from "../../constants/plotTypes";
 import "./RnDPlotWrapper.scss";
 
 /**
@@ -54,6 +45,7 @@ class RnDPlotWrapper extends Component {
   };
 
   onResizeStop = (event, direction, ref, delta, position) => {
+    console.log(ref.style.width)
     this.setState({
       plotWindowsWidth: ref.style.width,
       plotWindowsHeight: ref.style.height,
@@ -67,13 +59,18 @@ class RnDPlotWrapper extends Component {
   };
 
   render() {
-    const { zIndex, id, plotType, plotShit } = this.props;
+    const { zIndex } = this.props;
     const {
-      plotWindowsHeight,
       plotWindowsWidth,
+      plotWindowsHeight,
       plotWindowsPosX,
       plotWindowsPosY,
     } = this.state;
+    const children = React.cloneElement(this.props.children, {
+      ...this.props.children.props,
+      plotWindowsWidth: plotWindowsWidth,
+      plotWindowsHeight: plotWindowsHeight
+    })
 
     return (
       <Rnd
@@ -90,16 +87,7 @@ class RnDPlotWrapper extends Component {
           <CloseButton handleClose={this.handleClose} />
         </div>
         <div className="cancel">
-          {plotType === STANDARD_PLOT ? (
-            <StandardPlot id={id} />
-          ) : plotType === MULTI_PLOT ? (
-            <MultiPlot id={id} />
-          ) : plotType === PCI_PLOT ? (
-            <PCIGraph id={id}
-                      plotWindowsHeight={plotWindowsHeight}
-                      plotWindowsWidth={plotWindowsWidth}
-            />
-          ) : null}
+          {children}
         </div>
       </Rnd>
     );
