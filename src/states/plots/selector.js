@@ -16,3 +16,11 @@ export const getVisualizationId = (state, id) => {
 export const getPlotLayoutById = (state, id) => {
   return state.plots.plots.byId[id].layout || {};
 };
+
+export const getPlotAllIds = (state) => {
+  return state.plots.plots.allIds;
+};
+
+export const getPlotTypeById = (state, id) => {
+  return state.plots.plots.byId[id].plotType;
+};

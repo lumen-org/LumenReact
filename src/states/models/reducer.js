@@ -9,10 +9,9 @@ export const defaultState = {
   lastCreatedModelId: EMPTY,
   models: {
     byId: {},
-    allIds: []
-  }
+    allIds: [],
+  },
 };
-
 
 const models = (state = defaultState, action) => {
   let id;
@@ -21,7 +20,7 @@ const models = (state = defaultState, action) => {
       let modelName, model;
       ({ modelName, model, id } = action.payload);
       let fields = {};
-      model.forEach(o => {
+      model.forEach((o) => {
         fields[o.name] = o;
       });
       return {
@@ -33,16 +32,16 @@ const models = (state = defaultState, action) => {
                 fields: fields,
                 id: id,
                 showPCIGraph: false,
-              }
-            }
+              },
+            },
           },
-          allIds: { $set: [id] }
+          allIds: { $set: [id] },
         }),
-        lastCreatedModelId: id
+        lastCreatedModelId: id,
       };
 
     case SHOW_PCI_GRAPH:
-      ({ id }= action.payload);
+      ({ id } = action.payload);
       return {
         ...state,
         models: update(state.models, {
@@ -50,14 +49,14 @@ const models = (state = defaultState, action) => {
             [id]: {
               $merge: {
                 showPCIGraph: true,
-              }
-            }
+              },
+            },
           },
         }),
       };
 
     case HIDE_PCI_GRAPH:
-      ({ id }= action.payload);
+      ({ id } = action.payload);
       return {
         ...state,
         models: update(state.models, {
@@ -65,8 +64,8 @@ const models = (state = defaultState, action) => {
             [id]: {
               $merge: {
                 showPCIGraph: false,
-              }
-            }
+              },
+            },
           },
         }),
       };

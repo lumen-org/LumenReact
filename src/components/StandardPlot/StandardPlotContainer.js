@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getStandardPlotDataById } from "../../states/plots/selector";
+import { getStandardPlotDataById } from "../../states/standardplots/selector";
 import {
   getSpecById,
   getFacetById,
 } from "../../states/specifications/selector.js";
 import { getSpecificationId } from "../../states/plots/selector.js";
 import StandardPlot from "./StandardPlot";
-import { fetchStandardPlotData } from "../../states/plots/actions";
+import { fetchStandardPlotData } from "../../states/standardplots/actions";
+
 class StandardPlotContainer extends React.Component {
   static propTypes = {
     fetchStandardPlotData: PropTypes.func,

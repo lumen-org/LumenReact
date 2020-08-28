@@ -36,9 +36,8 @@ class AppToolbarContainer extends React.Component {
       showThisPCIGraph(activeModelId);
     }
   };
-  handleSyncModelClick = () => {
-    console.log("query...");
-  };
+
+  handleNewPlotClick = () => {};
   render() {
     return (
       <AppToolbar
@@ -47,7 +46,7 @@ class AppToolbarContainer extends React.Component {
         handleConfigClick={this.handleConfigClick}
         handleQueryClick={this.handleQueryClick}
         handleGraphClick={this.handleGraphClick}
-        handleRedoClick={this.handleSyncModelClick}
+        handleNewPlotClick={this.handleNewPlotClick}
         handleUndoClick={this.handleUndoClick}
       />
     );
@@ -61,13 +60,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    showThisPCIGraph: (
-      modelId
-    ) => dispatch(showPCIGraph(modelId)),
+    showThisPCIGraph: (modelId) => dispatch(showPCIGraph(modelId)),
   };
 };
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AppToolbarContainer);
-

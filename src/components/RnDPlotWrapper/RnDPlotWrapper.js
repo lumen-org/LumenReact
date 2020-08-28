@@ -4,7 +4,12 @@ import { Rnd } from "react-rnd";
 import CloseButton from "../Button/CloseButton";
 import MultiPlot from "../MultiPlot";
 import StandardPlot from "../StandardPlot";
-
+import {
+  STANDARD_PLOT,
+  MULTI_PLOT,
+  PCI_PLOT,
+  DIFFERENTIAL_MARGINAL_PLOT,
+} from "../../constants/plotTypes";
 import "./RnDPlotWrapper.scss";
 
 /**
@@ -19,6 +24,7 @@ class RnDPlotWrapper extends Component {
     onPlotClose: PropTypes.func,
     activePlotId: PropTypes.number,
     zIndex: PropTypes.number,
+    plotType: PropTypes.string,
   };
 
   state = {
@@ -57,13 +63,14 @@ class RnDPlotWrapper extends Component {
   };
 
   render() {
-    const { zIndex, id } = this.props;
+    const { zIndex, id, plotType } = this.props;
     const {
       plotWindowsHeight,
       plotWindowsWidth,
       plotWindowsPosX,
       plotWindowsPosY,
     } = this.state;
+
     return (
       <Rnd
         size={{ width: plotWindowsWidth, height: plotWindowsHeight }}
@@ -76,7 +83,11 @@ class RnDPlotWrapper extends Component {
         <div className="RndPlot-titlebar">
           <CloseButton handleClose={this.handleClose} />
         </div>
-        <StandardPlot id={id} />
+        {plotType === STANDARD_PLOT ? (
+          <StandardPlot id={id} />
+        ) : plotType === MULTI_PLOT ? (
+          <MultiPlot id={id} />
+        ) : null}
       </Rnd>
     );
   }

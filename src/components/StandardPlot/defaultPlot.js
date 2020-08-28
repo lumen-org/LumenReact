@@ -53,10 +53,48 @@ export const defaultPlot = {
     yaxis: "y2",
     type: "histogram",
   },
+  modelYHistogramTrace: {
+    marker: {
+      color: "rgb(235, 64, 52)",
+      opacity: 0.75,
+      line: {
+        color: "rgb(235, 64, 52)",
+        width: 1.5,
+      },
+      xbins: {
+        size: 0.08,
+      },
+    },
+    xaxis: "x2",
+    type: "histogram",
+  },
+  modelXHistogramTrace: {
+    marker: {
+      color: "rgb(2235, 64, 52)",
+      opacity: 0.75,
+      line: {
+        color: "rgb(235, 64, 52)",
+        width: 1.5,
+      },
+      xbins: {
+        size: 0.08,
+      },
+    },
+    yaxis: "y2",
+    type: "histogram",
+  },
   densityTrace: {
-    name: "density",
+    name: "training data density",
     ncontours: 20,
     colorscale: "Blues",
+    reversescale: true,
+    showscale: false,
+    type: "histogram2dcontour",
+  },
+  modelDensityTrace: {
+    name: "model density",
+    ncontours: 20,
+    colorscale: "Reds",
     reversescale: true,
     showscale: false,
     type: "histogram2dcontour",
