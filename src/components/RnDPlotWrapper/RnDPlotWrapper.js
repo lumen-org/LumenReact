@@ -2,14 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Rnd } from "react-rnd";
 import CloseButton from "../Button/CloseButton";
-import MultiPlot from "../MultiPlot";
-import StandardPlot from "../StandardPlot";
-import {
-  STANDARD_PLOT,
-  MULTI_PLOT,
-  PCI_PLOT,
-  DIFFERENTIAL_MARGINAL_PLOT,
-} from "../../constants/plotTypes";
 import "./RnDPlotWrapper.scss";
 
 /**
@@ -41,15 +33,19 @@ class RnDPlotWrapper extends Component {
     });
   };
 
-  onDragStop = (event, dragIndex) => {
+  onDragStart = (event) => {
     const { id, onActivePlotChange, activePlotId } = this.props;
     if (id !== activePlotId) {
       onActivePlotChange(id);
     }
+  }
+
+  onDragStop = (event, dragIndex) => {
     this.setNewPos(dragIndex);
   };
 
   onResizeStop = (event, direction, ref, delta, position) => {
+    console.log(ref.style.width)
     this.setState({
       plotWindowsWidth: ref.style.width,
       plotWindowsHeight: ref.style.height,
@@ -63,31 +59,36 @@ class RnDPlotWrapper extends Component {
   };
 
   render() {
-    const { zIndex, id, plotType } = this.props;
+    const { zIndex } = this.props;
     const {
-      plotWindowsHeight,
       plotWindowsWidth,
+      plotWindowsHeight,
       plotWindowsPosX,
       plotWindowsPosY,
     } = this.state;
+    const children = React.cloneElement(this.props.children, {
+      ...this.props.children.props,
+      plotWindowsWidth: plotWindowsWidth,
+      plotWindowsHeight: plotWindowsHeight
+    })
 
     return (
       <Rnd
         size={{ width: plotWindowsWidth, height: plotWindowsHeight }}
         position={{ x: plotWindowsPosX, y: plotWindowsPosY }}
+        cancel=".cancel"
         style={{ zIndex: zIndex }}
         onDragStop={this.onDragStop}
+        onDragStart={this.onDragStart}
         onResizeStop={this.onResizeStop}
         className="RndPlot-container"
       >
         <div className="RndPlot-titlebar">
           <CloseButton handleClose={this.handleClose} />
         </div>
-        {plotType === STANDARD_PLOT ? (
-          <StandardPlot id={id} />
-        ) : plotType === MULTI_PLOT ? (
-          <MultiPlot id={id} />
-        ) : null}
+        <div className="cancel">
+          {children}
+        </div>
       </Rnd>
     );
   }

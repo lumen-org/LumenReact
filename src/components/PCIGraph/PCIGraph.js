@@ -1,7 +1,5 @@
 import React from "react";
 import Graph from "react-graph-vis";
-import { Rnd } from "react-rnd";
-import CloseButton from "../Button/CloseButton";
 import ThresholdBar from "../ThresholdBar";
 import PropTypes from "prop-types";
 
@@ -12,26 +10,14 @@ class PCIGraph extends React.Component {
     nodes: PropTypes.array,
     edges: PropTypes.array,
     modelId: PropTypes.string,
+    plotWindowsHeight: PropTypes.number,
+    plotWindowsWidth: PropTypes.number,
   };
 
   state = {
-    plotWindowsWidth: 500,
-    plotWindowsHeight: 500,
-    plotWindowsPosX: 600,
-    plotWindowsPosY: 100,
     network: {},
   };
 
-  setNewPos = (dragIndex) => {
-    this.setState({
-      plotWindowsPosX: dragIndex.x,
-      plotWindowsPosY: dragIndex.y,
-    });
-  };
-
-  onDragStop = (event, dragIndex) => {
-    this.setNewPos(dragIndex);
-  };
 
   onResizeStop = (event, direction, ref, delta, position) => {
     this.setState({
@@ -39,7 +25,7 @@ class PCIGraph extends React.Component {
       plotWindowsHeight: ref.style.height,
       ...position,
     });
-    this.state.network.fit(ref.style.width, ref.style.height)
+    this.state.network.fit(ref.style.width*0.9, ref.style.height*0.9)
   };
 
   /**
@@ -71,16 +57,13 @@ class PCIGraph extends React.Component {
     const { nodes, edges} = this.props;
     const { network } = this.state;
     if(thresholdValue) {
-      let shouldRender = false;
       for (let i = 0; i < edges.length; i++) {
         if (parseFloat(edges[i].label) < parseFloat(thresholdValue)) {
           if (!edges[i].hidden) {
-            shouldRender = true;
           }
           edges[i].hidden = true;
         } else {
           if (edges[i].hidden) {
-            shouldRender = true;
           }
           edges[i].hidden = false;
         }
@@ -112,6 +95,8 @@ class PCIGraph extends React.Component {
       color: "#000000"
     },
     autoResize: false,
+    height: this.props.plotWindowsHeight.toString(),
+    width:  this.props.plotWindowsWidth.toString(),
   };
 
   const events = {
@@ -120,31 +105,13 @@ class PCIGraph extends React.Component {
     }
   };
     const {
-      plotWindowsHeight,
-      plotWindowsWidth,
-      plotWindowsPosX,
-      plotWindowsPosY,
-    } = this.state;
-    const {
       modelId,
     } = this.props;
     if(!this.props.nodes||!this.props.edges){
       return null;
     }
   return (
-    <Rnd
-      size={{ width: plotWindowsWidth, height: plotWindowsHeight }}
-      position={{ x: plotWindowsPosX, y: plotWindowsPosY }}
-      onDragStop={this.onDragStop}
-      onResizeStop={this.onResizeStop}
-      className="RndPlot-container"
-      style={{
-        border: "#dbdbdb 3px solid",
-        borderRadius: "10px",
-      }}>
-      <div className={"RndPlot-titlebar"}>
-        <CloseButton handleClose={this.handleClose} />
-      </div>
+    <div>
         <ThresholdBar
           name={modelId+"pciThreshold"}
           onThresholdChange={this.updateEdgesBasedOnThreshold}
@@ -158,7 +125,7 @@ class PCIGraph extends React.Component {
             //  if you want access to vis.js network api you can set the state in a parent component using this property
                 this.setState({ network: network }) }}
         />
-    </Rnd>
+    </div>
   );
   }
 }

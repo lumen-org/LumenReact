@@ -9,7 +9,7 @@ import {
   createNewVisualization,
   fillVisualization,
 } from "../../states/visualizations/actions";
-import { STANDARD_PLOT, MULTI_PLOT } from "../../constants/plotTypes";
+import { STANDARD_PLOT, MULTI_PLOT, PCI_PLOT } from "../../constants/plotTypes";
 class PlotMenuContainer extends React.Component {
   static propTypes = {
     specificationId: PropTypes.number,
@@ -25,6 +25,9 @@ class PlotMenuContainer extends React.Component {
   onCreateMultiPlot = () => {
     this.createNewPlot(MULTI_PLOT);
   };
+  onCreatePCIPlot = () => {
+    this.createNewPlot(PCI_PLOT)
+  }
 
   createNewPlot = (plotType) => {
     const {
@@ -38,7 +41,7 @@ class PlotMenuContainer extends React.Component {
     createNewVisualization().then(() => {
       addSpecifications().then(() => {
         createPlot(
-          "...", // supposed to be modelId, probably not useful here.
+          this.props.modelId, // Needed for pci plot deletion
           this.props.lastCreatedVisualizationId,
           this.props.specificationId,
           plotType
@@ -58,6 +61,7 @@ class PlotMenuContainer extends React.Component {
       <PlotMenu
         onCreateMultiPlot={this.onCreateMultiPlot}
         onCreateStandardPlot={this.onCreateStandardPlot}
+        onCreatePCIPlot={this.onCreatePCIPlot}
       />
     );
   }

@@ -45,10 +45,14 @@ function PlotMenu(props) {
         </MenuItem>
         <MenuItem onClick={() => props.onCreateMultiPlot()}>
           {" "}
-          Multi Plot</MenuItem>
-      </Menu>
-    </div>
-  );
+          Multi Plot
+        </Dropdown.Item>
+        <Dropdown.Item onClick={() => this.props.onCreatePCIPlot()}>
+          {" "}
+          PCI Graph
+        </Dropdown.Item>
+      </DropdownButton>
+    );
 }
 
 export default PlotMenu;
