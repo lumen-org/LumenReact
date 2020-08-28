@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
@@ -45,14 +44,13 @@ function PlotMenu(props) {
         </MenuItem>
         <MenuItem onClick={() => props.onCreateMultiPlot()}>
           {" "}
-          Multi Plot
-        </Dropdown.Item>
-        <Dropdown.Item onClick={() => this.props.onCreatePCIPlot()}>
-          {" "}
+          Multi Plot</MenuItem>
+        <MenuItem onClick={() => props.onCreatePCIPlot()}>
           PCI Graph
-        </Dropdown.Item>
-      </DropdownButton>
-    );
+        </MenuItem>
+      </Menu>
+    </div>
+  );
 }
 
 export default PlotMenu;
