@@ -40,10 +40,10 @@ function PlotMenu(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={() => this.props.onCreateStandardPlot()}>
+        <MenuItem onClick={() => props.onCreateStandardPlot()}>
           Standard Plot
         </MenuItem>
-        <MenuItem onClick={() => this.props.onCreateMultiPlot()}>
+        <MenuItem onClick={() => props.onCreateMultiPlot()}>
           {" "}
           Multi Plot</MenuItem>
       </Menu>
