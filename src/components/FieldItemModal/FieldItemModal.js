@@ -34,5 +34,4 @@ const FieldItemModal = ({ isOpen, handleClose, title = "Unkown"}) => {
   )
 };
 
-
 export default FieldItemModal;
