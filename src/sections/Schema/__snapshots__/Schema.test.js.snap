@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Schema displays dimensions correctly 1`] = `
+<div
+  className="Schema"
+>
+  <div
+    className="title-h1"
+  >
+    Schema
+  </div>
+  <div>
+    <div>
+      Quantitative
+    </div>
+    <div>
+      1
+      2
+      3
+      4
+      5
+      6
+      7
+      8
+      9
+      10
+      11
+      12
+      13
+      14
+      15
+      16
+      species
+    </div>
+  </div>
+  <div>
+    <div>
+      Categorical
+    </div>
+    <div>
+      sepal_length
+      sepal_width
+      petal_length
+      petal_width
+    </div>
+  </div>
+</div>
+`;
