@@ -26,6 +26,13 @@ class RnDPlotWrapper extends Component {
     plotWindowsPosY: 50,
   };
 
+  onClickEvent = () =>  {
+    const { id, onActivePlotChange, activePlotId } = this.props;
+    if (id !== activePlotId) {
+      onActivePlotChange(id);
+    }
+  }
+
   setNewPos = (dragIndex) => {
     this.setState({
       plotWindowsPosX: dragIndex.x,
@@ -74,6 +81,7 @@ class RnDPlotWrapper extends Component {
 
     return (
       <Rnd
+        onClick={this.onClickEvent}
         size={{ width: plotWindowsWidth, height: plotWindowsHeight }}
         position={{ x: plotWindowsPosX, y: plotWindowsPosY }}
         cancel=".cancel"
