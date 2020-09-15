@@ -66,7 +66,8 @@ export const defaultPlot = {
       },
     },
     xaxis: "x2",
-    type: "histogram",
+    line: { shape: "spline" },
+    type: "scatter",
   },
   modelXHistogramTrace: {
     marker: {
@@ -81,7 +82,8 @@ export const defaultPlot = {
       },
     },
     yaxis: "y2",
-    type: "histogram",
+    line: { shape: "spline" },
+    type: "scatter",
   },
   densityTrace: {
     name: "training data density",

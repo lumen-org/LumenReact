@@ -90,6 +90,7 @@ const standardPlots = (state = defaultState, action) => {
       return {
         ...state,
         standardPlots: {
+          ...state.standardPlots,
           [action.payload.id]: {
             ...state.standardPlots[action.payload.id],
             loading: true,
@@ -101,6 +102,7 @@ const standardPlots = (state = defaultState, action) => {
       return {
         ...state,
         standardPlots: {
+          ...state.standardPlots,
           [action.payload.id]: {
             ...state.standardPlots[action.payload.id],
             loading: false,
@@ -113,6 +115,7 @@ const standardPlots = (state = defaultState, action) => {
       return {
         ...state,
         standardPlots: {
+          ...state.standardPlots,
           [action.payload.id]: {
             ...state.standardPlots[action.payload.id],
             loading: false,
@@ -124,6 +127,7 @@ const standardPlots = (state = defaultState, action) => {
       return {
         ...state,
         standardPlots: {
+          ...state.standardPlots,
           [action.payload.id]: {
             ...state.standardPlots[action.payload.id],
             loading: false,
@@ -139,6 +143,7 @@ const standardPlots = (state = defaultState, action) => {
       return {
         ...state,
         standardPlots: {
+          ...state.standardPlots,
           [action.payload.id]: {
             ...state.standardPlots[action.payload.id],
             loading: false,
@@ -154,6 +159,7 @@ const standardPlots = (state = defaultState, action) => {
       return {
         ...state,
         standardPlots: {
+          ...state.standardPlots,
           [action.payload.id]: {
             ...state.standardPlots[action.payload.id],
             loading: false,
