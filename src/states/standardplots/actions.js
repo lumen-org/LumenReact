@@ -27,7 +27,7 @@ import { nextAvaliableId } from "../../utils/plotData";
 import queryTemplates from "../../utils/queryTemplates";
 import { fetchPlotData } from "../../utils/fetch";
 import { getSpecById } from "../specifications/selector";
-import { getSpecificationId } from "../plots/selector";
+import { getSpecificationId, getActivePlotId } from "../plots/selector";
 import { getModelNameById } from "../models/selector";
 
 function initializePlot(id) {
@@ -56,6 +56,58 @@ export function deleteStandardPlot(id) {
   };
 }
 
+export function fetchModelMarginalPending() {
+  return {
+    type: FETCH_MODEL_MARGINAL_PENDING,
+    payload: {
+      loading: true,
+    },
+  };
+}
+
+export function fetchTrainingDataPending(id) {
+  return {
+    type: FETCH_TRAINING_DATA_PENDING,
+    payload: {
+      id,
+    },
+  };
+}
+
+export function fetchTrainingDataSucess(id, trainingDataPoints) {
+  return {
+    type: FETCH_TRAINING_DATA_SUCCESS,
+    payload: {
+      id,
+      trainingDataPoints,
+    },
+  };
+}
+
+export function fetchTrainingDataPoints() {
+  return (dispatch, getState) => {
+    const id = getActivePlotId(getState());
+    dispatch(fetchTrainingDataPending(id));
+    const modelName = getModelNameById(getState(), id);
+    const specification = getSpecById(
+      getState(),
+      getSpecificationId(getState(), id)
+    );
+    const X_Axis = [...specification.X_Axis];
+    const Y_Axis = [...specification.Y_Axis];
+    const SELECT = getSelectFieldArray(X_Axis, Y_Axis);
+    const trainingDataQueryBody = {
+      ...queryTemplates.trainingDataPoints,
+      SELECT,
+      FROM: modelName,
+    };
+    fetchPlotData(trainingDataQueryBody).then((response) => {
+      console.log(response);
+      dispatch(fetchTrainingDataSucess(id, response));
+    });
+  };
+}
+
 export function updateStandardPlotData(id, newStandardPlotData) {
   return {
     type: FETCH_MODEL_DATA_SUCCESS,
@@ -66,8 +118,7 @@ export function updateStandardPlotData(id, newStandardPlotData) {
   };
 }
 
-// TODO: Make sure that only one dimension allowed for each specification
-// for standard plot
+// currently not used
 export function fetchStandardPlotData(id) {
   return (dispatch, getState) => {
     const modelName = getModelNameById(getState(), id);

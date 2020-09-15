@@ -20,7 +20,6 @@ import {
   INITIALIZE_NEW_STANDARD_PLOT,
   DELETE_STANDARD_PLOT,
 } from "./constants";
-
 import update from "immutability-helper";
 
 /*
@@ -29,7 +28,6 @@ maintains all existing standardPlots and their state
 
 export const defaultState = {
   standardPlots: {},
-  status: "ok",
 };
 
 const standardPlots = (state = defaultState, action) => {
@@ -42,6 +40,15 @@ const standardPlots = (state = defaultState, action) => {
         standardPlots: update(state.standardPlots, {
           [id]: {
             $set: {
+              loading: false,
+              modelData: {
+                x: [],
+                y: [],
+              },
+              trainingDataPoints: {
+                x: [],
+                y: [],
+              },
               training: {
                 x: [],
                 y: [],
@@ -63,6 +70,28 @@ const standardPlots = (state = defaultState, action) => {
         }),
       };
 
+    case FETCH_TRAINING_DATA_PENDING:
+      return {
+        ...state,
+        standardPlots: {
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: true,
+          },
+        },
+      };
+    case FETCH_TRAINING_DATA_SUCCESS:
+      return {
+        ...state,
+        standardPlots: {
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            trainingDataPoints: action.payload.trainingDataPoints,
+          },
+        },
+      };
+
     case FETCH_MODEL_DATA_SUCCESS:
       return {
         ...state,
@@ -71,8 +100,8 @@ const standardPlots = (state = defaultState, action) => {
             $merge: action.payload.newStandardPlotData,
           },
         }),
-        status: "ok",
       };
+
     default:
       return state;
   }

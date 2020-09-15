@@ -1,23 +1,25 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getStandardPlotDataById } from "../../states/standardplots/selector";
+import {
+  getStandardPlotDataById,
+  getStandardPlotLoadingState,
+} from "../../states/standardplots/selector";
 import {
   getSpecById,
   getFacetById,
 } from "../../states/specifications/selector.js";
 import { getSpecificationId } from "../../states/plots/selector.js";
 import StandardPlot from "./StandardPlot";
-import { fetchStandardPlotData } from "../../states/standardplots/actions";
 
 class StandardPlotContainer extends React.Component {
   static propTypes = {
-    fetchStandardPlotData: PropTypes.func,
-    plotData: PropTypes.array,
+    plotData: PropTypes.object,
     specification: PropTypes.object,
     facets: PropTypes.object,
     layout: PropTypes.object,
     id: PropTypes.number,
+    loading: PropTypes.bool,
   };
 
   state = {
@@ -31,11 +33,6 @@ class StandardPlotContainer extends React.Component {
         from: "data",
       },
     ],
-  };
-
-  getPlotInfo = () => {
-    const { fetchStandardPlotData, id } = this.props;
-    fetchStandardPlotData(id);
   };
 
   // refractor this to utility? This function filter the facets and return of an array
@@ -66,7 +63,6 @@ class StandardPlotContainer extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.specification !== this.props.specification) {
-      this.getPlotInfo();
       this.getDisplayTraces();
     }
 
@@ -91,10 +87,6 @@ class StandardPlotContainer extends React.Component {
   }
 }
 
-const mapDispatchToProps = {
-  fetchStandardPlotData,
-};
-
 const mapStateToProps = (state, ownProps) => {
   return {
     plotData: getStandardPlotDataById(state, ownProps.id),
@@ -103,7 +95,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(StandardPlotContainer);
+export default connect(mapStateToProps, null)(StandardPlotContainer);
