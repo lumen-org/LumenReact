@@ -1,4 +1,4 @@
-import { fetchPlotData } from "./fetch";
+import { fetch2DPlotData } from "./fetch";
 
 export const nextAvaliableId = (ids) => {
   if (ids.length === 0) {
@@ -63,6 +63,20 @@ export const getSelectFieldArray = (X_Axis, Y_Axis) => {
   return SELECT;
 };
 
+export const getSelectFieldObject = (X_Axis, Y_Axis) => {
+  var SELECT;
+  if (X_Axis.length === 0 && Y_Axis.length > 0) {
+    SELECT = { x: X_Axis[0] };
+  } else if (Y_Axis.length === 0 && X_Axis.length > 0) {
+    SELECT = { y: Y_Axis[0] };
+  } else if (Y_Axis.length === 0 && X_Axis.length === 0) {
+    SELECT = [];
+  } else {
+    SELECT = { x: X_Axis[0], y: Y_Axis[0] };
+  }
+  return SELECT;
+};
+
 // TODO: refractor this to action or fetch
 export const fetchAllPlotData = (specifications, modelName) => {
   const X_Axis = [...specifications.X_Axis];
@@ -71,7 +85,7 @@ export const fetchAllPlotData = (specifications, modelName) => {
   return Promise.all([
     combinations.map((comb, ind) => {
       ind++;
-      return fetchPlotData({
+      return fetch2DPlotData({
         SELECT: comb,
         FROM: modelName,
       }).then((response) => {

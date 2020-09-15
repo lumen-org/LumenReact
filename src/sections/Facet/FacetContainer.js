@@ -7,6 +7,7 @@ import { selectActiveSpecificationId } from "../../states/visualizations/selecto
 import {
   fetchTrainingDataPoints,
   fetchModelDataPoints,
+  fetchModelMarginals,
 } from "../../states/standardplots/actions";
 class FacetContainer extends React.Component {
   render() {
@@ -35,9 +36,11 @@ class FacetContainer extends React.Component {
     }
 
     if (facets[key].data === false && key === "Marginals") {
+      // TODO: Figure out the BE queries: which model should i take ?
     }
 
     if (facets[key].data === false && key === "Density") {
+      // TODO: Figure out the BE queries
     }
 
     changeFacets(activeSpecification, key, "data");
@@ -48,6 +51,7 @@ class FacetContainer extends React.Component {
       changeFacets,
       activeSpecification,
       fetchModelDataPoints,
+      fetchModelMarginals,
       facets,
     } = this.props;
     if (facets[key].model === false && key === "Data Points") {
@@ -58,6 +62,7 @@ class FacetContainer extends React.Component {
     }
 
     if (facets[key].model === false && key === "Marginals") {
+      fetchModelMarginals();
     }
 
     if (facets[key].model === false && key === "Density") {
@@ -76,7 +81,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchTrainingDataPoints: () => dispatch(fetchTrainingDataPoints()),
     fetchModelDataPoints: () => dispatch(fetchModelDataPoints()),
-
+    fetchModelMarginals: () => dispatch(fetchModelMarginals()),
     changeFacets: (id, item, type) =>
       dispatch(updateFacetState({ id: id, type: type, key: item })),
   };

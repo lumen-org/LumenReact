@@ -1,4 +1,7 @@
-import { getSelectFieldArray } from "../../utils/plotData";
+import {
+  getSelectFieldArray,
+  getSelectFieldObject,
+} from "../../utils/plotData";
 import queryTemplates from "../../utils/queryTemplates";
 import { getSpecById } from "../specifications/selector";
 import { getSpecificationId, getActivePlotId } from "../plots/selector";
@@ -13,6 +16,14 @@ export const getSelectedFieldArrayById = (state, id) => {
   const X_Axis = [...specification.X_Axis];
   const Y_Axis = [...specification.Y_Axis];
   const SELECT = getSelectFieldArray(X_Axis, Y_Axis);
+  return SELECT;
+};
+
+export const getSelectedFieldObjectById = (state, id) => {
+  const specification = getSpecById(state, getSpecificationId(state, id));
+  const X_Axis = [...specification.X_Axis];
+  const Y_Axis = [...specification.Y_Axis];
+  const SELECT = getSelectFieldObject(X_Axis, Y_Axis);
   return SELECT;
 };
 
@@ -33,6 +44,24 @@ export const getModelDataQueryBodyById = (state, id) => {
   const modelDataQueryBody = {
     ...queryTemplates.modelDataPoints,
     SELECT,
+    FROM: modelName,
+  };
+  return modelDataQueryBody;
+};
+
+export const getModelMarginalsQueryBodyById = (state, fieldItem, id) => {
+  const modelName = getModelNameById(state, id);
+  const modelDataQueryBody = {
+    ...queryTemplates.modelMarginal,
+    "SPLIT BY": [
+      {
+        name: fieldItem,
+        split: "equiinterval",
+        args: [25],
+        class: "Split",
+      },
+    ],
+    PREDICT: [fieldItem],
     FROM: modelName,
   };
   return modelDataQueryBody;

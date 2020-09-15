@@ -1,6 +1,7 @@
 import {
   FETCH_DATA_PENDING,
-  FETCH_MODEL_MARGINAL_SUCCESS,
+  FETCH_MODEL_X_MARGINAL_SUCCESS,
+  FETCH_MODEL_Y_MARGINAL_SUCCESS,
   FETCH_MODEL_MARGINAL_ERROR,
   FETCH_DATA_MARGINAL_SUCCESS,
   FETCH_DATA_MARGINAL_ERROR,
@@ -45,6 +46,24 @@ const standardPlots = (state = defaultState, action) => {
               trainingDataPoints: {
                 x: [],
                 y: [],
+              },
+              modelMarginals: {
+                x: [],
+                y: [],
+              },
+              dataMarginals: {
+                x: [],
+                y: [],
+              },
+              modelDensity: {
+                x: [],
+                y: [],
+                z: [],
+              },
+              dataDensity: {
+                x: [],
+                y: [],
+                z: [],
               },
               trainingPrediction: {
                 x: [],
@@ -98,6 +117,35 @@ const standardPlots = (state = defaultState, action) => {
             ...state.standardPlots[action.payload.id],
             loading: false,
             modelDataPoints: action.payload.modelDataPoints,
+          },
+        },
+      };
+    case FETCH_MODEL_X_MARGINAL_SUCCESS:
+      return {
+        ...state,
+        standardPlots: {
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            modelMarginals: {
+              ...state.standardPlots[action.payload.id].modelMarginals,
+              x: action.payload.x,
+            },
+          },
+        },
+      };
+
+    case FETCH_MODEL_Y_MARGINAL_SUCCESS:
+      return {
+        ...state,
+        standardPlots: {
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            modelMarginals: {
+              ...state.standardPlots[action.payload.id].modelMarginals,
+              y: action.payload.y,
+            },
           },
         },
       };

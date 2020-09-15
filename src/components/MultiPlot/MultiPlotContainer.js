@@ -16,7 +16,6 @@ import {
 
 class MultiPlotContainer extends React.Component {
   static propTypes = {
-    fetchPlotData: PropTypes.func,
     fetchPlotLayout: PropTypes.func,
     plotData: PropTypes.array,
     layout: PropTypes.object,

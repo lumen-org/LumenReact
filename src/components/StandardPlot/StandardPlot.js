@@ -70,7 +70,7 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.modelXHistogramTrace,
-      x: plotData.modelDataPoints.x,
+      x: plotData.modelMarginals.x,
     };
   };
 
@@ -78,7 +78,7 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.modelYHistogramTrace,
-      y: plotData.modelDataPoints.y,
+      y: plotData.modelMarginals.y,
     };
   };
 

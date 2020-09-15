@@ -59,10 +59,10 @@ export const defaultPlot = {
       opacity: 0.75,
       line: {
         color: "rgb(235, 64, 52)",
-        width: 1.5,
+        width: 1,
       },
       xbins: {
-        size: 0.08,
+        size: 0.02,
       },
     },
     xaxis: "x2",
@@ -74,10 +74,10 @@ export const defaultPlot = {
       opacity: 0.75,
       line: {
         color: "rgb(235, 64, 52)",
-        width: 1.5,
+        width: 1,
       },
       xbins: {
-        size: 0.08,
+        size: 0.02,
       },
     },
     yaxis: "y2",
