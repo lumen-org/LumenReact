@@ -1,22 +1,19 @@
 import {
+  FETCH_DATA_PENDING,
   FETCH_MODEL_MARGINAL_SUCCESS,
-  FETCH_MODEL_MARGINAL_PENDING,
   FETCH_MODEL_MARGINAL_ERROR,
   FETCH_DATA_MARGINAL_SUCCESS,
-  FETCH_DATA_MARGINAL_PENDING,
   FETCH_DATA_MARGINAL_ERROR,
   FETCH_MODEL_DATA_SUCCESS,
-  FETCH_MODEL_DATA_PENDING,
   FETCH_MODEL_DATA_ERROR,
   FETCH_TRAINING_DATA_SUCCESS,
-  FETCH_TRAINING_DATA_PENDING,
   FETCH_TRAINING_DATA_ERROR,
   FETCH_DATA_DENSITY_SUCCESS,
-  FETCH_DATA_DENSITY_PENDING,
   FETCH_DATA_DENSITY_ERROR,
   FETCH_MODEL_DENSITY_SUCCESS,
-  FETCH_MODEL_DENSITY_PENDING,
   FETCH_MODEL_DENSITY_ERROR,
+  FETCH_INITIAL_PLOTDATA_SUCCESS,
+  FETCH_INITIAL_PLOTDATA_ERROR,
   INITIALIZE_NEW_STANDARD_PLOT,
   DELETE_STANDARD_PLOT,
 } from "./constants";
@@ -41,7 +38,7 @@ const standardPlots = (state = defaultState, action) => {
           [id]: {
             $set: {
               loading: false,
-              modelData: {
+              modelDataPoints: {
                 x: [],
                 y: [],
               },
@@ -49,11 +46,11 @@ const standardPlots = (state = defaultState, action) => {
                 x: [],
                 y: [],
               },
-              training: {
+              trainingPrediction: {
                 x: [],
                 y: [],
               },
-              model: {
+              modelPrediction: {
                 x: [],
                 y: [],
               },
@@ -70,7 +67,7 @@ const standardPlots = (state = defaultState, action) => {
         }),
       };
 
-    case FETCH_TRAINING_DATA_PENDING:
+    case FETCH_DATA_PENDING:
       return {
         ...state,
         standardPlots: {
@@ -80,6 +77,7 @@ const standardPlots = (state = defaultState, action) => {
           },
         },
       };
+
     case FETCH_TRAINING_DATA_SUCCESS:
       return {
         ...state,
@@ -95,11 +93,27 @@ const standardPlots = (state = defaultState, action) => {
     case FETCH_MODEL_DATA_SUCCESS:
       return {
         ...state,
-        standardPlots: update(state.standardPlots, {
+        standardPlots: {
           [action.payload.id]: {
-            $merge: action.payload.newStandardPlotData,
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            modelDataPoints: action.payload.modelDataPoints,
           },
-        }),
+        },
+      };
+
+    case FETCH_INITIAL_PLOTDATA_SUCCESS:
+      return {
+        ...state,
+        standardPlots: {
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            modelDataPoints: action.payload.newStandardPlotData.model,
+            trainingDataPoints:
+              action.payload.newStandardPlotData.trainingDataPoints,
+          },
+        },
       };
 
     default:

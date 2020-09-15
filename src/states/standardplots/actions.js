@@ -1,22 +1,20 @@
 import {
+  FETCH_DATA_PENDING,
   FETCH_MODEL_MARGINAL_SUCCESS,
-  FETCH_MODEL_MARGINAL_PENDING,
   FETCH_MODEL_MARGINAL_ERROR,
   FETCH_DATA_MARGINAL_SUCCESS,
-  FETCH_DATA_MARGINAL_PENDING,
   FETCH_DATA_MARGINAL_ERROR,
   FETCH_MODEL_DATA_SUCCESS,
-  FETCH_MODEL_DATA_PENDING,
   FETCH_MODEL_DATA_ERROR,
   FETCH_TRAINING_DATA_SUCCESS,
   FETCH_TRAINING_DATA_PENDING,
   FETCH_TRAINING_DATA_ERROR,
   FETCH_DATA_DENSITY_SUCCESS,
-  FETCH_DATA_DENSITY_PENDING,
   FETCH_DATA_DENSITY_ERROR,
   FETCH_MODEL_DENSITY_SUCCESS,
-  FETCH_MODEL_DENSITY_PENDING,
   FETCH_MODEL_DENSITY_ERROR,
+  FETCH_INITIAL_PLOTDATA_SUCCESS,
+  FETCH_INITIAL_PLOTDATA_ERROR,
   INITIALIZE_NEW_STANDARD_PLOT,
   DELETE_STANDARD_PLOT,
 } from "./constants";
@@ -29,6 +27,10 @@ import { fetchPlotData } from "../../utils/fetch";
 import { getSpecById } from "../specifications/selector";
 import { getSpecificationId, getActivePlotId } from "../plots/selector";
 import { getModelNameById } from "../models/selector";
+import {
+  getTrainingDataQueryBodyById,
+  getModelDataQueryBodyById,
+} from "./selector";
 
 function initializePlot(id) {
   return {
@@ -56,18 +58,9 @@ export function deleteStandardPlot(id) {
   };
 }
 
-export function fetchModelMarginalPending() {
+export function fetchDataPending(id) {
   return {
-    type: FETCH_MODEL_MARGINAL_PENDING,
-    payload: {
-      loading: true,
-    },
-  };
-}
-
-export function fetchTrainingDataPending(id) {
-  return {
-    type: FETCH_TRAINING_DATA_PENDING,
+    type: FETCH_DATA_PENDING,
     payload: {
       id,
     },
@@ -87,30 +80,38 @@ export function fetchTrainingDataSucess(id, trainingDataPoints) {
 export function fetchTrainingDataPoints() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
-    dispatch(fetchTrainingDataPending(id));
-    const modelName = getModelNameById(getState(), id);
-    const specification = getSpecById(
-      getState(),
-      getSpecificationId(getState(), id)
-    );
-    const X_Axis = [...specification.X_Axis];
-    const Y_Axis = [...specification.Y_Axis];
-    const SELECT = getSelectFieldArray(X_Axis, Y_Axis);
-    const trainingDataQueryBody = {
-      ...queryTemplates.trainingDataPoints,
-      SELECT,
-      FROM: modelName,
-    };
+    dispatch(fetchDataPending(id));
+    const trainingDataQueryBody = getTrainingDataQueryBodyById(getState(), id);
     fetchPlotData(trainingDataQueryBody).then((response) => {
-      console.log(response);
       dispatch(fetchTrainingDataSucess(id, response));
+    });
+  };
+}
+
+export function fetchModelDataSucess(id, modelDataPoints) {
+  return {
+    type: FETCH_MODEL_DATA_SUCCESS,
+    payload: {
+      id,
+      modelDataPoints,
+    },
+  };
+}
+
+export function fetchModelDataPoints() {
+  return (dispatch, getState) => {
+    const id = getActivePlotId(getState());
+    dispatch(fetchDataPending(id));
+    const modelDataQueryBody = getModelDataQueryBodyById(getState(), id);
+    fetchPlotData(modelDataQueryBody).then((response) => {
+      dispatch(fetchModelDataSucess(id, response));
     });
   };
 }
 
 export function updateStandardPlotData(id, newStandardPlotData) {
   return {
-    type: FETCH_MODEL_DATA_SUCCESS,
+    type: FETCH_INITIAL_PLOTDATA_SUCCESS,
     payload: {
       id: id,
       newStandardPlotData: newStandardPlotData,
@@ -118,27 +119,12 @@ export function updateStandardPlotData(id, newStandardPlotData) {
   };
 }
 
-// currently not used
-export function fetchStandardPlotData(id) {
+export function fetchInitialStandardPlotData(id) {
   return (dispatch, getState) => {
-    const modelName = getModelNameById(getState(), id);
-    const specification = getSpecById(
-      getState(),
-      getSpecificationId(getState(), id)
-    );
-    const X_Axis = [...specification.X_Axis];
-    const Y_Axis = [...specification.Y_Axis];
-    const SELECT = getSelectFieldArray(X_Axis, Y_Axis);
-    const trainingDataQueryBody = {
-      ...queryTemplates.trainingDataPoints,
-      SELECT,
-      FROM: modelName,
-    };
-    const modelDataQueryBody = {
-      ...queryTemplates.modelDataPoints,
-      SELECT,
-      FROM: modelName,
-    };
+    const id = getActivePlotId(getState());
+    dispatch(fetchDataPending(id));
+    const modelDataQueryBody = getModelDataQueryBodyById(getState(), id);
+    const trainingDataQueryBody = getTrainingDataQueryBodyById(getState(), id);
     Promise.all([
       fetchPlotData(trainingDataQueryBody).then((payload) => {
         return payload;

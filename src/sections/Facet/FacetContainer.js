@@ -4,7 +4,10 @@ import Facet from "./Facet";
 import { connect } from "react-redux";
 import { updateFacetState } from "../../states/specifications/actions";
 import { selectActiveSpecificationId } from "../../states/visualizations/selector";
-import { fetchTrainingDataPoints } from "../../states/standardplots/actions";
+import {
+  fetchTrainingDataPoints,
+  fetchModelDataPoints,
+} from "../../states/standardplots/actions";
 class FacetContainer extends React.Component {
   render() {
     return (
@@ -25,7 +28,6 @@ class FacetContainer extends React.Component {
     } = this.props;
 
     if (facets[key].data === false && key === "Data Points") {
-      console.log("fetching data...");
       fetchTrainingDataPoints();
     }
 
@@ -41,9 +43,26 @@ class FacetContainer extends React.Component {
     changeFacets(activeSpecification, key, "data");
   };
 
-  updateFacetModel = (item) => {
-    const { changeFacets, activeSpecification } = this.props;
-    changeFacets(activeSpecification, item, "model");
+  updateFacetModel = (key) => {
+    const {
+      changeFacets,
+      activeSpecification,
+      fetchModelDataPoints,
+      facets,
+    } = this.props;
+    if (facets[key].model === false && key === "Data Points") {
+      fetchModelDataPoints();
+    }
+
+    if (facets[key].model === false && key === "Prediction") {
+    }
+
+    if (facets[key].model === false && key === "Marginals") {
+    }
+
+    if (facets[key].model === false && key === "Density") {
+    }
+    changeFacets(activeSpecification, key, "model");
   };
 }
 
@@ -56,6 +75,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchTrainingDataPoints: () => dispatch(fetchTrainingDataPoints()),
+    fetchModelDataPoints: () => dispatch(fetchModelDataPoints()),
+
     changeFacets: (id, item, type) =>
       dispatch(updateFacetState({ id: id, type: type, key: item })),
   };

@@ -52,8 +52,8 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.densityTrace,
-      x: plotData.training.x,
-      y: plotData.training.y,
+      x: plotData.trainingDataPoints.x,
+      y: plotData.trainingDataPoints.y,
     };
   };
 
@@ -61,8 +61,8 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.modelScatterTrace,
-      x: plotData.model.x,
-      y: plotData.model.y,
+      x: plotData.modelDataPoints.x,
+      y: plotData.modelDataPoints.y,
     };
   };
 
@@ -70,7 +70,7 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.modelXHistogramTrace,
-      x: plotData.model.x,
+      x: plotData.modelDataPoints.x,
     };
   };
 
@@ -78,7 +78,7 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.modelYHistogramTrace,
-      y: plotData.model.y,
+      y: plotData.modelDataPoints.y,
     };
   };
 
@@ -86,8 +86,8 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.modelDensityTrace,
-      x: plotData.model.x,
-      y: plotData.model.y,
+      x: plotData.modelDataPoints.x,
+      y: plotData.modelDataPoints.y,
     };
   };
 
