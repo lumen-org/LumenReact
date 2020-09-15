@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import Schema from "./Schema"
-import renderer from "react-test-renderer"
+import TestRenderer from "react-test-renderer"
 
 // https://jestjs.io/docs/en/tutorial-react
 
@@ -18,7 +18,7 @@ test("Schema displays dimensions correctly", () => {
     const quantitative = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "species"]
     const categorical = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
 
-    const component = renderer.create(
+    const component = TestRenderer.create(
         <Schema quantitative={quantitative} categorical={categorical} />
     )
     let tree = component.toJSON();
@@ -31,8 +31,9 @@ test("Schema throws no exception when all attributes are passed correctly", () =
 
     jest.spyOn(console, "error")
 
-    const div = document.createElement("div");
-    ReactDOM.render(<Schema quantitative={quantitative} categorical={categorical} />, div);
+    TestRenderer.create(
+        <Schema quantitative={quantitative} categorical={categorical} />
+    )
 
     expect(console.error).not.toBeCalled()
 })
@@ -42,9 +43,9 @@ test("Schema throws exception when no quantitative attribute is passed", () => {
 
     jest.spyOn(console, "error")
 
-    const div = document.createElement("div");
-    ReactDOM.render(<Schema categorical={categorical} />, div);
-
+    TestRenderer.create(
+        <Schema categorical={categorical} />
+    )
     expect(console.error).toBeCalled()
 })
 
@@ -52,20 +53,20 @@ test("Schema throws exception when no categorical attribute is passed", () => {
     const quantitative = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "species"]
 
     jest.spyOn(console, "error")
-
-    const div = document.createElement("div");
-    ReactDOM.render(<Schema quantitative={quantitative} />, div);
+    TestRenderer.create(
+        <Schema quantitative={quantitative} />
+    )
 
     expect(console.error).toBeCalled()
 })
 
 test("Schema throws exception when no attribute is passed", () => {
-    const quantitative = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "species"]
 
     jest.spyOn(console, "error")
 
-    const div = document.createElement("div");
-    ReactDOM.render(<Schema />, div);
+    TestRenderer.create(
+        <Schema />
+    )
 
     expect(console.error).toBeCalled()
 })
