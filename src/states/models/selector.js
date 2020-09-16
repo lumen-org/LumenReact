@@ -10,6 +10,13 @@ export const getModelNameById = (state, id) => {
   return state.models.models.byId[state.visualizations.visualizations.byId[state.plots.plots.byId[id].visualizationId].modelId].modelName || "";
 };
 
+export const getModelById = (state, id) => {
+  return state.models.models.byId[state.visualizations.visualizations.byId[state.plots.plots.byId[id].visualizationId].modelId] || "";
+};
+
+export const getDimensionsByVisualisationId = (state, id) => {
+  return state.models.models.byId[state.visualizations.visualizations.byId[id].fields] || "";
+};
 
 
 export const selectSchemeNames = createSelector(
