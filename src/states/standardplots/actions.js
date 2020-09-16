@@ -22,13 +22,18 @@ import {
 
 import { getPlotAllIds } from "../plots/selector";
 import { nextAvaliableId } from "../../utils/plotData";
-import { fetch2DPlotData, fetch1DPlotData } from "../../utils/fetch";
+import {
+  fetch3DPlotData,
+  fetch2DPlotData,
+  fetch1DPlotData,
+} from "../../utils/fetch";
 import { getActivePlotId, getSpecificationId } from "../plots/selector";
 import { getFacetById } from "../specifications/selector.js";
 import {
   getTrainingDataQueryBodyById,
   getModelDataQueryBodyById,
   getModelMarginalsQueryBodyById,
+  getModelDensityQueryBodyById,
   getSelectedFieldObjectById,
 } from "./selector";
 
@@ -96,6 +101,15 @@ export function fetchModelYMarginalSuccess(id, y) {
     },
   };
 }
+export function fetchModelDensitySuccess(id, modelDensity) {
+  return {
+    type: FETCH_MODEL_DENSITY_SUCCESS,
+    payload: {
+      id,
+      modelDensity,
+    },
+  };
+}
 
 export function fetchOnSpecChange() {
   return (dispatch, getState) => {
@@ -112,6 +126,20 @@ export function fetchOnSpecChange() {
     if (facets["Marginals"].model === true) {
       dispatch(fetchModelMarginals());
     }
+    if (facets["Density".model == true]) {
+      dispatch(fetchModelDensityData());
+    }
+  };
+}
+
+export function fetchModelDensityData() {
+  return (dispatch, getState) => {
+    const id = getActivePlotId(getState());
+    dispatch(fetchDataPending(id));
+    const modelDensityQueryBody = getModelDensityQueryBodyById(getState(), id);
+    fetch3DPlotData(modelDensityQueryBody).then((response) => {
+      dispatch(fetchModelDensitySuccess(id, response));
+    });
   };
 }
 

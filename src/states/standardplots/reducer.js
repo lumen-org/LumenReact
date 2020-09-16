@@ -154,7 +154,18 @@ const standardPlots = (state = defaultState, action) => {
           },
         },
       };
-
+    case FETCH_MODEL_DENSITY_SUCCESS:
+      return {
+        ...state,
+        standardPlots: {
+          ...state.standardPlots,
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            modelDensity: action.payload.modelDensity,
+          },
+        },
+      };
     case FETCH_INITIAL_PLOTDATA_SUCCESS:
       return {
         ...state,

@@ -66,3 +66,35 @@ export const getModelMarginalsQueryBodyById = (state, fieldItem, id) => {
   };
   return modelDataQueryBody;
 };
+
+export const getModelDensityQueryBodyById = (state, id) => {
+  const modelName = getModelNameById(state, id);
+  const fieldItems = getSelectedFieldArrayById(state, id);
+
+  return {
+    FROM: modelName,
+    PREDICT: [
+      fieldItems[0] || "",
+      fieldItems[1] || "",
+      {
+        name: fieldItems || [],
+        aggregation: "probability",
+        class: "Density",
+      },
+    ],
+    "SPLIT BY": [
+      {
+        name: fieldItems[0],
+        split: "equiinterval",
+        args: [25],
+        class: "Split",
+      },
+      {
+        name: fieldItems[1],
+        split: "equiinterval",
+        args: [25],
+        class: "Split",
+      },
+    ],
+  };
+};

@@ -86,8 +86,9 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.modelDensityTrace,
-      x: plotData.modelDataPoints.x,
-      y: plotData.modelDataPoints.y,
+      x: plotData.modelDensity.x || [],
+      y: plotData.modelDensity.y || [],
+      z: plotData.modelDensity.z || [],
     };
   };
 
@@ -148,10 +149,10 @@ class StandardPlot extends Component {
         {loading && (
           <Loader
             className={"standardplot-spinner"}
-            type="Rings"
+            type="TailSpin"
             color="#6465a1"
-            height={100}
-            width={100}
+            height={80}
+            width={80}
           />
         )}
       </div>
