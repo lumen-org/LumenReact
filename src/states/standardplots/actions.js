@@ -23,7 +23,8 @@ import {
 import { getPlotAllIds } from "../plots/selector";
 import { nextAvaliableId } from "../../utils/plotData";
 import { fetch2DPlotData, fetch1DPlotData } from "../../utils/fetch";
-import { getActivePlotId } from "../plots/selector";
+import { getActivePlotId, getSpecificationId } from "../plots/selector";
+import { getFacetById } from "../specifications/selector.js";
 import {
   getTrainingDataQueryBodyById,
   getModelDataQueryBodyById,
@@ -93,6 +94,24 @@ export function fetchModelYMarginalSuccess(id, y) {
       id,
       y,
     },
+  };
+}
+
+export function fetchOnSpecChange() {
+  return (dispatch, getState) => {
+    const id = getActivePlotId(getState());
+    const facets = getFacetById(getState(), getSpecificationId(getState(), id));
+    dispatch(fetchDataPending(id));
+    console.log(facets);
+    if (facets["Data Points"].data === true) {
+      dispatch(fetchTrainingDataPoints());
+    }
+    if (facets["Data Points"].model === true) {
+      dispatch(fetchTrainingDataPoints());
+    }
+    if (facets["Marginals"].model === true) {
+      dispatch(fetchModelMarginals());
+    }
   };
 }
 

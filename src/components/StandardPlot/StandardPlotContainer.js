@@ -9,6 +9,7 @@ import {
   getSpecById,
   getFacetById,
 } from "../../states/specifications/selector.js";
+import { fetchOnSpecChange } from "../../states/standardplots/actions";
 import { getSpecificationId } from "../../states/plots/selector.js";
 import StandardPlot from "./StandardPlot";
 
@@ -63,7 +64,9 @@ class StandardPlotContainer extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.specification !== this.props.specification) {
+      const { fetchOnSpecChange } = this.props;
       this.getDisplayTraces();
+      fetchOnSpecChange();
     }
 
     if (
@@ -87,6 +90,11 @@ class StandardPlotContainer extends React.Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchOnSpecChange: () => dispatch(fetchOnSpecChange()),
+  };
+};
 const mapStateToProps = (state, ownProps) => {
   return {
     plotData: getStandardPlotDataById(state, ownProps.id),
@@ -95,4 +103,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, null)(StandardPlotContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(StandardPlotContainer);
