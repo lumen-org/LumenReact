@@ -17,6 +17,7 @@ import {
   FETCH_INITIAL_PLOTDATA_ERROR,
   INITIALIZE_NEW_STANDARD_PLOT,
   DELETE_STANDARD_PLOT,
+  FETCH_MODEL_PREDICTION_SUCCESS,
 } from "./constants";
 import update from "immutability-helper";
 
@@ -166,6 +167,20 @@ const standardPlots = (state = defaultState, action) => {
           },
         },
       };
+
+    case FETCH_MODEL_PREDICTION_SUCCESS:
+      return {
+        ...state,
+        standardPlots: {
+          ...state.standardPlots,
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            modelPrediction: action.payload.modelPrediction,
+          },
+        },
+      };
+
     case FETCH_INITIAL_PLOTDATA_SUCCESS:
       return {
         ...state,

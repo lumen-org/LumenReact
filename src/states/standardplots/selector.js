@@ -67,6 +67,26 @@ export const getModelMarginalsQueryBodyById = (state, fieldItem, id) => {
   return modelDataQueryBody;
 };
 
+export const getModelPredictionQueryBodyId = (state, id) => {
+  const modelName = getModelNameById(state, id);
+  const fieldItems = getSelectedFieldArrayById(state, id);
+
+  const PREDICT = fieldItems.map((item, key) => {
+    return {
+      aggregation: "maximum",
+      class: "Aggregation",
+      name: [item],
+      yields: item,
+    };
+  });
+
+  console.log(PREDICT);
+  return {
+    FROM: modelName,
+    PREDICT: PREDICT,
+  };
+};
+
 export const getModelDensityQueryBodyById = (state, id) => {
   const modelName = getModelNameById(state, id);
   const fieldItems = getSelectedFieldArrayById(state, id);

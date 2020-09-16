@@ -92,6 +92,15 @@ class StandardPlot extends Component {
     };
   };
 
+  getNewModelPredictionTrace = () => {
+    const { plotData } = this.props;
+    return {
+      ...defaultPlot.modelPredictionTrace,
+      x: plotData.modelPrediction.x || [],
+      y: plotData.modelPrediction.y || [],
+    };
+  };
+
   // TODO: implement a callback so that the plot state are saved in the store
   setPlotData = () => {
     const { displayTraces } = this.props;
@@ -116,6 +125,9 @@ class StandardPlot extends Component {
       if (traceinfo.name === "Marginals" && traceinfo.from === "model") {
         data.push(this.getNewModelXHistogramTrace());
         data.push(this.getNewModelYHistogramTrace());
+      }
+      if (traceinfo.name === "Prediction" && traceinfo.from === "model") {
+        data.push(this.getNewModelPredictionTrace());
       }
     });
 

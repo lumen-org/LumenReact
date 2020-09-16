@@ -16,6 +16,16 @@ export const plotStyle = {
     },
     symbol: "square",
   },
+  modelPredictionMarker: {
+    color: "rgba(231, 99, 250, 0.5)",
+    size: 10,
+    line: {
+      color: "#000000",
+      width: 1.8,
+    },
+    symbol: "square",
+  },
+
   histogramMarker: {
     color: "rgb(207, 207, 207)",
     opacity: 0.75,

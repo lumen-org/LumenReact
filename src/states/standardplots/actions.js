@@ -16,6 +16,8 @@ import {
   FETCH_MODEL_DENSITY_ERROR,
   FETCH_INITIAL_PLOTDATA_SUCCESS,
   FETCH_INITIAL_PLOTDATA_ERROR,
+  FETCH_MODEL_PREDICTION_ERROR,
+  FETCH_MODEL_PREDICTION_SUCCESS,
   INITIALIZE_NEW_STANDARD_PLOT,
   DELETE_STANDARD_PLOT,
 } from "./constants";
@@ -35,6 +37,7 @@ import {
   getModelMarginalsQueryBodyById,
   getModelDensityQueryBodyById,
   getSelectedFieldObjectById,
+  getModelPredictionQueryBodyId,
 } from "./selector";
 
 function initializePlot(id) {
@@ -111,6 +114,16 @@ export function fetchModelDensitySuccess(id, modelDensity) {
   };
 }
 
+export function fetchModelPredictionSuccess(id, modelPrediction) {
+  return {
+    type: FETCH_MODEL_PREDICTION_SUCCESS,
+    payload: {
+      id,
+      modelPrediction,
+    },
+  };
+}
+
 export function fetchOnSpecChange() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
@@ -125,9 +138,26 @@ export function fetchOnSpecChange() {
     if (facets["Marginals"].model === true) {
       dispatch(fetchModelMarginals());
     }
-    if (facets["Density".model == true]) {
+    if (facets["Density"].model === true) {
       dispatch(fetchModelDensityData());
     }
+    if (facets["Prediction"].model === true) {
+      dispatch(fetchModelPrediction());
+    }
+  };
+}
+
+export function fetchModelPrediction() {
+  return (dispatch, getState) => {
+    const id = getActivePlotId(getState());
+    dispatch(fetchDataPending(id));
+    const modelPredictionQueryBody = getModelPredictionQueryBodyId(
+      getState(),
+      id
+    );
+    fetch2DPlotData(modelPredictionQueryBody).then((response) => {
+      dispatch(fetchModelPredictionSuccess(id, response));
+    });
   };
 }
 

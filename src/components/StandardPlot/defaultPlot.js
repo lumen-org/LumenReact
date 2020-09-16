@@ -55,7 +55,7 @@ export const defaultPlot = {
   },
   modelYHistogramTrace: {
     marker: {
-      color: "rgb(235, 64, 52)",
+      color: "rgba(231, 99, 250, 0.5",
       opacity: 0.75,
       line: {
         color: "rgb(235, 64, 52)",
@@ -70,7 +70,7 @@ export const defaultPlot = {
   },
   modelXHistogramTrace: {
     marker: {
-      color: "rgb(2235, 64, 52)",
+      color: "rgba(231, 99, 250, 0.5",
       opacity: 0.75,
       line: {
         color: "rgb(235, 64, 52)",
@@ -112,5 +112,12 @@ export const defaultPlot = {
     xaxis: "x",
     yaxis: "y",
     marker: plotStyle.modelScatterMarker,
+  },
+  modelPredictionTrace: {
+    type: "scatter",
+    mode: "markers",
+    xaxis: "x",
+    yaxis: "y",
+    marker: plotStyle.modelPredictionMarker,
   },
 };
