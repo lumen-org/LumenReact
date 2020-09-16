@@ -116,7 +116,6 @@ export function fetchOnSpecChange() {
     const id = getActivePlotId(getState());
     const facets = getFacetById(getState(), getSpecificationId(getState(), id));
     dispatch(fetchDataPending(id));
-    console.log(facets);
     if (facets["Data Points"].data === true) {
       dispatch(fetchTrainingDataPoints());
     }
