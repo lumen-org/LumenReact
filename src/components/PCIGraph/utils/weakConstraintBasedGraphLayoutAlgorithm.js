@@ -9,8 +9,6 @@ Edges ought to have a source and target node, no double edges with exactly the s
 *
 * */
 
-"use strict";
-
 import Vector from "./vectorclass";
 /**
  * @param {array} nodes An array containing objects of different nodes. Those objects ought to have an (globally) unique id
@@ -120,7 +118,7 @@ function solve(nodes, edges, DGA_coolingRate = 0.99, DGA_constraintSatisfactionD
 
   }
   //drawGraph(nodes, edges, s);
-  let t2 = performance.now();
+  //let t2 = performance.now();
   //console.log("Time:" + (t2 - t1) + " ms");
   //console.log("Iterations:", round - 1);
   for (let node of nodes) {
