@@ -70,8 +70,7 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.modelXHistogramTrace,
-      x: plotData.modelMarginals.y,
-      y: plotData.modelDataPoints.x,
+      x: plotData.modelDataPoints.x,
     };
   };
 
@@ -80,7 +79,6 @@ class StandardPlot extends Component {
     return {
       ...defaultPlot.modelYHistogramTrace,
       y: plotData.modelMarginals.y,
-      x: plotData.modelDataPoints.x,
     };
   };
 
@@ -152,9 +150,8 @@ class StandardPlot extends Component {
             className={"standardplot-spinner"}
             type="Rings"
             color="#6465a1"
-            height={60}
-            width={60}
-            // timeout={3000} //3 secs
+            height={100}
+            width={100}
           />
         )}
       </div>
