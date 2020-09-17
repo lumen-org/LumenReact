@@ -18,6 +18,8 @@ import {
   FETCH_INITIAL_PLOTDATA_SUCCESS,
   FETCH_INITIAL_PLOTDATA_ERROR,
   FETCH_MODEL_PREDICTION_ERROR,
+  FETCH_DATA_PREDICTION_ERROR,
+  FETCH_DATA_PREDICTION_SUCCESS,
   FETCH_MODEL_PREDICTION_SUCCESS,
   INITIALIZE_NEW_STANDARD_PLOT,
   DELETE_STANDARD_PLOT,
@@ -38,7 +40,7 @@ import {
   getMarginalsQueryBodyById,
   getDensityQueryBodyById,
   getSelectedFieldObjectById,
-  getModelPredictionQueryBodyId,
+  getPredictionQueryBodyId,
 } from "./selector";
 
 function initializePlot(id) {
@@ -165,6 +167,16 @@ export function fetchModelPredictionSuccess(id, modelPrediction) {
   };
 }
 
+export function fetchDataPredictionSuccess(id, dataPrediction) {
+  return {
+    type: FETCH_DATA_PREDICTION_SUCCESS,
+    payload: {
+      id,
+      dataPrediction,
+    },
+  };
+}
+
 export function updateStandardPlotData(id, newStandardPlotData) {
   return {
     type: FETCH_INITIAL_PLOTDATA_SUCCESS,
@@ -189,6 +201,9 @@ export function fetchOnSpecChange() {
     if (facets["Marginals"].data === true) {
       dispatch(fetchDataMarginals());
     }
+    if (facets["Prediction"].data === true) {
+      dispatch(fetchDataPrediction());
+    }
     if (facets["Data Points"].model === true) {
       dispatch(fetchModelDataPoints());
     }
@@ -208,12 +223,28 @@ export function fetchModelPrediction() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
     dispatch(fetchDataPending(id));
-    const modelPredictionQueryBody = getModelPredictionQueryBodyId(
+    const modelPredictionQueryBody = getPredictionQueryBodyId(
       getState(),
+      "model",
       id
     );
     fetch2DPlotData(modelPredictionQueryBody).then((response) => {
       dispatch(fetchModelPredictionSuccess(id, response));
+    });
+  };
+}
+
+export function fetchDataPrediction() {
+  return (dispatch, getState) => {
+    const id = getActivePlotId(getState());
+    dispatch(fetchDataPending(id));
+    const dataPredictionQueryBody = getPredictionQueryBodyId(
+      getState(),
+      "data",
+      id
+    );
+    fetch2DPlotData(dataPredictionQueryBody).then((response) => {
+      dispatch(fetchDataPredictionSuccess(id, response));
     });
   };
 }

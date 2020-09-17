@@ -78,10 +78,20 @@ export const getMarginalsQueryBodyById = (state, type, fieldItem, id) => {
   return marginalQueryBody;
 };
 
-export const getModelPredictionQueryBodyId = (state, id) => {
-  const modelName = getModelNameById(state, id);
+export const getPredictionQueryBodyId = (state, type, id) => {
   const fieldItems = getSelectedFieldArrayById(state, id);
+  var modelName = "";
 
+  if (type === "data") {
+    modelName =
+      "__emp_" +
+      getModelNameById(state, id).split("_")[1] +
+      "-dataMarginals-_0_0";
+  }
+
+  if (type === "model") {
+    modelName = getModelNameById(state, id);
+  }
   const PREDICT = fieldItems.map((item, key) => {
     return {
       aggregation: "maximum",

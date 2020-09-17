@@ -102,6 +102,15 @@ class StandardPlot extends Component {
     };
   };
 
+  getNewDataPredictionTrace = () => {
+    const { plotData } = this.props;
+    return {
+      ...defaultPlot.dataPredictionTrace,
+      x: plotData.dataPrediction.x || [],
+      y: plotData.dataPrediction.y || [],
+    };
+  };
+
   // TODO: implement a callback so that the plot state are saved in the store
   setPlotData = () => {
     const { displayTraces } = this.props;
@@ -116,6 +125,9 @@ class StandardPlot extends Component {
       if (traceinfo.name === "Marginals" && traceinfo.from === "data") {
         data.push(this.getNewDataXHistogramTrace());
         data.push(this.getNewDataYHistogramTrace());
+      }
+      if (traceinfo.name === "Prediction" && traceinfo.from === "data") {
+        data.push(this.getNewDataPredictionTrace());
       }
       if (traceinfo.name === "Data Points" && traceinfo.from === "model") {
         data.push(this.getNewModelScatterTrace());

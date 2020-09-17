@@ -123,4 +123,11 @@ export const defaultPlot = {
     yaxis: "y",
     marker: plotStyle.modelPredictionMarker,
   },
+  dataPredictionTrace: {
+    type: "scatter",
+    mode: "markers",
+    xaxis: "x",
+    yaxis: "y",
+    marker: plotStyle.dataPredictionMarker,
+  },
 };

@@ -12,6 +12,7 @@ import {
   fetchModelPrediction,
   fetchDataDensity,
   fetchDataMarginals,
+  fetchDataPrediction,
 } from "../../states/standardplots/actions";
 class FacetContainer extends React.Component {
   render() {
@@ -32,6 +33,7 @@ class FacetContainer extends React.Component {
       fetchTrainingDataPoints,
       fetchDataMarginals,
       fetchDataDensity,
+      fetchDataPrediction,
     } = this.props;
 
     if (facets[key].data === false && key === "Data Points") {
@@ -39,6 +41,7 @@ class FacetContainer extends React.Component {
     }
 
     if (facets[key].data === false && key === "Prediction") {
+      fetchDataPrediction();
     }
 
     if (facets[key].data === false && key === "Marginals") {
@@ -96,6 +99,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchModelPrediction: () => dispatch(fetchModelPrediction()),
     fetchDataDensity: () => dispatch(fetchDataDensity()),
     fetchDataMarginals: () => dispatch(fetchDataMarginals()),
+    fetchDataPrediction: () => dispatch(fetchDataPrediction()),
     changeFacets: (id, item, type) =>
       dispatch(updateFacetState({ id: id, type: type, key: item })),
   };

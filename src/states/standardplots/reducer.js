@@ -16,6 +16,8 @@ import {
   FETCH_MODEL_DENSITY_ERROR,
   FETCH_INITIAL_PLOTDATA_SUCCESS,
   FETCH_INITIAL_PLOTDATA_ERROR,
+  FETCH_DATA_PREDICTION_ERROR,
+  FETCH_DATA_PREDICTION_SUCCESS,
   INITIALIZE_NEW_STANDARD_PLOT,
   DELETE_STANDARD_PLOT,
   FETCH_MODEL_PREDICTION_SUCCESS,
@@ -67,7 +69,7 @@ const standardPlots = (state = defaultState, action) => {
                 y: [],
                 z: [],
               },
-              trainingPrediction: {
+              dataPrediction: {
                 x: [],
                 y: [],
               },
@@ -214,6 +216,18 @@ const standardPlots = (state = defaultState, action) => {
         },
       };
 
+    case FETCH_DATA_PREDICTION_SUCCESS:
+      return {
+        ...state,
+        standardPlots: {
+          ...state.standardPlots,
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            dataPrediction: action.payload.dataPrediction,
+          },
+        },
+      };
     case FETCH_DATA_DENSITY_SUCCESS:
       return {
         ...state,
