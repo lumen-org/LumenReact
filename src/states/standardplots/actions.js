@@ -2,8 +2,9 @@ import {
   FETCH_DATA_PENDING,
   FETCH_MODEL_X_MARGINAL_SUCCESS,
   FETCH_MODEL_Y_MARGINAL_SUCCESS,
+  FETCH_DATA_X_MARGINAL_SUCCESS,
+  FETCH_DATA_Y_MARGINAL_SUCCESS,
   FETCH_MODEL_MARGINAL_ERROR,
-  FETCH_DATA_MARGINAL_SUCCESS,
   FETCH_DATA_MARGINAL_ERROR,
   FETCH_MODEL_DATA_SUCCESS,
   FETCH_MODEL_DATA_ERROR,
@@ -34,8 +35,8 @@ import { getFacetById } from "../specifications/selector.js";
 import {
   getTrainingDataQueryBodyById,
   getModelDataQueryBodyById,
-  getModelMarginalsQueryBodyById,
-  getModelDensityQueryBodyById,
+  getMarginalsQueryBodyById,
+  getDensityQueryBodyById,
   getSelectedFieldObjectById,
   getModelPredictionQueryBodyId,
 } from "./selector";
@@ -75,6 +76,16 @@ export function fetchDataPending(id) {
   };
 }
 
+export function fetchModelDataSucess(id, modelDataPoints) {
+  return {
+    type: FETCH_MODEL_DATA_SUCCESS,
+    payload: {
+      id,
+      modelDataPoints,
+    },
+  };
+}
+
 export function fetchTrainingDataSucess(id, trainingDataPoints) {
   return {
     type: FETCH_TRAINING_DATA_SUCCESS,
@@ -104,12 +115,42 @@ export function fetchModelYMarginalSuccess(id, y) {
     },
   };
 }
+export function fetchDataXMarginalSuccess(id, x) {
+  return {
+    type: FETCH_DATA_X_MARGINAL_SUCCESS,
+    payload: {
+      id,
+      x,
+    },
+  };
+}
+
+export function fetchDataYMarginalSuccess(id, y) {
+  return {
+    type: FETCH_DATA_Y_MARGINAL_SUCCESS,
+    payload: {
+      id,
+      y,
+    },
+  };
+}
+
 export function fetchModelDensitySuccess(id, modelDensity) {
   return {
     type: FETCH_MODEL_DENSITY_SUCCESS,
     payload: {
       id,
       modelDensity,
+    },
+  };
+}
+
+export function fetchDataDensitySuccess(id, dataDensity) {
+  return {
+    type: FETCH_DATA_DENSITY_SUCCESS,
+    payload: {
+      id,
+      dataDensity,
     },
   };
 }
@@ -124,6 +165,16 @@ export function fetchModelPredictionSuccess(id, modelPrediction) {
   };
 }
 
+export function updateStandardPlotData(id, newStandardPlotData) {
+  return {
+    type: FETCH_INITIAL_PLOTDATA_SUCCESS,
+    payload: {
+      id: id,
+      newStandardPlotData: newStandardPlotData,
+    },
+  };
+}
+
 export function fetchOnSpecChange() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
@@ -132,8 +183,14 @@ export function fetchOnSpecChange() {
     if (facets["Data Points"].data === true) {
       dispatch(fetchTrainingDataPoints());
     }
+    if (facets["Density"].data === true) {
+      dispatch(fetchDataDensity());
+    }
+    if (facets["Marginals"].data === true) {
+      dispatch(fetchDataMarginals());
+    }
     if (facets["Data Points"].model === true) {
-      dispatch(fetchTrainingDataPoints());
+      dispatch(fetchModelDataPoints());
     }
     if (facets["Marginals"].model === true) {
       dispatch(fetchModelMarginals());
@@ -161,11 +218,29 @@ export function fetchModelPrediction() {
   };
 }
 
+export function fetchDataDensity() {
+  return (dispatch, getState) => {
+    const id = getActivePlotId(getState());
+    dispatch(fetchDataPending(id));
+    const dataDensityQueryBody = getDensityQueryBodyById(
+      getState(),
+      "data",
+      id
+    );
+    fetch3DPlotData(dataDensityQueryBody).then((response) => {
+      dispatch(fetchDataDensitySuccess(id, response));
+    });
+  };
+}
 export function fetchModelDensityData() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
     dispatch(fetchDataPending(id));
-    const modelDensityQueryBody = getModelDensityQueryBodyById(getState(), id);
+    const modelDensityQueryBody = getDensityQueryBodyById(
+      getState(),
+      "model",
+      id
+    );
     fetch3DPlotData(modelDensityQueryBody).then((response) => {
       dispatch(fetchModelDensitySuccess(id, response));
     });
@@ -178,8 +253,9 @@ export function fetchModelMarginals() {
     const fieldItems = getSelectedFieldObjectById(getState(), id);
     dispatch(fetchDataPending(id));
     if (fieldItems.x) {
-      const modelMarginalsQueryBody = getModelMarginalsQueryBodyById(
+      const modelMarginalsQueryBody = getMarginalsQueryBodyById(
         getState(),
+        "model",
         fieldItems.x,
         id
       );
@@ -189,13 +265,44 @@ export function fetchModelMarginals() {
     }
 
     if (fieldItems.y) {
-      const modelMarginalsQueryBody = getModelMarginalsQueryBodyById(
+      const modelMarginalsQueryBody = getMarginalsQueryBodyById(
         getState(),
+        "model",
         fieldItems.y,
         id
       );
       fetch1DPlotData(modelMarginalsQueryBody).then((response) => {
         dispatch(fetchModelYMarginalSuccess(id, response.a));
+      });
+    }
+  };
+}
+export function fetchDataMarginals() {
+  return (dispatch, getState) => {
+    const id = getActivePlotId(getState());
+    const fieldItems = getSelectedFieldObjectById(getState(), id);
+    dispatch(fetchDataPending(id));
+    if (fieldItems.x) {
+      const dataMarginalsQueryBody = getMarginalsQueryBodyById(
+        getState(),
+        "data",
+        fieldItems.x,
+        id
+      );
+      fetch1DPlotData(dataMarginalsQueryBody).then((response) => {
+        dispatch(fetchDataXMarginalSuccess(id, response.a));
+      });
+    }
+
+    if (fieldItems.y) {
+      const dataMarginalsQueryBody = getMarginalsQueryBodyById(
+        getState(),
+        "data",
+        fieldItems.y,
+        id
+      );
+      fetch1DPlotData(dataMarginalsQueryBody).then((response) => {
+        dispatch(fetchDataYMarginalSuccess(id, response.a));
       });
     }
   };
@@ -212,16 +319,6 @@ export function fetchTrainingDataPoints() {
   };
 }
 
-export function fetchModelDataSucess(id, modelDataPoints) {
-  return {
-    type: FETCH_MODEL_DATA_SUCCESS,
-    payload: {
-      id,
-      modelDataPoints,
-    },
-  };
-}
-
 export function fetchModelDataPoints() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
@@ -230,16 +327,6 @@ export function fetchModelDataPoints() {
     fetch2DPlotData(modelDataQueryBody).then((response) => {
       dispatch(fetchModelDataSucess(id, response));
     });
-  };
-}
-
-export function updateStandardPlotData(id, newStandardPlotData) {
-  return {
-    type: FETCH_INITIAL_PLOTDATA_SUCCESS,
-    payload: {
-      id: id,
-      newStandardPlotData: newStandardPlotData,
-    },
   };
 }
 

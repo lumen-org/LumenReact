@@ -36,7 +36,7 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.xHistogramTrace,
-      x: plotData.trainingDataPoints.x,
+      x: plotData.dataMarginals.x,
     };
   };
 
@@ -44,16 +44,17 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.yHistogramTrace,
-      y: plotData.trainingDataPoints.y,
+      y: plotData.dataMarginals.y,
     };
   };
 
   getNewDataDensityTrace = () => {
     const { plotData } = this.props;
     return {
-      ...defaultPlot.densityTrace,
-      x: plotData.trainingDataPoints.x,
-      y: plotData.trainingDataPoints.y,
+      ...defaultPlot.dataDensityTrace,
+      x: plotData.dataDensity.x,
+      y: plotData.dataDensity.y,
+      z: plotData.dataDensity.z,
     };
   };
 

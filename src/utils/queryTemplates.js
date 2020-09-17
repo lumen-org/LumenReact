@@ -1,17 +1,5 @@
 const queryTemplates = {
-  model1DPrediction: {
-    FROM: "mcg_iris_map",
-    PREDICT: [
-      {
-        aggregation: "maximum",
-        class: "Aggregation",
-        name: ["sepal_width"],
-        yields: "sepal_width",
-      },
-    ],
-  },
-
-  modelMarginal: {
+  marginal: {
     FROM: "mcg_iris_map",
     PREDICT: ["sepal_length"],
     "SPLIT BY": [
@@ -61,49 +49,19 @@ const queryTemplates = {
     ],
   },
 
-  dataPredictions: {
-    FROM: "__emp_iris-dataMarginals-_0_0",
-    PREDICT: [
-      {
-        aggregation: "maximum",
-        class: "Aggregation",
-        name: ["sepal_width"],
-        yields: "sepal_width",
-      },
-      {
-        aggregation: "maximum",
-        class: "Aggregation",
-        name: ["sepal_length"],
-        yields: "sepal_length",
-      },
-    ],
-  },
+  density: {
+    prediction: {
+      name: ["dimension1", "dimension2"],
+      aggregation: "probability",
+      class: "Density",
+    },
 
-  modelDensity: {
-    FROM: "mcg_iris_map",
-    PREDICT: [
-      "sepal_length",
-      "sepal_width",
-      {
-        name: ["sepal_length", "sepal_width"],
-        aggregation: "probability",
-        class: "Density",
-      },
-    ],
-    "SPLIT BY": [
-      {
-        name: "sepal_length",
-        split: "equiinterval",
-        args: [25],
-        class: "Split",
-      },
-      {
-        name: "sepal_width",
-        split: "equiinterval",
-        args: [25],
-        class: "Split",
-      },
-    ],
+    split: {
+      name: "dimension_name",
+      split: "equiinterval",
+      args: [25],
+      class: "Split",
+    },
   },
 };
 export default queryTemplates;

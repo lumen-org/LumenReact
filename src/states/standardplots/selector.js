@@ -49,10 +49,21 @@ export const getModelDataQueryBodyById = (state, id) => {
   return modelDataQueryBody;
 };
 
-export const getModelMarginalsQueryBodyById = (state, fieldItem, id) => {
-  const modelName = getModelNameById(state, id);
-  const modelDataQueryBody = {
-    ...queryTemplates.modelMarginal,
+export const getMarginalsQueryBodyById = (state, type, fieldItem, id) => {
+  var modelName = "";
+
+  if (type === "data") {
+    modelName =
+      "__emp_" +
+      getModelNameById(state, id).split("_")[1] +
+      "-dataMarginals-_0_0";
+  }
+
+  if (type === "model") {
+    modelName = getModelNameById(state, id);
+  }
+  const marginalQueryBody = {
+    ...queryTemplates.marginal,
     "SPLIT BY": [
       {
         name: fieldItem,
@@ -64,7 +75,7 @@ export const getModelMarginalsQueryBodyById = (state, fieldItem, id) => {
     PREDICT: [fieldItem],
     FROM: modelName,
   };
-  return modelDataQueryBody;
+  return marginalQueryBody;
 };
 
 export const getModelPredictionQueryBodyId = (state, id) => {
@@ -80,41 +91,45 @@ export const getModelPredictionQueryBodyId = (state, id) => {
     };
   });
 
-  console.log(PREDICT);
   return {
     FROM: modelName,
     PREDICT: PREDICT,
   };
 };
 
-export const getModelDensityQueryBodyById = (state, id) => {
-  const modelName = getModelNameById(state, id);
+export const getDensityQueryBodyById = (state, type, id) => {
   const fieldItems = getSelectedFieldArrayById(state, id);
+  var modelName = "";
+
+  if (type === "data") {
+    modelName =
+      "__emp_" +
+      getModelNameById(state, id).split("_")[1] +
+      "-dataMarginals-_0_0";
+  }
+
+  if (type === "model") {
+    modelName = getModelNameById(state, id);
+  }
+  const PREDICT = fieldItems.map((item, key) => {
+    return item;
+  });
+
+  PREDICT.push({
+    ...queryTemplates.density.prediction,
+    name: fieldItems,
+  });
+
+  const SPLIT_BY = fieldItems.map((item, key) => {
+    return {
+      ...queryTemplates.density.split,
+      name: item,
+    };
+  });
 
   return {
     FROM: modelName,
-    PREDICT: [
-      fieldItems[0] || "",
-      fieldItems[1] || "",
-      {
-        name: fieldItems || [],
-        aggregation: "probability",
-        class: "Density",
-      },
-    ],
-    "SPLIT BY": [
-      {
-        name: fieldItems[0],
-        split: "equiinterval",
-        args: [25],
-        class: "Split",
-      },
-      {
-        name: fieldItems[1],
-        split: "equiinterval",
-        args: [25],
-        class: "Split",
-      },
-    ],
+    PREDICT: PREDICT,
+    "SPLIT BY": SPLIT_BY,
   };
 };

@@ -2,8 +2,9 @@ import {
   FETCH_DATA_PENDING,
   FETCH_MODEL_X_MARGINAL_SUCCESS,
   FETCH_MODEL_Y_MARGINAL_SUCCESS,
+  FETCH_DATA_X_MARGINAL_SUCCESS,
+  FETCH_DATA_Y_MARGINAL_SUCCESS,
   FETCH_MODEL_MARGINAL_ERROR,
-  FETCH_DATA_MARGINAL_SUCCESS,
   FETCH_DATA_MARGINAL_ERROR,
   FETCH_MODEL_DATA_SUCCESS,
   FETCH_MODEL_DATA_ERROR,
@@ -155,6 +156,38 @@ const standardPlots = (state = defaultState, action) => {
           },
         },
       };
+
+    case FETCH_DATA_X_MARGINAL_SUCCESS:
+      return {
+        ...state,
+        standardPlots: {
+          ...state.standardPlots,
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            dataMarginals: {
+              ...state.standardPlots[action.payload.id].modelMarginals,
+              x: action.payload.x,
+            },
+          },
+        },
+      };
+
+    case FETCH_DATA_Y_MARGINAL_SUCCESS:
+      return {
+        ...state,
+        standardPlots: {
+          ...state.standardPlots,
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            dataMarginals: {
+              ...state.standardPlots[action.payload.id].modelMarginals,
+              y: action.payload.y,
+            },
+          },
+        },
+      };
     case FETCH_MODEL_DENSITY_SUCCESS:
       return {
         ...state,
@@ -177,6 +210,19 @@ const standardPlots = (state = defaultState, action) => {
             ...state.standardPlots[action.payload.id],
             loading: false,
             modelPrediction: action.payload.modelPrediction,
+          },
+        },
+      };
+
+    case FETCH_DATA_DENSITY_SUCCESS:
+      return {
+        ...state,
+        standardPlots: {
+          ...state.standardPlots,
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            dataDensity: action.payload.dataDensity,
           },
         },
       };
