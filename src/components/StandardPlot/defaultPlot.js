@@ -32,7 +32,7 @@ export const defaultPlot = {
         width: 1.5,
       },
       xbins: {
-        size: 0.08,
+        size: 0.01,
       },
     },
     xaxis: "x2",
@@ -47,7 +47,7 @@ export const defaultPlot = {
         width: 1.5,
       },
       xbins: {
-        size: 0.08,
+        size: 0.01,
       },
     },
     yaxis: "y2",
@@ -62,7 +62,7 @@ export const defaultPlot = {
         width: 1,
       },
       xbins: {
-        size: 0.02,
+        size: 0.01,
       },
     },
     xaxis: "x2",
@@ -77,7 +77,7 @@ export const defaultPlot = {
         width: 1,
       },
       xbins: {
-        size: 0.02,
+        size: 0.01,
       },
     },
     yaxis: "y2",
@@ -130,4 +130,5 @@ export const defaultPlot = {
     yaxis: "y",
     marker: plotStyle.dataPredictionMarker,
   },
+  showlegend: false,
 };

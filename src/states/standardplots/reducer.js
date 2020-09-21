@@ -168,7 +168,7 @@ const standardPlots = (state = defaultState, action) => {
             ...state.standardPlots[action.payload.id],
             loading: false,
             dataMarginals: {
-              ...state.standardPlots[action.payload.id].modelMarginals,
+              ...state.standardPlots[action.payload.id].dataMarginals,
               x: action.payload.x,
             },
           },
@@ -184,7 +184,7 @@ const standardPlots = (state = defaultState, action) => {
             ...state.standardPlots[action.payload.id],
             loading: false,
             dataMarginals: {
-              ...state.standardPlots[action.payload.id].modelMarginals,
+              ...state.standardPlots[action.payload.id].dataMarginals,
               y: action.payload.y,
             },
           },
