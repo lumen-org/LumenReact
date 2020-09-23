@@ -54,7 +54,7 @@ class ListModalContainer extends React.Component {
             return JSON.parse(JSON.stringify(response["Fields"]));
           })
           .then((value) => {
-            createNewDimension(item, value);
+            createNewDimension(this.props.modelId, item, value);
           })
           .then(() => {
             createPlot(
@@ -126,10 +126,10 @@ const mapDispatchToProps = (dispatch) => {
     addSpecifications: () => {
       return dispatch(createNewSpecification());
     },
-    createNewDimension: (modelName, dimensionName) => {
-      dispatch(createNewDimension(modelName, dimensionName))},
-    createNewModel: (modelName, model) =>
-      dispatch(createNewModel(modelName, model)),
+    createNewDimension: (modelId, modelName, dimensionName) => {
+      dispatch(createNewDimension(modelId, modelName, dimensionName))},
+    createNewModel: (modelId, modelName, model) =>
+      dispatch(createNewModel(modelId, modelName, model)),
     fillVisualization: (visualizationId, modelId, specificationId, plotId) =>
       dispatch(
         fillVisualization(visualizationId, modelId, specificationId, plotId)
