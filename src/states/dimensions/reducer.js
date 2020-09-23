@@ -22,6 +22,7 @@ const dimensions = (state = defaultState, action) => {
             [modelId]: modelName
         }
       });
+      updateDimensionsBasedOnCurrentModels(state, byDimensionName);
       return {
         dimensions: update(state.dimensions, {
           $merge: {
@@ -34,13 +35,20 @@ const dimensions = (state = defaultState, action) => {
   }
 };
 
-function updateDimensionsBasedOnCurrentModels(newDims){
-  return (dispatch, getState) => {
-    let state = getState();
-    state.dimensions.forEach((dimension) => {
-    
-    })
-  }
+function updateDimensionsBasedOnCurrentModels(state, newDims){
+    let dimKeys = Object.keys(newDims);
+    console.log("updateDimension");
+    console.log(state.dimensions.byDimensionName);
+    for (let dimension of Object.keys(state.dimensions.byDimensionName)) {
+      console.log(dimension.name);
+      if(dimension.name in dimKeys){
+        console.log("dimension already in data base");
+      }
+      else {
+        console.log("new dimension");
+      }
+    }
+  return newDims;
 }
 
 export default dimensions;
