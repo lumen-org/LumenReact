@@ -14,8 +14,6 @@ import { createNewMultiPlot, deleteMultiPlot } from "../multiplots/actions";
 import { nextAvaliableId } from "../../utils/plotData";
 import { hidePCIGraph, showPCIGraph } from "../models/actions";
 import { selectActiveModelId } from "../visualizations/selector";
-import { createNewDimension } from "../dimensions/actions";
-import { getDimensionsByVisualisationId } from "../models/selector";
 
 export function changeActivePlot(newid) {
   return {
@@ -46,7 +44,6 @@ export function createNewPlot(
       //return;
     }
     dispatch(createPlot(modelName, visualizationId, specificationId, plotType));
-    dispatch(createNewDimension(modelName, getDimensionsByVisualisationId(getState(), visualizationId)));
     dispatch(changeActivePlot(newId));
   };
 }

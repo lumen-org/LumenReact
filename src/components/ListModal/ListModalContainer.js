@@ -14,6 +14,7 @@ import {
   fillVisualization,
 } from "../../states/visualizations/actions";
 import { createNewModel } from "../../states/models/actions";
+import { createNewDimension } from "../../states/dimensions/actions";
 const defaultPlotType = STANDARD_PLOT; // Haha, we will certainly refractor this, right?
 class ListModalContainer extends React.Component {
   static propTypes = {
@@ -37,6 +38,7 @@ class ListModalContainer extends React.Component {
       addSpecifications,
       createNewVisualization,
       createNewModel,
+      createNewDimension,
       fillVisualization,
     } = this.props;
     // even though the dispatches officially are executed sequential the mapStateToProps
@@ -49,6 +51,10 @@ class ListModalContainer extends React.Component {
         fetchModelData(item)
           .then((response) => {
             createNewModel(item, response["Fields"]);
+            return JSON.parse(JSON.stringify(response["Fields"]));
+          })
+          .then((value) => {
+            createNewDimension(item, value);
           })
           .then(() => {
             createPlot(
@@ -120,6 +126,8 @@ const mapDispatchToProps = (dispatch) => {
     addSpecifications: () => {
       return dispatch(createNewSpecification());
     },
+    createNewDimension: (modelName, dimensionName) => {
+      dispatch(createNewDimension(modelName, dimensionName))},
     createNewModel: (modelName, model) =>
       dispatch(createNewModel(modelName, model)),
     fillVisualization: (visualizationId, modelId, specificationId, plotId) =>

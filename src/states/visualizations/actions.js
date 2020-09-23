@@ -5,8 +5,6 @@ import {
   FILL_VISUALIZATION
 } from "./constants";
 import { v4 as uuidv4 } from 'uuid';
-import { createNewDimension } from "../dimensions/actions";
-
 
 export const createNewVisualization = (payload) => {
   return dispatch => {

@@ -1,6 +1,7 @@
 import { CREATE_NEW_MODEL, SHOW_PCI_GRAPH, HIDE_PCI_GRAPH } from "./constants";
 import update from "immutability-helper";
 import { EMPTY } from "../constants";
+import { createNewDimension } from "../dimensions/actions";
 
 /*
 maintains a list of all models
@@ -13,6 +14,12 @@ export const defaultState = {
   },
 };
 
+export function sendDimension (modelName, dimName) {
+  return (dispatch) => {
+    dispatch(createNewDimension(modelName, dimName))
+  }
+}
+
 const models = (state = defaultState, action) => {
   let id;
   console.log("inside models store", action);
@@ -22,7 +29,8 @@ const models = (state = defaultState, action) => {
       ({ modelName, model, id } = action.payload);
       let fields = {};
       model.forEach((o) => {
-        fields[o.name] = o;
+        const name = o.name;
+        fields[name] = o;
       });
       return {
         models: update(state.models, {
