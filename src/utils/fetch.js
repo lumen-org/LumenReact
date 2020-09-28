@@ -25,6 +25,12 @@ export const _fetchModelData = (BODY) => {
   });
 };
 
+export const createIntermediateModels = (BODY) => {
+  return fetchData(BASE_URL, BODY).then((response) => {
+    return response;
+  });
+};
+
 export const fetchModelData = (modelName) => {
   const POST_BODY = { ...FETCH_SCHEMA, FROM: modelName };
   return _fetchModelData(POST_BODY);

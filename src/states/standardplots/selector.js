@@ -27,6 +27,26 @@ export const getSelectedFieldObjectById = (state, id) => {
   return SELECT;
 };
 
+export const getTrainingDataIntermediateModelQueryBodyById = (state, id) => {
+  const modelName = getModelNameById(state, id);
+  const SELECT = getSelectedFieldArrayById(state, id);
+  return {
+    FROM: modelName,
+    MODEL: SELECT,
+    AS: "__" + modelName + "_0_0",
+  };
+};
+
+export const getDataMarginalIntermediateModelQueryBodyById = (state, id) => {
+  const modelName = getModelNameById(state, id);
+  const SELECT = getSelectedFieldArrayById(state, id);
+  return {
+    FROM: modelName,
+    MODEL: SELECT,
+    AS: "__emp_" + modelName.split("_")[1] + "-dataMarginals-_0_0",
+  };
+};
+
 export const getTrainingDataQueryBodyById = (state, id) => {
   const modelName = getModelNameById(state, id);
   const SELECT = getSelectedFieldArrayById(state, id);
