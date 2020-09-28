@@ -1,26 +1,27 @@
 import {
-  FETCH_MODEL_MARGINAL_SUCCESS,
-  FETCH_MODEL_MARGINAL_PENDING,
+  FETCH_DATA_PENDING,
+  FETCH_MODEL_X_MARGINAL_SUCCESS,
+  FETCH_MODEL_Y_MARGINAL_SUCCESS,
+  FETCH_DATA_X_MARGINAL_SUCCESS,
+  FETCH_DATA_Y_MARGINAL_SUCCESS,
   FETCH_MODEL_MARGINAL_ERROR,
-  FETCH_DATA_MARGINAL_SUCCESS,
-  FETCH_DATA_MARGINAL_PENDING,
   FETCH_DATA_MARGINAL_ERROR,
   FETCH_MODEL_DATA_SUCCESS,
-  FETCH_MODEL_DATA_PENDING,
   FETCH_MODEL_DATA_ERROR,
   FETCH_TRAINING_DATA_SUCCESS,
-  FETCH_TRAINING_DATA_PENDING,
   FETCH_TRAINING_DATA_ERROR,
   FETCH_DATA_DENSITY_SUCCESS,
-  FETCH_DATA_DENSITY_PENDING,
   FETCH_DATA_DENSITY_ERROR,
   FETCH_MODEL_DENSITY_SUCCESS,
-  FETCH_MODEL_DENSITY_PENDING,
   FETCH_MODEL_DENSITY_ERROR,
+  FETCH_INITIAL_PLOTDATA_SUCCESS,
+  FETCH_INITIAL_PLOTDATA_ERROR,
+  FETCH_DATA_PREDICTION_ERROR,
+  FETCH_DATA_PREDICTION_SUCCESS,
   INITIALIZE_NEW_STANDARD_PLOT,
   DELETE_STANDARD_PLOT,
+  FETCH_MODEL_PREDICTION_SUCCESS,
 } from "./constants";
-
 import update from "immutability-helper";
 
 /*
@@ -29,7 +30,6 @@ maintains all existing standardPlots and their state
 
 export const defaultState = {
   standardPlots: {},
-  status: "ok",
 };
 
 const standardPlots = (state = defaultState, action) => {
@@ -42,11 +42,38 @@ const standardPlots = (state = defaultState, action) => {
         standardPlots: update(state.standardPlots, {
           [id]: {
             $set: {
-              training: {
+              loading: false,
+              modelDataPoints: {
                 x: [],
                 y: [],
               },
-              model: {
+              trainingDataPoints: {
+                x: [],
+                y: [],
+              },
+              modelMarginals: {
+                x: [],
+                y: [],
+              },
+              dataMarginals: {
+                x: [],
+                y: [],
+              },
+              modelDensity: {
+                x: [],
+                y: [],
+                z: [],
+              },
+              dataDensity: {
+                x: [],
+                y: [],
+                z: [],
+              },
+              dataPrediction: {
+                x: [],
+                y: [],
+              },
+              modelPrediction: {
                 x: [],
                 y: [],
               },
@@ -63,16 +90,172 @@ const standardPlots = (state = defaultState, action) => {
         }),
       };
 
+    case FETCH_DATA_PENDING:
+      return {
+        ...state,
+        standardPlots: {
+          ...state.standardPlots,
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: true,
+          },
+        },
+      };
+
+    case FETCH_TRAINING_DATA_SUCCESS:
+      return {
+        ...state,
+        standardPlots: {
+          ...state.standardPlots,
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            trainingDataPoints: action.payload.trainingDataPoints,
+          },
+        },
+      };
+
     case FETCH_MODEL_DATA_SUCCESS:
       return {
         ...state,
-        standardPlots: update(state.standardPlots, {
+        standardPlots: {
+          ...state.standardPlots,
           [action.payload.id]: {
-            $merge: action.payload.newStandardPlotData,
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            modelDataPoints: action.payload.modelDataPoints,
           },
-        }),
-        status: "ok",
+        },
       };
+    case FETCH_MODEL_X_MARGINAL_SUCCESS:
+      return {
+        ...state,
+        standardPlots: {
+          ...state.standardPlots,
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            modelMarginals: {
+              ...state.standardPlots[action.payload.id].modelMarginals,
+              x: action.payload.x,
+            },
+          },
+        },
+      };
+
+    case FETCH_MODEL_Y_MARGINAL_SUCCESS:
+      return {
+        ...state,
+        standardPlots: {
+          ...state.standardPlots,
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            modelMarginals: {
+              ...state.standardPlots[action.payload.id].modelMarginals,
+              y: action.payload.y,
+            },
+          },
+        },
+      };
+
+    case FETCH_DATA_X_MARGINAL_SUCCESS:
+      return {
+        ...state,
+        standardPlots: {
+          ...state.standardPlots,
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            dataMarginals: {
+              ...state.standardPlots[action.payload.id].dataMarginals,
+              x: action.payload.x,
+            },
+          },
+        },
+      };
+
+    case FETCH_DATA_Y_MARGINAL_SUCCESS:
+      return {
+        ...state,
+        standardPlots: {
+          ...state.standardPlots,
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            dataMarginals: {
+              ...state.standardPlots[action.payload.id].dataMarginals,
+              y: action.payload.y,
+            },
+          },
+        },
+      };
+    case FETCH_MODEL_DENSITY_SUCCESS:
+      return {
+        ...state,
+        standardPlots: {
+          ...state.standardPlots,
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            modelDensity: action.payload.modelDensity,
+          },
+        },
+      };
+
+    case FETCH_MODEL_PREDICTION_SUCCESS:
+      return {
+        ...state,
+        standardPlots: {
+          ...state.standardPlots,
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            modelPrediction: action.payload.modelPrediction,
+          },
+        },
+      };
+
+    case FETCH_DATA_PREDICTION_SUCCESS:
+      return {
+        ...state,
+        standardPlots: {
+          ...state.standardPlots,
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            dataPrediction: action.payload.dataPrediction,
+          },
+        },
+      };
+    case FETCH_DATA_DENSITY_SUCCESS:
+      return {
+        ...state,
+        standardPlots: {
+          ...state.standardPlots,
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            dataDensity: action.payload.dataDensity,
+          },
+        },
+      };
+
+    case FETCH_INITIAL_PLOTDATA_SUCCESS:
+      return {
+        ...state,
+        standardPlots: {
+          ...state.standardPlots,
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            loading: false,
+            modelDataPoints: action.payload.newStandardPlotData.model,
+            trainingDataPoints:
+              action.payload.newStandardPlotData.trainingDataPoints,
+          },
+        },
+      };
+
     default:
       return state;
   }
