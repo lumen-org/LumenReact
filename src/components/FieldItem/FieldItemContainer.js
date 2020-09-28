@@ -7,7 +7,7 @@ import {
   deleteFromSpecification,
 } from "../../states/specifications/actions";
 import { FIELD_ITEM } from "../../constants/dragAndDropTypes";
-import FieldItemModal from "../FieldItemModal/FieldItemModal";
+import FieldItemModal from "../FieldItemModal";
 import { selectActiveSpecificationId } from "../../states/visualizations/selector";
 
 function FieldItemContainer({ value, fieldName = "", type = FIELD_ITEM }) {
