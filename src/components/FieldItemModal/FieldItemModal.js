@@ -1,38 +1,42 @@
-import React  from "react";
+import React from "react";
 import "./FieldItemModal.css";
-import TitleH1Bar from "../TitleBar/TitleH1Bar";
-import Modal from "react-modal";
+import PropTypes from "prop-types";
 
-const modalStyles = {
-  overlay: {
-    backgroundColor: null
-  },
-  content: {
-    // top: "50%",
-    // left: "50%",
-    // right: "auto",
-    // bottom: "auto",
-    // marginRight: "-50%",
-    // top: 10,
-    // left: 10,
-    // transform: "translate(-50%, -50%)"
+import Popover from "@material-ui/core/Popover";
+
+class FieldItemModalContainer extends React.Component {
+  static propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    handleModalClose: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired,
+    anchorEl: PropTypes.object,
+  };
+
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+    }
   }
-};
 
-
-const FieldItemModal = ({ isOpen, handleClose, title = "Unkown"}) => {
-  return (
-    <div className={"field-modal"}>
-      <Modal
-        isOpen={isOpen}
-        onRequestClose={handleClose}
-        style={modalStyles}
+  render() {
+    const { isOpen, handleModalClose, title, anchorEl } = this.props;
+    return (
+      <Popover
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        open={isOpen}
+        onClose={() => handleModalClose()}
       >
-        <TitleH1Bar title={title} handleClose={handleClose}/>
-      </Modal>
-    </div>
-  )
-};
+        {title}
+      </Popover>
+    );
+  }
+}
 
-
-export default FieldItemModal;
+export default FieldItemModalContainer;

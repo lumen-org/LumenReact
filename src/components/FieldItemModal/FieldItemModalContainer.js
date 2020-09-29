@@ -4,7 +4,12 @@ import PropTypes from "prop-types";
 import FieldItemModal from "./FieldItemModal";
 
 class FieldItemModalContainer extends React.Component {
-  static propTypes = {};
+  static propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    handleModalClose: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired,
+    anchorEl: PropTypes.object,
+  };
 
   state = {};
 
@@ -14,9 +19,16 @@ class FieldItemModalContainer extends React.Component {
   }
 
   render() {
-    const {} = this.props;
+    const { isOpen, handleModalClose, title, anchorEl } = this.props;
     const {} = this.state;
-    return <FieldItemModal />;
+    return (
+      <FieldItemModal
+        isOpen={isOpen}
+        handleModalClose={handleModalClose}
+        title={title}
+        anchorEl={anchorEl}
+      />
+    );
   }
 }
 
