@@ -1,6 +1,6 @@
 .field-item-modal {
   flex: 1;
-  padding: 20px;
+  padding: 10px;
   margin: 10px;
   height: inherit;
   width: auto;
@@ -10,5 +10,8 @@
   display: grid;
 }
 .field-item-menu-button {
-  margin-top: 20px;
+  margin-top: 10px;
+}
+.field-item-modal-options-wrapper {
+  margin-top: 5px;
 }

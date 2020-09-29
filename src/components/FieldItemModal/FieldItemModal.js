@@ -55,31 +55,42 @@ class FieldItemModalContainer extends React.Component {
       >
         <div className="field-item-modal">
           {title}
-          <Button
-            className="field-item-menu-button"
-            aria-controls="customized-menu"
-            aria-haspopup="true"
-            variant="outlined"
-            color="default"
-            size="small"
-            onClick={(event) => this.handleMenuButtonClick(event)}
-          >
-            aggregate to
-          </Button>
+          <div className="field-item-modal-options-wrapper ">
+            <Button
+              className="field-item-menu-button"
+              aria-controls="customized-menu"
+              aria-haspopup="true"
+              variant="outlined"
+              color="default"
+              size="small"
+              onClick={(event) => this.handleMenuButtonClick(event)}
+            >
+              aggregate to
+            </Button>
+            <Menu
+              id="customized-menu"
+              anchorEl={menuAnchorEl}
+              keepMounted
+              open={menuOpen}
+              onClose={this.handleMenuClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              elevation={0}
+              getContentAnchorEl={null}
+            >
+              <MenuItem onClick={this.handleMenuClose}>Maximal</MenuItem>
+            </Menu>
 
-          <Menu
-            id="customized-menu"
-            anchorEl={menuAnchorEl}
-            keepMounted
-            open={menuOpen}
-            onClose={this.handleMenuClose}
-          >
-            <MenuItem onClick={this.handleMenuClose}>Maximal</MenuItem>
-          </Menu>
-
-          <IconButton color="default" aria-label="reset" component="span">
-            <RotateLeftIcon />
-          </IconButton>
+            <IconButton color="default" aria-label="reset" component="span">
+              <RotateLeftIcon />
+            </IconButton>
+          </div>
         </div>
       </Popover>
     );
