@@ -5,10 +5,10 @@ import Popover from "@material-ui/core/Popover";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+import RotateLeftIcon from "@material-ui/icons/RotateLeft";
+import IconButton from "@material-ui/core/IconButton";
+
 import "./FieldItemModal.css";
-import { MenuList } from "@material-ui/core";
 class FieldItemModalContainer extends React.Component {
   static propTypes = {
     isOpen: PropTypes.bool.isRequired,
@@ -76,6 +76,10 @@ class FieldItemModalContainer extends React.Component {
           >
             <MenuItem onClick={this.handleMenuClose}>Maximal</MenuItem>
           </Menu>
+
+          <IconButton color="default" aria-label="reset" component="span">
+            <RotateLeftIcon />
+          </IconButton>
         </div>
       </Popover>
     );
