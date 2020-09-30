@@ -19,10 +19,13 @@ const dimensions = (state = defaultState, action) => {
       dimensions.forEach((o) => {
         const name = o.name;
         byDimensionName[name] = {
+          models: {
             [modelId]: modelName
+          }
         }
+
       });
-      updateDimensionsBasedOnCurrentModels(state, byDimensionName);
+      byDimensionName = updateDimensionsBasedOnCurrentModels(state, byDimensionName, modelId, modelName);
       return {
         dimensions: update(state.dimensions, {
           $merge: {
@@ -35,20 +38,34 @@ const dimensions = (state = defaultState, action) => {
   }
 };
 
-function updateDimensionsBasedOnCurrentModels(state, newDims){
+function updateDimensionsBasedOnCurrentModels(state, newDims, modelId, modelName){
     let dimKeys = Object.keys(newDims);
     console.log("updateDimension");
+    console.log("dimKeys", dimKeys);
     console.log(state.dimensions.byDimensionName);
-    for (let dimension of Object.keys(state.dimensions.byDimensionName)) {
-      console.log(dimension.name);
-      if(dimension.name in dimKeys){
+    for (let dimension of dimKeys) {
+      console.log(dimension);
+      if(dimension in state.dimensions.byDimensionName){
         console.log("dimension already in data base");
+        /// Want to update the newDims with a new modelid in models
+        /// should update newDims mit state 
+        state.dimensions.byDimensionName[dimension].models[modelId] = modelName;
       }
       else {
         console.log("new dimension");
+        /// new dimension in byDimensionName 
+        // should include new Id, models with 
+        const id = uuidv4();
+        const dim = {
+          dimId: id,
+          models: {
+            [modelId]: modelName
+          }
+        }
+        state.dimensions.byDimensionName[dimension] = dim;
       }
     }
-  return newDims;
+  return state.dimensions.byDimensionName;
 }
 
 export default dimensions;
