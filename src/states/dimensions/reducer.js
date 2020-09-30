@@ -1,10 +1,11 @@
-import { ADD_ALL_DIMENSIONS } from "./constants";
+import { ADD_ALL_DIMENSIONS, GET_ALL_DIMENSION_IDS } from "./constants";
 import update from "immutability-helper";
 import { v4 as uuidv4 } from 'uuid';
 
 export const defaultState = {
   dimensions: {
     byDimensionName: {},
+    dimDict: {},
   }
 };
 
@@ -19,20 +20,23 @@ const dimensions = (state = defaultState, action) => {
       dimensions.forEach((o) => {
         const name = o.name;
         byDimensionName[name] = {
+          name: name,
           models: {
             [modelId]: modelName
           }
         }
-
       });
-      byDimensionName = updateDimensionsBasedOnCurrentModels(state, byDimensionName, modelId, modelName);
+      const updatedDimensions = updateDimensionsBasedOnCurrentModels(state, byDimensionName, modelId, modelName);
       return {
         dimensions: update(state.dimensions, {
           $merge: {
-              byDimensionName
+            byDimensionName: updatedDimensions.byDimensionName,
+            dimDict: updatedDimensions.dimDict,
           }
        })
       };
+    case GET_ALL_DIMENSION_IDS:
+      return state// JSON.parse(JSON.stringify(state.dimensions.dimDict));
     default:
       return state;
   }
@@ -57,15 +61,18 @@ function updateDimensionsBasedOnCurrentModels(state, newDims, modelId, modelName
         // should include new Id, models with 
         const id = uuidv4();
         const dim = {
+          name: dimension,
           dimId: id,
           models: {
             [modelId]: modelName
           }
         }
+        state.dimensions.dimDict[dimension] = id;
         state.dimensions.byDimensionName[dimension] = dim;
       }
     }
-  return state.dimensions.byDimensionName;
+  return state.dimensions;
 }
+
 
 export default dimensions;

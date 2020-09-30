@@ -1,4 +1,4 @@
-import { CREATE_NEW_MODEL, SHOW_PCI_GRAPH, HIDE_PCI_GRAPH } from "./constants";
+import { CREATE_NEW_MODEL, SHOW_PCI_GRAPH, HIDE_PCI_GRAPH, UPDATE_MODEL_DIMENSIONS } from "./constants";
 import update from "immutability-helper";
 import { EMPTY } from "../constants";
 
@@ -70,7 +70,13 @@ const models = (state = defaultState, action) => {
           },
         }),
       };
-
+    
+    case UPDATE_MODEL_DIMENSIONS:
+      let newDimensions;
+      ({ id, newDimensions } = action.payload);
+      console.log("this actually called it");
+      console.log(newDimensions);
+      return state;
     default:
       return state;
   }
