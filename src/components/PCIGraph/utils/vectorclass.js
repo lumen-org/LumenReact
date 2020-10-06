@@ -1,6 +1,6 @@
 /* copied from https://gist.github.com/winduptoy/a1aa09c3499e09edbd33
+-> adapted for own purposes
 */
-
 /*
 Simple 2D JavaScript Vector Class
 Hacked from evanw's lightgl.js
@@ -52,10 +52,10 @@ Vector.prototype = {
   },
   divide: function(v) {
     if (v instanceof Vector) {
-      if(v.x != 0) this.x /= v.x;
-      if(v.y != 0) this.y /= v.y;
+      if(v.x !== 0) this.x /= v.x;
+      if(v.y !== 0) this.y /= v.y;
     } else {
-      if(v != 0) {
+      if(v !== 0) {
         this.x /= v;
         this.y /= v;
       }
@@ -63,7 +63,7 @@ Vector.prototype = {
     return this;
   },
   equals: function(v) {
-    return this.x == v.x && this.y == v.y;
+    return this.x === v.x && this.y === v.y;
   },
   dot: function(v) {
     return this.x * v.x + this.y * v.y;
@@ -122,7 +122,7 @@ Vector.divide = function(a, b) {
   else return new Vector(a.x / b, a.y / b);
 };
 Vector.equals = function(a, b) {
-  return a.x == b.x && a.y == b.y;
+  return a.x === b.x && a.y === b.y;
 };
 Vector.dot = function(a, b) {
   return a.x * b.x + a.y * b.y;

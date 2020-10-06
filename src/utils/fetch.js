@@ -30,7 +30,26 @@ export const fetchModelData = (modelName) => {
   return _fetchModelData(POST_BODY);
 };
 
-export const fetchPlotData = (BODY) => {
+export const fetch3DPlotData = (BODY) => {
+  return fetchData(BASE_URL, BODY).then((response) => {
+    const dataString = response["data"].split("\n");
+    const X = [];
+    const Y = [];
+    const Z = [];
+    dataString.forEach((element) => {
+      X.push(element.split(",")[0]);
+      Y.push(element.split(",")[1]);
+      Z.push(element.split(",")[2]);
+    });
+    return {
+      x: X,
+      y: Y,
+      z: Z,
+    };
+  });
+};
+
+export const fetch2DPlotData = (BODY) => {
   return fetchData(BASE_URL, BODY).then((response) => {
     const dataString = response["data"].split("\n");
     const X = [];
@@ -42,6 +61,20 @@ export const fetchPlotData = (BODY) => {
     return {
       x: X,
       y: Y,
+    };
+  });
+};
+
+export const fetch1DPlotData = (BODY) => {
+  return fetchData(BASE_URL, BODY).then((response) => {
+    const dataString = response["data"].split("\n");
+    const a = [];
+
+    dataString.forEach((element) => {
+      a.push(element.split(",")[0]);
+    });
+    return {
+      a,
     };
   });
 };

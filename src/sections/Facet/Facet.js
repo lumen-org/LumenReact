@@ -26,8 +26,8 @@ class Facet extends React.Component {
         <thead>
           <tr>
             <th scope="col"> </th>
-            <th scope="col">Data</th>
             <th scope="col">Prediction</th>
+            <th scope="col">Data</th>
           </tr>
         </thead>
         <tbody>

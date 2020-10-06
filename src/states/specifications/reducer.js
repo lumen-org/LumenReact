@@ -30,11 +30,11 @@ export const defaultValues = {
     },
     "Data Points": {
       model: false,
-      data: true,
+      data: false,
     },
     Marginals: {
       model: false,
-      data: true,
+      data: false,
     },
     Density: {
       model: false,

@@ -1,17 +1,5 @@
 const queryTemplates = {
-  modelPrediction: {
-    FROM: "mcg_iris_map",
-    PREDICT: [
-      {
-        aggregation: "maximum",
-        class: "Aggregation",
-        name: ["sepal_width"],
-        yields: "sepal_width",
-      },
-    ],
-  },
-
-  modelMarginal: {
+  marginal: {
     FROM: "mcg_iris_map",
     PREDICT: ["sepal_length"],
     "SPLIT BY": [
@@ -40,6 +28,39 @@ const queryTemplates = {
     OPTS: {
       data_category: "training data",
       data_point_limit: 2000,
+    },
+  },
+
+  model2DPredictions: {
+    FROM: "mcg_iris_map",
+    PREDICT: [
+      {
+        aggregation: "maximum",
+        class: "Aggregation",
+        name: ["sepal_width"],
+        yields: "sepal_width",
+      },
+      {
+        aggregation: "maximum",
+        class: "Aggregation",
+        name: ["sepal_length"],
+        yields: "sepal_length",
+      },
+    ],
+  },
+
+  density: {
+    prediction: {
+      name: ["dimension1", "dimension2"],
+      aggregation: "probability",
+      class: "Density",
+    },
+
+    split: {
+      name: "dimension_name",
+      split: "equiinterval",
+      args: [25],
+      class: "Split",
     },
   },
 };

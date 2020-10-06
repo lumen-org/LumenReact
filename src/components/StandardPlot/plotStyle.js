@@ -12,9 +12,26 @@ export const plotStyle = {
     size: 8,
     line: {
       color: "rgba(231, 99, 250,0.5)",
-      width: 2,
+      width: 1.5,
     },
     symbol: "square",
+  },
+  modelPredictionMarker: {
+    color: "rgba(231, 99, 250, 0.5)",
+    size: 10,
+    line: {
+      color: "#000000",
+      width: 1.8,
+    },
+    symbol: "square",
+  },
+  dataPredictionMarker: {
+    color: "#333333",
+    size: 10,
+    line: {
+      color: "#000000",
+      width: 1.8,
+    },
   },
   histogramMarker: {
     color: "rgb(207, 207, 207)",

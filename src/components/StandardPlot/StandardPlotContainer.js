@@ -6,18 +6,18 @@ import {
   getSpecById,
   getFacetById,
 } from "../../states/specifications/selector.js";
+import { fetchOnSpecChange } from "../../states/standardplots/actions";
 import { getSpecificationId } from "../../states/plots/selector.js";
 import StandardPlot from "./StandardPlot";
-import { fetchStandardPlotData } from "../../states/standardplots/actions";
 
 class StandardPlotContainer extends React.Component {
   static propTypes = {
-    fetchStandardPlotData: PropTypes.func,
-    plotData: PropTypes.array,
+    plotData: PropTypes.object,
     specification: PropTypes.object,
     facets: PropTypes.object,
     layout: PropTypes.object,
     id: PropTypes.number,
+    loading: PropTypes.bool,
   };
 
   state = {
@@ -31,11 +31,6 @@ class StandardPlotContainer extends React.Component {
         from: "data",
       },
     ],
-  };
-
-  getPlotInfo = () => {
-    const { fetchStandardPlotData, id } = this.props;
-    fetchStandardPlotData(id);
   };
 
   // refractor this to utility? This function filter the facets and return of an array
@@ -66,8 +61,9 @@ class StandardPlotContainer extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.specification !== this.props.specification) {
-      this.getPlotInfo();
+      const { fetchOnSpecChange } = this.props;
       this.getDisplayTraces();
+      fetchOnSpecChange();
     }
 
     if (
@@ -91,10 +87,11 @@ class StandardPlotContainer extends React.Component {
   }
 }
 
-const mapDispatchToProps = {
-  fetchStandardPlotData,
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchOnSpecChange: () => dispatch(fetchOnSpecChange()),
+  };
 };
-
 const mapStateToProps = (state, ownProps) => {
   return {
     plotData: getStandardPlotDataById(state, ownProps.id),
