@@ -13,14 +13,19 @@ const dimensions = (state = defaultState, action) => {
   switch (action.type) {
     case ADD_ALL_DIMENSIONS:
       let { modelId, modelName, dimensions } = action.payload;
-      console.log(modelName, modelId, dimensions);
-      console.log("inside create new dimension", modelId, "Bil");
-      console.log(dimensions);
+      //console.log(modelName, modelId, dimensions);
+      //console.log("inside create new dimension", modelId, "Bil");
+      //console.log(dimensions);
       let byDimensionName = {};
       dimensions.forEach((o) => {
         const name = o.name;
         byDimensionName[name] = {
           name: name,
+          domain: o.domain,
+          extent: o.extent,
+          dtype: o.dtype,
+          hidden: o.hidden,
+          independent: o.independent,
           models: {
             [modelId]: modelName
           }
@@ -35,6 +40,7 @@ const dimensions = (state = defaultState, action) => {
           }
        })
       };
+    // Todo: move to selector
     case GET_ALL_DIMENSION_IDS:
       return state// JSON.parse(JSON.stringify(state.dimensions.dimDict));
     default:
@@ -44,25 +50,30 @@ const dimensions = (state = defaultState, action) => {
 
 function updateDimensionsBasedOnCurrentModels(state, newDims, modelId, modelName){
     let dimKeys = Object.keys(newDims);
-    console.log("updateDimension");
-    console.log("dimKeys", dimKeys);
-    console.log(state.dimensions.byDimensionName);
+    //console.log("updateDimension");
+    //console.log("dimKeys", dimKeys);
+    //console.log(state.dimensions.byDimensionName);
     for (let dimension of dimKeys) {
       console.log(dimension);
       if(dimension in state.dimensions.byDimensionName){
-        console.log("dimension already in data base");
+        //console.log("dimension already in data base");
         /// Want to update the newDims with a new modelid in models
         /// should update newDims mit state 
         state.dimensions.byDimensionName[dimension].models[modelId] = modelName;
       }
       else {
-        console.log("new dimension");
+        //console.log("new dimension");
         /// new dimension in byDimensionName 
         // should include new Id, models with 
         const id = uuidv4();
         const dim = {
-          name: dimension,
+          name: dimension.name,
           dimId: id,
+          domain: dimension.domain,
+          extent: dimension.extent,
+          dtype: dimension.dtype,
+          hidden: dimension.hidden,
+          independent: dimension.independent,
           models: {
             [modelId]: modelName
           }
