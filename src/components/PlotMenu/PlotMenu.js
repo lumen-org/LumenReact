@@ -28,6 +28,7 @@ function PlotMenu(props) {
         onClick={handleClick}
         variant="contained"
         color="primary"
+        endIcon={<img className="img" src={require("../../assets/icons/plus.svg")} alt=""></img>}
         size="small"
       >
         New Plot
