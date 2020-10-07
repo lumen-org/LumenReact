@@ -27,6 +27,26 @@ export const getSelectedFieldObjectById = (state, id) => {
   return SELECT;
 };
 
+export const getTrainingDataIntermediateModelQueryBodyById = (state, id) => {
+  const modelName = getModelNameById(state, id);
+  const SELECT = getSelectedFieldArrayById(state, id);
+  return {
+    FROM: modelName,
+    MODEL: SELECT,
+    AS: "__" + modelName + "_0_0",
+  };
+};
+
+export const getDataMarginalIntermediateModelQueryBodyById = (state, id) => {
+  const modelName = getModelNameById(state, id);
+  const SELECT = getSelectedFieldArrayById(state, id);
+  return {
+    FROM: modelName,
+    MODEL: SELECT,
+    AS: "__" + modelName + "-dataMarginals-_0_0",
+  };
+};
+
 export const getTrainingDataQueryBodyById = (state, id) => {
   const modelName = getModelNameById(state, id);
   const SELECT = getSelectedFieldArrayById(state, id);
@@ -53,10 +73,7 @@ export const getMarginalsQueryBodyById = (state, type, fieldItem, id) => {
   var modelName = "";
 
   if (type === "data") {
-    modelName =
-      "__emp_" +
-      getModelNameById(state, id).split("_")[1] +
-      "-dataMarginals-_0_0";
+    modelName = "__" + getModelNameById(state, id) + "-dataMarginals-_0_0";
   }
 
   if (type === "model") {
@@ -83,10 +100,7 @@ export const getPredictionQueryBodyId = (state, type, id) => {
   var modelName = "";
 
   if (type === "data") {
-    modelName =
-      "__emp_" +
-      getModelNameById(state, id).split("_")[1] +
-      "-dataMarginals-_0_0";
+    modelName = "__" + getModelNameById(state, id) + "-dataMarginals-_0_0";
   }
 
   if (type === "model") {
@@ -112,10 +126,7 @@ export const getDensityQueryBodyById = (state, type, id) => {
   var modelName = "";
 
   if (type === "data") {
-    modelName =
-      "__emp_" +
-      getModelNameById(state, id).split("_")[1] +
-      "-dataMarginals-_0_0";
+    modelName = "__" + getModelNameById(state, id) + "-dataMarginals-_0_0";
   }
 
   if (type === "model") {
