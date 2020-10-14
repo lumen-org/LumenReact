@@ -75,6 +75,7 @@ const models = (state = defaultState, action) => {
       let newDimensions;
       ({ id, newDimensions } = action.payload);
       console.log("this actually called it");
+      console.log(id);
       console.log(newDimensions);
       return state;
     default:

@@ -50,30 +50,21 @@ const dimensions = (state = defaultState, action) => {
 
 function updateDimensionsBasedOnCurrentModels(state, newDims, modelId, modelName){
     let dimKeys = Object.keys(newDims);
-    //console.log("updateDimension");
-    //console.log("dimKeys", dimKeys);
-    //console.log(state.dimensions.byDimensionName);
     for (let dimension of dimKeys) {
-      console.log(dimension);
+      //console.log(dimension);
       if(dimension in state.dimensions.byDimensionName){
-        //console.log("dimension already in data base");
-        /// Want to update the newDims with a new modelid in models
-        /// should update newDims mit state 
         state.dimensions.byDimensionName[dimension].models[modelId] = modelName;
       }
       else {
-        //console.log("new dimension");
-        /// new dimension in byDimensionName 
-        // should include new Id, models with 
         const id = uuidv4();
         const dim = {
-          name: dimension.name,
+          name: newDims[dimension].name,
           dimId: id,
-          domain: dimension.domain,
-          extent: dimension.extent,
-          dtype: dimension.dtype,
-          hidden: dimension.hidden,
-          independent: dimension.independent,
+          domain: newDims[dimension].domain,
+          extent: newDims[dimension].extent,
+          dtype: newDims[dimension].dtype,
+          hidden: newDims[dimension].hidden,
+          independent: newDims[dimension].independent,
           models: {
             [modelId]: modelName
           }
