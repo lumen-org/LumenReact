@@ -6,7 +6,6 @@ import {
 } from "./constants";
 import { v4 as uuidv4 } from 'uuid';
 
-
 export const createNewVisualization = (payload) => {
   return dispatch => {
     dispatch(_createNewVisualization(payload));

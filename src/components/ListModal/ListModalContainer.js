@@ -13,7 +13,9 @@ import {
   createNewVisualization,
   fillVisualization,
 } from "../../states/visualizations/actions";
-import { createNewModel } from "../../states/models/actions";
+import { createNewModel, updateModelDimensions } from "../../states/models/actions";
+import { addAllDimensions, getAllDimensionIds } from "../../states/dimensions/actions";
+import { getDimensionsByModelId } from "../../states/dimensions/selector";
 const defaultPlotType = STANDARD_PLOT; // Haha, we will certainly refractor this, right?
 class ListModalContainer extends React.Component {
   static propTypes = {
@@ -37,6 +39,9 @@ class ListModalContainer extends React.Component {
       addSpecifications,
       createNewVisualization,
       createNewModel,
+      updateModelDimensions,
+      addAllDimensions,
+      getAllDimensionIds,
       fillVisualization,
     } = this.props;
     // even though the dispatches officially are executed sequential the mapStateToProps
@@ -49,6 +54,14 @@ class ListModalContainer extends React.Component {
         fetchModelData(item)
           .then((response) => {
             createNewModel(item, response["Fields"]);
+            return JSON.parse(JSON.stringify(response["Fields"]));
+          })
+          .then((value) => {
+            const modelId = this.props.modelId;
+            addAllDimensions(this.props.modelId, item, value);
+            updateModelDimensions(this.props.modelId, this.props.getDimensionsByModelId);
+            
+            //console.log("getDimensionsByModelId", getDimensionsByModelId);
           })
           .then(() => {
             createPlot(
@@ -93,6 +106,8 @@ class ListModalContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    getDimensionsByModelId: getDimensionsByModelId(state),
+    dimensions: state.dimensions,
     specificationId: state.specifications.lastCreatedId,
     plotId: state.plots.lastCreatedId,
     modelId: state.models.lastCreatedModelId,
@@ -120,8 +135,16 @@ const mapDispatchToProps = (dispatch) => {
     addSpecifications: () => {
       return dispatch(createNewSpecification());
     },
-    createNewModel: (modelName, model) =>
-      dispatch(createNewModel(modelName, model)),
+    addAllDimensions: (modelId, modelName, dimensionName) => {
+      dispatch(addAllDimensions(modelId, modelName, dimensionName))},
+    updateModelDimensions: (modelId, dimensions) => {
+      dispatch(updateModelDimensions(modelId, dimensions))
+    },
+    getAllDimensionIds: () => {
+      return dispatch(getAllDimensionIds())
+    },
+    createNewModel: (modelId, modelName, model) =>
+      dispatch(createNewModel(modelId, modelName, model)),
     fillVisualization: (visualizationId, modelId, specificationId, plotId) =>
       dispatch(
         fillVisualization(visualizationId, modelId, specificationId, plotId)

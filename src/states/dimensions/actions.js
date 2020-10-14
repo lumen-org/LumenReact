@@ -1,10 +1,21 @@
-import { CREATE_NEW_DIMENSION } from "./constants";
+import { ADD_ALL_DIMENSIONS, GET_ALL_DIMENSION_IDS } from "./constants";
 
-export const createNewDimension = ({name}) => {
+export const addAllDimensions = (modelId, modelName, dimensions) => {
+  // let dimName = { "bla": "bla", "fegrt": "dkei"}; 
   return {
-    type: CREATE_NEW_DIMENSION,
+    type: ADD_ALL_DIMENSIONS,
     payload: {
-      name
+          modelId,
+          modelName,
+          dimensions,
     }
   }
-}
+};
+
+export const getAllDimensionIds = () => {
+  return {
+    type: GET_ALL_DIMENSION_IDS,
+    payload: {
+    }
+  }
+};
