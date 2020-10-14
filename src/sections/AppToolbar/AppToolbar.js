@@ -24,8 +24,6 @@ class AppToolbar extends Component {
       this.setState({
         openModal: true,
       });
-    } else if (buttonKey === 7) {
-      this.props.handleGraphClick();
     }
   };
 

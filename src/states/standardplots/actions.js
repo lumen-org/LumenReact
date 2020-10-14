@@ -28,6 +28,7 @@ import {
 import { getPlotAllIds } from "../plots/selector";
 import { nextAvaliableId } from "../../utils/plotData";
 import {
+  createIntermediateModels,
   fetch3DPlotData,
   fetch2DPlotData,
   fetch1DPlotData,
@@ -41,6 +42,8 @@ import {
   getDensityQueryBodyById,
   getSelectedFieldObjectById,
   getPredictionQueryBodyId,
+  getTrainingDataIntermediateModelQueryBodyById,
+  getDataMarginalIntermediateModelQueryBodyById,
 } from "./selector";
 
 function initializePlot(id) {
@@ -313,6 +316,11 @@ export function fetchDataMarginals() {
     const id = getActivePlotId(getState());
     const fieldItems = getSelectedFieldObjectById(getState(), id);
     dispatch(fetchDataPending(id));
+    const intermediateModelQueryBody = getDataMarginalIntermediateModelQueryBodyById(
+      getState(),
+      id
+    );
+    createIntermediateModels(intermediateModelQueryBody).then((response) => {});
     if (fieldItems.x) {
       const dataMarginalsQueryBody = getMarginalsQueryBodyById(
         getState(),
@@ -343,6 +351,11 @@ export function fetchTrainingDataPoints() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
     dispatch(fetchDataPending(id));
+    const intermediateModelQueryBody = getTrainingDataIntermediateModelQueryBodyById(
+      getState(),
+      id
+    );
+    createIntermediateModels(intermediateModelQueryBody).then((response) => {});
     const trainingDataQueryBody = getTrainingDataQueryBodyById(getState(), id);
     fetch2DPlotData(trainingDataQueryBody).then((response) => {
       dispatch(fetchTrainingDataSucess(id, response));
