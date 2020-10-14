@@ -10,18 +10,18 @@ export const getDimensionsByModelId = createSelector(
     [getDimensions, getCurrentModelId],
     (dimensions, modelId) => {
         let dimFromModel = {};
-        console.log("selector", dimensions);
-        console.log("modelid", modelId);
-        return { "bli": "blid"}
-        return Object.entries(dimensions).filter((dimension) => {
-            return modelId in dimensions[dimension].models;
-          });
+
+        /*return Object.entries(dimensions).filter((dimension) => {
+            console.log(Object.keys(dimension[1].models).includes(modelId));
+            return (Object.keys(dimension[1].models).includes(modelId));
+          });*/
         for ( let dimension in Object.entries(dimensions)) {
             console.log("element", dimension);
-            if (modelId in dimensions[dimension].models){
+            if (Object.keys(dimensions[dimension].models).includes(modelId)){
                  dimFromModel[dimension] = dimensions[dimension];
             }
         }
+
         console.log("dimFromModel", dimFromModel);
         return dimFromModel;
     }

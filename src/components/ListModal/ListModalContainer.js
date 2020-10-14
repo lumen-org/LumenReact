@@ -57,12 +57,12 @@ class ListModalContainer extends React.Component {
             return JSON.parse(JSON.stringify(response["Fields"]));
           })
           .then((value) => {
-            const modelId = this.props.modelId;
-            addAllDimensions(this.props.modelId, item, value);
-            updateModelDimensions(this.props.modelId, this.props.getDimensionsByModelId);
-            
-            //console.log("getDimensionsByModelId", getDimensionsByModelId);
-          })
+            return addAllDimensions(this.props.modelId, item, value);
+          }).then((dimensions) => {
+            updateModelDimensions(this.props.modelId,  this.props.getDimensionsByModelId);
+            console.log("getDimensionsByModelId", this.props.getDimensionsByModelId);
+          }
+          )
           .then(() => {
             createPlot(
               item,

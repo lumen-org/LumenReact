@@ -76,5 +76,4 @@ function updateDimensionsBasedOnCurrentModels(state, newDims, modelId, modelName
   return state.dimensions;
 }
 
-
 export default dimensions;
