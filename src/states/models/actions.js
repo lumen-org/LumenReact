@@ -35,7 +35,7 @@ export const updateModelDimensions = (id, dimensions) => {
     type: UPDATE_MODEL_DIMENSIONS,
     payload: {
       id,
-      dimensions
+      dimensions,
     }
   }
 };

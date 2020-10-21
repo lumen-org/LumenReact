@@ -72,11 +72,9 @@ const models = (state = defaultState, action) => {
       };
     
     case UPDATE_MODEL_DIMENSIONS:
-      let newDimensions;
-      ({ id, newDimensions } = action.payload);
-      console.log("this actually called it");
-      console.log(id);
-      console.log(newDimensions);
+      let dimensions;
+      ({ id, dimensions } = action.payload);
+      // Todo: Implement here functionality for updating dimensions like delete redundant information and give unique id
       return state;
     default:
       return state;

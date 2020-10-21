@@ -15,7 +15,7 @@ import {
 } from "../../states/visualizations/actions";
 import { createNewModel, updateModelDimensions } from "../../states/models/actions";
 import { addAllDimensions, getAllDimensionIds } from "../../states/dimensions/actions";
-import { getDimensionsByModelId } from "../../states/dimensions/selector";
+import { getDimensionsOfCurrentModel } from "../../states/dimensions/selector";
 const defaultPlotType = STANDARD_PLOT; // Haha, we will certainly refractor this, right?
 class ListModalContainer extends React.Component {
   static propTypes = {
@@ -57,10 +57,9 @@ class ListModalContainer extends React.Component {
             return JSON.parse(JSON.stringify(response["Fields"]));
           })
           .then((value) => {
-            return addAllDimensions(this.props.modelId, item, value);
-          }).then((dimensions) => {
-            updateModelDimensions(this.props.modelId,  this.props.getDimensionsByModelId);
-            console.log("getDimensionsByModelId", this.props.getDimensionsByModelId);
+            addAllDimensions(this.props.modelId, item, value);
+          }).then(() => {
+            updateModelDimensions(this.props.modelId,  this.props.getDimensionsOfCurrentModel);
           }
           )
           .then(() => {
@@ -106,12 +105,12 @@ class ListModalContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    getDimensionsByModelId: getDimensionsByModelId(state),
     dimensions: state.dimensions,
     specificationId: state.specifications.lastCreatedId,
     plotId: state.plots.lastCreatedId,
     modelId: state.models.lastCreatedModelId,
     lastCreatedVisualizationId: state.visualizations.lastCreatedVisualizationId,
+    getDimensionsOfCurrentModel: getDimensionsOfCurrentModel(state),
   };
 };
 
