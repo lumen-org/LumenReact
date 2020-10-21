@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { updateActiveModel } from "../../states/app/actions";
 import { createNewSpecification } from "../../states/specifications/actions";
@@ -14,7 +14,7 @@ import {
   fillVisualization,
 } from "../../states/visualizations/actions";
 import { createNewModel, updateModelDimensions } from "../../states/models/actions";
-import { addAllDimensions, getAllDimensionIds } from "../../states/dimensions/actions";
+import { addAllDimensions } from "../../states/dimensions/actions";
 import { getDimensionsOfCurrentModel } from "../../states/dimensions/selector";
 const defaultPlotType = STANDARD_PLOT; // Haha, we will certainly refractor this, right?
 class ListModalContainer extends React.Component {
@@ -41,7 +41,6 @@ class ListModalContainer extends React.Component {
       createNewModel,
       updateModelDimensions,
       addAllDimensions,
-      getAllDimensionIds,
       fillVisualization,
     } = this.props;
     // even though the dispatches officially are executed sequential the mapStateToProps
@@ -138,9 +137,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(addAllDimensions(modelId, modelName, dimensionName))},
     updateModelDimensions: (modelId, dimensions) => {
       dispatch(updateModelDimensions(modelId, dimensions))
-    },
-    getAllDimensionIds: () => {
-      return dispatch(getAllDimensionIds())
     },
     createNewModel: (modelId, modelName, model) =>
       dispatch(createNewModel(modelId, modelName, model)),

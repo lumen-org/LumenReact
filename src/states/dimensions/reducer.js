@@ -1,4 +1,4 @@
-import { ADD_ALL_DIMENSIONS, GET_ALL_DIMENSION_IDS } from "./constants";
+import { ADD_ALL_DIMENSIONS} from "./constants";
 import update from "immutability-helper";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -15,7 +15,7 @@ const dimensions = (state = defaultState, action) => {
       let { modelId, modelName, dimensions } = action.payload;
       //console.log(modelName, modelId, dimensions);
       //console.log("inside create new dimension", modelId, "Bil");
-      //console.log(dimensions);
+      console.log(dimensions);
       let byDimensionName = {};
       dimensions.forEach((o) => {
         const name = o.name;
@@ -40,9 +40,6 @@ const dimensions = (state = defaultState, action) => {
           }
        })
       };
-    // Todo: move to selector
-    case GET_ALL_DIMENSION_IDS:
-      return state// JSON.parse(JSON.stringify(state.dimensions.dimDict));
     default:
       return state;
   }
