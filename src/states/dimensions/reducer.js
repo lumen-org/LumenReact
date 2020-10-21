@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 export const defaultState = {
   dimensions: {
     byDimensionName: {},
-    dimDict: {},
   }
 };
 
@@ -15,7 +14,6 @@ const dimensions = (state = defaultState, action) => {
       let { modelId, modelName, dimensions } = action.payload;
       //console.log(modelName, modelId, dimensions);
       //console.log("inside create new dimension", modelId, "Bil");
-      console.log(dimensions);
       let byDimensionName = {};
       dimensions.forEach((o) => {
         const name = o.name;
@@ -36,7 +34,6 @@ const dimensions = (state = defaultState, action) => {
         dimensions: update(state.dimensions, {
           $merge: {
             byDimensionName: updatedDimensions.byDimensionName,
-            dimDict: updatedDimensions.dimDict,
           }
        })
       };
@@ -53,7 +50,7 @@ function updateDimensionsBasedOnCurrentModels(state, newDims, modelId, modelName
         state.dimensions.byDimensionName[dimension].models[modelId] = modelName;
       }
       else {
-        const id = uuidv4();
+        const id = "idFromBackend"//uuidv4();
         const dim = {
           name: newDims[dimension].name,
           dimId: id,
@@ -66,7 +63,6 @@ function updateDimensionsBasedOnCurrentModels(state, newDims, modelId, modelName
             [modelId]: modelName
           }
         }
-        state.dimensions.dimDict[dimension] = id;
         state.dimensions.byDimensionName[dimension] = dim;
       }
     }

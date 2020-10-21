@@ -16,3 +16,4 @@ export const getDimensionsOfCurrentModel = (state) => {
     }
     return dimFromModel;
 }
+export default getDimensionsOfCurrentModel;
