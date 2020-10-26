@@ -1,12 +1,12 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+
 import { connect } from "react-redux";
 import { updateActiveModel } from "../../states/app/actions";
 import { createNewSpecification } from "../../states/specifications/actions";
 import { createNewPlot } from "../../states/plots/actions";
-import PropTypes from "prop-types";
-import ListModal from "./ListModal";
-import fetchData, { fetchModelData } from "../../utils/fetch";
-import { BASE_URL, FETCH_ALL_MODEL_NAME } from "../../constants/query";
+import { ListModal } from "./ListModal";
+import { showModel, showHeaders } from "../../utils/pqlModelQueries";
 import { STANDARD_PLOT } from "../../constants/plotTypes";
 import {
   changeActiveVisualization,
@@ -27,9 +27,10 @@ class ListModalContainer extends React.Component {
 
   state = {
     models: [],
+    status: "ok",
   };
 
-  handleItemSelection = (item) => {
+  handleItemSelection = (modelName) => {
     const {
       changeActiveVisualization,
       handleModalClose,
@@ -43,16 +44,16 @@ class ListModalContainer extends React.Component {
     // is not updating in time, that's why we need to ensure the order by
     // making addSpecification a promise
     // Im not sure if I did it correctly
-    createNewVisualization(item).then(() => {
+    createNewVisualization(modelName).then(() => {
       addSpecifications().then(() => {
         // move into schema redux store to avoid this nested promises
-        fetchModelData(item)
-          .then((response) => {
-            createNewModel(item, response["Fields"]);
+        showHeaders(modelName)
+          .then((fields) => {
+            createNewModel(modelName, fields);
           })
           .then(() => {
             createPlot(
-              item,
+              modelName,
               this.props.lastCreatedVisualizationId,
               this.props.specificationId
             );
@@ -71,9 +72,9 @@ class ListModalContainer extends React.Component {
   };
 
   componentWillMount() {
-    fetchData(BASE_URL, FETCH_ALL_MODEL_NAME).then((response) =>
-      this.setState({ models: response["models"] })
-    );
+    showModel().then((models) => {
+      this.setState({ models });
+    });
   }
 
   render() {

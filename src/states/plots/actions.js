@@ -1,10 +1,5 @@
 import { CREATE_NEW_PLOT, CHANGE_ACTIVE_PLOT, DELETE_PLOT } from "./constants";
-import {
-  STANDARD_PLOT,
-  PCI_PLOT,
-  MULTI_PLOT,
-  DIFFERENTIAL_MARGINAL_PLOT,
-} from "../../constants/plotTypes";
+import { STANDARD_PLOT, PCI_PLOT, MULTI_PLOT } from "../../constants/plotTypes";
 import {
   createNewStandardPlot,
   deleteStandardPlot,
@@ -78,10 +73,10 @@ export function deletePlot(id) {
     if (plotType === MULTI_PLOT) {
       dispatch(deleteMultiPlot(id));
     }
-    if (plotType === PCI_PLOT){
+    if (plotType === PCI_PLOT) {
       console.log(id);
       let modelId = getState().plots.plots.byId[id].model;
-      dispatch(hidePCIGraph(modelId))
+      dispatch(hidePCIGraph(modelId));
     }
     dispatch(deletePlotInStore(id));
   };
