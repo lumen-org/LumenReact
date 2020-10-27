@@ -19,10 +19,6 @@ class ListModalContainer extends React.Component {
   static propTypes = {
     open: PropTypes.bool.isRequired,
     handleModalClose: PropTypes.func.isRequired,
-    specificationId: PropTypes.number,
-    plotId: PropTypes.number,
-    modelId: PropTypes.number,
-    lastCreatedVisualizationId: PropTypes.number,
   };
 
   state = {
@@ -83,9 +79,7 @@ const mapDispatchToProps = (dispatch) => {
     changeActiveVisualization: () => dispatch(changeActiveVisualization()),
     createPlot: (activeModel) =>
       dispatch(createNewPlot(activeModel, defaultPlotType)),
-    addSpecifications: () => {
-      return dispatch(createNewSpecification());
-    },
+    addSpecifications: () => dispatch(createNewSpecification()),
     createNewModel: (modelName, model) =>
       dispatch(createNewModel(modelName, model)),
     fillVisualization: () => dispatch(fillVisualization()),
