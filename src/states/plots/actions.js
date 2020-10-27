@@ -40,7 +40,6 @@ export function createNewPlot(modelName, plotType) {
     }
     if (plotType === PCI_PLOT) {
       dispatch(showPCIGraph(selectActiveModelId(getState())));
-      //return;
     }
 
     const visualizationId = getLastCreatedVisualizationId(getState());
@@ -82,7 +81,6 @@ export function deletePlot(id) {
       dispatch(deleteMultiPlot(id));
     }
     if (plotType === PCI_PLOT) {
-      console.log(id);
       let modelId = getState().plots.plots.byId[id].model;
       dispatch(hidePCIGraph(modelId));
     }

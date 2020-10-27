@@ -36,7 +36,6 @@ class MultiPlotContainer extends React.Component {
 
   render() {
     const { plotData, layout } = this.props;
-    console.log(layout);
     return <MultiPlot plotData={plotData} layout={layout} />;
   }
 }

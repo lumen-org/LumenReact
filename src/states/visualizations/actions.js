@@ -13,7 +13,6 @@ import { v4 as uuidv4 } from "uuid";
 export const createNewVisualization = () => {
   return (dispatch, getState) => {
     const modelId = getLastCreatedModelId(getState());
-    console.log("create new vis..", modelId);
     const specificationId = getLastCreatedSpecId(getState());
 
     dispatch(_createNewVisualization(uuidv4(), modelId, specificationId));
@@ -25,7 +24,6 @@ export const _createNewVisualization = (
   modelId = null,
   specificationId = null
 ) => {
-  console.log(modelId);
   return {
     type: CREATE_NEW_VISUALIZATION,
     payload: {
