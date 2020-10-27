@@ -4,11 +4,20 @@ import {
   createNewStandardPlot,
   deleteStandardPlot,
 } from "../standardplots/actions";
-import { getPlotTypeById, getPlotAllIds } from "./selector";
+import {
+  getPlotTypeById,
+  getPlotAllIds,
+  getLastCreatedPlotId,
+} from "./selector";
+import {
+  selectActiveModelId,
+  getLastCreatedVisualizationId,
+} from "../visualizations/selector";
+import { getLastCreatedSpecId } from "../specifications/selector";
+import { getLastCreatedModelId } from "../models/selector";
 import { createNewMultiPlot, deleteMultiPlot } from "../multiplots/actions";
 import { nextAvaliableId } from "../../utils/plotData";
 import { hidePCIGraph, showPCIGraph } from "../models/actions";
-import { selectActiveModelId } from "../visualizations/selector";
 
 export function changeActivePlot(newid) {
   return {
@@ -19,12 +28,7 @@ export function changeActivePlot(newid) {
   };
 }
 
-export function createNewPlot(
-  modelName,
-  visualizationId,
-  specificationId,
-  plotType
-) {
+export function createNewPlot(modelName, plotType) {
   return (dispatch, getState) => {
     const newId = nextAvaliableId(getPlotAllIds(getState()));
 
@@ -38,6 +42,10 @@ export function createNewPlot(
       dispatch(showPCIGraph(selectActiveModelId(getState())));
       //return;
     }
+
+    const visualizationId = getLastCreatedVisualizationId(getState());
+    const specificationId = getLastCreatedSpecId(getState());
+
     dispatch(createPlot(modelName, visualizationId, specificationId, plotType));
     dispatch(changeActivePlot(newId));
   };

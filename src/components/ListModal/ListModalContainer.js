@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import ListModal from "./ListModal";
 
 import { connect } from "react-redux";
 import { updateActiveModel } from "../../states/app/actions";
 import { createNewSpecification } from "../../states/specifications/actions";
 import { createNewPlot } from "../../states/plots/actions";
-import { ListModal } from "./ListModal";
 import { showModel, showHeaders } from "../../utils/pqlModelQueries";
 import { STANDARD_PLOT } from "../../constants/plotTypes";
 import {
@@ -40,35 +40,19 @@ class ListModalContainer extends React.Component {
       createNewModel,
       fillVisualization,
     } = this.props;
-    // even though the dispatches officially are executed sequential the mapStateToProps
-    // is not updating in time, that's why we need to ensure the order by
-    // making addSpecification a promise
-    // Im not sure if I did it correctly
-    createNewVisualization(modelName).then(() => {
-      addSpecifications().then(() => {
-        // move into schema redux store to avoid this nested promises
-        showHeaders(modelName)
-          .then((fields) => {
-            createNewModel(modelName, fields);
-          })
-          .then(() => {
-            createPlot(
-              modelName,
-              this.props.lastCreatedVisualizationId,
-              this.props.specificationId
-            );
-            fillVisualization(
-              this.props.lastCreatedVisualizationId,
-              this.props.modelId,
-              this.props.specificationId,
-              this.props.plotId
-            );
-            changeActiveVisualization(this.props.lastCreatedVisualizationId);
-            //... TODO: TO COMPLETE THE CONDITION
-            handleModalClose();
-          });
+
+    showHeaders(modelName)
+      .then((fields) => {
+        createNewModel(modelName, fields);
+      })
+      .then(() => {
+        addSpecifications();
+        createNewVisualization();
+        createPlot(modelName);
+        fillVisualization();
+        changeActiveVisualization();
+        handleModalClose();
       });
-    });
   };
 
   componentWillMount() {
@@ -92,42 +76,20 @@ class ListModalContainer extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    specificationId: state.specifications.lastCreatedId,
-    plotId: state.plots.lastCreatedId,
-    modelId: state.models.lastCreatedModelId,
-    lastCreatedVisualizationId: state.visualizations.lastCreatedVisualizationId,
-  };
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
-    createNewVisualization: (modelName, schemaId, specificationId, plotId) =>
-      dispatch(
-        createNewVisualization(modelName, schemaId, specificationId, plotId)
-      ),
+    createNewVisualization: () => dispatch(createNewVisualization()),
     updateActiveModel: (model) => dispatch(updateActiveModel(model)),
-    changeActiveVisualization: (id) => dispatch(changeActiveVisualization(id)),
-    createPlot: (activeModel, visualizationId, specificationId) =>
-      dispatch(
-        createNewPlot(
-          activeModel,
-          visualizationId,
-          specificationId,
-          defaultPlotType
-        )
-      ),
+    changeActiveVisualization: () => dispatch(changeActiveVisualization()),
+    createPlot: (activeModel) =>
+      dispatch(createNewPlot(activeModel, defaultPlotType)),
     addSpecifications: () => {
       return dispatch(createNewSpecification());
     },
     createNewModel: (modelName, model) =>
       dispatch(createNewModel(modelName, model)),
-    fillVisualization: (visualizationId, modelId, specificationId, plotId) =>
-      dispatch(
-        fillVisualization(visualizationId, modelId, specificationId, plotId)
-      ),
+    fillVisualization: () => dispatch(fillVisualization()),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListModalContainer);
+export default connect(null, mapDispatchToProps)(ListModalContainer);

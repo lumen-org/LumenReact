@@ -42,3 +42,7 @@ export const selectActiveModelId = createSelector(
     return activeId !== EMPTY ? selectVis[activeId].modelId : EMPTY;
   }
 );
+
+export const getLastCreatedVisualizationId = (state) => {
+  return state.visualizations.lastCreatedVisualizationId;
+};
