@@ -14,6 +14,9 @@ export const showModel = () => {
     return response["models"];
   });
 };
+/**
+ *  returns a description of a model in terms of its random variables
+ */
 export const showHeaders = (FROM) => {
   const BODY = { ...SHOW_HEADERS, FROM };
   return fetchData(BASE_URL, BODY).then((response) => {

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import ListModal from "./ListModal";
-
 import { connect } from "react-redux";
 import { updateActiveModel } from "../../states/app/actions";
 import { createNewSpecification } from "../../states/specifications/actions";
