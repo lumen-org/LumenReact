@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Modal from "react-modal";
-import Fab from "@material-ui/core/Fab";
+import Alert from "@material-ui/lab/Alert";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
@@ -31,6 +31,7 @@ class ListModdal extends Component {
     handleItemSelection: PropTypes.func,
     handleItemlClone: PropTypes.func,
     handleItemDelete: PropTypes.func,
+    fetchStatus: PropTypes.object,
   };
 
   onCloseClick = () => {
@@ -53,7 +54,7 @@ class ListModdal extends Component {
   };
 
   render() {
-    const { open, itemList, handleModalClose } = this.props;
+    const { open, itemList, handleModalClose, fetchStatus } = this.props;
     return (
       <Modal
         isOpen={open}
@@ -95,6 +96,9 @@ class ListModdal extends Component {
             </div>
           ))}
         </List>
+        {fetchStatus.showAlert && (
+          <Alert severity="error">{fetchStatus.error}</Alert>
+        )}
       </Modal>
     );
   }

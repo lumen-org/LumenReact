@@ -22,7 +22,7 @@ class ListModalContainer extends React.Component {
 
   state = {
     models: [],
-    status: "ok",
+    fetchStatus: { showAlert: false, error: "" },
   };
 
   handleModelClone = (modelName) => {};
@@ -54,14 +54,23 @@ class ListModalContainer extends React.Component {
   };
 
   componentWillMount() {
-    showModel().then((models) => {
-      this.setState({ models });
-    });
+    showModel()
+      .then((models) => {
+        this.setState({ models });
+      })
+      .catch((error) =>
+        this.setState({
+          fetchStatus: {
+            showAlert: true,
+            error: "show model error: " + error.toString(),
+          },
+        })
+      );
   }
 
   render() {
     const { open, handleModalClose } = this.props;
-    const { models } = this.state;
+    const { models, fetchStatus } = this.state;
 
     return (
       <ListModal
@@ -71,6 +80,7 @@ class ListModalContainer extends React.Component {
         handleItemSelection={this.handleItemSelection}
         handleItemlClone={this.handleModelClone}
         handleItemDelete={this.handleModelDelete}
+        fetchStatus={fetchStatus}
       />
     );
   }

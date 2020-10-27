@@ -82,6 +82,7 @@ export function deletePlot(id) {
     }
     if (plotType === PCI_PLOT) {
       let modelId = getState().plots.plots.byId[id].model;
+      console.log("hide pci", modelId);
       dispatch(hidePCIGraph(modelId));
     }
     dispatch(deletePlotInStore(id));
