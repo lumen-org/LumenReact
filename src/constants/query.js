@@ -12,3 +12,4 @@ export const MARGINLAIZE_MODEL = {
   MODEL: [],
   AS: "",
 };
+export const DERIVE_SUB_MODEL = {};

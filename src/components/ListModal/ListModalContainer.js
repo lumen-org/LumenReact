@@ -25,6 +25,9 @@ class ListModalContainer extends React.Component {
     status: "ok",
   };
 
+  handleModelClone = (modelName) => {};
+  handleModelDelete = (modelName) => {};
+
   handleItemSelection = (modelName) => {
     const {
       changeActiveVisualization,
@@ -66,6 +69,8 @@ class ListModalContainer extends React.Component {
         itemList={models}
         handleModalClose={handleModalClose}
         handleItemSelection={this.handleItemSelection}
+        handleItemlClone={this.handleModelClone}
+        handleItemDelete={this.handleModelDelete}
       />
     );
   }

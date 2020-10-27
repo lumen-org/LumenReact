@@ -29,6 +29,8 @@ class ListModdal extends Component {
     handleModalClose: PropTypes.func.isRequired,
     itemList: PropTypes.array.isRequired,
     handleItemSelection: PropTypes.func,
+    handleItemlClone: PropTypes.func,
+    handleItemDelete: PropTypes.func,
   };
 
   onCloseClick = () => {
@@ -41,8 +43,14 @@ class ListModdal extends Component {
     handleItemSelection(item);
   };
 
-  onCloneButtonClick = (item) => {};
-  onDeleteButtonClick = (item) => {};
+  onCloneButtonClick = (item) => {
+    const { handleItemlClone } = this.props;
+    handleItemlClone();
+  };
+  onDeleteButtonClick = (item) => {
+    const { handleItemDelete } = this.props;
+    handleItemDelete();
+  };
 
   render() {
     const { open, itemList, handleModalClose } = this.props;
