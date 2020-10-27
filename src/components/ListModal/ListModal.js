@@ -46,11 +46,11 @@ class ListModdal extends Component {
 
   onCloneButtonClick = (item) => {
     const { handleItemlClone } = this.props;
-    handleItemlClone();
+    handleItemlClone(item);
   };
   onDeleteButtonClick = (item) => {
     const { handleItemDelete } = this.props;
-    handleItemDelete();
+    handleItemDelete(item);
   };
 
   render() {

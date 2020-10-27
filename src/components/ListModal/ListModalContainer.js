@@ -5,7 +5,12 @@ import { connect } from "react-redux";
 import { updateActiveModel } from "../../states/app/actions";
 import { createNewSpecification } from "../../states/specifications/actions";
 import { createNewPlot } from "../../states/plots/actions";
-import { showModel, showHeaders } from "../../utils/pqlModelQueries";
+import {
+  showModel,
+  showHeaders,
+  cloneModel,
+  dropModel,
+} from "../../utils/pqlModelQueries";
 import { STANDARD_PLOT } from "../../constants/plotTypes";
 import {
   changeActiveVisualization,
@@ -25,8 +30,16 @@ class ListModalContainer extends React.Component {
     fetchStatus: { showAlert: false, error: "" },
   };
 
-  handleModelClone = (modelName) => {};
-  handleModelDelete = (modelName) => {};
+  handleModelClone = (modelName) => {
+    cloneModel(modelName)
+      .then((response) => this.getModels())
+      .catch((error) => console.log(error));
+  };
+  handleModelDelete = (modelName) => {
+    dropModel(modelName)
+      .then((response) => this.getModels())
+      .catch((error) => console.log(error));
+  };
 
   handleItemSelection = (modelName) => {
     const {
@@ -53,7 +66,7 @@ class ListModalContainer extends React.Component {
       });
   };
 
-  componentWillMount() {
+  getModels = () => {
     showModel()
       .then((models) => {
         this.setState({ models });
@@ -66,6 +79,9 @@ class ListModalContainer extends React.Component {
           },
         })
       );
+  };
+  componentWillMount() {
+    this.getModels();
   }
 
   render() {

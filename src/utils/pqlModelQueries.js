@@ -44,7 +44,7 @@ export const cloneModel = (FROM) => {
  * drops a model from the model base
  */
 export const dropModel = (DROP) => {
-  return fetchData(BASE_URL, { ...DROP_MODEL, DROP }).then((response) =>
+  return fetchData(BASE_URL, { DROP: DROP }).then((response) =>
     console.log(response)
   );
 };
