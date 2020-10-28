@@ -58,7 +58,8 @@ class ListModalContainer extends React.Component {
           .then((value) => {
             addAllDimensions(this.props.modelId, item, value);
           }).then(() => {
-            updateModelDimensions(this.props.modelId,  this.props.getDimensionsOfCurrentModel);
+            let dimensions =  this.props.getDimensionsOfCurrentModel;
+            updateModelDimensions(this.props.modelId, dimensions);
           }
           )
           .then(() => {
@@ -104,7 +105,6 @@ class ListModalContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    dimensions: state.dimensions,
     specificationId: state.specifications.lastCreatedId,
     plotId: state.plots.lastCreatedId,
     modelId: state.models.lastCreatedModelId,
