@@ -44,9 +44,9 @@ export const deleteVisualization = (visualizationId) => {
 };
 
 export const changeActiveVisualization = () => {
-  return (disptach, getState) => {
+  return (dispatch, getState) => {
     const visualizationId = getLastCreatedVisualizationId(getState());
-    disptach(_changeActiveVisualization(visualizationId));
+    dispatch(_changeActiveVisualization(visualizationId));
   };
 };
 
