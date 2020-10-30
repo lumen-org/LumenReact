@@ -12,8 +12,6 @@ const dimensions = (state = defaultState, action) => {
   switch (action.type) {
     case ADD_ALL_DIMENSIONS:
       let { modelId, modelName, dimensions } = action.payload;
-      //console.log(modelName, modelId, dimensions);
-      //console.log("inside create new dimension", modelId, "Bil");
       let byDimensionName = {};
       dimensions.forEach((o) => {
         const name = o.name;

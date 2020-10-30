@@ -1,7 +1,6 @@
 import { CREATE_NEW_MODEL, SHOW_PCI_GRAPH, HIDE_PCI_GRAPH, UPDATE_MODEL_DIMENSIONS } from "./constants";
 import update from "immutability-helper";
 import { EMPTY } from "../constants";
-import getDimensionsOfCurrentModel from "../dimensions/selector";
 
 /*
 maintains a list of all models
