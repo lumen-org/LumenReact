@@ -1,19 +1,23 @@
 import { CREATE_NEW_PLOT, CHANGE_ACTIVE_PLOT, DELETE_PLOT } from "./constants";
-import {
-  STANDARD_PLOT,
-  PCI_PLOT,
-  MULTI_PLOT,
-  DIFFERENTIAL_MARGINAL_PLOT,
-} from "../../constants/plotTypes";
+import { STANDARD_PLOT, PCI_PLOT, MULTI_PLOT } from "../../constants/plotTypes";
 import {
   createNewStandardPlot,
   deleteStandardPlot,
 } from "../standardplots/actions";
-import { getPlotTypeById, getPlotAllIds } from "./selector";
+import {
+  getPlotTypeById,
+  getPlotAllIds,
+  getLastCreatedPlotId,
+} from "./selector";
+import {
+  selectActiveModelId,
+  getLastCreatedVisualizationId,
+} from "../visualizations/selector";
+import { getLastCreatedSpecId } from "../specifications/selector";
+import { getLastCreatedModelId } from "../models/selector";
 import { createNewMultiPlot, deleteMultiPlot } from "../multiplots/actions";
 import { nextAvaliableId } from "../../utils/plotData";
 import { hidePCIGraph, showPCIGraph } from "../models/actions";
-import { selectActiveModelId } from "../visualizations/selector";
 
 export function changeActivePlot(newid) {
   return {
@@ -24,12 +28,7 @@ export function changeActivePlot(newid) {
   };
 }
 
-export function createNewPlot(
-  modelName,
-  visualizationId,
-  specificationId,
-  plotType
-) {
+export function createNewPlot(modelName, plotType) {
   return (dispatch, getState) => {
     const newId = nextAvaliableId(getPlotAllIds(getState()));
 
@@ -41,8 +40,11 @@ export function createNewPlot(
     }
     if (plotType === PCI_PLOT) {
       dispatch(showPCIGraph(selectActiveModelId(getState())));
-      //return;
     }
+
+    const visualizationId = getLastCreatedVisualizationId(getState());
+    const specificationId = getLastCreatedSpecId(getState());
+
     dispatch(createPlot(modelName, visualizationId, specificationId, plotType));
     dispatch(changeActivePlot(newId));
   };
@@ -78,10 +80,10 @@ export function deletePlot(id) {
     if (plotType === MULTI_PLOT) {
       dispatch(deleteMultiPlot(id));
     }
-    if (plotType === PCI_PLOT){
-      console.log(id);
+    if (plotType === PCI_PLOT) {
       let modelId = getState().plots.plots.byId[id].model;
-      dispatch(hidePCIGraph(modelId))
+      console.log("hide pci", modelId);
+      dispatch(hidePCIGraph(modelId));
     }
     dispatch(deletePlotInStore(id));
   };

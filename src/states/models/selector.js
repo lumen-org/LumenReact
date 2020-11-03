@@ -7,7 +7,13 @@ const getActiveId = (state) => selectActiveModelId(state);
 /// id is plot id
 export const getModelNameById = (state, id) => {
   //return state.models.models.byId[id].modelName || "";
-  return state.models.models.byId[state.visualizations.visualizations.byId[state.plots.plots.byId[id].visualizationId].modelId].modelName || "";
+  return (
+    state.models.models.byId[
+      state.visualizations.visualizations.byId[
+        state.plots.plots.byId[id].visualizationId
+      ].modelId
+    ].modelName || ""
+  );
 };
 
 export const getModelById = (state, id) => {
@@ -18,6 +24,9 @@ export const getDimensionsByVisualisationId = (state, id) => {
   return state.models.models.byId[state.visualizations.visualizations.byId[id].fields] || "";
 };
 
+export const getLastCreatedModelId = (state) => {
+  return state.models.lastCreatedModelId;
+};
 
 export const selectSchemeNames = createSelector(
   [getModel, getActiveId],
@@ -55,12 +64,3 @@ export const selectSchemeNames = createSelector(
     };
   }
 );
-
-// {
-//   categoricalFields: response["fields"].filter((field, index) => {
-//     return field.dtype === "string";
-//   }),
-//     quantitativeFields: response["fields"].filter((field, index) => {
-//   return field.dtype === "numerical";
-// }),
-// };

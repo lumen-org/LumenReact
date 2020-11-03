@@ -20,3 +20,7 @@ export const getPlotTypeById = (state, id) => {
 export const getActivePlotId = (state) => {
   return state.plots.activePlotId;
 };
+
+export const getLastCreatedPlotId = (state) => {
+  return state.plots.lastCreatedId;
+};
