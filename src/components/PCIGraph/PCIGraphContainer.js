@@ -20,7 +20,7 @@ class PCIGraphContainer extends React.Component {
     this.state = {
       nodes: null,
       edges: null,
-    }
+    };
   }
   static propTypes = {
     modelId: PropTypes.string,
@@ -35,20 +35,21 @@ class PCIGraphContainer extends React.Component {
     try {
       const modelname = getModelNameById(this.props.activePlotId);
       let body = {
-        "FROM": modelname,
-        'PCI_GRAPH.GET': true,
+        FROM: modelname,
+        "PCI_GRAPH.GET": true,
       };
-      fetchData(BASE_URL, body).then(response => graph = this.transformGraphData(response), error => console.log("Something went wrong: "+ error));
-    }
-    catch (e) {
-      console.log(e);
+      fetchData(BASE_URL, body).then(
+        (response) => (graph = this.transformGraphData(response)),
+        (error) => console.log("Something went wrong: " + error)
+      );
+    } catch (e) {
       graph = this.transformGraphData(false);
     }
     let result = solve(graph.nodes, graph.edges);
     this.setState({
       nodes: result[0],
       edges: result[1],
-    })
+    });
   }
 
   /**
@@ -60,18 +61,18 @@ class PCIGraphContainer extends React.Component {
    * layout algorithms needs them to be integer values. This function maps the correct integer value to each label string.
    * @param graphData is either a false if there is no available data in the backend or returns an object containing nodes and edges.
    */
-  transformGraphData(graphData){
+  transformGraphData(graphData) {
     let graph = graphData;
-    if (!graphData){
+    if (!graphData) {
       // load mock data
       graph = JSON.parse(JSON.stringify(mockdataPCI));
     }
     let lut = {};
-    for (let i = 0; i< graph._nodes.length; i++){
+    for (let i = 0; i < graph._nodes.length; i++) {
       graph._nodes[i].id = i;
       lut[graph._nodes[i].label] = i;
     }
-    for (let i = 0; i< graph._edges.length; i++){
+    for (let i = 0; i < graph._edges.length; i++) {
       graph._edges[i].id = i;
       graph._edges[i].source = lut[graph._edges[i].source];
       graph._edges[i].from = graph._edges[i].source;
@@ -84,7 +85,7 @@ class PCIGraphContainer extends React.Component {
     }
     return {
       nodes: graph._nodes,
-      edges: graph._edges
+      edges: graph._edges,
     };
   }
 
@@ -125,11 +126,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    hideThisPCIGraph: (id) =>
-      dispatch(hidePCIGraph(id)),
+    hideThisPCIGraph: (id) => dispatch(hidePCIGraph(id)),
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PCIGraphContainer);
-
-

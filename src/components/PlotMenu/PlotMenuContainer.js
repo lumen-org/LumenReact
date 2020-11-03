@@ -12,11 +12,7 @@ import {
 import { STANDARD_PLOT, MULTI_PLOT, PCI_PLOT } from "../../constants/plotTypes";
 class PlotMenuContainer extends React.Component {
   static propTypes = {
-    specificationId: PropTypes.number,
-    plotId: PropTypes.number,
-    modelId: PropTypes.number,
-    lastCreatedVisualizationId: PropTypes.number,
-    createNewVisualization: PropTypes.func.isRequired,
+    activeModel: PropTypes.string,
   };
 
   onCreateStandardPlot = () => {
@@ -26,11 +22,12 @@ class PlotMenuContainer extends React.Component {
     this.createNewPlot(MULTI_PLOT);
   };
   onCreatePCIPlot = () => {
-    this.createNewPlot(PCI_PLOT)
-  }
+    this.createNewPlot(PCI_PLOT);
+  };
 
   createNewPlot = (plotType) => {
     const {
+      activeModel,
       changeActiveVisualization,
       createPlot,
       addSpecifications,
@@ -38,23 +35,11 @@ class PlotMenuContainer extends React.Component {
       fillVisualization,
     } = this.props;
 
-    createNewVisualization().then(() => {
-      addSpecifications().then(() => {
-        createPlot(
-          this.props.modelId, // Needed for pci plot deletion
-          this.props.lastCreatedVisualizationId,
-          this.props.specificationId,
-          plotType
-        );
-        fillVisualization(
-          this.props.lastCreatedVisualizationId,
-          this.props.modelId,
-          this.props.specificationId,
-          this.props.plotId
-        );
-        changeActiveVisualization(this.props.lastCreatedVisualizationId);
-      });
-    });
+    addSpecifications();
+    createNewVisualization();
+    createPlot(activeModel, plotType);
+    fillVisualization();
+    changeActiveVisualization();
   };
   render() {
     return (
@@ -69,31 +54,18 @@ class PlotMenuContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    specificationId: state.specifications.lastCreatedId,
-    plotId: state.plots.lastCreatedId,
-    modelId: state.models.lastCreatedModelId,
-    lastCreatedVisualizationId: state.visualizations.lastCreatedVisualizationId,
+    activeModel: state.app.activeModel,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createNewVisualization: (modelName, schemaId, specificationId, plotId) =>
-      dispatch(
-        createNewVisualization(modelName, schemaId, specificationId, plotId)
-      ),
-    changeActiveVisualization: (id) => dispatch(changeActiveVisualization(id)),
-    createPlot: (activeModel, visualizationId, specificationId, plotType) =>
-      dispatch(
-        createNewPlot(activeModel, visualizationId, specificationId, plotType)
-      ),
-    addSpecifications: () => {
-      return dispatch(createNewSpecification());
-    },
-    fillVisualization: (visualizationId, modelId, specificationId, plotId) =>
-      dispatch(
-        fillVisualization(visualizationId, modelId, specificationId, plotId)
-      ),
+    createNewVisualization: () => dispatch(createNewVisualization()),
+    changeActiveVisualization: () => dispatch(changeActiveVisualization()),
+    createPlot: (activeModel, plotType) =>
+      dispatch(createNewPlot(activeModel, plotType)),
+    addSpecifications: () => dispatch(createNewSpecification()),
+    fillVisualization: () => dispatch(fillVisualization()),
   };
 };
 

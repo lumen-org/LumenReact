@@ -26,12 +26,12 @@ class RnDPlotWrapper extends Component {
     plotWindowsPosY: 50,
   };
 
-  onClickEvent = () =>  {
+  onClickEvent = () => {
     const { id, onActivePlotChange, activePlotId } = this.props;
     if (id !== activePlotId) {
       onActivePlotChange(id);
     }
-  }
+  };
 
   setNewPos = (dragIndex) => {
     this.setState({
@@ -45,14 +45,13 @@ class RnDPlotWrapper extends Component {
     if (id !== activePlotId) {
       onActivePlotChange(id);
     }
-  }
+  };
 
   onDragStop = (event, dragIndex) => {
     this.setNewPos(dragIndex);
   };
 
   onResizeStop = (event, direction, ref, delta, position) => {
-    console.log(ref.style.width)
     this.setState({
       plotWindowsWidth: ref.style.width,
       plotWindowsHeight: ref.style.height,
@@ -76,8 +75,8 @@ class RnDPlotWrapper extends Component {
     const children = React.cloneElement(this.props.children, {
       ...this.props.children.props,
       plotWindowsWidth: plotWindowsWidth,
-      plotWindowsHeight: plotWindowsHeight
-    })
+      plotWindowsHeight: plotWindowsHeight,
+    });
 
     return (
       <Rnd
@@ -94,9 +93,7 @@ class RnDPlotWrapper extends Component {
         <div className="RndPlot-titlebar">
           <CloseButton handleClose={this.handleClose} />
         </div>
-        <div className="cancel">
-          {children}
-        </div>
+        <div className="cancel">{children}</div>
       </Rnd>
     );
   }
