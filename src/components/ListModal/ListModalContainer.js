@@ -113,6 +113,7 @@ class ListModalContainer extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    addAllDimensions: (modelName, fields) => dispatch(addAllDimensions(modelName, fields)),
     createNewVisualization: () => dispatch(createNewVisualization()),
     updateActiveModel: (model) => dispatch(updateActiveModel(model)),
 
