@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import ListModal from "./ListModal";
 import { connect } from "react-redux";
@@ -17,7 +17,9 @@ import {
   createNewVisualization,
   fillVisualization,
 } from "../../states/visualizations/actions";
-import { createNewModel } from "../../states/models/actions";
+import { createNewModel, updateModelDimensions } from "../../states/models/actions";
+import { addAllDimensions } from "../../states/dimensions/actions";
+import { getDimensionsOfCurrentModel } from "../../states/dimensions/selector";
 const defaultPlotType = STANDARD_PLOT; // Haha, we will certainly refractor this, right?
 class ListModalContainer extends React.Component {
   static propTypes = {
@@ -49,14 +51,18 @@ class ListModalContainer extends React.Component {
       addSpecifications,
       createNewVisualization,
       createNewModel,
+      updateModelDimensions,
+      addAllDimensions,
       fillVisualization,
     } = this.props;
-
     showHeaders(modelName)
       .then((fields) => {
         createNewModel(modelName, fields);
+        return fields;
       })
-      .then(() => {
+      .then((fields) => {
+        addAllDimensions(modelName, fields);
+        //updateModelDimensions(this.props.modelId, dimensions);
         addSpecifications();
         createNewVisualization();
         createPlot(modelName);
@@ -102,10 +108,15 @@ class ListModalContainer extends React.Component {
   }
 }
 
+    //getDimensionsOfCurrentModel: getDimensionsOfCurrentModel(state),
+
+
 const mapDispatchToProps = (dispatch) => {
   return {
+    addAllDimensions: (modelName, fields) => dispatch(addAllDimensions(modelName, fields)),
     createNewVisualization: () => dispatch(createNewVisualization()),
     updateActiveModel: (model) => dispatch(updateActiveModel(model)),
+
     changeActiveVisualization: () => dispatch(changeActiveVisualization()),
     createPlot: (activeModel) =>
       dispatch(createNewPlot(activeModel, defaultPlotType)),
@@ -113,6 +124,7 @@ const mapDispatchToProps = (dispatch) => {
     createNewModel: (modelName, model) =>
       dispatch(createNewModel(modelName, model)),
     fillVisualization: () => dispatch(fillVisualization()),
+
   };
 };
 

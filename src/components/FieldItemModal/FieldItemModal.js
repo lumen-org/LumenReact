@@ -86,7 +86,6 @@ class FieldItemModalContainer extends React.Component {
             >
               <MenuItem onClick={this.handleMenuClose}>Maximal</MenuItem>
             </Menu>
-
             <IconButton color="default" aria-label="reset" component="span">
               <RotateLeftIcon />
             </IconButton>

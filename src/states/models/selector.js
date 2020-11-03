@@ -16,6 +16,14 @@ export const getModelNameById = (state, id) => {
   );
 };
 
+export const getModelById = (state, id) => {
+  return state.models.models.byId[state.visualizations.visualizations.byId[state.plots.plots.byId[id].visualizationId].modelId] || "";
+};
+
+export const getDimensionsByVisualisationId = (state, id) => {
+  return state.models.models.byId[state.visualizations.visualizations.byId[id].fields] || "";
+};
+
 export const getLastCreatedModelId = (state) => {
   return state.models.lastCreatedModelId;
 };

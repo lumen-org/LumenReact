@@ -1,10 +1,19 @@
-import { CREATE_NEW_DIMENSION } from "./constants";
+import { ADD_ALL_DIMENSIONS } from "./constants";
+import { getLastCreatedModelId } from "../models/selector";
 
-export const createNewDimension = ({name}) => {
+export const addAllDimensions = (modelName, fields) => {
+  return (dispatch, getState) => {
+    const modelId = getLastCreatedModelId(getState());
+    dispatch(_addAllDimensions(modelId, modelName, fields));
+  };
+};
+export const _addAllDimensions = (modelId, modelName, dimensions) => {
   return {
-    type: CREATE_NEW_DIMENSION,
+    type: ADD_ALL_DIMENSIONS,
     payload: {
-      name
+          modelId,
+          modelName,
+          dimensions,
     }
   }
-}
+};
