@@ -122,11 +122,12 @@ export const getDensityQueryBodyById = (state, type, id) => {
   var modelName = "";
 
   if (type === "data") {
-    modelName = "__" + getModelNameById(state, id) + "-dataMarginals-_0_0";
+    modelName =
+      "emp_" + getModelNameById(state, id).split("_")[1] + "_data_marginal";
   }
 
   if (type === "model") {
-    modelName = getModelNameById(state, id) + "data_marginal";
+    modelName = getModelNameById(state, id) + "_data_marginal";
   }
   const PREDICT = fieldItems.map((item, key) => {
     return item;
