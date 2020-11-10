@@ -192,6 +192,28 @@ export function updateStandardPlotData(id, newStandardPlotData) {
   };
 }
 
+/**
+ * derive a list of submodels for faster queries
+ */
+export function deriveSubmodelsOnSpecChange() {
+  return (dispatch, getState) => {
+    const id = getActivePlotId(getState());
+    const mcgModelName = getModelNameById(getState(), id);
+    const fieldsArray = getSelectedFieldArrayById(getState(), id);
+    const empModelName = "emp_" + mcgModelName.split("_")[1];
+    marginalizeModel(
+      mcgModelName,
+      fieldsArray,
+      mcgModelName + "_data_marginal"
+    ).then((response) => {});
+    marginalizeModel(
+      empModelName,
+      fieldsArray,
+      empModelName + "_data_marginal"
+    ).then((response) => {});
+  };
+}
+
 export function fetchOnSpecChange() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
@@ -319,11 +341,6 @@ export function fetchDataMarginals() {
     const fieldItems = getSelectedFieldObjectById(getState(), id);
 
     dispatch(fetchDataPending(id));
-    marginalizeModel(
-      getModelNameById(getState(), id),
-      getSelectedFieldArrayById(getState(), id)
-    ).then((response) => {});
-
     if (fieldItems.x) {
       const dataMarginalsQueryBody = getMarginalsQueryBodyById(
         getState(),
@@ -354,10 +371,6 @@ export function fetchTrainingDataPoints() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
     dispatch(fetchDataPending(id));
-    marginalizeModel(
-      getModelNameById(getState(), id),
-      getSelectedFieldArrayById(getState(), id)
-    ).then((response) => {});
     const trainingDataQueryBody = getTrainingDataQueryBodyById(getState(), id);
     fetch2DPlotData(trainingDataQueryBody).then((response) => {
       dispatch(fetchTrainingDataSucess(id, response));

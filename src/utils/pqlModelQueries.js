@@ -53,11 +53,11 @@ export const dropModel = (DROP) => {
  * Maginalizes some random variables out of a model (and modifies that model instead of creating a new one)
  * This query is sent each time field items change, to make the query process faster.
  */
-export const marginalizeModel = (FROM, MODEL) => {
+export const marginalizeModel = (FROM, MODEL, AS) => {
   const BODY = {
     FROM,
     MODEL,
-    AS: FROM + "marginalized",
+    AS,
   };
   return fetchData(BASE_URL, BODY).then((response) => {
     console.log(response);

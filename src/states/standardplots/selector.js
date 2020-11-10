@@ -64,8 +64,16 @@ export const getModelDataQueryBodyById = (state, id) => {
 };
 
 export const getMarginalsQueryBodyById = (state, type, fieldItem, id) => {
-  const modelName = getModelNameById(state, id) + "marginalized";
+  var modelName = "";
 
+  if (type === "data") {
+    modelName =
+      "emp_" + getModelNameById(state, id).split("_")[1] + "_data_marginal";
+  }
+
+  if (type === "model") {
+    modelName = getModelNameById(state, id) + "_data_marginal";
+  }
   const marginalQueryBody = {
     ...queryTemplates.marginal,
     "SPLIT BY": [
@@ -84,8 +92,16 @@ export const getMarginalsQueryBodyById = (state, type, fieldItem, id) => {
 
 export const getPredictionQueryBodyId = (state, type, id) => {
   const fieldItems = getSelectedFieldArrayById(state, id);
-  const modelName = getModelNameById(state, id) + "marginalized";
+  var modelName = "";
 
+  if (type === "data") {
+    modelName =
+      "emp_" + getModelNameById(state, id).split("_")[1] + "_data_marginal";
+  }
+
+  if (type === "model") {
+    modelName = getModelNameById(state, id) + "_data_marginal";
+  }
   const PREDICT = fieldItems.map((item, key) => {
     return {
       aggregation: "maximum",
@@ -110,7 +126,7 @@ export const getDensityQueryBodyById = (state, type, id) => {
   }
 
   if (type === "model") {
-    modelName = getModelNameById(state, id);
+    modelName = getModelNameById(state, id) + "data_marginal";
   }
   const PREDICT = fieldItems.map((item, key) => {
     return item;
