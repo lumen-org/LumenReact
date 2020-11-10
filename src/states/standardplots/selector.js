@@ -11,6 +11,13 @@ export const getStandardPlotDataById = (state, id) => {
   return state.standardplots.standardPlots[id] || {};
 };
 
+/**
+ *
+ * @param {the entire redux state} state
+ * @param {plot id} id
+ *
+ * return the selected field items array ready for query.
+ */
 export const getSelectedFieldArrayById = (state, id) => {
   const specification = getSpecById(state, getSpecificationId(state, id));
   const X_Axis = [...specification.X_Axis];
@@ -19,32 +26,19 @@ export const getSelectedFieldArrayById = (state, id) => {
   return SELECT;
 };
 
+/**
+ *
+ * @param {the entire redux state} state
+ * @param {plot id} id
+ * return the selected field items in format of object.
+ */
+
 export const getSelectedFieldObjectById = (state, id) => {
   const specification = getSpecById(state, getSpecificationId(state, id));
   const X_Axis = [...specification.X_Axis];
   const Y_Axis = [...specification.Y_Axis];
   const SELECT = getSelectFieldObject(X_Axis, Y_Axis);
   return SELECT;
-};
-
-export const getTrainingDataIntermediateModelQueryBodyById = (state, id) => {
-  const modelName = getModelNameById(state, id);
-  const SELECT = getSelectedFieldArrayById(state, id);
-  return {
-    FROM: modelName,
-    MODEL: SELECT,
-    AS: "__" + modelName + "_0_0",
-  };
-};
-
-export const getDataMarginalIntermediateModelQueryBodyById = (state, id) => {
-  const modelName = getModelNameById(state, id);
-  const SELECT = getSelectedFieldArrayById(state, id);
-  return {
-    FROM: modelName,
-    MODEL: SELECT,
-    AS: "__" + modelName + "-dataMarginals-_0_0",
-  };
 };
 
 export const getTrainingDataQueryBodyById = (state, id) => {
@@ -70,15 +64,8 @@ export const getModelDataQueryBodyById = (state, id) => {
 };
 
 export const getMarginalsQueryBodyById = (state, type, fieldItem, id) => {
-  var modelName = "";
+  const modelName = getModelNameById(state, id) + "marginalized";
 
-  if (type === "data") {
-    modelName = "__" + getModelNameById(state, id) + "-dataMarginals-_0_0";
-  }
-
-  if (type === "model") {
-    modelName = getModelNameById(state, id);
-  }
   const marginalQueryBody = {
     ...queryTemplates.marginal,
     "SPLIT BY": [
@@ -97,15 +84,8 @@ export const getMarginalsQueryBodyById = (state, type, fieldItem, id) => {
 
 export const getPredictionQueryBodyId = (state, type, id) => {
   const fieldItems = getSelectedFieldArrayById(state, id);
-  var modelName = "";
+  const modelName = getModelNameById(state, id) + "marginalized";
 
-  if (type === "data") {
-    modelName = "__" + getModelNameById(state, id) + "-dataMarginals-_0_0";
-  }
-
-  if (type === "model") {
-    modelName = getModelNameById(state, id);
-  }
   const PREDICT = fieldItems.map((item, key) => {
     return {
       aggregation: "maximum",

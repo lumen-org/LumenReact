@@ -26,6 +26,8 @@ import {
 } from "./constants";
 
 import { getPlotAllIds } from "../plots/selector";
+import { getModelNameById } from "../models/selector";
+
 import { nextAvaliableId } from "../../utils/plotData";
 import {
   createIntermediateModels,
@@ -34,6 +36,7 @@ import {
   fetch1DPlotData,
 } from "../../utils/fetch";
 import { getActivePlotId, getSpecificationId } from "../plots/selector";
+import { marginalizeModel } from "../../utils/pqlModelQueries";
 import { getFacetById } from "../specifications/selector.js";
 import {
   getTrainingDataQueryBodyById,
@@ -42,8 +45,7 @@ import {
   getDensityQueryBodyById,
   getSelectedFieldObjectById,
   getPredictionQueryBodyId,
-  getTrainingDataIntermediateModelQueryBodyById,
-  getDataMarginalIntermediateModelQueryBodyById,
+  getSelectedFieldArrayById,
 } from "./selector";
 
 function initializePlot(id) {
@@ -315,12 +317,13 @@ export function fetchDataMarginals() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
     const fieldItems = getSelectedFieldObjectById(getState(), id);
+
     dispatch(fetchDataPending(id));
-    const intermediateModelQueryBody = getDataMarginalIntermediateModelQueryBodyById(
-      getState(),
-      id
-    );
-    createIntermediateModels(intermediateModelQueryBody).then((response) => {});
+    marginalizeModel(
+      getModelNameById(getState(), id),
+      getSelectedFieldArrayById(getState(), id)
+    ).then((response) => {});
+
     if (fieldItems.x) {
       const dataMarginalsQueryBody = getMarginalsQueryBodyById(
         getState(),
@@ -351,11 +354,10 @@ export function fetchTrainingDataPoints() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
     dispatch(fetchDataPending(id));
-    const intermediateModelQueryBody = getTrainingDataIntermediateModelQueryBodyById(
-      getState(),
-      id
-    );
-    createIntermediateModels(intermediateModelQueryBody).then((response) => {});
+    marginalizeModel(
+      getModelNameById(getState(), id),
+      getSelectedFieldArrayById(getState(), id)
+    ).then((response) => {});
     const trainingDataQueryBody = getTrainingDataQueryBodyById(getState(), id);
     fetch2DPlotData(trainingDataQueryBody).then((response) => {
       dispatch(fetchTrainingDataSucess(id, response));

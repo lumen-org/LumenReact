@@ -51,7 +51,31 @@ export const dropModel = (DROP) => {
 
 /**
  * Maginalizes some random variables out of a model (and modifies that model instead of creating a new one)
+ * This query is sent each time field items change, to make the query process faster.
  */
-export const marginalizeModel = () => {};
+export const marginalizeModel = (FROM, MODEL) => {
+  const BODY = {
+    FROM,
+    MODEL,
+    AS: FROM + "marginalized",
+  };
+  return fetchData(BASE_URL, BODY).then((response) => {
+    console.log(response);
+  });
+};
 
-export const deriveSubmodel = () => {};
+/**
+ * Derive submodel over a set of random variables from the field
+ * conditioned over some operation and field items
+ */
+export const deriveSubmodel = (FROM, MODEL, AS, WHERE) => {
+  const BODY = {
+    FROM,
+    MODEL,
+    AS,
+    WHERE,
+  };
+  return fetchData(BASE_URL, BODY).then((response) => {
+    console.log(response);
+  });
+};
