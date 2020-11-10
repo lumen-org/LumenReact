@@ -30,7 +30,6 @@ import { getModelNameById } from "../models/selector";
 
 import { nextAvaliableId } from "../../utils/plotData";
 import {
-  createIntermediateModels,
   fetch3DPlotData,
   fetch2DPlotData,
   fetch1DPlotData,
@@ -39,8 +38,6 @@ import { getActivePlotId, getSpecificationId } from "../plots/selector";
 import { marginalizeModel } from "../../utils/pqlModelQueries";
 import { getFacetById } from "../specifications/selector.js";
 import {
-  getTrainingDataQueryBodyById,
-  getModelDataQueryBodyById,
   getMarginalsQueryBodyById,
   getDensityQueryBodyById,
   getSelectedFieldObjectById,
@@ -279,6 +276,7 @@ export function fetchDataPrediction() {
 export function fetchDataDensity() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
+
     dispatch(fetchDataPending(id));
     const dataDensityQueryBody = getDensityQueryBodyById(
       getState(),
@@ -317,8 +315,8 @@ export function fetchModelMarginals() {
         fieldItems.x,
         id
       );
-      fetch1DPlotData(modelMarginalsQueryBody).then((response) => {
-        dispatch(fetchModelXMarginalSuccess(id, response.a));
+      fetch2DPlotData(modelMarginalsQueryBody).then((response) => {
+        dispatch(fetchModelXMarginalSuccess(id, response));
       });
     }
 
@@ -329,8 +327,8 @@ export function fetchModelMarginals() {
         fieldItems.y,
         id
       );
-      fetch1DPlotData(modelMarginalsQueryBody).then((response) => {
-        dispatch(fetchModelYMarginalSuccess(id, response.a));
+      fetch2DPlotData(modelMarginalsQueryBody).then((response) => {
+        dispatch(fetchModelYMarginalSuccess(id, response));
       });
     }
   };
@@ -339,7 +337,7 @@ export function fetchDataMarginals() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
     const fieldItems = getSelectedFieldObjectById(getState(), id);
-
+    // TODO: How marginal data queries are done are wrong. fix me!
     dispatch(fetchDataPending(id));
     if (fieldItems.x) {
       const dataMarginalsQueryBody = getMarginalsQueryBodyById(
@@ -348,8 +346,8 @@ export function fetchDataMarginals() {
         fieldItems.x,
         id
       );
-      fetch1DPlotData(dataMarginalsQueryBody).then((response) => {
-        dispatch(fetchDataXMarginalSuccess(id, response.a));
+      fetch2DPlotData(dataMarginalsQueryBody).then((response) => {
+        dispatch(fetchDataXMarginalSuccess(id, response));
       });
     }
 
@@ -360,8 +358,8 @@ export function fetchDataMarginals() {
         fieldItems.y,
         id
       );
-      fetch1DPlotData(dataMarginalsQueryBody).then((response) => {
-        dispatch(fetchDataYMarginalSuccess(id, response.a));
+      fetch2DPlotData(dataMarginalsQueryBody).then((response) => {
+        dispatch(fetchDataYMarginalSuccess(id, response));
       });
     }
   };
@@ -371,7 +369,18 @@ export function fetchTrainingDataPoints() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
     dispatch(fetchDataPending(id));
-    const trainingDataQueryBody = getTrainingDataQueryBodyById(getState(), id);
+    const modelName = getModelNameById(getState(), id);
+    const fieldItems = getSelectedFieldArrayById(getState(), id);
+
+    const trainingDataQueryBody = {
+      FROM: modelName,
+      SELECT: fieldItems,
+      OPTS: {
+        data_category: "training data",
+        data_point_limit: 2000,
+      },
+    };
+
     fetch2DPlotData(trainingDataQueryBody).then((response) => {
       dispatch(fetchTrainingDataSucess(id, response));
     });
@@ -381,8 +390,18 @@ export function fetchTrainingDataPoints() {
 export function fetchModelDataPoints() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
+    const modelName = getModelNameById(getState(), id);
+    const fieldItems = getSelectedFieldArrayById(getState(), id);
     dispatch(fetchDataPending(id));
-    const modelDataQueryBody = getModelDataQueryBodyById(getState(), id);
+    const modelDataQueryBody = {
+      FROM: modelName,
+      OPTS: {
+        data_category: "model samples",
+        data_point_limit: 2000,
+        number_of_samples: 200,
+      },
+      SELECT: fieldItems,
+    };
     fetch2DPlotData(modelDataQueryBody).then((response) => {
       dispatch(fetchModelDataSucess(id, response));
     });
@@ -393,8 +412,25 @@ export function fetchInitialStandardPlotData(id) {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
     dispatch(fetchDataPending(id));
-    const modelDataQueryBody = getModelDataQueryBodyById(getState(), id);
-    const trainingDataQueryBody = getTrainingDataQueryBodyById(getState(), id);
+    const modelName = getModelNameById(getState(), id);
+    const fieldItems = getSelectedFieldArrayById(getState(), id);
+    const modelDataQueryBody = {
+      FROM: modelName,
+      OPTS: {
+        data_category: "model samples",
+        data_point_limit: 2000,
+        number_of_samples: 200,
+      },
+      SELECT: fieldItems,
+    };
+    const trainingDataQueryBody = {
+      FROM: modelName,
+      SELECT: fieldItems,
+      OPTS: {
+        data_category: "training data",
+        data_point_limit: 2000,
+      },
+    };
     Promise.all([
       fetch2DPlotData(trainingDataQueryBody).then((payload) => {
         return payload;

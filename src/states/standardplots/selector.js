@@ -41,28 +41,6 @@ export const getSelectedFieldObjectById = (state, id) => {
   return SELECT;
 };
 
-export const getTrainingDataQueryBodyById = (state, id) => {
-  const modelName = getModelNameById(state, id);
-  const SELECT = getSelectedFieldArrayById(state, id);
-  const trainingDataQueryBody = {
-    ...queryTemplates.trainingDataPoints,
-    SELECT,
-    FROM: modelName,
-  };
-  return trainingDataQueryBody;
-};
-
-export const getModelDataQueryBodyById = (state, id) => {
-  const modelName = getModelNameById(state, id);
-  const SELECT = getSelectedFieldArrayById(state, id);
-  const modelDataQueryBody = {
-    ...queryTemplates.modelDataPoints,
-    SELECT,
-    FROM: modelName,
-  };
-  return modelDataQueryBody;
-};
-
 export const getMarginalsQueryBodyById = (state, type, fieldItem, id) => {
   var modelName = "";
 
@@ -84,7 +62,14 @@ export const getMarginalsQueryBodyById = (state, type, fieldItem, id) => {
         class: "Split",
       },
     ],
-    PREDICT: [fieldItem],
+    PREDICT: [
+      fieldItem,
+      {
+        aggregation: "probability",
+        class: "Density",
+        name: fieldItem,
+      },
+    ],
     FROM: modelName,
   };
   return marginalQueryBody;

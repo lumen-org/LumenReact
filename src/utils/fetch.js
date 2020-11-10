@@ -19,12 +19,6 @@ export const fetchData = (url, body) => {
     });
 };
 
-export const createIntermediateModels = (BODY) => {
-  return fetchData(BASE_URL, BODY).then((response) => {
-    return response;
-  });
-};
-
 export const fetch3DPlotData = (BODY) => {
   return fetchData(BASE_URL, BODY).then((response) => {
     const dataString = response["data"].split("\n");

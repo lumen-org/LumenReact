@@ -22,22 +22,8 @@ const queryTemplates = {
     SELECT: ["sepal_width", "sepal_length"],
   },
 
-  trainingDataPoints: {
-    FROM: "mcg_iris_map",
-    SELECT: ["sepal_width", "sepal_length"],
-    OPTS: {
-      data_category: "training data",
-      data_point_limit: 2000,
-    },
-  },
-
   model2DPredictions: {
     FROM: "mcg_iris_map",
-    OPTS: {
-      data_category: "model samples",
-      data_point_limit: 2000,
-      number_of_samples: 200,
-    },
     PREDICT: [
       {
         aggregation: "maximum",

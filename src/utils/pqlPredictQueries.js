@@ -35,7 +35,9 @@ function createPredictionClause(
 ) {}
 
 /**
- *
+ * Currently I am not sure how many parameters are avaliable,
+ * please add here the complete variables description once the
+ * BE documentation is finished.
  * @param {*} name name of the dimension
  * @param {*} split
  * @param {*} args
@@ -46,4 +48,11 @@ function createSplitByClause(
   split = "equiinterval",
   args = 25,
   _class = "Split"
-) {}
+) {
+  return {
+    name,
+    split,
+    args,
+    class: _class,
+  };
+}
