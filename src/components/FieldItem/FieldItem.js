@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import PropTypes from "prop-types";
 
-import "./FielItem.scss";
+import "./FieldItem.scss";
 import CloseButton from "../Button/CloseButton";
 import FieldItemModal from "../FieldItemModal";
 

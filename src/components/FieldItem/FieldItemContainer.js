@@ -9,6 +9,7 @@ import {
 import { FIELD_ITEM } from "../../constants/dragAndDropTypes";
 import FieldItemModal from "../FieldItemModal";
 import { selectActiveSpecificationId } from "../../states/visualizations/selector";
+
 function FieldItemContainer({ value, fieldName = "", type = FIELD_ITEM }) {
   const item = { type: type };
   const specificationId = useSelector(selectActiveSpecificationId);
