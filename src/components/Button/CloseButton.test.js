@@ -25,4 +25,12 @@ it("render normally", () => {
     render(<CloseButton />, container);
   });
   expect(pretty(container.innerHTML)).toMatchInlineSnapshot(`""`);
+  
+  act(() => {
+    let handleClose = jest.fn();
+    render(<CloseButton handleClose={handleClose} />, container);
+  });
+  expect(pretty(container.innerHTML)).toMatchInlineSnapshot(`""`);
+
+
 });
