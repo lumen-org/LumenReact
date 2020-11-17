@@ -113,11 +113,16 @@ class StandardPlot extends Component {
     };
   };
 
-  // TODO: implement a callback so that the plot state are saved in the store
   setPlotData = () => {
-    const { displayTraces, modelName } = this.props;
+    const { displayTraces, modelName, axisField } = this.props;
     const data = [];
     displayTraces.map((traceinfo, ind) => {
+      if (traceinfo.name === "Prediction" && traceinfo.from === "data") {
+        data.push(this.getNewDataPredictionTrace());
+      }
+      if (traceinfo.name === "Prediction" && traceinfo.from === "model") {
+        data.push(this.getNewModelPredictionTrace());
+      }
       if (traceinfo.name === "Data Points" && traceinfo.from === "data") {
         data.push(this.getNewDataScatterTrace());
       }
@@ -128,9 +133,7 @@ class StandardPlot extends Component {
         data.push(this.getNewDataXHistogramTrace());
         data.push(this.getNewDataYHistogramTrace());
       }
-      if (traceinfo.name === "Prediction" && traceinfo.from === "data") {
-        data.push(this.getNewDataPredictionTrace());
-      }
+
       if (traceinfo.name === "Data Points" && traceinfo.from === "model") {
         data.push(this.getNewModelScatterTrace());
       }
@@ -141,13 +144,20 @@ class StandardPlot extends Component {
         data.push(this.getNewModelXHistogramTrace());
         data.push(this.getNewModelYHistogramTrace());
       }
-      if (traceinfo.name === "Prediction" && traceinfo.from === "model") {
-        data.push(this.getNewModelPredictionTrace());
-      }
     });
-
     this.setState({
-      layout: { ...defaultPlot.layout, title: modelName },
+      layout: {
+        ...defaultPlot.layout,
+        /*    xaxis: {
+          ...defaultPlot.layout.xaxis,
+          text: axisField.x,
+        },
+        yaxis: {
+          ...defaultPlot.layout.yaxis,
+          text: axisField.y,
+        },*/
+        title: modelName,
+      },
       data,
     });
   };
