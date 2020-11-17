@@ -27,7 +27,7 @@ describe('actions', () => {
                 dimensions,
         }
       }
-      expect(actions.addAllDimensions(modelId, modelName, dimensions)).toEqual(expectedAction)
+      expect(actions._addAllDimensions(modelId, modelName, dimensions)).toEqual(expectedAction)
     })
   });
   
