@@ -4,7 +4,13 @@ import FieldList from "../FieldList/FieldList";
 import "./Field.scss";
 import PropTypes from 'prop-types'
 
-function Field({ title, data, fieldName="" }) {
+Field.propTypes = {
+  title: PropTypes.string.isRequired,
+  data: PropTypes.array.isRequired
+};
+
+function Field({ title, data, fieldName=""}) {
+  // TODO: figure out what curly bracket does
   return (
     <div className={"Field"}>
       <TitelH2 value={title}/>
@@ -12,10 +18,5 @@ function Field({ title, data, fieldName="" }) {
     </div>
   );
 }
-
-Field.propTypes = {
-  title: PropTypes.string.isRequired,
-  data: PropTypes.array.isRequired
-};
 
 export default Field;

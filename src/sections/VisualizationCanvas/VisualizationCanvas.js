@@ -11,7 +11,7 @@ import MultiPlot from "../../components/MultiPlot/MultiPlotContainer";
 
 class VisualizationCanvas extends Component {
   static propTypes = {
-    plots: PropTypes.arrayOf(
+    plots: PropTypes.objectOf(
       PropTypes.objectOf({
         id: PropTypes.number,
         modelName: PropTypes.string,

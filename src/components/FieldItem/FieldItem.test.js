@@ -17,9 +17,8 @@ afterEach(() => {
   container = null;
 });
 
-/*
+
 test("render value", () => {
   const { getByText } = render(<FieldItem value={"sepal_width"}/>);
   expect(getByText("sepal_width")).toBeInTheDocument();
 });
-*/
