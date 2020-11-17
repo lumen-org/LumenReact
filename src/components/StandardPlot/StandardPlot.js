@@ -12,6 +12,8 @@ class StandardPlot extends Component {
     displayTraces: PropTypes.array,
     specification: PropTypes.object,
     loading: PropTypes.bool,
+    axisField: PropTypes.object,
+    modelName: PropTypes.string,
   };
 
   state = {
@@ -41,8 +43,8 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.yHistogramTrace,
-      y: plotData.dataMarginals.y.y,
-      x: plotData.dataMarginals.y.x,
+      y: plotData.dataMarginals.y.x,
+      x: plotData.dataMarginals.y.y,
     };
   };
 
@@ -78,8 +80,8 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.modelYHistogramTrace,
-      y: plotData.modelMarginals.y.y,
-      x: plotData.modelMarginals.y.x,
+      y: plotData.modelMarginals.y.x,
+      x: plotData.modelMarginals.y.y,
     };
   };
 
@@ -113,7 +115,7 @@ class StandardPlot extends Component {
 
   // TODO: implement a callback so that the plot state are saved in the store
   setPlotData = () => {
-    const { displayTraces } = this.props;
+    const { displayTraces, modelName } = this.props;
     const data = [];
     displayTraces.map((traceinfo, ind) => {
       if (traceinfo.name === "Data Points" && traceinfo.from === "data") {
@@ -145,7 +147,7 @@ class StandardPlot extends Component {
     });
 
     this.setState({
-      layout: defaultPlot.layout,
+      layout: { ...defaultPlot.layout, title: modelName },
       data,
     });
   };

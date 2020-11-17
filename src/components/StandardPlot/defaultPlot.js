@@ -3,6 +3,7 @@ import { plotStyle } from "./plotStyle";
 export const defaultPlot = {
   layout: {
     autosize: true,
+    showlegend: false,
     xaxis: {
       domain: [0, 0.85],
     },
@@ -33,7 +34,7 @@ export const defaultPlot = {
       },
     },
     xaxis: "x2",
-    type: "histogram",
+    type: "scatter",
     histnorm: "probability density",
   },
   xHistogramTrace: {
@@ -46,8 +47,7 @@ export const defaultPlot = {
       },
     },
     yaxis: "y2",
-    type: "histogram",
-    histnorm: "probability density",
+    type: "scatter",
   },
   modelYHistogramTrace: {
     marker: {
@@ -59,8 +59,7 @@ export const defaultPlot = {
       },
     },
     xaxis: "x2",
-    type: "histogram",
-    histnorm: "probability density",
+    type: "scatter",
   },
   modelXHistogramTrace: {
     marker: {
@@ -72,8 +71,7 @@ export const defaultPlot = {
       },
     },
     yaxis: "y2",
-    type: "histogram",
-    histnorm: "probability density",
+    type: "scatter",
   },
   dataDensityTrace: {
     name: "model density",
