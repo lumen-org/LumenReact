@@ -12,6 +12,8 @@ class StandardPlot extends Component {
     displayTraces: PropTypes.array,
     specification: PropTypes.object,
     loading: PropTypes.bool,
+    axisField: PropTypes.object,
+    modelName: PropTypes.string,
   };
 
   state = {
@@ -32,7 +34,8 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.xHistogramTrace,
-      x: plotData.dataMarginals.x,
+      x: plotData.dataMarginals.x.x,
+      y: plotData.dataMarginals.x.y,
     };
   };
 
@@ -40,7 +43,8 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.yHistogramTrace,
-      y: plotData.dataMarginals.y,
+      y: plotData.dataMarginals.y.x,
+      x: plotData.dataMarginals.y.y,
     };
   };
 
@@ -67,7 +71,8 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.modelXHistogramTrace,
-      x: plotData.dataMarginals.x,
+      x: plotData.modelMarginals.x.x,
+      y: plotData.modelMarginals.x.y,
     };
   };
 
@@ -75,7 +80,8 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.modelYHistogramTrace,
-      y: plotData.modelMarginals.y,
+      y: plotData.modelMarginals.y.x,
+      x: plotData.modelMarginals.y.y,
     };
   };
 
@@ -107,11 +113,16 @@ class StandardPlot extends Component {
     };
   };
 
-  // TODO: implement a callback so that the plot state are saved in the store
   setPlotData = () => {
-    const { displayTraces } = this.props;
+    const { displayTraces, modelName, axisField } = this.props;
     const data = [];
     displayTraces.map((traceinfo, ind) => {
+      if (traceinfo.name === "Prediction" && traceinfo.from === "data") {
+        data.push(this.getNewDataPredictionTrace());
+      }
+      if (traceinfo.name === "Prediction" && traceinfo.from === "model") {
+        data.push(this.getNewModelPredictionTrace());
+      }
       if (traceinfo.name === "Data Points" && traceinfo.from === "data") {
         data.push(this.getNewDataScatterTrace());
       }
@@ -122,9 +133,7 @@ class StandardPlot extends Component {
         data.push(this.getNewDataXHistogramTrace());
         data.push(this.getNewDataYHistogramTrace());
       }
-      if (traceinfo.name === "Prediction" && traceinfo.from === "data") {
-        data.push(this.getNewDataPredictionTrace());
-      }
+
       if (traceinfo.name === "Data Points" && traceinfo.from === "model") {
         data.push(this.getNewModelScatterTrace());
       }
@@ -135,13 +144,20 @@ class StandardPlot extends Component {
         data.push(this.getNewModelXHistogramTrace());
         data.push(this.getNewModelYHistogramTrace());
       }
-      if (traceinfo.name === "Prediction" && traceinfo.from === "model") {
-        data.push(this.getNewModelPredictionTrace());
-      }
     });
-
     this.setState({
-      layout: defaultPlot.layout,
+      layout: {
+        ...defaultPlot.layout,
+        /*    xaxis: {
+          ...defaultPlot.layout.xaxis,
+          text: axisField.x,
+        },
+        yaxis: {
+          ...defaultPlot.layout.yaxis,
+          text: axisField.y,
+        },*/
+        title: modelName,
+      },
       data,
     });
   };
