@@ -1,35 +1,49 @@
-import React, { Component } from "react";
+import React from "react";
+import PropTypes from "prop-types";
+import ListModal from "./ListModal";
 import { connect } from "react-redux";
 import { updateActiveModel } from "../../states/app/actions";
 import { createNewSpecification } from "../../states/specifications/actions";
 import { createNewPlot } from "../../states/plots/actions";
-import PropTypes from "prop-types";
-import ListModal from "./ListModal";
-import fetchData, { fetchModelData } from "../../utils/fetch";
-import { BASE_URL, FETCH_ALL_MODEL_NAME } from "../../constants/query";
+import {
+  showModel,
+  showHeaders,
+  cloneModel,
+  dropModel,
+} from "../../utils/pqlModelQueries";
 import { STANDARD_PLOT } from "../../constants/plotTypes";
 import {
   changeActiveVisualization,
   createNewVisualization,
   fillVisualization,
 } from "../../states/visualizations/actions";
-import { createNewModel } from "../../states/models/actions";
+import { createNewModel, updateModelDimensions } from "../../states/models/actions";
+import { addAllDimensions } from "../../states/dimensions/actions";
+import { getDimensionsOfCurrentModel } from "../../states/dimensions/selector";
 const defaultPlotType = STANDARD_PLOT; // Haha, we will certainly refractor this, right?
 class ListModalContainer extends React.Component {
   static propTypes = {
     open: PropTypes.bool.isRequired,
     handleModalClose: PropTypes.func.isRequired,
-    specificationId: PropTypes.number,
-    plotId: PropTypes.number,
-    modelId: PropTypes.number,
-    lastCreatedVisualizationId: PropTypes.number,
   };
 
   state = {
     models: [],
+    fetchStatus: { showAlert: false, error: "" },
   };
 
-  handleItemSelection = (item) => {
+  handleModelClone = (modelName) => {
+    cloneModel(modelName)
+      .then((response) => this.getModels())
+      .catch((error) => console.log(error));
+  };
+  handleModelDelete = (modelName) => {
+    dropModel(modelName)
+      .then((response) => this.getModels())
+      .catch((error) => console.log(error));
+  };
+
+  handleItemSelection = (modelName) => {
     const {
       changeActiveVisualization,
       handleModalClose,
@@ -37,48 +51,48 @@ class ListModalContainer extends React.Component {
       addSpecifications,
       createNewVisualization,
       createNewModel,
+      updateModelDimensions,
+      addAllDimensions,
       fillVisualization,
     } = this.props;
-    // even though the dispatches officially are executed sequential the mapStateToProps
-    // is not updating in time, that's why we need to ensure the order by
-    // making addSpecification a promise
-    // Im not sure if I did it correctly
-    createNewVisualization(item).then(() => {
-      addSpecifications().then(() => {
-        // move into schema redux store to avoid this nested promises
-        fetchModelData(item)
-          .then((response) => {
-            createNewModel(item, response["Fields"]);
-          })
-          .then(() => {
-            createPlot(
-              item,
-              this.props.lastCreatedVisualizationId,
-              this.props.specificationId
-            );
-            fillVisualization(
-              this.props.lastCreatedVisualizationId,
-              this.props.modelId,
-              this.props.specificationId,
-              this.props.plotId
-            );
-            changeActiveVisualization(this.props.lastCreatedVisualizationId);
-            //... TODO: TO COMPLETE THE CONDITION
-            handleModalClose();
-          });
+    showHeaders(modelName)
+      .then((fields) => {
+        createNewModel(modelName, fields);
+        return fields;
+      })
+      .then((fields) => {
+        addAllDimensions(modelName, fields);
+        //updateModelDimensions(this.props.modelId, dimensions);
+        addSpecifications();
+        createNewVisualization();
+        createPlot(modelName);
+        fillVisualization();
+        changeActiveVisualization();
+        handleModalClose();
       });
-    });
   };
 
+  getModels = () => {
+    showModel()
+      .then((models) => {
+        this.setState({ models });
+      })
+      .catch((error) =>
+        this.setState({
+          fetchStatus: {
+            showAlert: true,
+            error: "show model error: " + error.toString(),
+          },
+        })
+      );
+  };
   componentWillMount() {
-    fetchData(BASE_URL, FETCH_ALL_MODEL_NAME).then((response) =>
-      this.setState({ models: response["models"] })
-    );
+    this.getModels();
   }
 
   render() {
     const { open, handleModalClose } = this.props;
-    const { models } = this.state;
+    const { models, fetchStatus } = this.state;
 
     return (
       <ListModal
@@ -86,47 +100,32 @@ class ListModalContainer extends React.Component {
         itemList={models}
         handleModalClose={handleModalClose}
         handleItemSelection={this.handleItemSelection}
+        handleItemlClone={this.handleModelClone}
+        handleItemDelete={this.handleModelDelete}
+        fetchStatus={fetchStatus}
       />
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    specificationId: state.specifications.lastCreatedId,
-    plotId: state.plots.lastCreatedId,
-    modelId: state.models.lastCreatedModelId,
-    lastCreatedVisualizationId: state.visualizations.lastCreatedVisualizationId,
-  };
-};
+    //getDimensionsOfCurrentModel: getDimensionsOfCurrentModel(state),
+
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createNewVisualization: (modelName, schemaId, specificationId, plotId) =>
-      dispatch(
-        createNewVisualization(modelName, schemaId, specificationId, plotId)
-      ),
+    addAllDimensions: (modelName, fields) => dispatch(addAllDimensions(modelName, fields)),
+    createNewVisualization: () => dispatch(createNewVisualization()),
     updateActiveModel: (model) => dispatch(updateActiveModel(model)),
-    changeActiveVisualization: (id) => dispatch(changeActiveVisualization(id)),
-    createPlot: (activeModel, visualizationId, specificationId) =>
-      dispatch(
-        createNewPlot(
-          activeModel,
-          visualizationId,
-          specificationId,
-          defaultPlotType
-        )
-      ),
-    addSpecifications: () => {
-      return dispatch(createNewSpecification());
-    },
+
+    changeActiveVisualization: () => dispatch(changeActiveVisualization()),
+    createPlot: (activeModel) =>
+      dispatch(createNewPlot(activeModel, defaultPlotType)),
+    addSpecifications: () => dispatch(createNewSpecification()),
     createNewModel: (modelName, model) =>
       dispatch(createNewModel(modelName, model)),
-    fillVisualization: (visualizationId, modelId, specificationId, plotId) =>
-      dispatch(
-        fillVisualization(visualizationId, modelId, specificationId, plotId)
-      ),
+    fillVisualization: () => dispatch(fillVisualization()),
+
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListModalContainer);
+export default connect(null, mapDispatchToProps)(ListModalContainer);

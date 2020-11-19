@@ -2,7 +2,7 @@ import {
   CHANGE_ACTIVE_VISUALIZATION,
   CREATE_NEW_VISUALIZATION,
   DELETE_VISUALIZATION,
-  FILL_VISUALIZATION
+  FILL_VISUALIZATION,
 } from "./constants";
 import update from "immutability-helper";
 import { act } from "react-dom/test-utils";
@@ -17,8 +17,8 @@ export const defaultState = {
   lastCreatedVisualizationId: EMPTY,
   visualizations: {
     byId: {},
-    allIds: []
-  }
+    allIds: [],
+  },
 };
 
 /**
@@ -37,7 +37,7 @@ const visualizations = (state = defaultState, action) => {
   let visualizations = Object.assign({}, state.visualizations);
   switch (action.type) {
     case CREATE_NEW_VISUALIZATION:
-      const { id, modelId, specificationId, plotId } = action.payload;
+      const { id, modelId, specificationId } = action.payload;
       if (!visualizations.allIds.includes(id)) {
         return {
           ...state,
@@ -48,22 +48,24 @@ const visualizations = (state = defaultState, action) => {
                 $set: {
                   modelId: modelId,
                   specificationId: specificationId,
-                  plotId: plotId,
-                  visualizationId: id
-                }
-              }
+                  //plotId: plotId,
+                  visualizationId: id,
+                },
+              },
             },
-            allIds: { $push: [id] }
-          })
+            allIds: { $push: [id] },
+          }),
         };
       }
       return state;
     case FILL_VISUALIZATION: {
       const { visualizationId } = action.payload;
-      if (visualizations.allIds.includes(visualizationId)
-        && !visualizations.byId[visualizationId].modelId
-        && !visualizations.byId[visualizationId].specificationId
-        && !visualizations.byId[visualizationId].plotId) {
+      if (
+        visualizations.allIds.includes(visualizationId) &&
+        !visualizations.byId[visualizationId].modelId &&
+        !visualizations.byId[visualizationId].specificationId &&
+        !visualizations.byId[visualizationId].plotId
+      ) {
         return {
           ...state,
           activeVisualizationId: visualizationId,
@@ -73,45 +75,43 @@ const visualizations = (state = defaultState, action) => {
                 $merge: {
                   modelId: action.payload.modelId,
                   specificationId: action.payload.specificationId,
-                  plotId: action.payload.plotId
-                }
-              }
-            }
-          })
+                  plotId: action.payload.plotId,
+                },
+              },
+            },
+          }),
         };
       }
       return state;
     }
-    case DELETE_VISUALIZATION:{
+    case DELETE_VISUALIZATION: {
       const { visualizationId } = action.payload;
       return {
         ...state,
         visualizations: update(state.visualizations, {
           byId: {
-            $unset: [visualizationId]
+            $unset: [visualizationId],
           },
           allIds: {
-            $splice: [[state.visualizations.allIds.indexOf(visualizationId), 1]]
-          }
+            $splice: [
+              [state.visualizations.allIds.indexOf(visualizationId), 1],
+            ],
+          },
         }),
-        activeVisualizationId: state.activeVisualizationId === visualizationId ? EMPTY : state.activeVisualizationId
+        activeVisualizationId:
+          state.activeVisualizationId === visualizationId
+            ? EMPTY
+            : state.activeVisualizationId,
       };
     }
 
-    // case ADD_PLOT:
-    //   return state;
-    // case ADD_SECIFICATION:
-    //   return state;
-    // case ADD_MODEL:
-    //   return state;
     case CHANGE_ACTIVE_VISUALIZATION:
       return {
         ...state,
-        activeVisualizationId: action.payload.visualizationId
+        activeVisualizationId: action.payload.visualizationId,
       };
     default:
       return state;
-
   }
 };
 

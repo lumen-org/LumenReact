@@ -1,4 +1,4 @@
-import { BASE_URL, FETCH_SCHEMA } from "../constants/query";
+import { BASE_URL } from "../constants/query";
 
 export const fetchData = (url, body) => {
   return fetch(url, {
@@ -17,17 +17,6 @@ export const fetchData = (url, body) => {
         return Promise.resolve({ status, statusText });
       } else throw error;
     });
-};
-
-export const _fetchModelData = (BODY) => {
-  return fetchData(BASE_URL, BODY).then((response) => {
-    return { Fields: response["fields"] };
-  });
-};
-
-export const fetchModelData = (modelName) => {
-  const POST_BODY = { ...FETCH_SCHEMA, FROM: modelName };
-  return _fetchModelData(POST_BODY);
 };
 
 export const fetch3DPlotData = (BODY) => {

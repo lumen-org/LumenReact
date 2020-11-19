@@ -5,7 +5,7 @@ import { updateActiveModel } from "../../states/app/actions";
 import PropTypes from "prop-types";
 import RnDPlotWrapper from "./RnDPlotWrapper";
 import {
-  changeActiveVisualization,
+  _changeActiveVisualization,
   deleteVisualization,
 } from "../../states/visualizations/actions";
 import { selectActiveSpecificationId } from "../../states/visualizations/selector";
@@ -22,12 +22,12 @@ class RnDPlotWrapperContainer extends React.Component {
     const {
       deletePlot,
       plots,
-      changeActiveVisualization,
+      _changeActiveVisualization,
       deleteVisualization,
     } = this.props;
     const nextId = plots.allIds[0];
     const getVisualizationId = (plotId) => plots.byId[plotId].visualizationId;
-    changeActiveVisualization(getVisualizationId(nextId));
+    _changeActiveVisualization(getVisualizationId(nextId));
     deletePlot(id);
     deleteVisualization(getVisualizationId(id));
   };
@@ -37,10 +37,10 @@ class RnDPlotWrapperContainer extends React.Component {
       changeActivePlot,
       updateActiveModel,
       modelName,
-      changeActiveVisualization,
+      _changeActiveVisualization,
       visualizationId,
     } = this.props;
-    changeActiveVisualization(visualizationId);
+    _changeActiveVisualization(visualizationId);
     changeActivePlot(id);
     updateActiveModel(modelName);
   };
@@ -70,8 +70,8 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeActiveVisualization: (newActiveModelId) =>
-      dispatch(changeActiveVisualization(newActiveModelId)),
+    _changeActiveVisualization: (id) =>
+      dispatch(_changeActiveVisualization(id)),
     changeActivePlot: (
       newActivePlotId // this function change the zIndex of plot and bring it to the front
     ) => dispatch(changeActivePlot(newActivePlotId)),

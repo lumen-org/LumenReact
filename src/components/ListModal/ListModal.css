@@ -11,3 +11,9 @@
   font-size: 18px;
   line-height: 0;
 }
+
+.List-item-div {
+  display: flex;
+}
+.List-item-delete-button {
+}
