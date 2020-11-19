@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Facet from "./Facet";
 import { connect } from "react-redux";
-import { updateFacetState } from "../../states/specifications/actions";
+import { updateFacetState } from "../../states/standardspecifications/actions";
 import { selectActiveSpecificationId } from "../../states/visualizations/selector";
 import {
   fetchTrainingDataPoints,
