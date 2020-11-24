@@ -44,7 +44,20 @@ test("Schema displays dimensions correctly", () => {
     expect(tree).toMatchSnapshot();
 })
 
+test("Specification throws no exception when all attributes are passed correctly", () => {
+    const specifications = { "X_Axis": [], "Y-Axis": []};
+    const facets = "bla";//{ "Prediction": {}, "Data Points": {}, "Marginals": {}, "Desity": {} };
+
+    jest.spyOn(console, "error")
+
+    TestRenderer.create(
+        <Specification specifications={specifications} facets={facets} />
+    )
+    expect(console.error).not.toBeCalled()
+})
+
 /*
+
 test("Specification throws exception when no attribute is passed", () => {
 
     jest.spyOn(console, "error");
@@ -56,19 +69,6 @@ test("Specification throws exception when no attribute is passed", () => {
     expect(console.error).toBeCalled();
 })
 
-
-test("Schema throws no exception when all attributes are passed correctly", () => {
-    const quantitative = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "species"]
-    const categorical = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
-
-    jest.spyOn(console, "error")
-
-    TestRenderer.create(
-        <Specification quantitative={quantitative} categorical={categorical} />
-    )
-
-    expect(console.error).not.toBeCalled()
-})
 
 test("Schema throws exception when no quantitative attribute is passed", () => {
     const categorical = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
