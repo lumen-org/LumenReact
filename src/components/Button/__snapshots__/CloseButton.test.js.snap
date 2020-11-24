@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render normally 2`] = `
+<div
+  className="close-container"
+  onClick={[MockFunction]}
+>
+  <div
+    className="leftright"
+  />
+  <div
+    className="rightleft"
+  />
+</div>
+`;

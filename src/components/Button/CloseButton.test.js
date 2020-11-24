@@ -1,7 +1,8 @@
 import React from "react";
 import { unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
+import TestRenderer from "react-test-renderer"
 
 import CloseButton from "./CloseButton";
 import pretty from "pretty";
@@ -26,11 +27,12 @@ it("render normally", () => {
   });
   expect(pretty(container.innerHTML)).toMatchInlineSnapshot(`""`);
   
-  act(() => {
-    let handleClose = jest.fn();
-    render(<CloseButton handleClose={handleClose} />, container);
-  });
-  expect(pretty(container.innerHTML)).toMatchInlineSnapshot(`""`);
+  
+  let handleClose = jest.fn();
+  let component = TestRenderer.create(<CloseButton handleClose={handleClose} />, container);
+
+  let tree = component.toJSON();
+  expect(tree).toMatchSnapshot();
 
 
 });

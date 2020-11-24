@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-<<<<<<< HEAD
-import TitelH1 from "../../components/Titles/TitleH1";
-=======
 import TitleH1 from "../../components/Titles/TitleH1";
->>>>>>> cb278de8668db187aca51ba72390a048351d5a43
 import Field from "../../components/Field";
 import "./Schema.css";
 
