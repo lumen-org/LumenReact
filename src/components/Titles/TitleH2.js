@@ -1,8 +1,8 @@
 import React from "react";
 
-import "./TitelH2.scss"
+import "./TitleH2.scss"
 
-function TitelH2(props) {
+function TitleH2(props) {
   return (
       <h2 className="title_h2">
         {props.value}
@@ -10,4 +10,4 @@ function TitelH2(props) {
   )
 }
 
-export default TitelH2
+export default TitleH2

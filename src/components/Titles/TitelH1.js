@@ -1,8 +1,8 @@
 import React from "react";
 
-import "./TitelH1.scss"
+import "./TitleH1.scss"
 
-function TitelH1(props) {
+function TitleH1(props) {
   return (
       <div className="title-h1">
         {props.value}
@@ -10,4 +10,4 @@ function TitelH1(props) {
   )
 }
 
-export default TitelH1
+export default TitleH1
