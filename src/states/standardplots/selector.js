@@ -11,6 +11,13 @@ export const getStandardPlotDataById = (state, id) => {
   return state.standardplots.standardPlots[id] || {};
 };
 
+/**
+ *
+ * @param {the entire redux state} state
+ * @param {plot id} id
+ *
+ * return the selected field items array ready for query.
+ */
 export const getSelectedFieldArrayById = (state, id) => {
   const specification = getSpecById(state, getSpecificationId(state, id));
   const X_Axis = [...specification.X_Axis];
@@ -18,6 +25,13 @@ export const getSelectedFieldArrayById = (state, id) => {
   const SELECT = getSelectFieldArray(X_Axis, Y_Axis);
   return SELECT;
 };
+
+/**
+ *
+ * @param {the entire redux state} state
+ * @param {plot id} id
+ * return the selected field items in format of object.
+ */
 
 export const getSelectedFieldObjectById = (state, id) => {
   const specification = getSpecById(state, getSpecificationId(state, id));
@@ -27,57 +41,16 @@ export const getSelectedFieldObjectById = (state, id) => {
   return SELECT;
 };
 
-export const getTrainingDataIntermediateModelQueryBodyById = (state, id) => {
-  const modelName = getModelNameById(state, id);
-  const SELECT = getSelectedFieldArrayById(state, id);
-  return {
-    FROM: modelName,
-    MODEL: SELECT,
-    AS: "__" + modelName + "_0_0",
-  };
-};
-
-export const getDataMarginalIntermediateModelQueryBodyById = (state, id) => {
-  const modelName = getModelNameById(state, id);
-  const SELECT = getSelectedFieldArrayById(state, id);
-  return {
-    FROM: modelName,
-    MODEL: SELECT,
-    AS: "__" + modelName + "-dataMarginals-_0_0",
-  };
-};
-
-export const getTrainingDataQueryBodyById = (state, id) => {
-  const modelName = getModelNameById(state, id);
-  const SELECT = getSelectedFieldArrayById(state, id);
-  const trainingDataQueryBody = {
-    ...queryTemplates.trainingDataPoints,
-    SELECT,
-    FROM: modelName,
-  };
-  return trainingDataQueryBody;
-};
-
-export const getModelDataQueryBodyById = (state, id) => {
-  const modelName = getModelNameById(state, id);
-  const SELECT = getSelectedFieldArrayById(state, id);
-  const modelDataQueryBody = {
-    ...queryTemplates.modelDataPoints,
-    SELECT,
-    FROM: modelName,
-  };
-  return modelDataQueryBody;
-};
-
 export const getMarginalsQueryBodyById = (state, type, fieldItem, id) => {
   var modelName = "";
 
   if (type === "data") {
-    modelName = "__" + getModelNameById(state, id) + "-dataMarginals-_0_0";
+    modelName =
+      "emp_" + getModelNameById(state, id).split("_")[1] + "_data_marginal";
   }
 
   if (type === "model") {
-    modelName = getModelNameById(state, id);
+    modelName = getModelNameById(state, id) + "_data_marginal";
   }
   const marginalQueryBody = {
     ...queryTemplates.marginal,
@@ -89,7 +62,14 @@ export const getMarginalsQueryBodyById = (state, type, fieldItem, id) => {
         class: "Split",
       },
     ],
-    PREDICT: [fieldItem],
+    PREDICT: [
+      fieldItem,
+      {
+        aggregation: "probability",
+        class: "Density",
+        name: fieldItem,
+      },
+    ],
     FROM: modelName,
   };
   return marginalQueryBody;
@@ -100,11 +80,12 @@ export const getPredictionQueryBodyId = (state, type, id) => {
   var modelName = "";
 
   if (type === "data") {
-    modelName = "__" + getModelNameById(state, id) + "-dataMarginals-_0_0";
+    modelName =
+      "emp_" + getModelNameById(state, id).split("_")[1] + "_data_marginal";
   }
 
   if (type === "model") {
-    modelName = getModelNameById(state, id);
+    modelName = getModelNameById(state, id) + "_data_marginal";
   }
   const PREDICT = fieldItems.map((item, key) => {
     return {
@@ -126,11 +107,12 @@ export const getDensityQueryBodyById = (state, type, id) => {
   var modelName = "";
 
   if (type === "data") {
-    modelName = "__" + getModelNameById(state, id) + "-dataMarginals-_0_0";
+    modelName =
+      "emp_" + getModelNameById(state, id).split("_")[1] + "_data_marginal";
   }
 
   if (type === "model") {
-    modelName = getModelNameById(state, id);
+    modelName = getModelNameById(state, id) + "_data_marginal";
   }
   const PREDICT = fieldItems.map((item, key) => {
     return item;

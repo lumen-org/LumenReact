@@ -1,13 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getStandardPlotDataById } from "../../states/standardplots/selector";
+import {
+  getStandardPlotDataById,
+  getSelectedFieldObjectById,
+} from "../../states/standardplots/selector";
 import {
   getSpecById,
   getFacetById,
 } from "../../states/specifications/selector.js";
-import { fetchOnSpecChange } from "../../states/standardplots/actions";
+
+import {
+  fetchOnSpecChange,
+  deriveSubmodelsOnSpecChange,
+} from "../../states/standardplots/actions";
 import { getSpecificationId } from "../../states/plots/selector.js";
+import { getModelNameById } from "../../states/models/selector";
 import StandardPlot from "./StandardPlot";
 
 class StandardPlotContainer extends React.Component {
@@ -18,6 +26,8 @@ class StandardPlotContainer extends React.Component {
     layout: PropTypes.object,
     id: PropTypes.number,
     loading: PropTypes.bool,
+    modelName: PropTypes.string,
+    axisFields: PropTypes.object,
   };
 
   state = {
@@ -61,8 +71,9 @@ class StandardPlotContainer extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.specification !== this.props.specification) {
-      const { fetchOnSpecChange } = this.props;
+      const { fetchOnSpecChange, deriveSubmodelsOnSpecChange } = this.props;
       this.getDisplayTraces();
+      deriveSubmodelsOnSpecChange();
       fetchOnSpecChange();
     }
 
@@ -75,13 +86,15 @@ class StandardPlotContainer extends React.Component {
   }
 
   render() {
-    const { plotData, specification } = this.props;
+    const { plotData, specification, axisFields, modelName } = this.props;
     const { displayTraces } = this.state;
     return (
       <StandardPlot
         plotData={plotData}
         displayTraces={displayTraces}
         specification={specification}
+        axisFields={axisFields}
+        modelName={modelName}
       />
     );
   }
@@ -90,6 +103,7 @@ class StandardPlotContainer extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchOnSpecChange: () => dispatch(fetchOnSpecChange()),
+    deriveSubmodelsOnSpecChange: () => dispatch(deriveSubmodelsOnSpecChange()),
   };
 };
 const mapStateToProps = (state, ownProps) => {
@@ -97,6 +111,8 @@ const mapStateToProps = (state, ownProps) => {
     plotData: getStandardPlotDataById(state, ownProps.id),
     specification: getSpecById(state, getSpecificationId(state, ownProps.id)),
     facets: getFacetById(state, getSpecificationId(state, ownProps.id)),
+    axisFields: getSelectedFieldObjectById(state, ownProps.id),
+    modelName: getModelNameById(state, ownProps.id),
   };
 };
 
