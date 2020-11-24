@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { EMPTY } from "../../states/constants";
 import StandardSpecification from "./StandardSpecification";
@@ -9,11 +10,10 @@ class StandardSpecificationContainer extends React.Component {
     };
 
     render() {
-        const specifications = this.props.standardSpecifications.byId;
-        const { specificationId } = this.props
+        const { specifications, specificationId } = this.props
         return (<div>
             {
-                (specificationId !== EMPTY && specifications[specificationId]) &&
+                (specificationId && specificationId !== EMPTY && specifications[specificationId]) &&
                 <StandardSpecification
                     specifications={specifications[specificationId].specification}
                     facets={specifications[specificationId].facets}
@@ -26,7 +26,7 @@ class StandardSpecificationContainer extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        specifications: state.standardSpecifications.standardSpecifications,
+        specifications: state.standardspecifications.standardspecifications,
     };
 };
 

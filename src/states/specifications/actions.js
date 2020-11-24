@@ -62,31 +62,31 @@ import {
 //   };
 // };
 
-export const createNewSpecification = (specificationType = STANDARD_SPECIFICATION, initValues = null, id = uuidv4()) => {
+export const createNewSpecification = (specificationType = STANDARD_SPECIFICATION, specificationId = uuidv4(), initValues = null) => {
   return (dispatch) => {
     if (specificationType === STANDARD_SPECIFICATION) {
-      dispatch(createNewStandardSpecification(id, initValues))
+      dispatch(createNewStandardSpecification(specificationId, initValues))
     }
-    dispatch(createSpecification(id, specificationType))
-    dispatch(changeActiveSpecification(id))
+    dispatch(createSpecification(specificationId, specificationType))
+    dispatch(changeActiveSpecification(specificationId))
   }
 }
 
-const createSpecification = (id, specificationType) => {
+const createSpecification = (specificationId, specificationType) => {
   return {
     type: CREATE_NEW_SPECIFICATION,
     payload: {
-      id: id,
+      id: specificationId,
       specificationType: specificationType
     }
   }
 }
 
-const changeActiveSpecification = (id) => {
+const changeActiveSpecification = (specificationId) => {
   return {
     type: CHANGE_ACTIVE_SPECIFICATIONS,
     payload: {
-      id: id
+      id: specificationId
     }
   }
 }

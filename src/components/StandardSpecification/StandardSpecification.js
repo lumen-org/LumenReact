@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import TitelH1 from "../../components/Titles/TitelH1";
-import TitelH2 from "../../components/Titles/TitleH2";
-import Field from "../../components/Field";
+import TitelH1 from "../Titles/TitelH1";
+import TitelH2 from "../Titles/TitleH2";
+import Field from "../Field";
 import Facet from "../Facet";
-import "./Specification.css";
+import "./StandardSpecification.css";
 
 class StandardSpecification extends Component {
   static propTypes = {

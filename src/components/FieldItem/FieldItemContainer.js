@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import FieldItem from "./FieldItem";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addToSpecification,
-  deleteFromSpecification,
-} from "../../states/specifications/actions";
+  addToStandardSpecification,
+  deleteFromStandardSpecification,
+} from "../../states/standardspecifications/actions";
 import { FIELD_ITEM } from "../../constants/dragAndDropTypes";
 import FieldItemModal from "../FieldItemModal";
 import { selectActiveSpecificationId } from "../../states/visualizations/selector";
@@ -16,7 +16,7 @@ function FieldItemContainer({ value, fieldName = "", type = FIELD_ITEM }) {
 
   function dispatchListItem() {
     dispatch(
-      deleteFromSpecification({
+      deleteFromStandardSpecification({
         id: specificationId,
         key: fieldName,
         value: value,
@@ -48,7 +48,7 @@ function FieldItemContainer({ value, fieldName = "", type = FIELD_ITEM }) {
           dispatchListItem();
         }
         dispatch(
-          addToSpecification({
+          addToStandardSpecification({
             id: specificationId,
             key: dropResult.result,
             value: value,

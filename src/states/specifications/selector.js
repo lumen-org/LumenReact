@@ -1,11 +1,22 @@
 import { createSelector } from "reselect";
+import { STANDARD_SPECIFICATION } from "./specificationTypes";
+
+const getSpecType = (state, id) => {
+  return state.specifications.specifications.byId[id].specificationType || {};
+}
 
 export const getSpecById = (state, id) => {
-  return state.specifications.specifications.byId[id].specification || {};
+  const specType = getSpecType(state, id)
+  if (specType === STANDARD_SPECIFICATION) {
+    return state.standardspecifications.standardspecifications[id].specification
+  }
 };
 
 export const getFacetById = (state, id) => {
-  return state.specifications.specifications.byId[id].facets || {};
+  const specType = getSpecType(state, id)
+  if (specType === STANDARD_SPECIFICATION) {
+    return state.standardspecifications.standardspecifications[id].facets || {};
+  }
 };
 
 export const getLastCreatedSpecId = (state) => {

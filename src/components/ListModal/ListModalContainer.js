@@ -1,4 +1,6 @@
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import PropTypes from "prop-types";
 import ListModal from "./ListModal";
 import { connect } from "react-redux";
@@ -20,6 +22,8 @@ import {
 import { createNewModel, updateModelDimensions } from "../../states/models/actions";
 import { addAllDimensions } from "../../states/dimensions/actions";
 import { getDimensionsOfCurrentModel } from "../../states/dimensions/selector";
+import { STANDARD_SPECIFICATION } from "../../states/specifications/specificationTypes";
+import specifications from "../../states/specifications/reducer";
 const defaultPlotType = STANDARD_PLOT; // Haha, we will certainly refractor this, right?
 class ListModalContainer extends React.Component {
   static propTypes = {
@@ -63,9 +67,10 @@ class ListModalContainer extends React.Component {
       .then((fields) => {
         addAllDimensions(modelName, fields);
         //updateModelDimensions(this.props.modelId, dimensions);
-        addSpecifications();
-        createNewVisualization();
-        createPlot(modelName);
+        const specificationId = uuidv4()
+        addSpecifications(STANDARD_SPECIFICATION, specificationId);
+        createNewVisualization(specificationId);
+        createPlot(modelName, specificationId);
         fillVisualization();
         changeActiveVisualization();
         handleModalClose();
@@ -108,19 +113,19 @@ class ListModalContainer extends React.Component {
   }
 }
 
-    //getDimensionsOfCurrentModel: getDimensionsOfCurrentModel(state),
+//getDimensionsOfCurrentModel: getDimensionsOfCurrentModel(state),
 
 
 const mapDispatchToProps = (dispatch) => {
   return {
     addAllDimensions: (modelName, fields) => dispatch(addAllDimensions(modelName, fields)),
-    createNewVisualization: () => dispatch(createNewVisualization()),
+    createNewVisualization: (specificationId) => dispatch(createNewVisualization(specificationId)),
     updateActiveModel: (model) => dispatch(updateActiveModel(model)),
 
     changeActiveVisualization: () => dispatch(changeActiveVisualization()),
-    createPlot: (activeModel) =>
-      dispatch(createNewPlot(activeModel, defaultPlotType)),
-    addSpecifications: () => dispatch(createNewSpecification()),
+    createPlot: (activeModel, specificationId) =>
+      dispatch(createNewPlot(activeModel, defaultPlotType, specificationId)),
+    addSpecifications: (specificationType, specificationId) => dispatch(createNewSpecification(specificationType, specificationId)),
     createNewModel: (modelName, model) =>
       dispatch(createNewModel(modelName, model)),
     fillVisualization: () => dispatch(fillVisualization()),

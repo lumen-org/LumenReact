@@ -9,31 +9,31 @@ import {
 import update from "immutability-helper";
 
 export const defaultState = {
-    standardSpecifications: {}
+    standardspecifications: {}
 }
 
 const standardspecifications = (state = defaultState, action) => {
     switch (action.type) {
         case CREATE_NEW_STANDARD_SPECIFICATION:
-            const { id, defaultState } = action.payload
+            const { id, defaultValues } = action.payload
             return {
                 ...state,
-                standardSpecifications: update(state.standardSpecifications, {
-                    [id]: { $set: defaultState }
+                standardspecifications: update(state.standardspecifications, {
+                    [id]: { $set: defaultValues }
                 }
                 )
             }
         case REMOVE_STANDARD_SPECIFICATION:
             return {
                 ...state,
-                standardSpecifications: update(state.standardSpecifications, {
+                standardspecifications: update(state.standardspecifications, {
                     $unset: [action.payload.id]
                 })
             }
         case ADD_TO_STANDARD_SPECIFICATION:
             return {
                 ...state,
-                standardSpecifications: update(state.standardSpecifications, {
+                standardspecifications: update(state.standardspecifications, {
                     [action.payload.id.toString()]: {
                         [action.payload.key]: { $add: [action.payload.value] }
                     }
@@ -42,7 +42,7 @@ const standardspecifications = (state = defaultState, action) => {
         case DELETE_FROM_STANDARD_SPECIFICATION:
             return {
                 ...state,
-                standardSpecifications: update(state.standardSpecifications, {
+                standardspecifications: update(state.standardspecifications, {
                     [action.payload.id]: { $remove: [action.payload.value] }
                 })
             }
@@ -50,12 +50,12 @@ const standardspecifications = (state = defaultState, action) => {
 
             return {
                 ...state,
-                specifications: update(state.standardSpecifications, {
+                specifications: update(state.standardspecifications, {
                     [action.payload.id]: {
                         facets: {
                             [action.payload.key]: {
                                 $merge: {
-                                    [action.payload.type]: !state.standardSpecifications.byId[
+                                    [action.payload.type]: !state.standardspecifications.byId[
                                         action.payload.id
                                     ].facets[action.payload.key][action.payload.type],
                                 },

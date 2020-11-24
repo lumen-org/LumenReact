@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import PlotMenu from "./PlotMenu";
+import { v4 as uuidv4 } from "uuid";
 import { createNewPlot } from "../../states/plots/actions";
 import { createNewSpecification } from "../../states/specifications/actions";
 import {
@@ -10,6 +11,7 @@ import {
   fillVisualization,
 } from "../../states/visualizations/actions";
 import { STANDARD_PLOT, MULTI_PLOT, PCI_PLOT } from "../../constants/plotTypes";
+import { STANDARD_SPECIFICATION } from "../../states/specifications/specificationTypes";
 class PlotMenuContainer extends React.Component {
   static propTypes = {
     activeModel: PropTypes.string,
@@ -34,9 +36,9 @@ class PlotMenuContainer extends React.Component {
       createNewVisualization,
       fillVisualization,
     } = this.props;
-
-    addSpecifications();
-    createNewVisualization();
+    const specificationId = uuidv4()
+    addSpecifications(STANDARD_SPECIFICATION, specificationId);
+    createNewVisualization(specificationId);
     createPlot(activeModel, plotType);
     fillVisualization();
     changeActiveVisualization();
@@ -60,11 +62,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createNewVisualization: () => dispatch(createNewVisualization()),
+    createNewVisualization: (specificationId) => dispatch(createNewVisualization(specificationId)),
     changeActiveVisualization: () => dispatch(changeActiveVisualization()),
     createPlot: (activeModel, plotType) =>
       dispatch(createNewPlot(activeModel, plotType)),
-    addSpecifications: () => dispatch(createNewSpecification()),
+    addSpecifications: (specificationType, specificationId) => dispatch(createNewSpecification(specificationType, specificationId)),
     fillVisualization: () => dispatch(fillVisualization()),
   };
 };

@@ -1,1 +1,1 @@
-export { default } from "./SpecificationContainer";
+export { default } from "./StandardSpecificationContainer";

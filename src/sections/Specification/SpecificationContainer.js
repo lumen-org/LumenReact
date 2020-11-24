@@ -1,28 +1,23 @@
 import React from "react";
-import Specification from "./Specification";
 import { connect } from "react-redux";
 import { selectActiveSpecificationId } from "../../states/visualizations/selector";
 import { EMPTY } from "../../states/constants";
+import { STANDARD_SPECIFICATION } from "../../states/specifications/specificationTypes";
+import StandardSpecification from "../../components/StandardSpecification/StandardSpecification";
+import Specification from "./Specification";
 
 class SpecificationContainer extends React.Component {
   render() {
-    const specifications = this.props.specifications.byId;
-    return (<div>
-        { 
-          this.props.activeSpecification !== EMPTY &&
-          <Specification
-            specifications={specifications[this.props.activeSpecification].specification}
-            facets={specifications[this.props.activeSpecification].facets}
-          />
-        }
-      </div>
-    );
+    return this.props.activeSpecification !== EMPTY && <Specification
+      specificationType={this.props.specifications[this.props.activeSpecification].specificationType}
+      specificationId={this.props.activeSpecification}
+    />
   }
 }
 
 const mapStateToProps = state => {
   return {
-    specifications: state.specifications.specifications,
+    specifications: state.specifications.specifications.byId,
     activeSpecification: selectActiveSpecificationId(state)
   };
 };
