@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 import { STANDARD_SPECIFICATION } from "./specificationTypes";
 
-const getSpecType = (state, id) => {
+export const getSpecType = (state, id) => {
   return state.specifications.specifications.byId[id].specificationType || {};
 }
 

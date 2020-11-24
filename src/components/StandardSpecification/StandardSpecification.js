@@ -4,6 +4,10 @@ import TitelH1 from "../Titles/TitelH1";
 import TitelH2 from "../Titles/TitleH2";
 import Field from "../Field";
 import Facet from "../Facet";
+import {
+  addToStandardSpecification,
+  deleteFromStandardSpecification,
+} from "../../states/standardspecifications/actions";
 import "./StandardSpecification.css";
 
 class StandardSpecification extends Component {
@@ -15,7 +19,12 @@ class StandardSpecification extends Component {
   handleDrop = item => {
   };
 
+  simplifiedFunction (value) {
+    console.log(value)
+  }
+
   render() {
+    // const hallo = 
     const { specifications } = this.props;
     return (
       <div className="specification">
@@ -25,7 +34,6 @@ class StandardSpecification extends Component {
             title={item[0]}
             data={item[1]}
             dropable={true}
-            onDrop={this.handleDrop}
           />
         ))}
         <TitelH2 value={"Drop here to remove"}/>
