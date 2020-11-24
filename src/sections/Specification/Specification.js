@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import TitelH1 from "../../components/Titles/TitelH1";
-import TitelH2 from "../../components/Titles/TitleH2";
+import TitleH1 from "../../components/Titles/TitleH1";
+import TitleH2 from "../../components/Titles/TitleH2";
 import Field from "../../components/Field";
 import Facet from "../Facet";
 import "./Specification.css";
@@ -19,7 +19,7 @@ class Specification extends Component {
     const { specifications } = this.props;
     return (
       <div className="specification">
-        <TitelH1 value={"Spezification"}/>
+        <TitleH1 value={"Spezification"}/>
         {Object.entries(specifications).map((item, index) => (
           <Field
             title={item[0]}
@@ -28,8 +28,8 @@ class Specification extends Component {
             onDrop={this.handleDrop}
           />
         ))}
-        <TitelH2 value={"Drop here to remove"}/>
-        <TitelH1 value={"Facets"}/>
+        <TitleH2 value={"Drop here to remove"}/>
+        <TitleH1 value={"Facets"}/>
         <Facet text="Test" facets={this.props.facets}/>
       </div>
     );
