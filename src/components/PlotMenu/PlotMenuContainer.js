@@ -39,7 +39,7 @@ class PlotMenuContainer extends React.Component {
     const specificationId = uuidv4()
     addSpecifications(STANDARD_SPECIFICATION, specificationId);
     createNewVisualization(specificationId);
-    createPlot(activeModel, plotType);
+    createPlot(activeModel, plotType, specificationId);
     fillVisualization();
     changeActiveVisualization();
   };
@@ -64,8 +64,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     createNewVisualization: (specificationId) => dispatch(createNewVisualization(specificationId)),
     changeActiveVisualization: () => dispatch(changeActiveVisualization()),
-    createPlot: (activeModel, plotType) =>
-      dispatch(createNewPlot(activeModel, plotType)),
+    createPlot: (activeModel, plotType, specificationId) =>
+      dispatch(createNewPlot(activeModel, plotType, specificationId)),
     addSpecifications: (specificationType, specificationId) => dispatch(createNewSpecification(specificationType, specificationId)),
     fillVisualization: () => dispatch(fillVisualization()),
   };

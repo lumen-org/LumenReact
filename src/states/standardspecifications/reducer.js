@@ -34,8 +34,10 @@ const standardspecifications = (state = defaultState, action) => {
             return {
                 ...state,
                 standardspecifications: update(state.standardspecifications, {
-                    [action.payload.id.toString()]: {
-                        [action.payload.key]: { $add: [action.payload.value] }
+                    [action.payload.id]: {
+                        specification: {
+                            [action.payload.key]: { $add: [action.payload.value] }
+                        }
                     }
                 })
             }
@@ -43,19 +45,23 @@ const standardspecifications = (state = defaultState, action) => {
             return {
                 ...state,
                 standardspecifications: update(state.standardspecifications, {
-                    [action.payload.id]: { $remove: [action.payload.value] }
+                    [action.payload.id]: {
+                        specification: {
+                            [action.payload.key]: { $remove: [action.payload.value] },
+                        },
+                    },
                 })
             }
         case UPDATE_FACET_STATE:
 
             return {
                 ...state,
-                specifications: update(state.standardspecifications, {
+                standardspecifications: update(state.standardspecifications, {
                     [action.payload.id]: {
                         facets: {
                             [action.payload.key]: {
                                 $merge: {
-                                    [action.payload.type]: !state.standardspecifications.byId[
+                                    [action.payload.type]: !state.standardspecifications[
                                         action.payload.id
                                     ].facets[action.payload.key][action.payload.type],
                                 },
