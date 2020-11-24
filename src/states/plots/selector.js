@@ -1,11 +1,3 @@
-export const getStandardPlotDataById = (state, id) => {
-  return state.plots.plots.byId[id].standardPlotData || {};
-};
-
-export const getMultiPlotDataById = (state, id) => {
-  return state.plots.plots.byId[id].multiPlotData || [];
-};
-
 export const getSpecificationId = (state, id) => {
   return state.plots.plots.byId[id].specificationId || [];
 };
@@ -23,4 +15,12 @@ export const getPlotAllIds = (state) => {
 
 export const getPlotTypeById = (state, id) => {
   return state.plots.plots.byId[id].plotType;
+};
+
+export const getActivePlotId = (state) => {
+  return state.plots.activePlotId;
+};
+
+export const getLastCreatedPlotId = (state) => {
+  return state.plots.lastCreatedId;
 };

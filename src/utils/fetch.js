@@ -1,4 +1,4 @@
-import { BASE_URL, FETCH_SCHEMA } from "../constants/query";
+import { BASE_URL } from "../constants/query";
 
 export const fetchData = (url, body) => {
   return fetch(url, {
@@ -19,18 +19,32 @@ export const fetchData = (url, body) => {
     });
 };
 
-export const _fetchModelData = (BODY) => {
+export const createIntermediateModels = (BODY) => {
   return fetchData(BASE_URL, BODY).then((response) => {
-    return { Fields: response["fields"] };
+    return response;
   });
 };
 
-export const fetchModelData = (modelName) => {
-  const POST_BODY = { ...FETCH_SCHEMA, FROM: modelName };
-  return _fetchModelData(POST_BODY);
+export const fetch3DPlotData = (BODY) => {
+  return fetchData(BASE_URL, BODY).then((response) => {
+    const dataString = response["data"].split("\n");
+    const X = [];
+    const Y = [];
+    const Z = [];
+    dataString.forEach((element) => {
+      X.push(element.split(",")[0]);
+      Y.push(element.split(",")[1]);
+      Z.push(element.split(",")[2]);
+    });
+    return {
+      x: X,
+      y: Y,
+      z: Z,
+    };
+  });
 };
 
-export const fetchPlotData = (BODY) => {
+export const fetch2DPlotData = (BODY) => {
   return fetchData(BASE_URL, BODY).then((response) => {
     const dataString = response["data"].split("\n");
     const X = [];
@@ -42,6 +56,20 @@ export const fetchPlotData = (BODY) => {
     return {
       x: X,
       y: Y,
+    };
+  });
+};
+
+export const fetch1DPlotData = (BODY) => {
+  return fetchData(BASE_URL, BODY).then((response) => {
+    const dataString = response["data"].split("\n");
+    const a = [];
+
+    dataString.forEach((element) => {
+      a.push(element.split(",")[0]);
+    });
+    return {
+      a,
     };
   });
 };

@@ -1,20 +1,17 @@
-/*.field-modal {*/
-/*    height: auto;*/
-/*    position: absolute;*/
-/*    overflow: visible;*/
-/*    background-color: rgba(255, 255, 255, 0.95);*/
-/*    border-radius: 5px;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    justify-content: start;*/
-/*    box-sizing: border-box;*/
-/*    transform: translateX(0%) translateY(40%);*/
-/*}*/
-
-/*.show-field-modal {*/
-/*    display: block;*/
-/*}*/
-
-/*.hide-field-modal {*/
-/*    display: none;*/
-/*}*/
+.field-item-modal {
+  flex: 1;
+  padding: 10px;
+  margin: 10px;
+  height: inherit;
+  width: auto;
+  overflow: hidden;
+  text-align: center;
+  vertical-align: middle;
+  display: grid;
+}
+.field-item-menu-button {
+  margin-top: 10px;
+}
+.field-item-modal-options-wrapper {
+  margin-top: 5px;
+}

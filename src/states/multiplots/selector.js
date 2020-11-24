@@ -3,6 +3,5 @@ export const getMultiPlotDataById = (state, id) => {
 };
 
 export const getPlotLayoutById = (state, id) => {
-  console.log(state.multiplots.layout);
   return state.multiplots.layout[id] || {};
 };

@@ -2,9 +2,9 @@ import React from "react";
 import "./CloseButton.scss";
 
 function CloseButton({ handleClose }) {
-  return <div class="close-container" onClick={handleClose}>
-  <div class="leftright"></div>
-  <div class="rightleft"></div>
+  return <div className="close-container" onClick={handleClose}>
+  <div className="leftright"></div>
+  <div className="rightleft"></div>
   </div>
 
 

@@ -7,7 +7,7 @@ import {
   deleteFromSpecification,
 } from "../../states/specifications/actions";
 import { FIELD_ITEM } from "../../constants/dragAndDropTypes";
-import FieldItemModal from "../FieldItemModal/FieldItemModal";
+import FieldItemModal from "../FieldItemModal";
 import { selectActiveSpecificationId } from "../../states/visualizations/selector";
 
 function FieldItemContainer({ value, fieldName = "", type = FIELD_ITEM }) {
@@ -24,11 +24,16 @@ function FieldItemContainer({ value, fieldName = "", type = FIELD_ITEM }) {
     );
   }
 
-  const [isOpen, setIsOpen] = useState(false);
-  const handleModal = () => {
-    setIsOpen(!isOpen);
-  };
+  const [isModalOpen, setIsOpen] = useState(false);
+  const [anchordEl, setAnchordEl] = useState({});
 
+  const handleModalOpen = (event) => {
+    setAnchordEl(event);
+    setIsOpen(true);
+  };
+  const handleModalClose = () => {
+    setIsOpen(false);
+  };
   // to hook into specifications actions
   const dispatch = useDispatch();
 
@@ -60,15 +65,20 @@ function FieldItemContainer({ value, fieldName = "", type = FIELD_ITEM }) {
       {fieldName ? (
         <FieldItem
           value={value}
-          handleClose={() => dispatchListItem()}
-          handleClick={handleModal}
-          isOpen={isOpen}
-          handleModal={handleModal}
+          handleFieldItemClose={() => dispatchListItem()}
+          handleModalOpen={handleModalOpen}
         />
       ) : (
         <FieldItem value={value} />
       )}
-      <FieldItemModal />
+      {isModalOpen && (
+        <FieldItemModal
+          isOpen={isModalOpen}
+          handleModalClose={handleModalClose}
+          title={value}
+          anchorEl={anchordEl}
+        />
+      )}
     </div>
   );
 }

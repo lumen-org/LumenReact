@@ -16,7 +16,6 @@ import {
 
 class MultiPlotContainer extends React.Component {
   static propTypes = {
-    fetchPlotData: PropTypes.func,
     fetchPlotLayout: PropTypes.func,
     plotData: PropTypes.array,
     layout: PropTypes.object,
@@ -37,7 +36,6 @@ class MultiPlotContainer extends React.Component {
 
   render() {
     const { plotData, layout } = this.props;
-    console.log(layout);
     return <MultiPlot plotData={plotData} layout={layout} />;
   }
 }

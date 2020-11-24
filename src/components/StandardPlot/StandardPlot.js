@@ -1,18 +1,17 @@
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Loader from "react-loader-spinner";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./StandardPlot.css";
 import { defaultPlot } from "./defaultPlot";
-// We need to import Plotly in this strange way due to heap memory
-// See issue: https://github.com/plotly/react-plotly.js/issues/135
-import createPlotlyComponent from "react-plotly.js/factory";
-const Plotly = window.Plotly;
-const Plot = createPlotlyComponent(Plotly);
+import Plot from "react-plotly.js";
 
 class StandardPlot extends Component {
   static propTypes = {
     plotData: PropTypes.array,
     displayTraces: PropTypes.array,
     specification: PropTypes.object,
+    loading: PropTypes.bool,
   };
 
   state = {
@@ -24,8 +23,8 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.scatterTrace,
-      x: plotData.training.x,
-      y: plotData.training.y,
+      x: plotData.trainingDataPoints.x,
+      y: plotData.trainingDataPoints.y,
     };
   };
 
@@ -33,7 +32,7 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.xHistogramTrace,
-      x: plotData.training.x,
+      x: plotData.dataMarginals.x,
     };
   };
 
@@ -41,16 +40,17 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.yHistogramTrace,
-      y: plotData.training.y,
+      y: plotData.dataMarginals.y,
     };
   };
 
   getNewDataDensityTrace = () => {
     const { plotData } = this.props;
     return {
-      ...defaultPlot.densityTrace,
-      x: plotData.training.x,
-      y: plotData.training.y,
+      ...defaultPlot.dataDensityTrace,
+      x: plotData.dataDensity.x,
+      y: plotData.dataDensity.y,
+      z: plotData.dataDensity.z,
     };
   };
 
@@ -58,8 +58,8 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.modelScatterTrace,
-      x: plotData.model.x,
-      y: plotData.model.y,
+      x: plotData.modelDataPoints.x,
+      y: plotData.modelDataPoints.y,
     };
   };
 
@@ -67,7 +67,7 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.modelXHistogramTrace,
-      x: plotData.model.x,
+      x: plotData.dataMarginals.x,
     };
   };
 
@@ -75,7 +75,7 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.modelYHistogramTrace,
-      y: plotData.model.y,
+      y: plotData.modelMarginals.y,
     };
   };
 
@@ -83,8 +83,27 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.modelDensityTrace,
-      x: plotData.model.x,
-      y: plotData.model.y,
+      x: plotData.modelDensity.x || [],
+      y: plotData.modelDensity.y || [],
+      z: plotData.modelDensity.z || [],
+    };
+  };
+
+  getNewModelPredictionTrace = () => {
+    const { plotData } = this.props;
+    return {
+      ...defaultPlot.modelPredictionTrace,
+      x: plotData.modelPrediction.x || [],
+      y: plotData.modelPrediction.y || [],
+    };
+  };
+
+  getNewDataPredictionTrace = () => {
+    const { plotData } = this.props;
+    return {
+      ...defaultPlot.dataPredictionTrace,
+      x: plotData.dataPrediction.x || [],
+      y: plotData.dataPrediction.y || [],
     };
   };
 
@@ -103,6 +122,9 @@ class StandardPlot extends Component {
         data.push(this.getNewDataXHistogramTrace());
         data.push(this.getNewDataYHistogramTrace());
       }
+      if (traceinfo.name === "Prediction" && traceinfo.from === "data") {
+        data.push(this.getNewDataPredictionTrace());
+      }
       if (traceinfo.name === "Data Points" && traceinfo.from === "model") {
         data.push(this.getNewModelScatterTrace());
       }
@@ -112,6 +134,9 @@ class StandardPlot extends Component {
       if (traceinfo.name === "Marginals" && traceinfo.from === "model") {
         data.push(this.getNewModelXHistogramTrace());
         data.push(this.getNewModelYHistogramTrace());
+      }
+      if (traceinfo.name === "Prediction" && traceinfo.from === "model") {
+        data.push(this.getNewModelPredictionTrace());
       }
     });
 
@@ -133,13 +158,25 @@ class StandardPlot extends Component {
 
   render() {
     const { layout, data } = this.state;
+    const { loading } = this.props.plotData;
     return (
-      <Plot
-        data={data}
-        layout={layout}
-        useResizeHandler={true}
-        className="StandardPlot-plot"
-      />
+      <div>
+        <Plot
+          data={data}
+          layout={layout}
+          useResizeHandler={true}
+          className="StandardPlot-plot"
+        />
+        {loading && (
+          <Loader
+            className={"standardplot-spinner"}
+            type="TailSpin"
+            color="#6465a1"
+            height={80}
+            width={80}
+          />
+        )}
+      </div>
     );
   }
 }

@@ -32,7 +32,7 @@ export const defaultPlot = {
         width: 1.5,
       },
       xbins: {
-        size: 0.08,
+        size: 0.01,
       },
     },
     xaxis: "x2",
@@ -47,7 +47,7 @@ export const defaultPlot = {
         width: 1.5,
       },
       xbins: {
-        size: 0.08,
+        size: 0.01,
       },
     },
     yaxis: "y2",
@@ -55,14 +55,14 @@ export const defaultPlot = {
   },
   modelYHistogramTrace: {
     marker: {
-      color: "rgb(235, 64, 52)",
+      color: "rgba(231, 99, 250, 0.5",
       opacity: 0.75,
       line: {
         color: "rgb(235, 64, 52)",
-        width: 1.5,
+        width: 1,
       },
       xbins: {
-        size: 0.08,
+        size: 0.01,
       },
     },
     xaxis: "x2",
@@ -70,34 +70,44 @@ export const defaultPlot = {
   },
   modelXHistogramTrace: {
     marker: {
-      color: "rgb(2235, 64, 52)",
+      color: "rgba(231, 99, 250, 0.5",
       opacity: 0.75,
       line: {
         color: "rgb(235, 64, 52)",
-        width: 1.5,
+        width: 1,
       },
       xbins: {
-        size: 0.08,
+        size: 0.01,
       },
     },
     yaxis: "y2",
     type: "histogram",
   },
-  densityTrace: {
-    name: "training data density",
-    ncontours: 20,
-    colorscale: "Blues",
-    reversescale: true,
+  dataDensityTrace: {
+    name: "model density",
     showscale: false,
-    type: "histogram2dcontour",
+    type: "contour",
+    colorscale: "Greys",
+    contours: {
+      coloring: "lines",
+      color: "#666666",
+      width: 4,
+    },
+    xaxis: "x",
+    yaxis: "y",
   },
   modelDensityTrace: {
     name: "model density",
-    ncontours: 20,
-    colorscale: "Reds",
-    reversescale: true,
     showscale: false,
-    type: "histogram2dcontour",
+    type: "contour",
+    colorscale: "YlOrRd",
+    contours: {
+      coloring: "lines",
+      color: "pink",
+      width: 4,
+    },
+    xaxis: "x",
+    yaxis: "y",
   },
   modelScatterTrace: {
     type: "scatter",
@@ -106,4 +116,19 @@ export const defaultPlot = {
     yaxis: "y",
     marker: plotStyle.modelScatterMarker,
   },
+  modelPredictionTrace: {
+    type: "scatter",
+    mode: "markers",
+    xaxis: "x",
+    yaxis: "y",
+    marker: plotStyle.modelPredictionMarker,
+  },
+  dataPredictionTrace: {
+    type: "scatter",
+    mode: "markers",
+    xaxis: "x",
+    yaxis: "y",
+    marker: plotStyle.dataPredictionMarker,
+  },
+  showlegend: false,
 };

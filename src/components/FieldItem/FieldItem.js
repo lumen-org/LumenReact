@@ -1,20 +1,33 @@
-import React, {useRef} from "react";
-import "./FielItem.scss";
+import React, { useRef } from "react";
+import PropTypes from "prop-types";
+
+import "./FieldItem.scss";
 import CloseButton from "../Button/CloseButton";
-import FieldItemModal from "../FieldItemModal/FieldItemModal";
+import FieldItemModal from "../FieldItemModal";
 
+class FieldItem extends React.Component {
+  static propTypes = {
+    value: PropTypes.string,
+    handleFieldItemClose: PropTypes.func,
+    handleModalOpen: PropTypes.func,
+  };
 
-const FieldItem = ({ value, handleClick = null, handleClose = null, handleModal = null, isOpen = false, input_dom=null }) => {
-  return (
-    <div className="field-item-container draggable">
-      {handleClose && <CloseButton handleClose={handleClose}/>}
-      <div className={"field-item"} onClick={handleClick}>
-        {value}
+  render() {
+    const { value, handleFieldItemClose, handleModalOpen } = this.props;
+    return (
+      <div className="field-item-container draggable">
+        {handleFieldItemClose && (
+          <CloseButton handleClose={handleFieldItemClose} />
+        )}
+        <div
+          className={"field-item"}
+          onClick={(event) => handleModalOpen(event.currentTarget)}
+        >
+          {value}
+        </div>
       </div>
-      <FieldItemModal title={value} isOpen={isOpen} handleClose={handleModal}/>
-    </div>
-  );
-};
-
+    );
+  }
+}
 
 export default FieldItem;

@@ -24,8 +24,6 @@ class AppToolbar extends Component {
       this.setState({
         openModal: true,
       });
-    } else if (buttonKey === 7) {
-      this.props.handleGraphClick();
     }
   };
 
@@ -46,7 +44,7 @@ class AppToolbar extends Component {
       <div className="navbar navbar-dark navbar-expand fixed-top">
         <ListModal open={openModal} handleModalClose={this.handleModalClose} />
 
-        <a class="navbar-brand">Lumen</a>
+        <a className="navbar-brand">Lumen</a>
         <ul className="navbar-nav mr-auto">
           {items.map((item, key) => (
             <li className="nav-item appToolbar-buttonContainer">

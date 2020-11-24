@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./MultiPlot.css";
-// We need to import Plotly in this strange way due to heap memory
-// See issue: https://github.com/plotly/react-plotly.js/issues/135
-import createPlotlyComponent from "react-plotly.js/factory";
-const Plotly = window.Plotly;
-const Plot = createPlotlyComponent(Plotly);
+import Plot from "react-plotly.js";
 
 class MultiPlot extends Component {
   static propTypes = {
