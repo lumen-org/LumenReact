@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Schema displays dimensions correctly 1`] = `
+<div
+  className="specification"
+>
+  <div>
+    Spezification
+  </div>
+  <div>
+    <div>
+      X_Axis
+    </div>
+    <div />
+  </div>
+  <div>
+    <div>
+      Y-Axis
+    </div>
+    <div />
+  </div>
+  <h2>
+    Drop here to remove
+  </h2>
+  <div>
+    Facets
+  </div>
+  <div>
+    bla
+  </div>
+</div>
+`;

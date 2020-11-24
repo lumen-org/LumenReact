@@ -1,7 +1,7 @@
 import React from "react";
 import { unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
-import TitelH2 from "../Titles/TitleH2";
+import TitleH2 from "../Titles/TitleH2";
 import FieldList from "../FieldList/FieldList";
 //import { render, fireEvent, screen } from "@testing-library/react";
 import { shallow } from "enzyme";
@@ -47,8 +47,9 @@ describe("Field.js Test", () => {
     jest.spyOn(console, "error");
     const wrapper = shallow(<Field title={title} data={data} />);
     expect(
-      wrapper.contains(<TitelH2 value={title} />, <FieldList dataList={data} />)
+      wrapper.contains(<TitleH2 value={title} />, <FieldList dataList={data} />)
     ).toEqual(true);
+    
     expect(console.error).not.toBeCalled();
   });
 
