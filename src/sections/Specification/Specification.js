@@ -6,14 +6,17 @@ import Field from "../../components/Field";
 import Facet from "../Facet";
 import "./Specification.css";
 
-type SpecificationProps = {
-  specifications: object,
-  facets: object
-}
+class Specification extends Component {
+  static propTypes = {
+    specifications: PropTypes.object.isRequired,
+    facets: PropTypes.object.isRequired
+  };
 
-class Specification extends Component<SpecificationProps> {
+  handleDrop = item => {
+  };
+
   render() {
-    const { specifications, facets } = this.props;
+    const { specifications } = this.props;
     return (
       <div className="specification">
         <TitleH1 value={"Spezification"}/>
@@ -22,11 +25,12 @@ class Specification extends Component<SpecificationProps> {
             title={item[0]}
             data={item[1]}
             dropable={true}
+            onDrop={this.handleDrop}
           />
         ))}
         <TitleH2 value={"Drop here to remove"}/>
         <TitleH1 value={"Facets"}/>
-        <Facet text="Test" facets={facets}/>
+        <Facet text="Test" facets={this.props.facets}/>
       </div>
     );
   }
