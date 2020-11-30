@@ -52,12 +52,12 @@ const standardPlots = (state = defaultState, action) => {
                 y: [],
               },
               modelMarginals: {
-                x: { x: [], y: [] },
-                y: { x: [], y: [] },
+                xAxis: { x: [], y: [] },
+                yAxis: { x: [], y: [] },
               },
               dataMarginals: {
-                x: { x: [], y: [] },
-                y: { x: [], y: [] },
+                xAxis: { x: [], y: [] },
+                yAxis: { x: [], y: [] },
               },
               modelDensity: {
                 x: [],
@@ -137,7 +137,7 @@ const standardPlots = (state = defaultState, action) => {
             loading: false,
             modelMarginals: {
               ...state.standardPlots[action.payload.id].modelMarginals,
-              x: action.payload.x,
+              xAxis: action.payload.x,
             },
           },
         },
@@ -153,7 +153,7 @@ const standardPlots = (state = defaultState, action) => {
             loading: false,
             modelMarginals: {
               ...state.standardPlots[action.payload.id].modelMarginals,
-              y: action.payload.y,
+              yAxis: action.payload.y,
             },
           },
         },
@@ -169,7 +169,7 @@ const standardPlots = (state = defaultState, action) => {
             loading: false,
             dataMarginals: {
               ...state.standardPlots[action.payload.id].dataMarginals,
-              x: action.payload.x,
+              xAxis: action.payload.x,
             },
           },
         },
@@ -185,7 +185,7 @@ const standardPlots = (state = defaultState, action) => {
             loading: false,
             dataMarginals: {
               ...state.standardPlots[action.payload.id].dataMarginals,
-              y: action.payload.y,
+              yAxis: action.payload.y,
             },
           },
         },

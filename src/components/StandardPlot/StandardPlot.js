@@ -34,8 +34,8 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.xHistogramTrace,
-      x: plotData.dataMarginals.x.x,
-      y: plotData.dataMarginals.x.y,
+      x: plotData.dataMarginals.xAxis.x,
+      y: plotData.dataMarginals.xAxis.y,
     };
   };
 
@@ -43,8 +43,8 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.yHistogramTrace,
-      y: plotData.dataMarginals.y.x,
-      x: plotData.dataMarginals.y.y,
+      y: plotData.dataMarginals.yAxis.x,
+      x: plotData.dataMarginals.yAxis.y,
     };
   };
 
@@ -71,8 +71,8 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.modelXHistogramTrace,
-      x: plotData.modelMarginals.x.x,
-      y: plotData.modelMarginals.x.y,
+      x: plotData.modelMarginals.xAxis.x,
+      y: plotData.modelMarginals.xAxis.y,
     };
   };
 
@@ -80,8 +80,8 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.modelYHistogramTrace,
-      y: plotData.modelMarginals.y.x,
-      x: plotData.modelMarginals.y.y,
+      y: plotData.modelMarginals.yAxis.x,
+      x: plotData.modelMarginals.yAxis.y,
     };
   };
 
