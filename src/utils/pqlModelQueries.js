@@ -60,7 +60,7 @@ export const marginalizeModel = (FROM, MODEL, AS) => {
     AS,
   };
   return fetchData(BASE_URL, BODY).then((response) => {
-    console.log(response);
+    //  console.log(response);
   });
 };
 

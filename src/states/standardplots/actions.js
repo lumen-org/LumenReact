@@ -29,21 +29,17 @@ import { getPlotAllIds } from "../plots/selector";
 import { getModelNameById } from "../models/selector";
 
 import { nextAvaliableId } from "../../utils/plotData";
-import {
-  fetch3DPlotData,
-  fetch2DPlotData,
-  fetch1DPlotData,
-} from "../../utils/fetch";
+import { fetch3DPlotData, fetch2DPlotData } from "../../utils/fetch";
 import { getActivePlotId, getSpecificationId } from "../plots/selector";
 import { marginalizeModel } from "../../utils/pqlModelQueries";
-import { getFacetById } from "../specifications/selector.js";
+import { getFacetById, getSpecById } from "../specifications/selector.js";
 import {
   getMarginalsQueryBodyById,
   getDensityQueryBodyById,
   getSelectedFieldObjectById,
   getPredictionQueryBodyId,
   getSelectedFieldArrayById,
-} from "./selector";
+} from "./utils";
 
 function initializePlot(id) {
   return {
@@ -214,6 +210,7 @@ export function deriveSubmodelsOnSpecChange() {
 export function fetchOnSpecChange() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
+
     const facets = getFacetById(getState(), getSpecificationId(getState(), id));
     dispatch(fetchDataPending(id));
     if (facets["Data Points"].data === true) {
@@ -337,7 +334,6 @@ export function fetchDataMarginals() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
     const fieldItems = getSelectedFieldObjectById(getState(), id);
-    // TODO: How marginal data queries are done are wrong. fix me!
     dispatch(fetchDataPending(id));
     if (fieldItems.x) {
       const dataMarginalsQueryBody = getMarginalsQueryBodyById(
@@ -392,6 +388,7 @@ export function fetchModelDataPoints() {
     const id = getActivePlotId(getState());
     const modelName = getModelNameById(getState(), id);
     const fieldItems = getSelectedFieldArrayById(getState(), id);
+
     dispatch(fetchDataPending(id));
     const modelDataQueryBody = {
       FROM: modelName,
