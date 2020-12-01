@@ -1,4 +1,3 @@
-import { createSelector } from "reselect";
 import { STANDARD_SPECIFICATION } from "./specificationTypes";
 
 export const getSpecType = (state, id) => {

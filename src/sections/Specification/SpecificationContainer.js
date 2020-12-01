@@ -2,8 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { selectActiveSpecificationId } from "../../states/visualizations/selector";
 import { EMPTY } from "../../states/constants";
-import { STANDARD_SPECIFICATION } from "../../states/specifications/specificationTypes";
-import StandardSpecification from "../../components/StandardSpecification/StandardSpecification";
 import Specification from "./Specification";
 
 class SpecificationContainer extends React.Component {
