@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Field.js Functionality Test render normally 1`] = `
+<div
+  className="field-item-container draggable"
+>
+  <div>
+    CloseButton
+  </div>
+  <div
+    className="field-item"
+    onClick={[Function]}
+  >
+    sepal_width
+  </div>
+</div>
+`;
