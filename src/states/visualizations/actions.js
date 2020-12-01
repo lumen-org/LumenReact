@@ -10,10 +10,10 @@ import { getLastCreatedPlotId } from "../plots/selector";
 import { getLastCreatedVisualizationId } from "./selector";
 import { v4 as uuidv4 } from "uuid";
 
-export const createNewVisualization = () => {
+export const createNewVisualization = (specificationId) => {
   return (dispatch, getState) => {
     const modelId = getLastCreatedModelId(getState());
-    const specificationId = getLastCreatedSpecId(getState());
+    // const specificationId = getLastCreatedSpecId(getState());
 
     dispatch(_createNewVisualization(uuidv4(), modelId, specificationId));
   };

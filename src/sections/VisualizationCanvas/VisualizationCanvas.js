@@ -7,6 +7,7 @@ import "./VisualizationCanvas.scss";
 import { MULTI_PLOT, PCI_PLOT, STANDARD_PLOT } from "../../constants/plotTypes";
 import StandardPlot from "../../components/StandardPlot/StandardPlotContainer";
 import MultiPlot from "../../components/MultiPlot/MultiPlotContainer";
+import { STANDARD_SPECIFICATION } from "../../states/specifications/specificationTypes";
 
 
 class VisualizationCanvas extends Component {
@@ -28,7 +29,7 @@ class VisualizationCanvas extends Component {
   }
 
   render() {
-    const { plots, specifications, models } = this.props;
+    const { plots, specifications, standardspecifications, models } = this.props;
     const {
       plotWindowsHeight,
       plotWindowsWidth
@@ -37,14 +38,16 @@ class VisualizationCanvas extends Component {
       <div className="VisualizationCanvas-container">
         {Object.keys(plots).map(
           (id) => {
-            const plotType = plots[id].plotType;
+            const {plotType, specificationId} = plots[id];
+            const specificationType = specifications[specificationId].specificationType
+            
             return plots[id].show && (
               <RnDPlot
                 id={plots[id].id}
                 zIndex={plots[id].zIndex + 10}
                 modelName={plots[id].model}
                 specifications={
-                  specifications.byId[plots[id].specificationId].specification
+                  standardspecifications[specificationId]
                 }
                 visualizationId={plots[id].visualizationId}
               >
@@ -54,8 +57,8 @@ class VisualizationCanvas extends Component {
                   <MultiPlot id={id} />
                 ) : plotType === PCI_PLOT ? (
                   <PCIGraph id={id}
-                    // plotWindowsHeight={plotWindowsHeight}
-                    // plotWindowsWidth={plotWindowsWidth}
+                  // plotWindowsHeight={plotWindowsHeight}
+                  // plotWindowsWidth={plotWindowsWidth}
                   />
                 ) : null}
               </RnDPlot>
