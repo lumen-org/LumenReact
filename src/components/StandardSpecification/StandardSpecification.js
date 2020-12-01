@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import TitelH1 from "../Titles/TitelH1";
+import TitelH1 from "../Titles/TitleH1";
 import TitelH2 from "../Titles/TitleH2";
 import Field from "../Field";
 import Facet from "../Facet";
