@@ -57,7 +57,7 @@ describe('dimensions reducer', () => {
     })
   })
 
-describe('dimensions reducer', () => {
+describe('dimensions reducer 2', () => {
     it('compare dimensions and add model id to models', () => {
       expect(
         //// second: same model -> compare dimensions and add model id to models

@@ -3,9 +3,7 @@ import { unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 import { render } from "@testing-library/react";
 import TestRenderer from "react-test-renderer"
-
 import CloseButton from "./CloseButton";
-import pretty from "pretty";
 
 let container = null;
 beforeEach(() => {
@@ -21,18 +19,19 @@ afterEach(() => {
   container = null;
 });
 
-it("render normally", () => {
+test("CloseButton missing value", () => {
+  jest.spyOn(console, "error")
   act(() => {
     render(<CloseButton />, container);
   });
-  expect(pretty(container.innerHTML)).toMatchInlineSnapshot(`""`);
-  
+  expect(console.error).toBeCalled()
+}); 
+
+test("CloseButton render normally", () => {  
   
   let handleClose = jest.fn();
   let component = TestRenderer.create(<CloseButton handleClose={handleClose} />, container);
 
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
-
-
 });
