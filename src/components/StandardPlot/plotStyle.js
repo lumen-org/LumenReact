@@ -8,10 +8,10 @@ export const plotStyle = {
     },
   },
   modelScatterMarker: {
-    color: "rgba(231, 99, 250, 0.5)",
     size: 8,
+    opacity: 0.5,
     line: {
-      color: "rgba(231, 99, 250,0.5)",
+      //   color: "rgba(231, 99, 250,0.5)",
       width: 1.5,
     },
     symbol: "square",

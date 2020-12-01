@@ -58,13 +58,16 @@ class StandardPlot extends Component {
     };
   };
 
-  getNewModelScatterTrace = () => {
+  getNewModelScatterTrace = (data) => {
     const { plotData } = this.props;
-    return {
-      ...defaultPlot.modelScatterTrace,
-      x: plotData.modelDataPoints.x,
-      y: plotData.modelDataPoints.y,
-    };
+    for (var key of Object.keys(plotData.modelDataPoints.x)) {
+      console.log(key, plotData.modelDataPoints.x[key]);
+      data.push({
+        ...defaultPlot.modelScatterTrace,
+        x: plotData.modelDataPoints.x[key],
+        y: plotData.modelDataPoints.y[key],
+      });
+    }
   };
 
   getNewModelXHistogramTrace = () => {
@@ -135,7 +138,7 @@ class StandardPlot extends Component {
       }
 
       if (traceinfo.name === "Data Points" && traceinfo.from === "model") {
-        data.push(this.getNewModelScatterTrace());
+        this.getNewModelScatterTrace(data);
       }
       if (traceinfo.name === "Density" && traceinfo.from === "model") {
         data.push(this.getNewModelDensityTrace());
@@ -148,7 +151,8 @@ class StandardPlot extends Component {
     this.setState({
       layout: {
         ...defaultPlot.layout,
-        /*    xaxis: {
+        /* TODO: Add axis name  
+           xaxis: {
           ...defaultPlot.layout.xaxis,
           text: axisField.x,
         },

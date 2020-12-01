@@ -38,8 +38,8 @@ const standardPlots = (state = defaultState, action) => {
               loading: false,
               categories: ["all"],
               modelDataPoints: {
-                x: [],
-                y: [],
+                x: {},
+                y: {},
               },
               trainingDataPoints: {
                 x: [],

@@ -7,7 +7,5 @@ export const getFacetById = (state, id) => {
 };
 
 export const getColorCatgeoryById = (state, id) => {
-  return (
-    [...state.standardspecifications.standardspecifications[id].Color] || []
-  );
+  return [...getSpecById(state, id).Color] || [];
 };

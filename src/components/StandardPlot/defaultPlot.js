@@ -1,12 +1,11 @@
 import { plotStyle } from "./plotStyle";
-
+// TODO: Implement colorscheme
 export const defaultPlot = {
   layout: {
     colorway: [
-      "#f3cec9",
-      "#e7a4b6",
-      "#cd7eaf",
-      "#a262a9",
+      "rgba(231, 99, 250)",
+      "rgba(231,164,18)",
+      "rgba(10, 100,250)",
       "#6f4d96",
       "#3d3b72",
       "#182844",

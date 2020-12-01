@@ -10,3 +10,7 @@ import { getModelNameById } from "../models/selector";
 export const getStandardPlotDataById = (state, id) => {
   return state.standardplots.standardPlots[id] || {};
 };
+
+export const getStandardPlotCategoriesById = (state, id) => {
+  return getStandardPlotDataById(state, id).categories || {};
+};

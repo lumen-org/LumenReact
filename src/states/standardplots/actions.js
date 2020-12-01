@@ -20,8 +20,13 @@ import { getPlotAllIds } from "../plots/selector";
 import { getModelNameById } from "../models/selector";
 
 import { nextAvaliableId } from "../../utils/plotData";
-import { fetch3DPlotData, fetch2DPlotData } from "../../utils/fetch";
+import {
+  fetch3DPlotData,
+  fetch2DPlotData,
+  fetch2DPlotDataCategroy,
+} from "../../utils/fetch";
 import { getActivePlotId, getSpecificationId } from "../plots/selector";
+import { getStandardPlotCategoriesById } from "./selector";
 import { marginalizeModel } from "../../utils/pqlModelQueries";
 import {
   getFacetById,
@@ -199,8 +204,8 @@ export function fetchCatgetories(fieldItems) {
       fieldItems,
       mcgModelName + "_data_marginal"
     ).then((response) => {
-      console.log(response.fields[0].extent);
-      dispatch(updateCategories(id, response.fields[0].extent));
+      const categories = response.fields[0].extent;
+      dispatch(updateCategories(id, categories));
     });
   };
 }
@@ -408,7 +413,10 @@ export function fetchModelDataPoints() {
     const id = getActivePlotId(getState());
     const modelName = getModelNameById(getState(), id);
     const fieldItems = getSelectedFieldArrayById(getState(), id);
-    const colorSpec = getColorCatgeoryById(getState(), id);
+    const colorSpec = getColorCatgeoryById(
+      getState(),
+      getSpecificationId(getState(), id)
+    );
     if (colorSpec.length !== 0) {
       fieldItems.push(colorSpec[0]);
       dispatch(fetchCatgetories(fieldItems));
@@ -423,7 +431,7 @@ export function fetchModelDataPoints() {
       },
       SELECT: fieldItems,
     };
-    fetch2DPlotData(modelDataQueryBody).then((response) => {
+    fetch2DPlotDataCategroy(modelDataQueryBody).then((response) => {
       dispatch(fetchModelDataSucess(id, response));
     });
   };
