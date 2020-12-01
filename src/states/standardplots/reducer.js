@@ -36,7 +36,7 @@ const standardPlots = (state = defaultState, action) => {
           [id]: {
             $set: {
               loading: false,
-              categories: [],
+              categories: ["all"],
               modelDataPoints: {
                 x: [],
                 y: [],

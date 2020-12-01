@@ -4,21 +4,11 @@ import {
   FETCH_MODEL_Y_MARGINAL_SUCCESS,
   FETCH_DATA_X_MARGINAL_SUCCESS,
   FETCH_DATA_Y_MARGINAL_SUCCESS,
-  FETCH_MODEL_MARGINAL_ERROR,
-  FETCH_DATA_MARGINAL_ERROR,
   FETCH_MODEL_DATA_SUCCESS,
-  FETCH_MODEL_DATA_ERROR,
   FETCH_TRAINING_DATA_SUCCESS,
-  FETCH_TRAINING_DATA_PENDING,
-  FETCH_TRAINING_DATA_ERROR,
   FETCH_DATA_DENSITY_SUCCESS,
-  FETCH_DATA_DENSITY_ERROR,
   FETCH_MODEL_DENSITY_SUCCESS,
-  FETCH_MODEL_DENSITY_ERROR,
   FETCH_INITIAL_PLOTDATA_SUCCESS,
-  FETCH_INITIAL_PLOTDATA_ERROR,
-  FETCH_MODEL_PREDICTION_ERROR,
-  FETCH_DATA_PREDICTION_ERROR,
   FETCH_CATEGORIES,
   FETCH_DATA_PREDICTION_SUCCESS,
   FETCH_MODEL_PREDICTION_SUCCESS,
@@ -33,7 +23,11 @@ import { nextAvaliableId } from "../../utils/plotData";
 import { fetch3DPlotData, fetch2DPlotData } from "../../utils/fetch";
 import { getActivePlotId, getSpecificationId } from "../plots/selector";
 import { marginalizeModel } from "../../utils/pqlModelQueries";
-import { getFacetById, getSpecById } from "../specifications/selector.js";
+import {
+  getFacetById,
+  getSpecById,
+  getColorCatgeoryById,
+} from "../standardspecifications/selector.js";
 import {
   getMarginalsQueryBodyById,
   getDensityQueryBodyById,
@@ -414,20 +408,11 @@ export function fetchModelDataPoints() {
     const id = getActivePlotId(getState());
     const modelName = getModelNameById(getState(), id);
     const fieldItems = getSelectedFieldArrayById(getState(), id);
-
-    // TODO: Below code needs refractoring
-    // After merge with Specification refractoring, refractor
-    // getting the categorical field item name to standardspecification selector.
-    const specifications = getSpecById(
-      getState(),
-      getSpecificationId(getState(), id)
-    );
-    const colorSpec = [...specifications.Color];
+    const colorSpec = getColorCatgeoryById(getState(), id);
     if (colorSpec.length !== 0) {
       fieldItems.push(colorSpec[0]);
       dispatch(fetchCatgetories(fieldItems));
     }
-    // Above code needs refractoring
     dispatch(fetchDataPending(id));
     const modelDataQueryBody = {
       FROM: modelName,

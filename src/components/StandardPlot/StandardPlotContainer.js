@@ -6,7 +6,7 @@ import { getStandardPlotDataById } from "../../states/standardplots/selector";
 import {
   getSpecById,
   getFacetById,
-} from "../../states/specifications/selector.js";
+} from "../../states/standardspecifications/selector.js";
 
 import {
   fetchOnSpecChange,

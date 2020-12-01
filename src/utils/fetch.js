@@ -54,6 +54,33 @@ export const fetch2DPlotData = (BODY) => {
   });
 };
 
+export const fetch2DPlotDataCategroy = (BODY, categories) => {
+  return fetchData(BASE_URL, BODY).then((response) => {
+    const dataString = response["data"].split("\n");
+    var X = {};
+    var Y = {};
+
+    categories.forEach((category) => {
+      X[category] = [];
+      Y[category] = [];
+    });
+    dataString.forEach((element) => {
+      var splited = element.split(",");
+      if (splited.length === 3) {
+        X[splited[2]].push(splited[0]);
+        Y[splited[2]].push(splited[1]);
+      } else {
+        X["all"].push(splited[0]);
+        Y["all"].push(splited[1]);
+      }
+    });
+    return {
+      x: X,
+      y: Y,
+    };
+  });
+};
+
 export const fetch1DPlotData = (BODY) => {
   return fetchData(BASE_URL, BODY).then((response) => {
     const dataString = response["data"].split("\n");

@@ -7,11 +7,6 @@ import { getSpecById } from "../specifications/selector";
 import { getSpecificationId } from "../plots/selector";
 import { getModelNameById } from "../models/selector";
 
-export const getColorFieldItemById = (state, id) => {
-  const specifications = getSpecById(state, getSpecificationId(state, id));
-  const colorSpec = [...specifications.Color];
-  return colorSpec[0];
-};
 /**
  *
  * @param {the entire redux state} state
