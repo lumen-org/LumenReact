@@ -28,7 +28,7 @@ export function changeActivePlot(newid) {
   };
 }
 
-export function createNewPlot(modelName, plotType) {
+export function createNewPlot(modelName, plotType, specificationId) {
   return (dispatch, getState) => {
     const newId = nextAvaliableId(getPlotAllIds(getState()));
 
@@ -43,7 +43,7 @@ export function createNewPlot(modelName, plotType) {
     }
 
     const visualizationId = getLastCreatedVisualizationId(getState());
-    const specificationId = getLastCreatedSpecId(getState());
+    // const specificationId = getLastCreatedSpecId(getState());
 
     dispatch(createPlot(modelName, visualizationId, specificationId, plotType));
     dispatch(changeActivePlot(newId));
