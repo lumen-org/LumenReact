@@ -20,7 +20,6 @@ class StandardSpecification extends Component {
   }
 
   render() {
-    // const hallo = 
     const { specifications } = this.props;
     return (
       <div className="specification">
