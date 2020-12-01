@@ -1,29 +1,24 @@
 import React from "react";
-import { unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 import { render } from "@testing-library/react";
 import TestRenderer from "react-test-renderer"
 import CloseButton from "./CloseButton";
 
 let container = null;
+let spy = null;
 beforeEach(() => {
-  // setup a DOM element as a render target
-  container = document.createElement("div");
-  document.body.appendChild(container);
+  spy = jest.spyOn(console, 'error').mockImplementation();
 });
 
 afterEach(() => {
   // cleanup on exiting
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
+  spy.mockRestore();
 });
 
 describe("CloseButton Missing Values", () => {
   test("CloseButton missing value", () => {
-    jest.spyOn(console, "error")
     act(() => {
-      render(<CloseButton />, container);
+      TestRenderer.create(<CloseButton />);
     });
     expect(console.error).toBeCalled()
   }); 

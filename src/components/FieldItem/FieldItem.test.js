@@ -1,5 +1,4 @@
 import React from "react";
-import { unmountComponentAtNode } from "react-dom";
 import { render } from "@testing-library/react";
 import FieldItem from "./FieldItem";
 import TestRenderer from "react-test-renderer";
@@ -8,22 +7,15 @@ jest.mock("../../components/Button/CloseButton", () => (props) =>
 <div>CloseButton</div>
 )
 /// executed before every describe
-let container = null;
 let spy = null;
 beforeEach(() => {
   // setup a DOM element as a render target
-  container = document.createElement("div");
-  document.body.appendChild(container);
   spy = jest.spyOn(console, 'error').mockImplementation(); /// prevents console from showing the errors while simultaniously being able to catch errors
 });
 
 /// executed after every describe
 afterEach(() => {
   // cleanup on exiting
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
-  console.clear();
   spy.mockRestore(); // important so errors are displayed again
 });
 
