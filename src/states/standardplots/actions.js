@@ -392,7 +392,15 @@ export function fetchTrainingDataPoints() {
     dispatch(fetchDataPending(id));
     const modelName = getModelNameById(getState(), id);
     const fieldItems = getSelectedFieldArrayById(getState(), id);
-
+    const colorSpec = getColorCatgeoryById(
+      getState(),
+      getSpecificationId(getState(), id)
+    );
+    if (colorSpec.length !== 0) {
+      fieldItems.push(colorSpec[0]);
+      dispatch(fetchCatgetories(fieldItems));
+    }
+    dispatch(fetchDataPending(id));
     const trainingDataQueryBody = {
       FROM: modelName,
       SELECT: fieldItems,
@@ -402,7 +410,7 @@ export function fetchTrainingDataPoints() {
       },
     };
 
-    fetch2DPlotData(trainingDataQueryBody).then((response) => {
+    fetch2DPlotDataCategroy(trainingDataQueryBody).then((response) => {
       dispatch(fetchTrainingDataSucess(id, response));
     });
   };

@@ -21,13 +21,17 @@ class StandardPlot extends Component {
     data: [],
   };
 
-  getNewDataScatterTrace = () => {
+  getNewDataScatterTrace = (data) => {
     const { plotData } = this.props;
-    return {
-      ...defaultPlot.scatterTrace,
-      x: plotData.trainingDataPoints.x,
-      y: plotData.trainingDataPoints.y,
-    };
+    for (var key of Object.keys(plotData.trainingDataPoints.x)) {
+      console.log(key, plotData.trainingDataPoints.x[key]);
+      data.push({
+        ...defaultPlot.scatterTrace,
+        //name: key,
+        x: plotData.trainingDataPoints.x[key],
+        y: plotData.trainingDataPoints.y[key],
+      });
+    }
   };
 
   getNewDataXHistogramTrace = () => {
@@ -64,6 +68,7 @@ class StandardPlot extends Component {
       console.log(key, plotData.modelDataPoints.x[key]);
       data.push({
         ...defaultPlot.modelScatterTrace,
+        name: key,
         x: plotData.modelDataPoints.x[key],
         y: plotData.modelDataPoints.y[key],
       });
@@ -127,7 +132,7 @@ class StandardPlot extends Component {
         data.push(this.getNewModelPredictionTrace());
       }
       if (traceinfo.name === "Data Points" && traceinfo.from === "data") {
-        data.push(this.getNewDataScatterTrace());
+        this.getNewDataScatterTrace(data);
       }
       if (traceinfo.name === "Density" && traceinfo.from === "data") {
         data.push(this.getNewDataDensityTrace());

@@ -42,8 +42,8 @@ const standardPlots = (state = defaultState, action) => {
                 y: {},
               },
               trainingDataPoints: {
-                x: [],
-                y: [],
+                x: {},
+                y: {},
               },
               modelMarginals: {
                 xAxis: { x: [], y: [] },
