@@ -4,10 +4,6 @@ import TitelH1 from "../Titles/TitelH1";
 import TitelH2 from "../Titles/TitleH2";
 import Field from "../Field";
 import Facet from "../Facet";
-import {
-  addToStandardSpecification,
-  deleteFromStandardSpecification,
-} from "../../states/standardspecifications/actions";
 import "./StandardSpecification.css";
 
 class StandardSpecification extends Component {
