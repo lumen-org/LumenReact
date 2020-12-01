@@ -19,19 +19,24 @@ afterEach(() => {
   container = null;
 });
 
-test("CloseButton missing value", () => {
-  jest.spyOn(console, "error")
-  act(() => {
-    render(<CloseButton />, container);
-  });
-  expect(console.error).toBeCalled()
-}); 
-
-test("CloseButton render normally", () => {  
-  
-  let handleClose = jest.fn();
-  let component = TestRenderer.create(<CloseButton handleClose={handleClose} />, container);
-
-  let tree = component.toJSON();
-  expect(tree).toMatchSnapshot();
+describe("CloseButton Missing Values", () => {
+  test("CloseButton missing value", () => {
+    jest.spyOn(console, "error")
+    act(() => {
+      render(<CloseButton />, container);
+    });
+    expect(console.error).toBeCalled()
+  }); 
 });
+
+describe("CloseButton Functionality", () => {
+  test("CloseButton render normally", () => {  
+    
+    let handleClose = jest.fn();
+    let component = TestRenderer.create(<CloseButton handleClose={handleClose} />, container);
+  
+    let tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+});
+

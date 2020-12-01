@@ -1,69 +1,61 @@
 import React from "react";
 import { unmountComponentAtNode } from "react-dom";
-import { act } from "react-dom/test-utils";
-import TitleH2 from "../Titles/TitleH2";
-import FieldList from "../FieldList/FieldList";
-//import { render, fireEvent, screen } from "@testing-library/react";
-import { shallow } from "enzyme";
+import TestRenderer from "react-test-renderer";
 import Field from "./Field";
-import pretty from "pretty";
 
+/// mock children components for shallow rendering
+jest.mock("../../components/Titles/TitleH2", () => (props) => (
+  <h2>{props.value}</h2>
+));
+
+jest.mock("../../components/FieldList/FieldList", () => (props) => (
+<div>FieldList</div>
+));
+
+/// executed before every describe
 let container = null;
+let spy = null;
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement("div");
   document.body.appendChild(container);
+  spy = jest.spyOn(console, 'error').mockImplementation(); /// prevents console from showing the errors while simultaniously being able to catch errors
 });
 
+/// executed after every describe
 afterEach(() => {
   // cleanup on exiting
   unmountComponentAtNode(container);
   container.remove();
   container = null;
+  console.clear();
+  spy.mockRestore(); // important so errors are displayed again
 });
 
-/*
-it("missing title", () => {
-  act(() => {
-    render(<Field />, container);
-  });
-  expect(container).toThrow();
-  //expect(pretty(container.innerHTML)).toMatchInlineSnapshot(`""`);
-});
+/// Test missing Values
+describe("Field.js Missing Values Test", () => {
 
-it("missing title 2", () => {
-  act(() => {
-    let handleClose = jest.fn();
-    render(<Field handleClose={handleClose} />, container);
-  });
-  expect(container).toThrow();
-});
-
-*/
-describe("Field.js Test", () => {
-  it("render normally", () => {
+  it("missing value data", () => {
     let title = "TestTitle";
-    let data = ["Test", "Test", "Test"];
-    jest.spyOn(console, "error");
-    const wrapper = shallow(<Field title={title} data={data} />);
-    expect(
-      wrapper.contains(<TitleH2 value={title} />, <FieldList dataList={data} />)
-    ).toEqual(true);
-    
-    expect(console.error).not.toBeCalled();
+    TestRenderer.create(<Field title={title} />);
+    expect(console.error).toHaveBeenCalledTimes(1);
   });
 
   it("missing value title", () => {
-    let title = "TestTitle";
-    jest.spyOn(console, "error");
-    const wrapper = shallow(<Field title={title} />);
-    expect(console.error).toBeCalled();
-  });
-
-  it("missing value data", () => {
     let data = ["TestTitle"];
-    jest.spyOn(console, "error");
-    const wrapper = shallow(<Field data={data} />);
-    expect(console.error).toBeCalled();
+    TestRenderer.create(<Field data={data} />);
+    expect(console.error).toHaveBeenCalledTimes(1);
+  }); 
+});
+
+/// test normal rendering and additional functionality
+describe("Field.js Functionality Test", () => {
+  it("render normally", () => {
+    let title = "TestTitle";
+    let data = ["Test", "Test", "Test"];
+    const component = TestRenderer.create(<Field title={title} data={data} />);
+    let tree = component.toJSON();
+    expect(console.error).not.toBeCalled();
+    expect(tree).toMatchSnapshot();
   });
 });
