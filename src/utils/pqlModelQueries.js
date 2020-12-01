@@ -37,16 +37,14 @@ export const showHeaders = (FROM) => {
  */
 export const cloneModel = (FROM) => {
   const BODY = { ...CLONE_MODEL, FROM, AS: FROM + "_clone" };
-  return fetchData(BASE_URL, BODY).then((response) => console.log(response));
+  return fetchData(BASE_URL, BODY);
 };
 
 /**
  * drops a model from the model base
  */
 export const dropModel = (DROP) => {
-  return fetchData(BASE_URL, { DROP: DROP }).then((response) =>
-    console.log(response)
-  );
+  return fetchData(BASE_URL, { DROP: DROP });
 };
 
 /**
@@ -59,9 +57,7 @@ export const marginalizeModel = (FROM, MODEL, AS) => {
     MODEL,
     AS,
   };
-  return fetchData(BASE_URL, BODY).then((response) => {
-    //  console.log(response);
-  });
+  return fetchData(BASE_URL, BODY);
 };
 
 /**
@@ -75,7 +71,5 @@ export const deriveSubmodel = (FROM, MODEL, AS, WHERE) => {
     AS,
     WHERE,
   };
-  return fetchData(BASE_URL, BODY).then((response) => {
-    console.log(response);
-  });
+  return fetchData(BASE_URL, BODY);
 };

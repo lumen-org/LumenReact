@@ -19,6 +19,7 @@ import {
   FETCH_INITIAL_PLOTDATA_ERROR,
   FETCH_MODEL_PREDICTION_ERROR,
   FETCH_DATA_PREDICTION_ERROR,
+  FETCH_CATEGORIES,
   FETCH_DATA_PREDICTION_SUCCESS,
   FETCH_MODEL_PREDICTION_SUCCESS,
   INITIALIZE_NEW_STANDARD_PLOT,
@@ -182,6 +183,31 @@ export function updateStandardPlotData(id, newStandardPlotData) {
       id: id,
       newStandardPlotData: newStandardPlotData,
     },
+  };
+}
+
+export function updateCategories(id, categories) {
+  return {
+    type: FETCH_CATEGORIES,
+    payload: {
+      id: id,
+      categories: categories,
+    },
+  };
+}
+
+export function fetchCatgetories(fieldItems) {
+  return (dispatch, getState) => {
+    const id = getActivePlotId(getState());
+    const mcgModelName = getModelNameById(getState(), id);
+    marginalizeModel(
+      mcgModelName,
+      fieldItems,
+      mcgModelName + "_data_marginal"
+    ).then((response) => {
+      console.log(response.fields[0].extent);
+      dispatch(updateCategories(id, response.fields[0].extent));
+    });
   };
 }
 
@@ -389,6 +415,19 @@ export function fetchModelDataPoints() {
     const modelName = getModelNameById(getState(), id);
     const fieldItems = getSelectedFieldArrayById(getState(), id);
 
+    // TODO: Below code needs refractoring
+    // After merge with Specification refractoring, refractor
+    // getting the categorical field item name to standardspecification selector.
+    const specifications = getSpecById(
+      getState(),
+      getSpecificationId(getState(), id)
+    );
+    const colorSpec = [...specifications.Color];
+    if (colorSpec.length !== 0) {
+      fieldItems.push(colorSpec[0]);
+      dispatch(fetchCatgetories(fieldItems));
+    }
+    // Above code needs refractoring
     dispatch(fetchDataPending(id));
     const modelDataQueryBody = {
       FROM: modelName,
