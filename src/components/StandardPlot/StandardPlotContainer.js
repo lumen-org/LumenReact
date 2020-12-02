@@ -85,6 +85,7 @@ class StandardPlotContainer extends React.Component {
 
   render() {
     const { plotData, specification, axisFields, modelName } = this.props;
+
     const { displayTraces } = this.state;
     return (
       <StandardPlot

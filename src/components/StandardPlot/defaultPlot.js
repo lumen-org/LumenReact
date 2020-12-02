@@ -14,10 +14,23 @@ export const defaultPlot = {
     xaxis: {
       domain: [0, 0.85],
       showgrid: false,
+      title: {
+        text: "x Axis",
+        /*
+        font: {
+          family: "Courier New, monospace",
+          size: 18,
+          color: "#7f7f7f",
+        },
+        */
+      },
     },
     yaxis: {
       domain: [0, 0.85],
       showgrid: false,
+      title: {
+        text: "x Axis",
+      },
     },
     xaxis2: {
       domain: [0.85, 1],
@@ -49,7 +62,7 @@ export const defaultPlot = {
     mode: "markers",
     xaxis: "x",
     yaxis: "y",
-    showlegend: false,
+    showlegend: true,
     marker: plotStyle.scatterMarker,
   },
   yHistogramTrace: {

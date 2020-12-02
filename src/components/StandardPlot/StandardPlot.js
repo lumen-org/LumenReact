@@ -12,7 +12,7 @@ class StandardPlot extends Component {
     displayTraces: PropTypes.array,
     specification: PropTypes.object,
     loading: PropTypes.bool,
-    axisField: PropTypes.object,
+    axisFields: PropTypes.object,
     modelName: PropTypes.string,
   };
 
@@ -24,10 +24,9 @@ class StandardPlot extends Component {
   getNewDataScatterTrace = (data) => {
     const { plotData } = this.props;
     for (var key of Object.keys(plotData.trainingDataPoints.x)) {
-      console.log(key, plotData.trainingDataPoints.x[key]);
       data.push({
         ...defaultPlot.scatterTrace,
-        //name: key,
+        name: "train: " + key,
         x: plotData.trainingDataPoints.x[key],
         y: plotData.trainingDataPoints.y[key],
       });
@@ -65,7 +64,6 @@ class StandardPlot extends Component {
   getNewModelScatterTrace = (data) => {
     const { plotData } = this.props;
     for (var key of Object.keys(plotData.modelDataPoints.x)) {
-      console.log(key, plotData.modelDataPoints.x[key]);
       data.push({
         ...defaultPlot.modelScatterTrace,
         name: key,
@@ -122,7 +120,7 @@ class StandardPlot extends Component {
   };
 
   setPlotData = () => {
-    const { displayTraces, modelName, axisField } = this.props;
+    const { displayTraces, modelName, axisFields } = this.props;
     const data = [];
     displayTraces.map((traceinfo, ind) => {
       if (traceinfo.name === "Prediction" && traceinfo.from === "data") {
@@ -156,15 +154,20 @@ class StandardPlot extends Component {
     this.setState({
       layout: {
         ...defaultPlot.layout,
-        /* TODO: Add axis name  
-           xaxis: {
+        xaxis: {
           ...defaultPlot.layout.xaxis,
-          text: axisField.x,
+          title: {
+            ...defaultPlot.layout.xaxis.title,
+            text: axisFields.x,
+          },
         },
         yaxis: {
           ...defaultPlot.layout.yaxis,
-          text: axisField.y,
-        },*/
+          title: {
+            ...defaultPlot.layout.yaxis.title,
+            text: axisFields.y,
+          },
+        },
         title: modelName,
       },
       data,
