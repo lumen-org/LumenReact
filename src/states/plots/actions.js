@@ -30,23 +30,28 @@ export function changeActivePlot(newid) {
 
 export function createNewPlot(modelName, plotType, specificationId) {
   return (dispatch, getState) => {
-    const newId = nextAvaliableId(getPlotAllIds(getState()));
+    if (getState().models.lastCreatedModelId !== null){
+      const newId = nextAvaliableId(getPlotAllIds(getState()));
 
-    if (plotType === STANDARD_PLOT) {
-      dispatch(createNewStandardPlot());
-    }
-    if (plotType === MULTI_PLOT) {
-      dispatch(createNewMultiPlot());
-    }
-    if (plotType === PCI_PLOT) {
-      dispatch(showPCIGraph(selectActiveModelId(getState())));
-    }
+      if (plotType === STANDARD_PLOT) {
+        dispatch(createNewStandardPlot());
+      }
+      if (plotType === MULTI_PLOT) {
+        dispatch(createNewMultiPlot());
+      }
+      if (plotType === PCI_PLOT) {
+        dispatch(showPCIGraph(selectActiveModelId(getState())));
+      }
 
-    const visualizationId = getLastCreatedVisualizationId(getState());
-    // const specificationId = getLastCreatedSpecId(getState());
+      const visualizationId = getLastCreatedVisualizationId(getState());
+      // const specificationId = getLastCreatedSpecId(getState());
 
-    dispatch(createPlot(modelName, visualizationId, specificationId, plotType));
-    dispatch(changeActivePlot(newId));
+      dispatch(createPlot(modelName, visualizationId, specificationId, plotType));
+      dispatch(changeActivePlot(newId));
+    }
+    else {
+      alert("No model selected!");
+    }
   };
 }
 
@@ -81,7 +86,7 @@ export function deletePlot(id) {
       dispatch(deleteMultiPlot(id));
     }
     if (plotType === PCI_PLOT) {
-      let modelId = getState().plots.plots.byId[id].model;
+      let modelId = getState().visualizations.visualizations.byId[getState().plots.plots.byId[id].visualizationId].modelId;
       console.log("hide pci", modelId);
       dispatch(hidePCIGraph(modelId));
     }
