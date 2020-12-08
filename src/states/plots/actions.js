@@ -30,7 +30,6 @@ export function changeActivePlot(newid) {
 
 export function createNewPlot(modelName, plotType, specificationId) {
   return (dispatch, getState) => {
-    if (getState().models.lastCreatedModelId !== null){
       const newId = nextAvaliableId(getPlotAllIds(getState()));
 
       if (plotType === STANDARD_PLOT) {
@@ -48,10 +47,6 @@ export function createNewPlot(modelName, plotType, specificationId) {
 
       dispatch(createPlot(modelName, visualizationId, specificationId, plotType));
       dispatch(changeActivePlot(newId));
-    }
-    else {
-      alert("No model selected!");
-    }
   };
 }
 
