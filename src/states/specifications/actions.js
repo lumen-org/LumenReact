@@ -6,17 +6,17 @@ import {
   STANDARD_SPECIFICATION
 } from "./specificationTypes"
 
-export const createNewSpecification = (specificationType = STANDARD_SPECIFICATION, specificationId = uuidv4(), initValues = null) => {
+export const createNewSpecification = ({specificationType = STANDARD_SPECIFICATION, specificationId = uuidv4(), initValues = null}) => {
   return (dispatch) => {
     if (specificationType === STANDARD_SPECIFICATION) {
       dispatch(createNewStandardSpecification(specificationId, initValues))
     }
-    dispatch(createSpecification(specificationId, specificationType))
-    dispatch(changeActiveSpecification(specificationId))
+    dispatch(createSpecification({specificationId, specificationType}))
+    dispatch(changeActiveSpecification({specificationId}))
   }
 }
 
-const createSpecification = (specificationId, specificationType) => {
+export const createSpecification = ({specificationId, specificationType}) => {
   return {
     type: CREATE_NEW_SPECIFICATION,
     payload: {
@@ -26,7 +26,7 @@ const createSpecification = (specificationId, specificationType) => {
   }
 }
 
-const changeActiveSpecification = (specificationId) => {
+export const changeActiveSpecification = ({specificationId}) => {
   return {
     type: CHANGE_ACTIVE_SPECIFICATIONS,
     payload: {

@@ -1,5 +1,6 @@
 import {
     CREATE_NEW_STANDARD_SPECIFICATION,
+    REMOVE_STANDARD_SPECIFICATION,
     ADD_TO_STANDARD_SPECIFICATION,
     RESET_STANDARD_SPECIFICATIONS,
     UPDATE_FACET_STATE,
@@ -45,6 +46,15 @@ export const createNewStandardSpecification = (id, initValues = null) => {
         payload: {
             id,
             defaultValues: initValues ? initValues : defaultValues
+        }
+    }
+}
+
+export const removeStandardSpecification = (id) => {
+    return {
+        type: REMOVE_STANDARD_SPECIFICATION,
+        payload: {
+            id
         }
     }
 }

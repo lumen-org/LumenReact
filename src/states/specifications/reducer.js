@@ -1,7 +1,8 @@
 import { EMPTY } from "../constants";
-import { CREATE_NEW_SPECIFICATION } from "./constants";
+import { CHANGE_ACTIVE_SPECIFICATIONS, CREATE_NEW_SPECIFICATION } from "./constants";
 
 import update from "immutability-helper";
+import store from "../../store";
 
 export const defaultState = {
   specifications: {
@@ -31,6 +32,11 @@ const specifications = (state = defaultState, action) => {
           activeSpecificationId: id,
         };
       }
+      case CHANGE_ACTIVE_SPECIFICATIONS:
+        return {
+          ...state,
+          activeSpecificationId: action.payload.id
+        }
     default:
       return {
         ...state
