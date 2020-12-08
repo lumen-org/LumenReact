@@ -48,7 +48,7 @@ describe("RnDPlotWrapper Funcitionality", () => {
       );
     });
     let tree = component.toJSON();
-    //expect(tree).toMatchSnapshot();
+    expect(tree).toMatchSnapshot();
   });
 })
 
