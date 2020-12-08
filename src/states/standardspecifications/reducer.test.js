@@ -3,7 +3,7 @@ import reducer from "./reducer";
 import { defaultValues, defaultState, filledOneState, changedPredictionModelState } from "./testData";
 
 describe("standardspecification reducer", () => {
-    it("should create the intial state", () => {
+    it("should create the initial state", () => {
         expect(reducer(undefined, {})).toEqual(
             {
                 standardspecifications: {}
