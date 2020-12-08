@@ -9,8 +9,8 @@ import "./MainWindows.scss";
 // TODO: Make it responsive according to tablet size
 class MainWindows extends Component {
   static propTypes = {
-    openModal: PropTypes.bool.isRequired,
-    handleModalClose: PropTypes.func.isRequired
+    openModal: PropTypes.bool,//.isRequired,
+    handleModalClose: PropTypes.func,//.isRequired
   };
 
   state = {

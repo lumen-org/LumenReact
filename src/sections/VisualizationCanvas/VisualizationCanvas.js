@@ -12,7 +12,7 @@ import { STANDARD_SPECIFICATION } from "../../states/specifications/specificatio
 
 class VisualizationCanvas extends Component {
   static propTypes = {
-    plots: PropTypes.arrayOf(
+    plots: PropTypes.objectOf(
       PropTypes.objectOf({
         id: PropTypes.number,
         modelName: PropTypes.string,

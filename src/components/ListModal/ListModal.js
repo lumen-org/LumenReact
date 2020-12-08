@@ -58,6 +58,7 @@ class ListModdal extends Component {
     return (
       <Modal
         isOpen={open}
+        ariaHideApp={false}
         onRequestClose={handleModalClose}
         style={modalStyles}
         contentLabel="Main Windows"
