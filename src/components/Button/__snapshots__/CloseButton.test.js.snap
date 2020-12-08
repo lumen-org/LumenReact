@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CloseButton Functionality CloseButton render normally 1`] = `
+<div
+  className="close-container"
+  onClick={[MockFunction]}
+>
+  <div
+    className="leftright"
+  />
+  <div
+    className="rightleft"
+  />
+</div>
+`;

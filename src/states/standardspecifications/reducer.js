@@ -3,6 +3,7 @@ import {
     CREATE_NEW_STANDARD_SPECIFICATION,
     DELETE_FROM_STANDARD_SPECIFICATION,
     REMOVE_STANDARD_SPECIFICATION,
+    RESET_STANDARD_SPECIFICATIONS,
     UPDATE_FACET_STATE
 } from "./constants"
 
@@ -70,6 +71,8 @@ const standardspecifications = (state = defaultState, action) => {
                     },
                 }),
             };
+            case RESET_STANDARD_SPECIFICATIONS:
+                return defaultState
         default:
             return state
     }

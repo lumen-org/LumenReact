@@ -1,15 +1,14 @@
-import React, { useRef } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
-import "./FielItem.scss";
+import "./FieldItem.scss";
 import CloseButton from "../Button/CloseButton";
-import FieldItemModal from "../FieldItemModal";
 
 class FieldItem extends React.Component {
   static propTypes = {
-    value: PropTypes.string,
-    handleFieldItemClose: PropTypes.func,
-    handleModalOpen: PropTypes.func,
+    value: PropTypes.string.isRequired,
+    handleFieldItemClose: PropTypes.func.isRequired,
+    handleModalOpen: PropTypes.func.isRequired,
   };
 
   render() {
