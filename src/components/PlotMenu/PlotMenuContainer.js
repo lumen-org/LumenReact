@@ -46,7 +46,7 @@ class PlotMenuContainer extends React.Component {
       changeActiveVisualization();
     }
     else {
-      alert("No model selected");
+      alert("No model selected!");
     }
 
   };
