@@ -1,7 +1,7 @@
 import { UPDATE_ACTIVE_MODEL } from "./constants";
 
 export const defaultState = {
-  activeModel: "mcg_iris_map",
+  activeModel: "",//"mcg_iris_map",
   activePlots: undefined,
   activeSpecification: undefined,
 };
