@@ -21,6 +21,15 @@ export const getActivePlotId = (state) => {
   return state.plots.activePlotId;
 };
 
+export const getModelNameOfActivePlotId = (state) => {
+  if (getActivePlotId(state)) {
+    return state.plots.plots.byId[state.plots.activePlotId].model;
+  }
+  else {
+    return "";
+  }
+};
+
 export const getLastCreatedPlotId = (state) => {
   return state.plots.lastCreatedId;
 };

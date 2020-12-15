@@ -19,11 +19,9 @@ import {
   createNewVisualization,
   fillVisualization,
 } from "../../states/visualizations/actions";
-import { createNewModel, updateModelDimensions } from "../../states/models/actions";
+import { createNewModel} from "../../states/models/actions";
 import { addAllDimensions } from "../../states/dimensions/actions";
-import { getDimensionsOfCurrentModel } from "../../states/dimensions/selector";
 import { STANDARD_SPECIFICATION } from "../../states/specifications/specificationTypes";
-import specifications from "../../states/specifications/reducer";
 const defaultPlotType = STANDARD_PLOT; // Haha, we will certainly refractor this, right?
 class ListModalContainer extends React.Component {
   static propTypes = {
@@ -55,18 +53,18 @@ class ListModalContainer extends React.Component {
       addSpecifications,
       createNewVisualization,
       createNewModel,
-      updateModelDimensions,
       addAllDimensions,
       fillVisualization,
+      updateActiveModel,
     } = this.props;
     showHeaders(modelName)
       .then((fields) => {
         createNewModel(modelName, fields);
+        updateActiveModel(modelName);
         return fields;
       })
       .then((fields) => {
         addAllDimensions(modelName, fields);
-        //updateModelDimensions(this.props.modelId, dimensions);
         const specificationId = uuidv4()
         addSpecifications(STANDARD_SPECIFICATION, specificationId);
         createNewVisualization(specificationId);

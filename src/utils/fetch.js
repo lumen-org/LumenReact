@@ -71,7 +71,7 @@ export const fetch2DPlotDataCategroy = (BODY) => {
         categories.push(splited[2]);
       }
     });
-    if (dataString[0].split(",").length === 3) {
+    if (dataString[0] && dataString[0].split(",").length === 3) {
       categories.splice(0, 1);
     }
     categories.forEach((category) => {

@@ -36,7 +36,6 @@ class PlotMenuContainer extends React.Component {
       createNewVisualization,
       fillVisualization,
     } = this.props;
-    console.log(activeModel);
     if (activeModel !== ""){
       const specificationId = uuidv4();
       addSpecifications(STANDARD_SPECIFICATION, specificationId);

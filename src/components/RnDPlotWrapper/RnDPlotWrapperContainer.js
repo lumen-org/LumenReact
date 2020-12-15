@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { changeActivePlot, deletePlot } from "../../states/plots/actions";
-import { updateActiveModel } from "../../states/app/actions";
+import { updateActiveModel, _updateActiveModel } from "../../states/app/actions";
 import PropTypes from "prop-types";
 import RnDPlotWrapper from "./RnDPlotWrapper";
 import {
@@ -24,12 +24,14 @@ class RnDPlotWrapperContainer extends React.Component {
       plots,
       _changeActiveVisualization,
       deleteVisualization,
+      _updateActiveModel,
     } = this.props;
     const nextId = plots.allIds[0];
     const getVisualizationId = (plotId) => plots.byId[plotId].visualizationId;
     _changeActiveVisualization(getVisualizationId(nextId));
     deletePlot(id);
     deleteVisualization(getVisualizationId(id));
+    _updateActiveModel();
   };
 
   onActivePlotChange = (id) => {
@@ -78,6 +80,7 @@ const mapDispatchToProps = (dispatch) => {
     updateActiveModel: (
       newActiveModel // this function trigger the update of models
     ) => dispatch(updateActiveModel(newActiveModel)),
+    _updateActiveModel: () => dispatch(_updateActiveModel()),
     deleteVisualization: (id) => dispatch(deleteVisualization(id)),
     deletePlot: (id) => dispatch(deletePlot(id)),
   };
