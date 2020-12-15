@@ -39,7 +39,7 @@ class VisualizationCanvas extends Component {
         {Object.keys(plots).map(
           (id) => {
             const {plotType, specificationId} = plots[id];
-            const specificationType = specifications[specificationId].specificationType
+            // const specificationType = specifications[specificationId].specificationType
             
             return plots[id].show && (
               <RnDPlot
