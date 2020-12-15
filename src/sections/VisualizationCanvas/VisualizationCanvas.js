@@ -12,7 +12,7 @@ import { STANDARD_SPECIFICATION } from "../../states/specifications/specificatio
 
 class VisualizationCanvas extends Component {
   static propTypes = {
-    plots: PropTypes.objectOf(
+    plots: PropTypes.arrayOf(
       PropTypes.objectOf({
         id: PropTypes.number,
         modelName: PropTypes.string,
@@ -39,7 +39,7 @@ class VisualizationCanvas extends Component {
         {Object.keys(plots).map(
           (id) => {
             const {plotType, specificationId} = plots[id];
-            // const specificationType = specifications[specificationId].specificationType
+            const specificationType = specifications[specificationId].specificationType
             
             return plots[id].show && (
               <RnDPlot

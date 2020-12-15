@@ -125,7 +125,7 @@ const mapDispatchToProps = (dispatch) => {
     changeActiveVisualization: () => dispatch(changeActiveVisualization()),
     createPlot: (activeModel, specificationId) =>
       dispatch(createNewPlot(activeModel, defaultPlotType, specificationId)),
-    addSpecifications: (specificationType, specificationId) => dispatch(createNewSpecification(specificationType, specificationId)),
+    addSpecifications: (specificationType, specificationId) => dispatch(createNewSpecification({specificationType, specificationId})),
     createNewModel: (modelName, model) =>
       dispatch(createNewModel(modelName, model)),
     fillVisualization: () => dispatch(fillVisualization()),
