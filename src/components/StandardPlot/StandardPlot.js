@@ -12,7 +12,7 @@ class StandardPlot extends Component {
     displayTraces: PropTypes.array,
     specification: PropTypes.object,
     loading: PropTypes.bool,
-    axisField: PropTypes.object,
+    axisFields: PropTypes.object,
     modelName: PropTypes.string,
   };
 
@@ -21,21 +21,24 @@ class StandardPlot extends Component {
     data: [],
   };
 
-  getNewDataScatterTrace = () => {
+  getNewDataScatterTrace = (data) => {
     const { plotData } = this.props;
-    return {
-      ...defaultPlot.scatterTrace,
-      x: plotData.trainingDataPoints.x,
-      y: plotData.trainingDataPoints.y,
-    };
+    for (var key of Object.keys(plotData.trainingDataPoints.x)) {
+      data.push({
+        ...defaultPlot.scatterTrace,
+        name: "train: " + key,
+        x: plotData.trainingDataPoints.x[key],
+        y: plotData.trainingDataPoints.y[key],
+      });
+    }
   };
 
   getNewDataXHistogramTrace = () => {
     const { plotData } = this.props;
     return {
       ...defaultPlot.xHistogramTrace,
-      x: plotData.dataMarginals.x.x,
-      y: plotData.dataMarginals.x.y,
+      x: plotData.dataMarginals.xAxis.x,
+      y: plotData.dataMarginals.xAxis.y,
     };
   };
 
@@ -43,8 +46,8 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.yHistogramTrace,
-      y: plotData.dataMarginals.y.x,
-      x: plotData.dataMarginals.y.y,
+      y: plotData.dataMarginals.yAxis.x,
+      x: plotData.dataMarginals.yAxis.y,
     };
   };
 
@@ -58,21 +61,24 @@ class StandardPlot extends Component {
     };
   };
 
-  getNewModelScatterTrace = () => {
+  getNewModelScatterTrace = (data) => {
     const { plotData } = this.props;
-    return {
-      ...defaultPlot.modelScatterTrace,
-      x: plotData.modelDataPoints.x,
-      y: plotData.modelDataPoints.y,
-    };
+    for (var key of Object.keys(plotData.modelDataPoints.x)) {
+      data.push({
+        ...defaultPlot.modelScatterTrace,
+        name: key,
+        x: plotData.modelDataPoints.x[key],
+        y: plotData.modelDataPoints.y[key],
+      });
+    }
   };
 
   getNewModelXHistogramTrace = () => {
     const { plotData } = this.props;
     return {
       ...defaultPlot.modelXHistogramTrace,
-      x: plotData.modelMarginals.x.x,
-      y: plotData.modelMarginals.x.y,
+      x: plotData.modelMarginals.xAxis.x,
+      y: plotData.modelMarginals.xAxis.y,
     };
   };
 
@@ -80,8 +86,8 @@ class StandardPlot extends Component {
     const { plotData } = this.props;
     return {
       ...defaultPlot.modelYHistogramTrace,
-      y: plotData.modelMarginals.y.x,
-      x: plotData.modelMarginals.y.y,
+      y: plotData.modelMarginals.yAxis.x,
+      x: plotData.modelMarginals.yAxis.y,
     };
   };
 
@@ -114,7 +120,7 @@ class StandardPlot extends Component {
   };
 
   setPlotData = () => {
-    const { displayTraces, modelName, axisField } = this.props;
+    const { displayTraces, modelName, axisFields } = this.props;
     const data = [];
     displayTraces.map((traceinfo, ind) => {
       if (traceinfo.name === "Prediction" && traceinfo.from === "data") {
@@ -124,7 +130,7 @@ class StandardPlot extends Component {
         data.push(this.getNewModelPredictionTrace());
       }
       if (traceinfo.name === "Data Points" && traceinfo.from === "data") {
-        data.push(this.getNewDataScatterTrace());
+        this.getNewDataScatterTrace(data);
       }
       if (traceinfo.name === "Density" && traceinfo.from === "data") {
         data.push(this.getNewDataDensityTrace());
@@ -135,7 +141,7 @@ class StandardPlot extends Component {
       }
 
       if (traceinfo.name === "Data Points" && traceinfo.from === "model") {
-        data.push(this.getNewModelScatterTrace());
+        this.getNewModelScatterTrace(data);
       }
       if (traceinfo.name === "Density" && traceinfo.from === "model") {
         data.push(this.getNewModelDensityTrace());
@@ -148,14 +154,20 @@ class StandardPlot extends Component {
     this.setState({
       layout: {
         ...defaultPlot.layout,
-        /*    xaxis: {
+        xaxis: {
           ...defaultPlot.layout.xaxis,
-          text: axisField.x,
+          title: {
+            ...defaultPlot.layout.xaxis.title,
+            text: axisFields.x,
+          },
         },
         yaxis: {
           ...defaultPlot.layout.yaxis,
-          text: axisField.y,
-        },*/
+          title: {
+            ...defaultPlot.layout.yaxis.title,
+            text: axisFields.y,
+          },
+        },
         title: modelName,
       },
       data,

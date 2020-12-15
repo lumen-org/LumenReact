@@ -4,23 +4,16 @@ import {
   FETCH_MODEL_Y_MARGINAL_SUCCESS,
   FETCH_DATA_X_MARGINAL_SUCCESS,
   FETCH_DATA_Y_MARGINAL_SUCCESS,
-  FETCH_MODEL_MARGINAL_ERROR,
-  FETCH_DATA_MARGINAL_ERROR,
   FETCH_MODEL_DATA_SUCCESS,
-  FETCH_MODEL_DATA_ERROR,
   FETCH_TRAINING_DATA_SUCCESS,
-  FETCH_TRAINING_DATA_ERROR,
   FETCH_DATA_DENSITY_SUCCESS,
-  FETCH_DATA_DENSITY_ERROR,
   FETCH_MODEL_DENSITY_SUCCESS,
-  FETCH_MODEL_DENSITY_ERROR,
   FETCH_INITIAL_PLOTDATA_SUCCESS,
-  FETCH_INITIAL_PLOTDATA_ERROR,
-  FETCH_DATA_PREDICTION_ERROR,
   FETCH_DATA_PREDICTION_SUCCESS,
   INITIALIZE_NEW_STANDARD_PLOT,
   DELETE_STANDARD_PLOT,
   FETCH_MODEL_PREDICTION_SUCCESS,
+  FETCH_CATEGORIES,
 } from "./constants";
 import update from "immutability-helper";
 
@@ -43,21 +36,22 @@ const standardPlots = (state = defaultState, action) => {
           [id]: {
             $set: {
               loading: false,
+              categories: ["all"],
               modelDataPoints: {
-                x: [],
-                y: [],
+                x: {},
+                y: {},
               },
               trainingDataPoints: {
-                x: [],
-                y: [],
+                x: {},
+                y: {},
               },
               modelMarginals: {
-                x: { x: [], y: [] },
-                y: { x: [], y: [] },
+                xAxis: { x: [], y: [] },
+                yAxis: { x: [], y: [] },
               },
               dataMarginals: {
-                x: { x: [], y: [] },
-                y: { x: [], y: [] },
+                xAxis: { x: [], y: [] },
+                yAxis: { x: [], y: [] },
               },
               modelDensity: {
                 x: [],
@@ -137,7 +131,7 @@ const standardPlots = (state = defaultState, action) => {
             loading: false,
             modelMarginals: {
               ...state.standardPlots[action.payload.id].modelMarginals,
-              x: action.payload.x,
+              xAxis: action.payload.x,
             },
           },
         },
@@ -153,7 +147,7 @@ const standardPlots = (state = defaultState, action) => {
             loading: false,
             modelMarginals: {
               ...state.standardPlots[action.payload.id].modelMarginals,
-              y: action.payload.y,
+              yAxis: action.payload.y,
             },
           },
         },
@@ -169,7 +163,7 @@ const standardPlots = (state = defaultState, action) => {
             loading: false,
             dataMarginals: {
               ...state.standardPlots[action.payload.id].dataMarginals,
-              x: action.payload.x,
+              xAxis: action.payload.x,
             },
           },
         },
@@ -185,7 +179,7 @@ const standardPlots = (state = defaultState, action) => {
             loading: false,
             dataMarginals: {
               ...state.standardPlots[action.payload.id].dataMarginals,
-              y: action.payload.y,
+              yAxis: action.payload.y,
             },
           },
         },
@@ -256,6 +250,17 @@ const standardPlots = (state = defaultState, action) => {
         },
       };
 
+    case FETCH_CATEGORIES:
+      return {
+        ...state,
+        standardPlots: {
+          ...state.standardPlots,
+          [action.payload.id]: {
+            ...state.standardPlots[action.payload.id],
+            categories: action.payload.categories,
+          },
+        },
+      };
     default:
       return state;
   }

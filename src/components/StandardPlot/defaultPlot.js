@@ -1,16 +1,36 @@
 import { plotStyle } from "./plotStyle";
-
+// TODO: Implement colorscheme
 export const defaultPlot = {
   layout: {
+    colorway: [
+      "rgba(231, 99, 250)",
+      "rgba(231,164,18)",
+      "rgba(10, 100,250)",
+      //  "#6f4d96",
+      // "#3d3b72",
+      //"#182844",
+    ],
     autosize: true,
-    showlegend: false,
     xaxis: {
       domain: [0, 0.85],
       showgrid: false,
+      title: {
+        text: "x Axis",
+        /*
+        font: {
+          family: "Courier New, monospace",
+          size: 18,
+          color: "#7f7f7f",
+        },
+        */
+      },
     },
     yaxis: {
       domain: [0, 0.85],
       showgrid: false,
+      title: {
+        text: "x Axis",
+      },
     },
     xaxis2: {
       domain: [0.85, 1],
@@ -26,6 +46,7 @@ export const defaultPlot = {
     mode: "markers",
     xaxis: "x",
     yaxis: "y",
+    showlegend: false,
     marker: plotStyle.modelPredictionMarker,
   },
   dataPredictionTrace: {
@@ -33,6 +54,7 @@ export const defaultPlot = {
     mode: "markers",
     xaxis: "x",
     yaxis: "y",
+    showlegend: false,
     marker: plotStyle.dataPredictionMarker,
   },
   scatterTrace: {
@@ -40,6 +62,7 @@ export const defaultPlot = {
     mode: "markers",
     xaxis: "x",
     yaxis: "y",
+    showlegend: true,
     marker: plotStyle.scatterMarker,
   },
   yHistogramTrace: {
@@ -54,6 +77,7 @@ export const defaultPlot = {
     xaxis: "x2",
     type: "scatter",
     fill: "tozeroy",
+    showlegend: false,
   },
   xHistogramTrace: {
     marker: {
@@ -67,6 +91,7 @@ export const defaultPlot = {
     yaxis: "y2",
     fill: "tozeroy",
     type: "scatter",
+    showlegend: false,
   },
   modelYHistogramTrace: {
     marker: {
@@ -80,10 +105,11 @@ export const defaultPlot = {
     fill: "tozeroy",
     xaxis: "x2",
     type: "scatter",
+    showlegend: false,
   },
   modelXHistogramTrace: {
     marker: {
-      color: "rgba(231, 99, 250, 0.5)",
+      color: "rgba(231, 99, 250,0.5)",
       opacity: 0.5,
       line: {
         color: "rgb(235, 64, 52)",
@@ -93,6 +119,7 @@ export const defaultPlot = {
     fill: "tozeroy",
     yaxis: "y2",
     type: "scatter",
+    showlegend: false,
   },
   dataDensityTrace: {
     name: "model density",
@@ -106,6 +133,7 @@ export const defaultPlot = {
     },
     xaxis: "x",
     yaxis: "y",
+    showlegend: false,
   },
   modelDensityTrace: {
     name: "model density",
@@ -119,6 +147,7 @@ export const defaultPlot = {
     },
     xaxis: "x",
     yaxis: "y",
+    showlegend: false,
   },
   modelScatterTrace: {
     type: "scatter",
@@ -126,5 +155,6 @@ export const defaultPlot = {
     xaxis: "x",
     yaxis: "y",
     marker: plotStyle.modelScatterMarker,
+    showlegend: true,
   },
 };

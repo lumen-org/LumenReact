@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import Schema from "./Schema";
+import Schema from "./Schema.tsx";
 import { selectSchemeNames } from "../../states/models/selector";
 import { EMPTY } from "../../states/constants";
 

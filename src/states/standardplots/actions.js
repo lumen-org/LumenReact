@@ -4,21 +4,12 @@ import {
   FETCH_MODEL_Y_MARGINAL_SUCCESS,
   FETCH_DATA_X_MARGINAL_SUCCESS,
   FETCH_DATA_Y_MARGINAL_SUCCESS,
-  FETCH_MODEL_MARGINAL_ERROR,
-  FETCH_DATA_MARGINAL_ERROR,
   FETCH_MODEL_DATA_SUCCESS,
-  FETCH_MODEL_DATA_ERROR,
   FETCH_TRAINING_DATA_SUCCESS,
-  FETCH_TRAINING_DATA_PENDING,
-  FETCH_TRAINING_DATA_ERROR,
   FETCH_DATA_DENSITY_SUCCESS,
-  FETCH_DATA_DENSITY_ERROR,
   FETCH_MODEL_DENSITY_SUCCESS,
-  FETCH_MODEL_DENSITY_ERROR,
   FETCH_INITIAL_PLOTDATA_SUCCESS,
-  FETCH_INITIAL_PLOTDATA_ERROR,
-  FETCH_MODEL_PREDICTION_ERROR,
-  FETCH_DATA_PREDICTION_ERROR,
+  FETCH_CATEGORIES,
   FETCH_DATA_PREDICTION_SUCCESS,
   FETCH_MODEL_PREDICTION_SUCCESS,
   INITIALIZE_NEW_STANDARD_PLOT,
@@ -32,18 +23,23 @@ import { nextAvaliableId } from "../../utils/plotData";
 import {
   fetch3DPlotData,
   fetch2DPlotData,
-  fetch1DPlotData,
+  fetch2DPlotDataCategroy,
 } from "../../utils/fetch";
 import { getActivePlotId, getSpecificationId } from "../plots/selector";
+import { getStandardPlotCategoriesById } from "./selector";
 import { marginalizeModel } from "../../utils/pqlModelQueries";
-import { getFacetById } from "../specifications/selector.js";
+import {
+  getFacetById,
+  getSpecById,
+  getColorCatgeoryById,
+} from "../standardspecifications/selector.js";
 import {
   getMarginalsQueryBodyById,
   getDensityQueryBodyById,
   getSelectedFieldObjectById,
   getPredictionQueryBodyId,
   getSelectedFieldArrayById,
-} from "./selector";
+} from "./utils";
 
 function initializePlot(id) {
   return {
@@ -189,6 +185,31 @@ export function updateStandardPlotData(id, newStandardPlotData) {
   };
 }
 
+export function updateCategories(id, categories) {
+  return {
+    type: FETCH_CATEGORIES,
+    payload: {
+      id: id,
+      categories: categories,
+    },
+  };
+}
+
+export function fetchCatgetories(fieldItems) {
+  return (dispatch, getState) => {
+    const id = getActivePlotId(getState());
+    const mcgModelName = getModelNameById(getState(), id);
+    marginalizeModel(
+      mcgModelName,
+      fieldItems,
+      mcgModelName + "_data_marginal"
+    ).then((response) => {
+      const categories = response.fields[0].extent;
+      dispatch(updateCategories(id, categories));
+    });
+  };
+}
+
 /**
  * derive a list of submodels for faster queries
  */
@@ -214,6 +235,7 @@ export function deriveSubmodelsOnSpecChange() {
 export function fetchOnSpecChange() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
+
     const facets = getFacetById(getState(), getSpecificationId(getState(), id));
     dispatch(fetchDataPending(id));
     if (facets["Data Points"].data === true) {
@@ -337,7 +359,6 @@ export function fetchDataMarginals() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
     const fieldItems = getSelectedFieldObjectById(getState(), id);
-    // TODO: How marginal data queries are done are wrong. fix me!
     dispatch(fetchDataPending(id));
     if (fieldItems.x) {
       const dataMarginalsQueryBody = getMarginalsQueryBodyById(
@@ -371,7 +392,15 @@ export function fetchTrainingDataPoints() {
     dispatch(fetchDataPending(id));
     const modelName = getModelNameById(getState(), id);
     const fieldItems = getSelectedFieldArrayById(getState(), id);
-
+    const colorSpec = getColorCatgeoryById(
+      getState(),
+      getSpecificationId(getState(), id)
+    );
+    if (colorSpec.length !== 0) {
+      fieldItems.push(colorSpec[0]);
+      dispatch(fetchCatgetories(fieldItems));
+    }
+    dispatch(fetchDataPending(id));
     const trainingDataQueryBody = {
       FROM: modelName,
       SELECT: fieldItems,
@@ -381,7 +410,7 @@ export function fetchTrainingDataPoints() {
       },
     };
 
-    fetch2DPlotData(trainingDataQueryBody).then((response) => {
+    fetch2DPlotDataCategroy(trainingDataQueryBody).then((response) => {
       dispatch(fetchTrainingDataSucess(id, response));
     });
   };
@@ -392,6 +421,14 @@ export function fetchModelDataPoints() {
     const id = getActivePlotId(getState());
     const modelName = getModelNameById(getState(), id);
     const fieldItems = getSelectedFieldArrayById(getState(), id);
+    const colorSpec = getColorCatgeoryById(
+      getState(),
+      getSpecificationId(getState(), id)
+    );
+    if (colorSpec.length !== 0) {
+      fieldItems.push(colorSpec[0]);
+      dispatch(fetchCatgetories(fieldItems));
+    }
     dispatch(fetchDataPending(id));
     const modelDataQueryBody = {
       FROM: modelName,
@@ -402,7 +439,7 @@ export function fetchModelDataPoints() {
       },
       SELECT: fieldItems,
     };
-    fetch2DPlotData(modelDataQueryBody).then((response) => {
+    fetch2DPlotDataCategroy(modelDataQueryBody).then((response) => {
       dispatch(fetchModelDataSucess(id, response));
     });
   };

@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import {
-  getStandardPlotDataById,
-  getSelectedFieldObjectById,
-} from "../../states/standardplots/selector";
+import { getSelectedFieldObjectById } from "../../states/standardplots/utils";
+import { getStandardPlotDataById } from "../../states/standardplots/selector";
 import {
   getSpecById,
   getFacetById,
-} from "../../states/specifications/selector.js";
+} from "../../states/standardspecifications/selector.js";
 
 import {
   fetchOnSpecChange,
@@ -87,6 +85,7 @@ class StandardPlotContainer extends React.Component {
 
   render() {
     const { plotData, specification, axisFields, modelName } = this.props;
+
     const { displayTraces } = this.state;
     return (
       <StandardPlot
