@@ -36,7 +36,7 @@ const models = (state = defaultState, action) => {
               },
             },
           },
-          allIds: { $set: [id] },
+          allIds: { $push: [id] },
         }),
         lastCreatedModelId: id,
       };
