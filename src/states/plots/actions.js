@@ -16,6 +16,7 @@ import { getModelIdByPlotId } from "../models/selector";
 import { createNewMultiPlot, deleteMultiPlot } from "../multiplots/actions";
 import { nextAvaliableId } from "../../utils/plotData";
 import { deleteModelIfNecessary, hidePCIGraph, showPCIGraph } from "../models/actions";
+import { deleteDimensions } from "../dimensions/actions";
 
 export function changeActivePlot(newid) {
   return {
@@ -72,6 +73,7 @@ function deletePlotInStore(id) {
 export function deletePlot(id) {
   return (dispatch, getState) => {
     const plotType = getPlotTypeById(getState(), id);
+    dispatch(deleteDimensions(getModelIdByPlotId(getState(), id)));
     dispatch(deleteModelIfNecessary(getModelIdByPlotId(getState(),id)));
     if (plotType === STANDARD_PLOT) {
       dispatch(deleteStandardPlot(id));
