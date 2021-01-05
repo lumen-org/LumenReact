@@ -46,3 +46,16 @@ export const selectActiveModelId = createSelector(
 export const getLastCreatedVisualizationId = (state) => {
   return state.visualizations.lastCreatedVisualizationId;
 };
+
+export const hasAnotherVisualizationWithSameModelId = (state) => {
+  const activeModelId = state.visualizations.visualizations.byId[activeId(state)].modelId;
+  console.log(activeModelId);
+  for (let vis in getVis(state)){
+    console.log(vis.modelId);
+    console.log(activeId(state));
+    if (vis.modelId === activeModelId && vis !== activeId(state)) {
+      return true;
+    }
+  }
+  return false;
+}

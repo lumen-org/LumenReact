@@ -51,6 +51,7 @@ export const changeActiveVisualization = () => {
 };
 
 export const _changeActiveVisualization = (visualizationId) => {
+
   return {
     type: CHANGE_ACTIVE_VISUALIZATION,
     payload: {
