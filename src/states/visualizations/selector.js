@@ -49,11 +49,12 @@ export const getLastCreatedVisualizationId = (state) => {
 
 export const hasAnotherVisualizationWithSameModelId = (state) => {
   const activeModelId = state.visualizations.visualizations.byId[activeId(state)].modelId;
-  console.log(activeModelId);
+  //console.log("activeModelId ", activeModelId);
   for (let vis in getVis(state)){
-    console.log(vis.modelId);
-    console.log(activeId(state));
-    if (vis.modelId === activeModelId && vis !== activeId(state)) {
+    //console.log("state.visualizations.visualizations.byId[vis].modelId ", state.visualizations.visualizations.byId[vis].modelId);
+    //console.log("activeId(state) ", activeId(state));
+    //console.log("vis ", vis);
+    if (state.visualizations.visualizations.byId[vis].modelId === activeModelId && vis !== activeId(state)) {
       return true;
     }
   }

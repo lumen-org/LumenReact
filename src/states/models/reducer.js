@@ -77,16 +77,17 @@ const models = (state = defaultState, action) => {
       ({ id, dimensions } = action.payload);
       // Todo: Implement here functionality for updating dimensions like delete redundant information and give unique id
       return state;
+
     case DELETE_MODEL:
       ({ id } = action.payload);
       const allIds = PlotStack.pop(state.models.allIds);
-      console.log(allIds);
+      console.log("id ", id);
+      //const byIds = PlotStack.remove(state.models.byId, id);
       return {
         ...state,
         models: update(state.models, {
-          byId: {
-            $unset: [id]
-          },
+          //byId: { $unset: [action.payload.id] },
+          byId: { $unset: [id] },
           allIds: { $set: allIds },
         }),
       };

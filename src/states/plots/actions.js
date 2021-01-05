@@ -14,7 +14,7 @@ import {
   getLastCreatedVisualizationId,
 } from "../visualizations/selector";
 import { getLastCreatedSpecId } from "../specifications/selector";
-import { getLastCreatedModelId } from "../models/selector";
+import { getLastCreatedModelId, getModelIdByPlotId } from "../models/selector";
 import { createNewMultiPlot, deleteMultiPlot } from "../multiplots/actions";
 import { nextAvaliableId } from "../../utils/plotData";
 import { deleteModelIfNecessary, hidePCIGraph, showPCIGraph } from "../models/actions";
@@ -74,7 +74,7 @@ function deletePlotInStore(id) {
 export function deletePlot(id) {
   return (dispatch, getState) => {
     const plotType = getPlotTypeById(getState(), id);
-    dispatch(deleteModelIfNecessary(id));
+    dispatch(deleteModelIfNecessary(getModelIdByPlotId(getState(),id)));
     if (plotType === STANDARD_PLOT) {
       dispatch(deleteStandardPlot(id));
     }
