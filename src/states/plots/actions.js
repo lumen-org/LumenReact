@@ -7,14 +7,12 @@ import {
 import {
   getPlotTypeById,
   getPlotAllIds,
-  getLastCreatedPlotId,
 } from "./selector";
 import {
   selectActiveModelId,
   getLastCreatedVisualizationId,
 } from "../visualizations/selector";
-import { getLastCreatedSpecId } from "../specifications/selector";
-import { getLastCreatedModelId, getModelIdByPlotId } from "../models/selector";
+import { getModelIdByPlotId } from "../models/selector";
 import { createNewMultiPlot, deleteMultiPlot } from "../multiplots/actions";
 import { nextAvaliableId } from "../../utils/plotData";
 import { deleteModelIfNecessary, hidePCIGraph, showPCIGraph } from "../models/actions";
