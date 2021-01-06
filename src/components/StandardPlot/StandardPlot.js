@@ -4,8 +4,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./StandardPlot.css";
 import { defaultPlot } from "./defaultPlot";
+import { plotStyle } from "./plotStyle";
+import { colorPalettes, createCategoryColorMap } from "./colorPalettes";
 import Plot from "react-plotly.js";
-
 class StandardPlot extends Component {
   static propTypes = {
     plotData: PropTypes.array,
@@ -14,6 +15,7 @@ class StandardPlot extends Component {
     loading: PropTypes.bool,
     axisFields: PropTypes.object,
     modelName: PropTypes.string,
+    category: PropTypes.array,
   };
 
   state = {
@@ -21,7 +23,7 @@ class StandardPlot extends Component {
     data: [],
   };
 
-  getNewDataScatterTrace = (data) => {
+  getNewDataScatterTrace = (data, categoryColorMap) => {
     const { plotData } = this.props;
     for (var key of Object.keys(plotData.trainingDataPoints.x)) {
       data.push({
@@ -29,6 +31,10 @@ class StandardPlot extends Component {
         name: "train: " + key,
         x: plotData.trainingDataPoints.x[key],
         y: plotData.trainingDataPoints.y[key],
+        marker: {
+          ...plotStyle.scatterMarker,
+          color: categoryColorMap[key],
+        },
       });
     }
   };
@@ -61,7 +67,7 @@ class StandardPlot extends Component {
     };
   };
 
-  getNewModelScatterTrace = (data) => {
+  getNewModelScatterTrace = (data, categoryColorMap) => {
     const { plotData } = this.props;
     for (var key of Object.keys(plotData.modelDataPoints.x)) {
       data.push({
@@ -69,6 +75,10 @@ class StandardPlot extends Component {
         name: key,
         x: plotData.modelDataPoints.x[key],
         y: plotData.modelDataPoints.y[key],
+        marker: {
+          ...plotStyle.modelScatterMarker,
+          color: categoryColorMap[key],
+        },
       });
     }
   };
@@ -120,7 +130,8 @@ class StandardPlot extends Component {
   };
 
   setPlotData = () => {
-    const { displayTraces, modelName, axisFields } = this.props;
+    const { displayTraces, modelName, axisFields, category } = this.props;
+    const categoryColorMap = createCategoryColorMap(category);
     const data = [];
     displayTraces.map((traceinfo, ind) => {
       if (traceinfo.name === "Prediction" && traceinfo.from === "data") {
@@ -130,7 +141,7 @@ class StandardPlot extends Component {
         data.push(this.getNewModelPredictionTrace());
       }
       if (traceinfo.name === "Data Points" && traceinfo.from === "data") {
-        this.getNewDataScatterTrace(data);
+        this.getNewDataScatterTrace(data, categoryColorMap);
       }
       if (traceinfo.name === "Density" && traceinfo.from === "data") {
         data.push(this.getNewDataDensityTrace());
@@ -141,7 +152,7 @@ class StandardPlot extends Component {
       }
 
       if (traceinfo.name === "Data Points" && traceinfo.from === "model") {
-        this.getNewModelScatterTrace(data);
+        this.getNewModelScatterTrace(data, categoryColorMap);
       }
       if (traceinfo.name === "Density" && traceinfo.from === "model") {
         data.push(this.getNewModelDensityTrace());

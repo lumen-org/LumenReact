@@ -1,15 +1,6 @@
 import { plotStyle } from "./plotStyle";
-// TODO: Implement colorscheme
 export const defaultPlot = {
   layout: {
-    colorway: [
-      "rgba(231, 99, 250)",
-      "rgba(231,164,18)",
-      "rgba(10, 100,250)",
-      //  "#6f4d96",
-      // "#3d3b72",
-      //"#182844",
-    ],
     autosize: true,
     xaxis: {
       domain: [0, 0.85],
@@ -64,6 +55,14 @@ export const defaultPlot = {
     yaxis: "y",
     showlegend: true,
     marker: plotStyle.scatterMarker,
+  },
+  modelScatterTrace: {
+    type: "scatter",
+    mode: "markers",
+    xaxis: "x",
+    yaxis: "y",
+    marker: plotStyle.modelScatterMarker,
+    showlegend: true,
   },
   yHistogramTrace: {
     marker: {
@@ -148,13 +147,5 @@ export const defaultPlot = {
     xaxis: "x",
     yaxis: "y",
     showlegend: false,
-  },
-  modelScatterTrace: {
-    type: "scatter",
-    mode: "markers",
-    xaxis: "x",
-    yaxis: "y",
-    marker: plotStyle.modelScatterMarker,
-    showlegend: true,
   },
 };
