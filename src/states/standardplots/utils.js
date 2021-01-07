@@ -6,7 +6,7 @@ import queryTemplates from "../../utils/queryTemplates";
 import { getSpecById } from "../specifications/selector";
 import { getSpecificationId } from "../plots/selector";
 import { getModelNameById } from "../models/selector";
-
+import { getColorCatgeoryById } from "../standardspecifications/selector.js";
 /**
  *
  * @param {the entire redux state} state
@@ -48,16 +48,27 @@ export const getMarginalsQueryBodyById = (state, type, fieldItem, id) => {
   if (type === "model") {
     modelName = getModelNameById(state, id) + "_data_marginal";
   }
+  const colorSpec = getColorCatgeoryById(state, getSpecificationId(state, id));
+  var splitBy = [
+    {
+      name: fieldItem,
+      split: "equiinterval",
+      args: [25],
+      class: "Split",
+    },
+  ];
+
+  if (colorSpec.length !== 0) {
+    splitBy.push({
+      name: colorSpec[0],
+      split: "elements",
+      class: "Split",
+    });
+    fieldItem.push(colorSpec[0]);
+  }
+
   const marginalQueryBody = {
-    ...queryTemplates.marginal,
-    "SPLIT BY": [
-      {
-        name: fieldItem,
-        split: "equiinterval",
-        args: [25],
-        class: "Split",
-      },
-    ],
+    "SPLIT BY": splitBy,
     PREDICT: [
       fieldItem,
       {
