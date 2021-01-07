@@ -1,4 +1,4 @@
-import { plotStyle } from "./plotStyle";
+import { markers } from "./markers";
 export const defaultPlot = {
   layout: {
     autosize: true,
@@ -38,7 +38,7 @@ export const defaultPlot = {
     xaxis: "x",
     yaxis: "y",
     showlegend: false,
-    marker: plotStyle.modelPredictionMarker,
+    marker: markers.modelPredictionMarker,
   },
   dataPredictionTrace: {
     type: "scatter",
@@ -46,7 +46,7 @@ export const defaultPlot = {
     xaxis: "x",
     yaxis: "y",
     showlegend: false,
-    marker: plotStyle.dataPredictionMarker,
+    marker: markers.dataPredictionMarker,
   },
   scatterTrace: {
     type: "scatter",
@@ -54,67 +54,39 @@ export const defaultPlot = {
     xaxis: "x",
     yaxis: "y",
     showlegend: true,
-    marker: plotStyle.scatterMarker,
+    marker: markers.scatterMarker,
   },
   modelScatterTrace: {
     type: "scatter",
     mode: "markers",
     xaxis: "x",
     yaxis: "y",
-    marker: plotStyle.modelScatterMarker,
+    marker: markers.modelScatterMarker,
     showlegend: true,
   },
   yHistogramTrace: {
-    marker: {
-      color: "rgb(207,207,207)",
-      opacity: 0.7,
-      line: {
-        color: "rgb(33, 33, 33)",
-        width: 4.5,
-      },
-    },
+    marker: markers.histogramMarker,
     xaxis: "x2",
     type: "scatter",
     fill: "tozeroy",
     showlegend: false,
   },
   xHistogramTrace: {
-    marker: {
-      color: "rgb(207, 207, 207)",
-      opacity: 0.7,
-      line: {
-        color: "rgb(33, 33, 33)",
-        width: 4.5,
-      },
-    },
+    marker: markers.histogramMarker,
     yaxis: "y2",
     fill: "tozeroy",
     type: "scatter",
     showlegend: false,
   },
   modelYHistogramTrace: {
-    marker: {
-      color: "rgba(231, 99, 250, 0.5)",
-      opacity: 0.5,
-      line: {
-        color: "rgb(235, 64, 52)",
-        width: 4.5,
-      },
-    },
+    marker: markers.modelHistogramMarker,
     fill: "tozeroy",
     xaxis: "x2",
     type: "scatter",
     showlegend: false,
   },
   modelXHistogramTrace: {
-    marker: {
-      color: "rgba(231, 99, 250,0.5)",
-      opacity: 0.5,
-      line: {
-        color: "rgb(235, 64, 52)",
-        width: 4.5,
-      },
-    },
+    marker: markers.modelHistogramMarker,
     fill: "tozeroy",
     yaxis: "y2",
     type: "scatter",

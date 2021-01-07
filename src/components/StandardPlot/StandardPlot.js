@@ -4,8 +4,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./StandardPlot.css";
 import { defaultPlot } from "./defaultPlot";
-import { plotStyle } from "./plotStyle";
-import { colorPalettes, createCategoryColorMap } from "./colorPalettes";
+import { markers } from "./markers";
+import { createCategoryColorMap } from "./colorPalettes";
 import Plot from "react-plotly.js";
 class StandardPlot extends Component {
   static propTypes = {
@@ -32,29 +32,41 @@ class StandardPlot extends Component {
         x: plotData.trainingDataPoints.x[key],
         y: plotData.trainingDataPoints.y[key],
         marker: {
-          ...plotStyle.scatterMarker,
+          ...markers.scatterMarker,
           color: categoryColorMap[key],
         },
       });
     }
   };
 
-  getNewDataXHistogramTrace = () => {
+  getNewDataXHistogramTrace = (data, categoryColorMap) => {
     const { plotData } = this.props;
-    return {
-      ...defaultPlot.xHistogramTrace,
-      x: plotData.dataMarginals.xAxis.x,
-      y: plotData.dataMarginals.xAxis.y,
-    };
+    for (var key of Object.keys(plotData.dataMarginals.xAxis.x)) {
+      data.push({
+        ...defaultPlot.xHistogramTrace,
+        x: plotData.dataMarginals.xAxis.x[key],
+        y: plotData.dataMarginals.xAxis.y[key],
+        marker: {
+          ...markers.histogramMarker,
+          color: categoryColorMap[key],
+        },
+      });
+    }
   };
 
-  getNewDataYHistogramTrace = () => {
+  getNewDataYHistogramTrace = (data, categoryColorMap) => {
     const { plotData } = this.props;
-    return {
-      ...defaultPlot.yHistogramTrace,
-      y: plotData.dataMarginals.yAxis.x,
-      x: plotData.dataMarginals.yAxis.y,
-    };
+    for (var key of Object.keys(plotData.dataMarginals.yAxis.x)) {
+      data.push({
+        ...defaultPlot.yHistogramTrace,
+        x: plotData.dataMarginals.yAxis.y[key],
+        y: plotData.dataMarginals.yAxis.x[key],
+        marker: {
+          ...markers.histogramMarker,
+          color: categoryColorMap[key],
+        },
+      });
+    }
   };
 
   getNewDataDensityTrace = () => {
@@ -76,29 +88,41 @@ class StandardPlot extends Component {
         x: plotData.modelDataPoints.x[key],
         y: plotData.modelDataPoints.y[key],
         marker: {
-          ...plotStyle.modelScatterMarker,
+          ...markers.modelScatterMarker,
           color: categoryColorMap[key],
         },
       });
     }
   };
 
-  getNewModelXHistogramTrace = () => {
+  getNewModelXHistogramTrace = (data, categoryColorMap) => {
     const { plotData } = this.props;
-    return {
-      ...defaultPlot.modelXHistogramTrace,
-      x: plotData.modelMarginals.xAxis.x,
-      y: plotData.modelMarginals.xAxis.y,
-    };
+    for (var key of Object.keys(plotData.modelMarginals.xAxis.x)) {
+      data.push({
+        ...defaultPlot.modelXHistogramTrace,
+        x: plotData.modelMarginals.xAxis.x[key],
+        y: plotData.modelMarginals.xAxis.y[key],
+        marker: {
+          ...markers.modelHistogramMarker,
+          color: categoryColorMap[key],
+        },
+      });
+    }
   };
 
-  getNewModelYHistogramTrace = () => {
+  getNewModelYHistogramTrace = (data, categoryColorMap) => {
     const { plotData } = this.props;
-    return {
-      ...defaultPlot.modelYHistogramTrace,
-      y: plotData.modelMarginals.yAxis.x,
-      x: plotData.modelMarginals.yAxis.y,
-    };
+    for (var key of Object.keys(plotData.modelMarginals.yAxis.x)) {
+      data.push({
+        ...defaultPlot.modelYHistogramTrace,
+        x: plotData.modelMarginals.yAxis.y[key],
+        y: plotData.modelMarginals.yAxis.x[key],
+        marker: {
+          ...markers.modelHistogramMarker,
+          color: categoryColorMap[key],
+        },
+      });
+    }
   };
 
   getNewModelDensityTrace = () => {
@@ -147,8 +171,8 @@ class StandardPlot extends Component {
         data.push(this.getNewDataDensityTrace());
       }
       if (traceinfo.name === "Marginals" && traceinfo.from === "data") {
-        data.push(this.getNewDataXHistogramTrace());
-        data.push(this.getNewDataYHistogramTrace());
+        this.getNewDataXHistogramTrace(data, categoryColorMap);
+        this.getNewDataYHistogramTrace(data, categoryColorMap);
       }
 
       if (traceinfo.name === "Data Points" && traceinfo.from === "model") {
@@ -158,8 +182,8 @@ class StandardPlot extends Component {
         data.push(this.getNewModelDensityTrace());
       }
       if (traceinfo.name === "Marginals" && traceinfo.from === "model") {
-        data.push(this.getNewModelXHistogramTrace());
-        data.push(this.getNewModelYHistogramTrace());
+        this.getNewModelXHistogramTrace(data, categoryColorMap);
+        this.getNewModelYHistogramTrace(data, categoryColorMap);
       }
     });
     this.setState({
