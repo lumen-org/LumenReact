@@ -57,26 +57,27 @@ export const getMarginalsQueryBodyById = (state, type, fieldItem, id) => {
       class: "Split",
     },
   ];
-
+  var fieldItems = [fieldItem];
   if (colorSpec.length !== 0) {
     splitBy.push({
       name: colorSpec[0],
       split: "elements",
       class: "Split",
     });
-    fieldItem.push(colorSpec[0]);
+    fieldItems.push(colorSpec[0]);
   }
+
+  const PREDICT = fieldItems.concat([
+    {
+      aggregation: "probability",
+      class: "Density",
+      name: fieldItems,
+    },
+  ]);
 
   const marginalQueryBody = {
     "SPLIT BY": splitBy,
-    PREDICT: [
-      fieldItem,
-      {
-        aggregation: "probability",
-        class: "Density",
-        name: fieldItem,
-      },
-    ],
+    PREDICT: PREDICT,
     FROM: modelName,
   };
   return marginalQueryBody;
