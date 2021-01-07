@@ -24,6 +24,7 @@ import {
   fetch3DPlotData,
   fetch2DPlotData,
   fetch2DPlotDataCategroy,
+  fetch2DPlotMarginalCategroy,
 } from "../../utils/fetch";
 import { getActivePlotId, getSpecificationId } from "../plots/selector";
 import { getStandardPlotCategoriesById } from "./selector";
@@ -337,7 +338,7 @@ export function fetchModelMarginals() {
         fieldItems.x,
         id
       );
-      fetch2DPlotData(modelMarginalsQueryBody).then((response) => {
+      fetch2DPlotMarginalCategroy(modelMarginalsQueryBody).then((response) => {
         dispatch(fetchModelXMarginalSuccess(id, response));
       });
     }
@@ -349,7 +350,7 @@ export function fetchModelMarginals() {
         fieldItems.y,
         id
       );
-      fetch2DPlotData(modelMarginalsQueryBody).then((response) => {
+      fetch2DPlotMarginalCategroy(modelMarginalsQueryBody).then((response) => {
         dispatch(fetchModelYMarginalSuccess(id, response));
       });
     }
@@ -367,7 +368,7 @@ export function fetchDataMarginals() {
         fieldItems.x,
         id
       );
-      fetch2DPlotData(dataMarginalsQueryBody).then((response) => {
+      fetch2DPlotMarginalCategroy(dataMarginalsQueryBody).then((response) => {
         dispatch(fetchDataXMarginalSuccess(id, response));
       });
     }
@@ -379,7 +380,8 @@ export function fetchDataMarginals() {
         fieldItems.y,
         id
       );
-      fetch2DPlotData(dataMarginalsQueryBody).then((response) => {
+
+      fetch2DPlotMarginalCategroy(dataMarginalsQueryBody).then((response) => {
         dispatch(fetchDataYMarginalSuccess(id, response));
       });
     }

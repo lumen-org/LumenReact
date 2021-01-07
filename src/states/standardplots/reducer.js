@@ -46,12 +46,12 @@ const standardPlots = (state = defaultState, action) => {
                 y: {},
               },
               modelMarginals: {
-                xAxis: { x: [], y: [] },
-                yAxis: { x: [], y: [] },
+                xAxis: { x: {}, y: {} },
+                yAxis: { x: {}, y: {} },
               },
               dataMarginals: {
-                xAxis: { x: [], y: [] },
-                yAxis: { x: [], y: [] },
+                xAxis: { x: {}, y: {} },
+                yAxis: { x: {}, y: {} },
               },
               modelDensity: {
                 x: [],
