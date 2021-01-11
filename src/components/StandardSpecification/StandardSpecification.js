@@ -23,7 +23,7 @@ class StandardSpecification extends Component {
     const { specifications } = this.props;
     return (
       <div className="specification">
-        <TitelH1 value={"Spezification"}/>
+        <TitelH1 value={"Spezifikation"}/>
         {Object.entries(specifications).map((item, index) => (
           <Field
             title={item[0]}
