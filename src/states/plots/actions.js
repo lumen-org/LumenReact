@@ -73,8 +73,6 @@ function deletePlotInStore(id) {
 export function deletePlot(id) {
   return (dispatch, getState) => {
     const plotType = getPlotTypeById(getState(), id);
-    dispatch(deleteDimensions(getModelIdByPlotId(getState(), id)));
-    dispatch(deleteModelIfNecessary(getModelIdByPlotId(getState(),id)));
     if (plotType === STANDARD_PLOT) {
       dispatch(deleteStandardPlot(id));
     }
@@ -83,7 +81,6 @@ export function deletePlot(id) {
     }
     if (plotType === PCI_PLOT) {
       let modelId = getState().visualizations.visualizations.byId[getState().plots.plots.byId[id].visualizationId].modelId;
-     
       dispatch(hidePCIGraph(modelId));
     }
     dispatch(deletePlotInStore(id));

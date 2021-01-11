@@ -45,11 +45,10 @@ const dimensions = (state = defaultState, action) => {
           dimensionsToBeUnset.push(o.name);
         }
       };
-      console.log(dimensionsToBeUnset);
       return {
         dimensions: update(state.dimensions, {
           byDimensionName: {
-            $unset: dimensionsToBeUnset
+            $unset: dimensionsToBeUnset,
           }
         })
       }

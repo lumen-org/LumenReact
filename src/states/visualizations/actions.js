@@ -4,11 +4,14 @@ import {
   DELETE_VISUALIZATION,
   FILL_VISUALIZATION,
 } from "./constants";
-import { getLastCreatedModelId } from "../models/selector";
+import { getLastCreatedModelId, getModelIdByVisualisationId } from "../models/selector";
 import { getLastCreatedSpecId } from "../specifications/selector";
 import { getLastCreatedPlotId } from "../plots/selector";
 import { getLastCreatedVisualizationId } from "./selector";
 import { v4 as uuidv4 } from "uuid";
+import visualizations from "./reducer";
+import { deleteDimensions } from "../dimensions/actions";
+import { deleteModelIfNecessary } from "../models/actions";
 
 export const createNewVisualization = (specificationId) => {
   return (dispatch, getState) => {
@@ -34,7 +37,7 @@ export const _createNewVisualization = (
   };
 };
 
-export const deleteVisualization = (visualizationId) => {
+export const _deleteVisualization = (visualizationId) => {
   return {
     type: DELETE_VISUALIZATION,
     payload: {
@@ -42,6 +45,14 @@ export const deleteVisualization = (visualizationId) => {
     },
   };
 };
+
+export const deleteVisualization = (visualizationId) => {
+  return (dispatch, getState) => {
+    dispatch(deleteDimensions(getModelIdByVisualisationId(getState(), visualizationId)));
+    dispatch(deleteModelIfNecessary(getModelIdByVisualisationId(getState(), visualizationId)));
+    dispatch(_deleteVisualization(visualizationId))
+  }
+}
 
 export const changeActiveVisualization = () => {
   return (dispatch, getState) => {

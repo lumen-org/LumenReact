@@ -32,7 +32,6 @@ class RnDPlotWrapperContainer extends React.Component {
     deletePlot(id);
     deleteVisualization(getVisualizationId(id));
     _updateActiveModel();
-
   };
 
   onActivePlotChange = (id) => {

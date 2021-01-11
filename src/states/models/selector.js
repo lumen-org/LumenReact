@@ -30,6 +30,10 @@ export const getModelById = (state, id) => {
       state.plots.plots.byId[id].visualizationId].modelId] || "";
 };
 
+export const getModelIdByVisualisationId = (state, id) => {
+  return state.visualizations.visualizations.byId[id].modelId || "";
+}
+
 export const getDimensionsByVisualisationId = (state, id) => {
   return state.models.models.byId[state.visualizations.visualizations.byId[id].fields] || "";
 };
