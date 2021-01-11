@@ -16,6 +16,10 @@ export const getModelNameById = (state, id) => {
   );
 };
 
+export const isIdInAllIds = (state, id) => {
+  return state.models.models.byId.hasOwnProperty(id) || false;
+}
+
 export const getModelIdByPlotId = (state, id) => {
   return (
       state.visualizations.visualizations.byId[

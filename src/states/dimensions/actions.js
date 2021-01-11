@@ -1,5 +1,5 @@
 import { ADD_ALL_DIMENSIONS, DELETE_DIMENSIONS } from "./constants";
-import { getLastCreatedModelId } from "../models/selector";
+import { getLastCreatedModelId, isIdInAllIds } from "../models/selector";
 
 export const addAllDimensions = (modelName, fields) => {
   return (dispatch, getState) => {
@@ -19,7 +19,7 @@ export const _addAllDimensions = (modelId, modelName, dimensions) => {
   }
 };
 
-export const deleteDimensions = (modelId) => {
+export const _deleteDimensions = (modelId) => {
   return {
     type: DELETE_DIMENSIONS,
     payload: {
@@ -28,7 +28,10 @@ export const deleteDimensions = (modelId) => {
   }
 };
 
-export const _deleteDimensions = (modelId) => {
+export const deleteDimensions = (modelId) => {
   return (dispatch, getState) => {
+    if(!isIdInAllIds(getState(), modelId)){
+      dispatch(_deleteDimensions(modelId))
+    }
   }
 };

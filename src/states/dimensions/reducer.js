@@ -38,18 +38,20 @@ const dimensions = (state = defaultState, action) => {
       };
     case DELETE_DIMENSIONS:
       ({ modelId } = action.payload);
-      let dimensionsToBeUnset = [];
+      let byDimensionNameNew = state.dimensions.byDimensionName;
       for (let dimensionName in state.dimensions.byDimensionName) {
         let o = state.dimensions.byDimensionName[dimensionName];
-        if (o.models.hasOwnProperty(modelId) && Object.keys(o.models).length < 2){
-          dimensionsToBeUnset.push(o.name);
+        if (o.models.hasOwnProperty(modelId)){
+          delete byDimensionNameNew[dimensionName].models[modelId];
+          if (Object.keys(byDimensionNameNew[dimensionName].models).length === 0) {
+            delete byDimensionNameNew[dimensionName];
+          }
         }
       };
       return {
         dimensions: update(state.dimensions, {
-          byDimensionName: {
-            $unset: dimensionsToBeUnset,
-          }
+            byDimensionName: { $set: byDimensionNameNew},
+
         })
       }
     default:

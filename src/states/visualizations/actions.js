@@ -48,8 +48,8 @@ export const _deleteVisualization = (visualizationId) => {
 
 export const deleteVisualization = (visualizationId) => {
   return (dispatch, getState) => {
-    dispatch(deleteDimensions(getModelIdByVisualisationId(getState(), visualizationId)));
     dispatch(deleteModelIfNecessary(getModelIdByVisualisationId(getState(), visualizationId)));
+    dispatch(deleteDimensions(getModelIdByVisualisationId(getState(), visualizationId)));
     dispatch(_deleteVisualization(visualizationId))
   }
 }
