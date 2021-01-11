@@ -38,6 +38,7 @@ const dimensions = (state = defaultState, action) => {
       };
     case DELETE_DIMENSIONS:
       ({ modelId } = action.payload);
+      console.log("inside delete dimensions");
       let byDimensionNameNew = state.dimensions.byDimensionName;
       for (let dimensionName in state.dimensions.byDimensionName) {
         let o = state.dimensions.byDimensionName[dimensionName];

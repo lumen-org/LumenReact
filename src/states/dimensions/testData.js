@@ -83,6 +83,13 @@ export const dummyDimensions = [
     }
   ];
 
+export const empytDimStore = {
+  dimensions: {
+    byDimensionName: {
+
+    }
+  }
+}
 export const dimStore = {
     dimensions: {
       byDimensionName: {
@@ -238,7 +245,11 @@ export const dimStore2 =  {
 export const selectorState = [{
     state: {
         models: {
-            lastCreatedModelId: modelId2,
+          lastCreatedModelId: modelId2,
+          byId: {
+            "9b322875-ed80-4a09-aec7-8d417fe50c1e": modelId1,
+            "58bac0af-8c1d-40c2-9c86-3721ec59e26e": modelId2,
+          }
         },
         dimensions: dimStore2,
     }
