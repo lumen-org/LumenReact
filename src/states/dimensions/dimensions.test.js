@@ -9,7 +9,7 @@ import {
   dummyDimensions,
   dimStore2,
   selectorState,
-  emptyDimStore
+  emptyDimStore, modelId3, dimStore3, irisDimensions
 } from "./testData";
 
 describe('actions', () => {
@@ -37,6 +37,7 @@ describe('actions', () => {
       }
       expect(actions._addAllDimensions(modelId, modelName, dimensions)).toEqual(expectedAction)
     })
+
   it("should delete dimensions", () => {
     const modelId = modelId1;
     const expectedAction = {
@@ -96,11 +97,32 @@ describe('dimensions reducer', () => {
           dimensions: dummyDimensions,
         }
       })).toEqual(dimStore2)
+
+  })
+  it('should add the dimensions to the dimstore and keep the others', () => {
+    const action = {
+      type: types.ADD_ALL_DIMENSIONS,
+      payload: {
+        modelId: modelId3,
+        modelName: "mcg_iris",
+        dimensions: irisDimensions,
+      }
+    };
+    expect(reducer(dimStore2, action)).toEqual(dimStore3)
   })
   })
 
 describe('dimensions reducer 2', () => {
-  it("deletes modelId2 from dimensions.models", () => {
+  it('should delete modelId3 for irisDimension and delete them', () => {
+    const action = {
+      type: types.DELETE_DIMENSIONS,
+      payload: {
+        modelId: modelId3,
+      }
+    }
+    expect(reducer(dimStore3, action)).toEqual(dimStore2);
+  })
+  it('deletes modelId2 from dimensions.models', () => {
     expect(reducer(dimStore2, {
       type: types.DELETE_DIMENSIONS,
       payload: {
@@ -108,7 +130,7 @@ describe('dimensions reducer 2', () => {
       }
     })).toEqual(dimStore)
   })
-  it("deletes modelId1 from dimensions.models and returns empty store", () => {
+  it('deletes modelId1 from dimensions.models and returns empty store', () => {
     expect(reducer(dimStore, {
       type: types.DELETE_DIMENSIONS,
       payload: {
