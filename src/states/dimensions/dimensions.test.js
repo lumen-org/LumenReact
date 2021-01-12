@@ -1,15 +1,14 @@
 import * as actions from './actions';
 import * as types from './constants';
 import reducer from './reducer';
-import selector from './selector';
+import * as selector from './selector';
 import {
   dimStore,
   modelId1,
   modelId2,
   dummyDimensions,
   dimStore2,
-  selectorState,
-  emptyDimStore, modelId3, dimStore3, irisDimensions
+  emptyDimStore, modelId3, dimStore3, irisDimensions, selectorState
 } from "./testData";
 
 describe('actions', () => {
@@ -45,7 +44,7 @@ describe('actions', () => {
       payload: {
         modelId: modelId
       }
-    }
+    };
     expect(actions._deleteDimensions(modelId)).toEqual(expectedAction);
     }
   )
@@ -63,41 +62,41 @@ describe('actions', () => {
   });
   
 describe('dimensions reducer', () => {
+  const action ={};
+  const state = emptyDimStore;
     it('should return the initial state', () => {
-      expect(reducer(undefined, {})).toEqual(
-        {
-          dimensions: {
-            byDimensionName: {},
-          }
-        }
+      expect(reducer(undefined, action)).toEqual(
+        state
       )
     })
   
     it('should handle ADD_ALL_DIMENSIONS', () => {
       /// first: empty store, first dimensions
-      expect(
-        reducer(undefined, {
-          type: types.ADD_ALL_DIMENSIONS,
-          payload: {
-            modelId: modelId1,
-            modelName: "emp_mpg",
-            dimensions: dummyDimensions,
-          }
-        })
-      ).toEqual(dimStore) 
-    })
-  it('compare dimensions and add model id to models', () => {
-    expect(
-      //// second: same model -> compare dimensions and add model id to models
-      reducer(dimStore, {
+      const action = {
         type: types.ADD_ALL_DIMENSIONS,
         payload: {
-          modelId: modelId2,
-          modelName: "emp_mpg_new",
+          modelId: modelId1,
+          modelName: "emp_mpg",
           dimensions: dummyDimensions,
         }
-      })).toEqual(dimStore2)
-
+      };
+      expect(
+        reducer(undefined, action)
+      ).toEqual(dimStore);
+    })
+  it('compare dimensions and add model id to models', () => {
+    const action = {
+      type: types.ADD_ALL_DIMENSIONS,
+      payload: {
+        modelId: modelId2,
+        modelName: "emp_mpg_new",
+        dimensions: dummyDimensions,
+      }
+    };
+    const state = JSON.parse(JSON.stringify(dimStore));
+    expect(
+      //// second: same model -> compare dimensions and add model id to models
+      reducer(state, action)).toEqual(dimStore2);
   })
   it('should add the dimensions to the dimstore and keep the others', () => {
     const action = {
@@ -108,41 +107,48 @@ describe('dimensions reducer', () => {
         dimensions: irisDimensions,
       }
     };
-    expect(reducer(dimStore2, action)).toEqual(dimStore3)
+    const state = JSON.parse(JSON.stringify(dimStore2));
+    expect(reducer(state, action)).toEqual(dimStore3);
   })
   })
 
-describe('dimensions reducer 2', () => {
+describe('dimensions reducer DELETE_DIMENSIONS', () => {
   it('should delete modelId3 for irisDimension and delete them', () => {
     const action = {
       type: types.DELETE_DIMENSIONS,
       payload: {
         modelId: modelId3,
       }
-    }
-    expect(reducer(dimStore3, action)).toEqual(dimStore2);
+    };
+    const state = JSON.parse(JSON.stringify(dimStore3));
+    expect(reducer(state, action)).toEqual(dimStore2);
   })
   it('deletes modelId2 from dimensions.models', () => {
-    expect(reducer(dimStore2, {
+    const action = {
       type: types.DELETE_DIMENSIONS,
       payload: {
         modelId: modelId2,
       }
-    })).toEqual(dimStore)
+    };
+    const state = JSON.parse(JSON.stringify(dimStore2));
+    expect(reducer(state, action)).toEqual(dimStore);
   })
+
   it('deletes modelId1 from dimensions.models and returns empty store', () => {
-    expect(reducer(dimStore, {
+    const action = {
       type: types.DELETE_DIMENSIONS,
       payload: {
         modelId: modelId1,
       }
-    })).toEqual(emptyDimStore)
+    };
+    const state = JSON.parse(JSON.stringify(dimStore));
+    expect(reducer(state, action)).toEqual(emptyDimStore);
   })
 })
 
 /*describe("dimensions selector unit test ", () => {
   it('should return the dummy dimensions', () => {
-    expect(selector(selectorState)).toEqual(dummyDimensions)
+    expect(selector.default(selectorState)).toEqual(dummyDimensions)
   })
 })*/
 

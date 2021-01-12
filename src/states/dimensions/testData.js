@@ -84,81 +84,81 @@ export const dummyDimensions = [
     }
   ];
 
-export const irisDimensions = {
-  species: {
-    name: 'species',
-    dimId: 'idFromBackend',
-    domain: null,
-    extent: [
+export const irisDimensions = [
+  {
+    "name": 'species',
+    "dimId": 'idFromBackend',
+    "domain": null,
+    "extent": [
       'setosa',
       'versicolor',
       'virginica'
     ],
-    dtype: 'string',
-    hidden: false,
-    independent: false,
+    "dtype": 'string',
+    "hidden": false,
+    "independent": false,
   },
-  sepal_length: {
-    name: 'sepal_length',
-    dimId: 'idFromBackend',
-    domain: [
+  {
+    "name": 'sepal_length',
+    "dimId": 'idFromBackend',
+    "domain": [
       null,
       null
     ],
-    extent: [
+    "extent": [
       3.486399999999999,
       8.792800000000002
     ],
-    dtype: 'numerical',
-    hidden: false,
-    independent: false,
+    "dtype": 'numerical',
+    "hidden": false,
+    "independent": false,
   },
-  sepal_width: {
-    name: 'sepal_width',
-    dimId: 'idFromBackend',
-    domain: [
+  {
+    "name": 'sepal_width',
+    "dimId": 'idFromBackend',
+    "domain": [
       null,
       null
     ],
-    extent: [
+    "extent": [
       1.616,
       4.731200000000002
     ],
-    dtype: 'numerical',
-    hidden: false,
-    independent: false,
+    "dtype": 'numerical',
+    "hidden": false,
+    "independent": false,
   },
-  petal_length: {
-    name: 'petal_length',
-    dimId: 'idFromBackend',
-    domain: [
+  {
+    "name": 'petal_length',
+    "dimId": 'idFromBackend',
+    "domain": [
       null,
       null
     ],
-    extent: [
+    "extent": [
       -0.9824000000000003,
       8.233400000000001
     ],
-    dtype: 'numerical',
-    hidden: false,
-    independent: false,
+    "dtype": 'numerical',
+    "hidden": false,
+    "independent": false,
   },
-  petal_width: {
-    name: 'petal_width',
-    dimId: 'idFromBackend',
-    domain: [
+  {
+    "name": 'petal_width',
+    "dimId": 'idFromBackend',
+    "domain": [
       null,
       null
     ],
-    extent: [
+    "extent": [
       -0.8119999999999998,
       3.3063999999999996
     ],
-    dtype: 'numerical',
-    hidden: false,
-    independent: false,
+    "dtype": 'numerical',
+    "hidden": false,
+    "independent": false,
   }
-};
+];
 
 export const emptyDimStore = {
   dimensions: {
@@ -173,7 +173,7 @@ export const dimStore = {
         "transmission": {
           "name":"transmission",
           "dimId":"idFromBackend",
-          "domain":null,
+          "domain": null,
           "extent":["auto","lock-up","manual"],
           "dtype":"string",
           "hidden":false,
@@ -392,91 +392,91 @@ export const dimStore3 =  {
         "independent":false,
         "models":{"9b322875-ed80-4a09-aec7-8d417fe50c1e":"emp_mpg", "58bac0af-8c1d-40c2-9c86-3721ec59e26e":"emp_mpg_new"}
       },
-      species: {
-        name: 'species',
-        dimId: 'idFromBackend',
-        domain: null,
-        extent: [
+      "species": {
+        "name": 'species',
+        "dimId": 'idFromBackend',
+        "domain": null,
+        "extent": [
           'setosa',
           'versicolor',
           'virginica'
         ],
-        dtype: 'string',
-        hidden: false,
-        independent: false,
-        models: {
+        "dtype": 'string',
+        "hidden": false,
+        "independent": false,
+        "models": {
           '6b8c9fd5-6e9f-4ca8-a7f6-e3002f668ab1': 'mcg_iris'
         }
       },
-      sepal_length: {
-        name: 'sepal_length',
-        dimId: 'idFromBackend',
-        domain: [
+      "sepal_length": {
+        "name": 'sepal_length',
+        "dimId": 'idFromBackend',
+        "domain": [
           null,
           null
         ],
-        extent: [
+        "extent": [
           3.486399999999999,
           8.792800000000002
         ],
-        dtype: 'numerical',
-        hidden: false,
-        independent: false,
-        models: {
+        "dtype": 'numerical',
+        "hidden": false,
+        "independent": false,
+        "models": {
           '6b8c9fd5-6e9f-4ca8-a7f6-e3002f668ab1': 'mcg_iris'
         }
       },
-      sepal_width: {
-        name: 'sepal_width',
-        dimId: 'idFromBackend',
-        domain: [
+      "sepal_width": {
+        "name": 'sepal_width',
+        "dimId": 'idFromBackend',
+        "domain": [
           null,
           null
         ],
-        extent: [
+        "extent": [
           1.616,
           4.731200000000002
         ],
-        dtype: 'numerical',
-        hidden: false,
-        independent: false,
-        models: {
+        "dtype": 'numerical',
+        "hidden": false,
+        "independent": false,
+        "models": {
           '6b8c9fd5-6e9f-4ca8-a7f6-e3002f668ab1': 'mcg_iris'
         }
       },
-      petal_length: {
-        name: 'petal_length',
-        dimId: 'idFromBackend',
-        domain: [
+      "petal_length": {
+        "name": 'petal_length',
+        "dimId": 'idFromBackend',
+        "domain": [
           null,
           null
         ],
-        extent: [
+        "extent": [
           -0.9824000000000003,
           8.233400000000001
         ],
-        dtype: 'numerical',
-        hidden: false,
-        independent: false,
-        models: {
+        "dtype": 'numerical',
+        "hidden": false,
+        "independent": false,
+        "models": {
           '6b8c9fd5-6e9f-4ca8-a7f6-e3002f668ab1': 'mcg_iris'
         }
       },
-      petal_width: {
-        name: 'petal_width',
-        dimId: 'idFromBackend',
-        domain: [
+      "petal_width": {
+        "name": 'petal_width',
+        "dimId": 'idFromBackend',
+        "domain": [
           null,
           null
         ],
-        extent: [
+        "extent": [
           -0.8119999999999998,
           3.3063999999999996
         ],
-        dtype: 'numerical',
-        hidden: false,
-        independent: false,
-        models: {
+        "dtype": 'numerical',
+        "hidden": false,
+        "independent": false,
+        "models": {
           '6b8c9fd5-6e9f-4ca8-a7f6-e3002f668ab1': 'mcg_iris'
         }
       }
@@ -491,6 +491,11 @@ export const selectorState = [{
             "58bac0af-8c1d-40c2-9c86-3721ec59e26e": modelId2,
           }
         },
-        dimensions: dimStore2,
+      dimensions: {
+        dimensions: {
+          byDimensionName: dimStore2
+        },
+      }
+
     }
 }]
