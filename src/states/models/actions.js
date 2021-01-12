@@ -7,7 +7,7 @@ export const createNewModel = (modelName, model, id=uuidv4()) => {
     type: CREATE_NEW_MODEL,
     payload: {
       modelName,
-      model,
+      model, // model is an array with all the dimensions
       id
     }
   }
@@ -31,7 +31,7 @@ export const hidePCIGraph = (id) => {
   }
 };
 
-const _deleteModel = (id) => {
+export const _deleteModel = (id) => {
   return {
     type: DELETE_MODEL,
     payload: {

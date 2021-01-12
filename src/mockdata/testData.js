@@ -1,10 +1,13 @@
-import dimensions from "./reducer";
+import { EMPTY } from "../states/constants";
 
 export const modelId1 = "9b322875-ed80-4a09-aec7-8d417fe50c1e";
+export const modelName1 = "emp_mpg";
 export const modelId2 = "58bac0af-8c1d-40c2-9c86-3721ec59e26e";
+export const modelName2 = "emp_mpg_new";
 export const modelId3 = "6b8c9fd5-6e9f-4ca8-a7f6-e3002f668ab1";
+export const modelName3 ="mcg_iris";
 
-export const dummyDimensions = [
+export const emp_mpgDimensions = [
     {
       "name":"transmission",
       "domain":null,
@@ -499,3 +502,11 @@ export const selectorState = [{
 
     }
 }]
+
+export const emptyModelStore = {
+    lastCreatedModelId: EMPTY,
+    models: {
+      byId: {},
+      allIds: [],
+    },
+}
