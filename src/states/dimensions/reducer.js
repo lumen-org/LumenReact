@@ -40,8 +40,8 @@ const dimensions = (state = defaultState, action) => {
       ({ modelId } = action.payload);
       console.log("inside delete dimensions");
       let byDimensionNameNew = state.dimensions.byDimensionName;
-      for (let dimensionName in state.dimensions.byDimensionName) {
-        let o = state.dimensions.byDimensionName[dimensionName];
+      for (let dimensionName in byDimensionNameNew) {
+        let o = byDimensionNameNew[dimensionName];
         if (o.models.hasOwnProperty(modelId)){
           delete byDimensionNameNew[dimensionName].models[modelId];
           if (Object.keys(byDimensionNameNew[dimensionName].models).length === 0) {
@@ -52,7 +52,6 @@ const dimensions = (state = defaultState, action) => {
       return {
         dimensions: update(state.dimensions, {
             byDimensionName: { $set: byDimensionNameNew},
-
         })
       }
     default:

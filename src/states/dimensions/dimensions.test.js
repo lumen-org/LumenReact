@@ -2,7 +2,15 @@ import * as actions from './actions';
 import * as types from './constants';
 import reducer from './reducer';
 import selector from './selector';
-import { dimStore, modelId1, modelId2, dummyDimensions, dimStore2, selectorState, empytDimStore } from './testData';
+import {
+  dimStore,
+  modelId1,
+  modelId2,
+  dummyDimensions,
+  dimStore2,
+  selectorState,
+  emptyDimStore
+} from "./testData";
 
 describe('actions', () => {
     it('should create an action to add the given dimensions', () => {
@@ -100,13 +108,13 @@ describe('dimensions reducer 2', () => {
       }
     })).toEqual(dimStore)
   })
-  it("deletes modelId1 from dimensions.models and return empty store", () => {
+  it("deletes modelId1 from dimensions.models and returns empty store", () => {
     expect(reducer(dimStore, {
       type: types.DELETE_DIMENSIONS,
       payload: {
         modelId: modelId1,
       }
-    })).toEqual(empytDimStore)
+    })).toEqual(emptyDimStore)
   })
 })
 

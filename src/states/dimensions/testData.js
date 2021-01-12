@@ -83,7 +83,7 @@ export const dummyDimensions = [
     }
   ];
 
-export const empytDimStore = {
+export const emptyDimStore = {
   dimensions: {
     byDimensionName: {
 
