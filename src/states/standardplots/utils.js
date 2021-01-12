@@ -39,13 +39,14 @@ export const getSelectedFieldObjectById = (state, id) => {
 
 export const getMarginalsQueryBodyById = (state, type, fieldItem, id) => {
   var modelName = "";
+
   // TODO: Use submodel, right now when color field is updated, no submodels are created,so we use the whole model
   if (type === "data") {
     modelName = "emp_" + getModelNameById(state, id).split("_")[1]; // + "_data_marginal";
   }
 
   if (type === "model") {
-    modelName = getModelNameById(state, id); //+ "_data_marginal";
+    modelName = "mcg_" + getModelNameById(state, id).split("_")[1]; //+ "_data_marginal";
   }
   const colorSpec = getColorCatgeoryById(state, getSpecificationId(state, id));
   var splitBy = [
@@ -92,7 +93,8 @@ export const getPredictionQueryBodyId = (state, type, id) => {
   }
 
   if (type === "model") {
-    modelName = getModelNameById(state, id) + "_data_marginal";
+    modelName =
+      "mcg_" + getModelNameById(state, id).split("_")[1] + "_data_marginal";
   }
   const PREDICT = fieldItems.map((item, key) => {
     return {
@@ -119,7 +121,8 @@ export const getDensityQueryBodyById = (state, type, id) => {
   }
 
   if (type === "model") {
-    modelName = getModelNameById(state, id) + "_data_marginal";
+    modelName =
+      "mcg_" + getModelNameById(state, id).split("_")[1] + "_data_marginal";
   }
   const PREDICT = fieldItems.map((item, key) => {
     return item;

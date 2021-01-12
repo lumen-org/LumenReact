@@ -12,6 +12,7 @@ import {
   showHeaders,
   cloneModel,
   dropModel,
+  createEmpmodel,
 } from "../../utils/pqlModelQueries";
 import { STANDARD_PLOT } from "../../constants/plotTypes";
 import {
@@ -19,7 +20,7 @@ import {
   createNewVisualization,
   fillVisualization,
 } from "../../states/visualizations/actions";
-import { createNewModel} from "../../states/models/actions";
+import { createNewModel } from "../../states/models/actions";
 import { addAllDimensions } from "../../states/dimensions/actions";
 import { STANDARD_SPECIFICATION } from "../../states/specifications/specificationTypes";
 const defaultPlotType = STANDARD_PLOT; // Haha, we will certainly refractor this, right?
@@ -65,12 +66,13 @@ class ListModalContainer extends React.Component {
       })
       .then((fields) => {
         addAllDimensions(modelName, fields);
-        const specificationId = uuidv4()
+        const specificationId = uuidv4();
         addSpecifications(STANDARD_SPECIFICATION, specificationId);
         createNewVisualization(specificationId);
         createPlot(modelName, specificationId);
         fillVisualization();
         changeActiveVisualization();
+        createEmpmodel(modelName);
         handleModalClose();
       });
   };
@@ -113,21 +115,22 @@ class ListModalContainer extends React.Component {
 
 //getDimensionsOfCurrentModel: getDimensionsOfCurrentModel(state),
 
-
 const mapDispatchToProps = (dispatch) => {
   return {
-    addAllDimensions: (modelName, fields) => dispatch(addAllDimensions(modelName, fields)),
-    createNewVisualization: (specificationId) => dispatch(createNewVisualization(specificationId)),
+    addAllDimensions: (modelName, fields) =>
+      dispatch(addAllDimensions(modelName, fields)),
+    createNewVisualization: (specificationId) =>
+      dispatch(createNewVisualization(specificationId)),
     updateActiveModel: (model) => dispatch(updateActiveModel(model)),
 
     changeActiveVisualization: () => dispatch(changeActiveVisualization()),
     createPlot: (activeModel, specificationId) =>
       dispatch(createNewPlot(activeModel, defaultPlotType, specificationId)),
-    addSpecifications: (specificationType, specificationId) => dispatch(createNewSpecification({specificationType, specificationId})),
+    addSpecifications: (specificationType, specificationId) =>
+      dispatch(createNewSpecification({ specificationType, specificationId })),
     createNewModel: (modelName, model) =>
       dispatch(createNewModel(modelName, model)),
     fillVisualization: () => dispatch(fillVisualization()),
-
   };
 };
 
