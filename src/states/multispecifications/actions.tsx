@@ -15,7 +15,7 @@ type createNewSpecProps = {
     initValues: any
 }
 
-export const createNewMultiSpecification = ({id, initValues = {}}: createNewSpecProps) => {
+export const createNewMultiSpecification = ({ id, initValues = {} }: createNewSpecProps) => {
     return {
         type: CREATE_NEW_MULTI_SPECIFICATION,
         payload: {
@@ -41,16 +41,14 @@ export const addToMultiSpecification = (payload: object) => {
     }
 }
 
-export const deleteFromMultiSpecification = (payload: object) => {
-    return  {
+export const deleteFromMultiSpecification = (payload: any) => {
+    return {
         type: DELETE_FROM_MULTI_SPECIFICATION,
-        payload: {
-            payload
-        }
+        payload
     }
 }
 
-export const reesetMultiSpecification = () => {
+export const resetMultiSpecification = () => {
     return {
         type: RESET_MULTI_SPECIFICATION
     }
