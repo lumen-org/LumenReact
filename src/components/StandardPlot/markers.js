@@ -16,7 +16,7 @@ export const markers = {
     symbol: "square",
   },
   modelPredictionMarker: {
-    color: "rgba(231, 99, 250, 0.5)",
+    color: "rgba(231, 99, 250)",
     opacity: 0.8,
     size: 10,
     line: {
@@ -35,20 +35,18 @@ export const markers = {
     },
   },
   histogramMarker: {
-    marker: {
-      color: "rgb(207, 207, 207)",
-      opacity: 0.7,
-      line: {
-        color: "rgb(33, 33, 33)",
-        width: 4.5,
-      },
+    color: "rgb(207, 207, 207)",
+    opacity: 0.1,
+    line: {
+      color: "rgb(33, 33, 33)",
+      width: 4.5,
     },
   },
   modelHistogramMarker: {
-    color: "rgba(231, 99, 250, 0.5)",
-    opacity: 0.5,
+    color: "rgba(231, 99, 250)",
+    opacity: 0.1,
     line: {
-      color: "rgb(235, 64, 52)",
+      color: "rgb(33, 33, 33)",
       width: 4.5,
     },
   },
