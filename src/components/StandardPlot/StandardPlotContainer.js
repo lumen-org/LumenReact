@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getSelectedFieldObjectById } from "../../states/standardplots/utils";
-import { getStandardPlotDataById } from "../../states/standardplots/selector";
+import {
+  getStandardPlotDataById,
+  getStandardPlotCategoriesById,
+} from "../../states/standardplots/selector";
 import {
   getSpecById,
   getFacetById,
@@ -26,6 +29,7 @@ class StandardPlotContainer extends React.Component {
     loading: PropTypes.bool,
     modelName: PropTypes.string,
     axisFields: PropTypes.object,
+    category: PropTypes.array,
   };
 
   state = {
@@ -84,7 +88,13 @@ class StandardPlotContainer extends React.Component {
   }
 
   render() {
-    const { plotData, specification, axisFields, modelName } = this.props;
+    const {
+      plotData,
+      specification,
+      axisFields,
+      modelName,
+      category,
+    } = this.props;
 
     const { displayTraces } = this.state;
     return (
@@ -94,6 +104,7 @@ class StandardPlotContainer extends React.Component {
         specification={specification}
         axisFields={axisFields}
         modelName={modelName}
+        category={category}
       />
     );
   }
@@ -108,6 +119,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     plotData: getStandardPlotDataById(state, ownProps.id),
+    category: getStandardPlotCategoriesById(state, ownProps.id),
     specification: getSpecById(state, getSpecificationId(state, ownProps.id)),
     facets: getFacetById(state, getSpecificationId(state, ownProps.id)),
     axisFields: getSelectedFieldObjectById(state, ownProps.id),

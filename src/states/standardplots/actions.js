@@ -24,6 +24,7 @@ import {
   fetch3DPlotData,
   fetch2DPlotData,
   fetch2DPlotDataCategroy,
+  fetch2DPlotMarginalCategroy,
 } from "../../utils/fetch";
 import { getActivePlotId, getSpecificationId } from "../plots/selector";
 import { getStandardPlotCategoriesById } from "./selector";
@@ -198,7 +199,9 @@ export function updateCategories(id, categories) {
 export function fetchCatgetories(fieldItems) {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
-    const mcgModelName = getModelNameById(getState(), id);
+    const modelName = getModelNameById(getState(), id);
+    const mcgModelName = "mcg_" + modelName.split("_")[1];
+
     marginalizeModel(
       mcgModelName,
       fieldItems,
@@ -216,9 +219,11 @@ export function fetchCatgetories(fieldItems) {
 export function deriveSubmodelsOnSpecChange() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
-    const mcgModelName = getModelNameById(getState(), id);
+    const modelName = getModelNameById(getState(), id);
+    const mcgModelName = "mcg_" + modelName.split("_")[1];
+
     const fieldsArray = getSelectedFieldArrayById(getState(), id);
-    const empModelName = "emp_" + mcgModelName.split("_")[1];
+    const empModelName = "emp_" + modelName.split("_")[1];
     marginalizeModel(
       mcgModelName,
       fieldsArray,
@@ -337,7 +342,7 @@ export function fetchModelMarginals() {
         fieldItems.x,
         id
       );
-      fetch2DPlotData(modelMarginalsQueryBody).then((response) => {
+      fetch2DPlotMarginalCategroy(modelMarginalsQueryBody).then((response) => {
         dispatch(fetchModelXMarginalSuccess(id, response));
       });
     }
@@ -349,7 +354,7 @@ export function fetchModelMarginals() {
         fieldItems.y,
         id
       );
-      fetch2DPlotData(modelMarginalsQueryBody).then((response) => {
+      fetch2DPlotMarginalCategroy(modelMarginalsQueryBody).then((response) => {
         dispatch(fetchModelYMarginalSuccess(id, response));
       });
     }
@@ -367,7 +372,7 @@ export function fetchDataMarginals() {
         fieldItems.x,
         id
       );
-      fetch2DPlotData(dataMarginalsQueryBody).then((response) => {
+      fetch2DPlotMarginalCategroy(dataMarginalsQueryBody).then((response) => {
         dispatch(fetchDataXMarginalSuccess(id, response));
       });
     }
@@ -379,7 +384,8 @@ export function fetchDataMarginals() {
         fieldItems.y,
         id
       );
-      fetch2DPlotData(dataMarginalsQueryBody).then((response) => {
+
+      fetch2DPlotMarginalCategroy(dataMarginalsQueryBody).then((response) => {
         dispatch(fetchDataYMarginalSuccess(id, response));
       });
     }
@@ -391,6 +397,7 @@ export function fetchTrainingDataPoints() {
     const id = getActivePlotId(getState());
     dispatch(fetchDataPending(id));
     const modelName = getModelNameById(getState(), id);
+    const mcgModelName = "mcg_" + modelName.split("_")[1];
     const fieldItems = getSelectedFieldArrayById(getState(), id);
     const colorSpec = getColorCatgeoryById(
       getState(),
@@ -402,7 +409,7 @@ export function fetchTrainingDataPoints() {
     }
     dispatch(fetchDataPending(id));
     const trainingDataQueryBody = {
-      FROM: modelName,
+      FROM: mcgModelName,
       SELECT: fieldItems,
       OPTS: {
         data_category: "training data",
@@ -420,6 +427,7 @@ export function fetchModelDataPoints() {
   return (dispatch, getState) => {
     const id = getActivePlotId(getState());
     const modelName = getModelNameById(getState(), id);
+    const empModelName = "emp_" + modelName.split("_")[1];
     const fieldItems = getSelectedFieldArrayById(getState(), id);
     const colorSpec = getColorCatgeoryById(
       getState(),
@@ -431,7 +439,7 @@ export function fetchModelDataPoints() {
     }
     dispatch(fetchDataPending(id));
     const modelDataQueryBody = {
-      FROM: modelName,
+      FROM: empModelName,
       OPTS: {
         data_category: "model samples",
         data_point_limit: 2000,
