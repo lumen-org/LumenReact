@@ -9,7 +9,7 @@ import {
   modelName1,
   modelName3,
   modelStore1,
-  irisModel, modelStorePCIGraphShown
+  irisModel, modelStorePCIGraphShown, modelStoreAfterModelDeletion
 } from "../../mockdata/testData";
 
 describe('model actions', () => {
@@ -126,7 +126,7 @@ describe('models reducer', () => {
       }
     }
     const state = JSON.parse(JSON.stringify(modelStorePCIGraphShown));
-    expect(reducer(state, action)).toEqual(emptyModelStore)
+    expect(reducer(state, action)).toEqual(modelStoreAfterModelDeletion)
   })
 })
 /*

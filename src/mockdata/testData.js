@@ -640,4 +640,8 @@ temp.forEach((o) => {
 })
 temp = JSON.parse(JSON.stringify(modelStore1))
 temp.models.byId["6b8c9fd5-6e9f-4ca8-a7f6-e3002f668ab1"].showPCIGraph= true;
-export const modelStorePCIGraphShown = temp
+export const modelStorePCIGraphShown = temp;
+
+temp = JSON.parse(JSON.stringify(emptyModelStore));
+temp.lastCreatedModelId = modelId3;
+export const modelStoreAfterModelDeletion = temp;
