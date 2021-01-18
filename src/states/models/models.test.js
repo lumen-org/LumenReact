@@ -8,7 +8,8 @@ import {
   modelId3,
   modelName1,
   modelName3,
-  modelStore1
+  modelStore1,
+  irisModel, modelStorePCIGraphShown
 } from "../../mockdata/testData";
 
 describe('model actions', () => {
@@ -80,9 +81,9 @@ describe('models reducer', () => {
     expect(reducer(undefined, action)).toEqual(emptyModelStore);
   })
   it('Test add to store_MODEL', () => {
-    const modelName = modelName1;
+    const modelName = modelName3;
     const modelId = modelId3;
-    const model = irisDimensions;
+    const model = irisModel;
     const action = {
       type: types.CREATE_NEW_MODEL,
       payload: {
@@ -93,6 +94,39 @@ describe('models reducer', () => {
     }
     const state = JSON.parse(JSON.stringify(emptyModelStore));
     expect(reducer(state, action)).toEqual(modelStore1)
+  })
+  it('Test PCI graph shown', () => {
+    const modelId = modelId3;
+    const action = {
+      type: types.SHOW_PCI_GRAPH,
+      payload: {
+        id: modelId
+      }
+    }
+    const state = JSON.parse(JSON.stringify(modelStore1));
+    expect(reducer(state, action)).toEqual(modelStorePCIGraphShown)
+  })
+  it('Test PCI graph not shown', () => {
+    const modelId = modelId3;
+    const action = {
+      type: types.HIDE_PCI_GRAPH,
+      payload: {
+        id: modelId
+      }
+    }
+    const state = JSON.parse(JSON.stringify(modelStorePCIGraphShown));
+    expect(reducer(state, action)).toEqual(modelStore1)
+  })
+  it('delete model', () => {
+    const modelId = modelId3;
+    const action = {
+      type: types.DELETE_MODEL,
+      payload: {
+        id: modelId
+      }
+    }
+    const state = JSON.parse(JSON.stringify(modelStorePCIGraphShown));
+    expect(reducer(state, action)).toEqual(emptyModelStore)
   })
 })
 /*
