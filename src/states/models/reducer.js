@@ -21,6 +21,7 @@ const models = (state = defaultState, action) => {
     case CREATE_NEW_MODEL:
       let modelName, model;
       ({ modelName, model, id } = action.payload);
+      console.log(model);
       let fields = {};
       model.forEach((o) => {
         fields[o.name] = o;

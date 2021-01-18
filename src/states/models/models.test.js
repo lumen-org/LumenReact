@@ -2,7 +2,14 @@ import * as actions from "./actions";
 import * as types from "./constants";
 import reducer from "./reducer";
 //import * as selector from './selector';
-import { emptyModelStore, irisDimensions, modelId3, modelName3 } from "../../mockdata/testData";
+import {
+  emptyModelStore,
+  irisDimensions,
+  modelId3,
+  modelName1,
+  modelName3,
+  modelStore1
+} from "../../mockdata/testData";
 
 describe('model actions', () => {
   it('test CREATE_NEW_MODEL', () => {
@@ -72,18 +79,24 @@ describe('models reducer', () => {
     const action = {};
     expect(reducer(undefined, action)).toEqual(emptyModelStore);
   })
-  it('')
+  it('Test add to store_MODEL', () => {
+    const modelName = modelName1;
+    const modelId = modelId3;
+    const model = irisDimensions;
+    const action = {
+      type: types.CREATE_NEW_MODEL,
+      payload: {
+        modelName: modelName,
+        model: model,
+        id: modelId
+      }
+    }
+    const state = JSON.parse(JSON.stringify(emptyModelStore));
+    expect(reducer(state, action)).toEqual(modelStore1)
+  })
 })
 /*
 describe('models reducer', () => {
-  const action ={};
-  const state = emptyDimStore;
-  it('should return the initial state', () => {
-    expect(reducer(undefined, action)).toEqual(
-      state
-    )
-  })
-
   it('should handle ADD_ALL_DIMENSIONS', () => {
     /// first: empty store, first dimensions
     const action = {

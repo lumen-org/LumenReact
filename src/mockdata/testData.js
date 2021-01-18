@@ -166,7 +166,6 @@ export const irisDimensions = [
 export const emptyDimStore = {
   dimensions: {
     byDimensionName: {
-
     }
   }
 }
@@ -510,3 +509,104 @@ export const emptyModelStore = {
       allIds: [],
     },
 }
+
+export const modelStore1 = {
+    models: {
+      byId: {
+        '6b8c9fd5-6e9f-4ca8-a7f6-e3002f668ab1': {
+          modelName: 'mcg_iris',
+          fields: {
+            species: {
+              name: 'species',
+              domain: null,
+              extent: [
+                'setosa',
+                'versicolor',
+                'virginica'
+              ],
+              dtype: 'string',
+              obstype: 'observed',
+              hidden: false,
+              default_value: null,
+              default_subset: null,
+              independent: false
+            },
+            sepal_length: {
+              name: 'sepal_length',
+              domain: [
+                null,
+                null
+              ],
+              extent: [
+                3.486399999999999,
+                8.792800000000002
+              ],
+              dtype: 'numerical',
+              obstype: 'observed',
+              hidden: false,
+              default_value: null,
+              default_subset: null,
+              independent: false
+            },
+            sepal_width: {
+              name: 'sepal_width',
+              domain: [
+                null,
+                null
+              ],
+              extent: [
+                1.616,
+                4.731200000000002
+              ],
+              dtype: 'numerical',
+              obstype: 'observed',
+              hidden: false,
+              default_value: null,
+              default_subset: null,
+              independent: false
+            },
+            petal_length: {
+              name: 'petal_length',
+              domain: [
+                null,
+                null
+              ],
+              extent: [
+                -0.9824000000000003,
+                8.233400000000001
+              ],
+              dtype: 'numerical',
+              obstype: 'observed',
+              hidden: false,
+              default_value: null,
+              default_subset: null,
+              independent: false
+            },
+            petal_width: {
+              name: 'petal_width',
+              domain: [
+                null,
+                null
+              ],
+              extent: [
+                -0.8119999999999998,
+                3.3063999999999996
+              ],
+              dtype: 'numerical',
+              obstype: 'observed',
+              hidden: false,
+              default_value: null,
+              default_subset: null,
+              independent: false
+            }
+          },
+          id: '6b8c9fd5-6e9f-4ca8-a7f6-e3002f668ab1',
+          showPCIGraph: false
+        }
+      },
+      allIds: [
+        '6b8c9fd5-6e9f-4ca8-a7f6-e3002f668ab1'
+      ]
+    },
+    lastCreatedModelId: '6b8c9fd5-6e9f-4ca8-a7f6-e3002f668ab1'
+  }
