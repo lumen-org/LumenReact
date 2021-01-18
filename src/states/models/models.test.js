@@ -72,6 +72,7 @@ describe('models reducer', () => {
     const action = {};
     expect(reducer(undefined, action)).toEqual(emptyModelStore);
   })
+  it('')
 })
 /*
 describe('models reducer', () => {
