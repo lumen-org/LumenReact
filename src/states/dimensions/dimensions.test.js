@@ -1,7 +1,6 @@
 import * as actions from "./actions";
 import * as types from "./constants";
 import reducer from "./reducer";
-// import * as selector from './selector';
 import {
   dimStore,
   dimStore2,
@@ -140,12 +139,4 @@ describe('dimensions reducer DELETE_DIMENSIONS', () => {
     expect(reducer(state, action)).toEqual(emptyDimStore);
   })
 })
-
-/*describe("dimensions selector unit test ", () => {
-  it('should return the dummy dimensions', () => {
-    expect(selector.default(selectorState)).toEqual(emp_mpgDimensions)
-  })
-})*/
-
- 
 
