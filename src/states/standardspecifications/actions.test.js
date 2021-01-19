@@ -11,7 +11,7 @@ describe("actions", () => {
             type: types.CREATE_NEW_STANDARD_SPECIFICATION,
             payload: {
                 id,
-                initValues: defaultValues
+                defaultValues
             }
         }
 
@@ -23,7 +23,7 @@ describe("actions", () => {
             type: types.CREATE_NEW_STANDARD_SPECIFICATION,
             payload: {
                 id,
-                initValues: filledTwoValues
+                defaultValues: filledTwoValues
             }
         }
         // should create a new specification with set values

@@ -1,4 +1,10 @@
-import { ADD_TO_MULTI_SPECIFICATION, CREATE_NEW_MULTI_SPECIFICATION, DELETE_FROM_MULTI_SPECIFICATION, REMOVE_MULTI_SPECIFICATION, RESET_MULTI_SPECIFICATION } from "./constants"
+import { 
+    ADD_TO_MULTI_SPECIFICATION, 
+    CREATE_NEW_MULTI_SPECIFICATION, 
+    DELETE_FROM_MULTI_SPECIFICATION, 
+    REMOVE_MULTI_SPECIFICATION, 
+    RESET_MULTI_SPECIFICATION 
+} from "./constants"
 
 
 
@@ -10,12 +16,12 @@ const defaultValues = {
     }
 }
 
-type createNewSpecProps = {
+type createNewMultiSpecProps = {
     id: any,
     initValues: any
 }
 
-export const createNewMultiSpecification = ({ id, initValues = {} }: createNewSpecProps) => {
+export const createNewMultiSpecification = ({ id, initValues = null }: createNewMultiSpecProps) => {
     return {
         type: CREATE_NEW_MULTI_SPECIFICATION,
         payload: {

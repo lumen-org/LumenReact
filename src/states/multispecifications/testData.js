@@ -29,3 +29,31 @@ export const filledOneValues = {
         Size: new Set([]),
     }
 }
+
+export const defaultState = {
+    "multispecifications": {
+        "10": {
+            "specification": {
+                "Color": new Set([]),
+                "X_Axis": new Set([]),
+                "Y_Axis": new Set([]),
+            }
+        }
+    }
+}
+
+export const filledOneState = {
+    "multispecifications": {
+        "10": {
+            "specification": {
+                "Color": new Set([]),
+                "X_Axis": new Set(["time[s]"]),
+                "Y_Axis": new Set([]),
+            }
+        }
+    }
+}
+
+export const changedState = {
+
+}

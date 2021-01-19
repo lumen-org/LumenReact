@@ -10,7 +10,7 @@ describe("actions", () => {
             type: types.CREATE_NEW_MULTI_SPECIFICATION,
             payload: {
                 id,
-                initValues: defaultValues
+                defaultValues: defaultValues
             }
         }
 
@@ -18,10 +18,10 @@ describe("actions", () => {
         expect(actions.createNewMultiSpecification({ id, initValues: defaultValues })).toEqual(defaultAction)
 
         const filledAction = {
-            type: types.createNewMultiSpecification,
+            type: types.CREATE_NEW_MULTI_SPECIFICATION,
             payload: {
                 id,
-                initValues: filledTwoValues
+                defaultValues: filledTwoValues
             }
         }
 
