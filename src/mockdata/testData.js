@@ -529,7 +529,7 @@ export const modelStore1 = {
     models: {
       byId: {
         '6b8c9fd5-6e9f-4ca8-a7f6-e3002f668ab1': {
-          modelName: 'mcg_iris',
+          modelName: modelName3,
           fields: {
             species: {
               name: 'species',
@@ -645,3 +645,33 @@ export const modelStorePCIGraphShown = temp;
 temp = JSON.parse(JSON.stringify(emptyModelStore));
 temp.lastCreatedModelId = modelId3;
 export const modelStoreAfterModelDeletion = temp;
+
+let tempFields = JSON.parse(JSON.stringify(dimStore.dimensions.byDimensionName));
+Object.keys(tempFields).forEach((o) => {
+  console.log(o);
+  delete tempFields[o].dimId;
+  delete tempFields[o].models;
+  tempFields[o].default_value = null;
+  tempFields[o].default_subset = null;
+  tempFields[o].obstype = "observed";
+})
+
+temp = JSON.parse(JSON.stringify(modelStore1));
+temp.models.byId[modelId1] = {
+  id: modelId1,
+  modelName: modelName1,
+  showPCIGraph: false,
+  fields: tempFields,
+};
+
+temp.models.allIds.push(modelId1);
+temp.lastCreatedModelId = modelId1;
+export const modelStoreAddSecondModel = temp;
+
+temp = temp = JSON.parse(JSON.stringify(modelStore1));
+temp.lastCreatedModelId = modelId1;
+export const modelStoreAfterDeletion = temp;
+
+temp = JSON.parse(JSON.stringify(emptyModelStore));
+temp.lastCreatedModelId = modelId1;
+export const modelStoreEmpyt = temp;

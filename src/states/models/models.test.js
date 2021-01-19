@@ -3,13 +3,20 @@ import * as types from "./constants";
 import reducer from "./reducer";
 //import * as selector from './selector';
 import {
+  emp_mpgDimensions,
   emptyModelStore,
   irisDimensions,
+  irisModel,
+  modelId1,
   modelId3,
   modelName1,
   modelName3,
   modelStore1,
-  irisModel, modelStorePCIGraphShown, modelStoreAfterModelDeletion
+  modelStoreAddSecondModel,
+  modelStoreAfterDeletion,
+  modelStoreAfterModelDeletion,
+  modelStoreEmpyt,
+  modelStorePCIGraphShown
 } from "../../mockdata/testData";
 
 describe('model actions', () => {
@@ -81,52 +88,79 @@ describe('models reducer', () => {
     expect(reducer(undefined, action)).toEqual(emptyModelStore);
   })
   it('Test add to store_MODEL', () => {
-    const modelName = modelName3;
-    const modelId = modelId3;
-    const model = irisModel;
     const action = {
       type: types.CREATE_NEW_MODEL,
       payload: {
-        modelName: modelName,
-        model: model,
-        id: modelId
+        modelName: modelName3,
+        model: irisModel,
+        id: modelId3
       }
     }
     const state = JSON.parse(JSON.stringify(emptyModelStore));
     expect(reducer(state, action)).toEqual(modelStore1)
   })
   it('Test PCI graph shown', () => {
-    const modelId = modelId3;
     const action = {
       type: types.SHOW_PCI_GRAPH,
       payload: {
-        id: modelId
+        id: modelId3
       }
     }
     const state = JSON.parse(JSON.stringify(modelStore1));
     expect(reducer(state, action)).toEqual(modelStorePCIGraphShown)
   })
+
   it('Test PCI graph not shown', () => {
-    const modelId = modelId3;
     const action = {
       type: types.HIDE_PCI_GRAPH,
       payload: {
-        id: modelId
+        id: modelId3
       }
     }
     const state = JSON.parse(JSON.stringify(modelStorePCIGraphShown));
     expect(reducer(state, action)).toEqual(modelStore1)
   })
   it('delete model', () => {
-    const modelId = modelId3;
     const action = {
       type: types.DELETE_MODEL,
       payload: {
-        id: modelId
+        id: modelId3
       }
     }
     const state = JSON.parse(JSON.stringify(modelStorePCIGraphShown));
-    expect(reducer(state, action)).toEqual(modelStoreAfterModelDeletion)
+    expect(reducer(state, action)).toEqual(modelStoreAfterModelDeletion);
+  })
+  it('add second model', () => {
+    const action = {
+      type: types.CREATE_NEW_MODEL,
+      payload: {
+        modelName: modelName1,
+        model: emp_mpgDimensions,
+        id: modelId1
+      }
+    }
+    const state = JSON.parse(JSON.stringify(modelStore1));
+    expect(reducer(state, action)).toEqual(modelStoreAddSecondModel)
+  })
+  it('delete model', () => {
+    const action = {
+      type: types.DELETE_MODEL,
+      payload: {
+        id: modelId1
+      }
+    }
+    const state = JSON.parse(JSON.stringify(modelStoreAddSecondModel));
+    expect(reducer(state, action)).toEqual(modelStoreAfterDeletion);
+  })
+  it('delete last model', () => {
+    const action = {
+      type: types.DELETE_MODEL,
+      payload: {
+        id: modelId3
+      }
+    }
+    const state = JSON.parse(JSON.stringify(modelStoreAfterDeletion));
+    expect(reducer(state, action)).toEqual(modelStoreEmpyt);
   })
 })
 /*
