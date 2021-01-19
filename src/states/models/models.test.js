@@ -21,8 +21,7 @@ import {
   plotId1,
   testSchemes,
   visualizationId1,
-  create,
-} from "../../mockdata/testData";
+} from "./testData";
 
 describe('model actions', () => {
   it('test CREATE_NEW_MODEL', () => {

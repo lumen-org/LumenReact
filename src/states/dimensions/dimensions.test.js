@@ -15,7 +15,7 @@ import {
   modelName1,
   modelName2,
   modelName3
-} from "../../mockdata/testData";
+} from "./testData";
 
 describe('actions', () => {
     it('should create an action to add the given dimensions', () => {
