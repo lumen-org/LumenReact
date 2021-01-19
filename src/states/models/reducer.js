@@ -81,7 +81,6 @@ const models = (state = defaultState, action) => {
     case DELETE_MODEL:
       ({ id } = action.payload);
       const allIds = PlotStack.pop(state.models.allIds);
-      console.log("id ", id);
       //const byIds = PlotStack.remove(state.models.byId, id);
       return {
         ...state,

@@ -1025,3 +1025,14 @@ export const testSchemes = {
     "petal_width"
   ]
 }
+export const create = () => {
+  const store = {
+    getState: jest.fn(() => ({})),
+    dispatch: jest.fn()
+  }
+  const next = jest.fn()
+
+  const invoke = action => thunk(store)(next)(action)
+
+  return { store, next, invoke }
+}

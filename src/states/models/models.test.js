@@ -20,7 +20,8 @@ import {
   modelStorePCIGraphShown,
   plotId1,
   testSchemes,
-  visualizationId1
+  visualizationId1,
+  create,
 } from "../../mockdata/testData";
 
 describe('model actions', () => {
@@ -206,3 +207,15 @@ describe("models selector unit test ", () => {
     expect(selector.selectSchemeNames(modelSelectorState)).toEqual(testSchemes);
   })
 })
+
+/*describe("functionality tests", () =>  {
+  // TODO: add functionality tests for deleteModelIfNecessary
+  const action = {
+    type: types.DELETE_MODEL,
+    payload: {
+      id: modelId3,
+    }
+  }
+  const { store } = create();
+  expect(actions.deleteModelIfNecessary(modelId3)).toEqual(action);
+})*/
