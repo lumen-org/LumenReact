@@ -188,6 +188,82 @@ export const emptyModelStore = {
     },
 }
 
+export const dimStore = {
+  dimensions: {
+    byDimensionName: {
+      "transmission": {
+        "name":"transmission",
+        "dimId":"idFromBackend",
+        "domain": null,
+        "extent":["auto","lock-up","manual"],
+        "dtype":"string",
+        "hidden":false,
+        "independent":false,
+        "models":{"9b322875-ed80-4a09-aec7-8d417fe50c1e":"emp_mpg"}
+      },
+      "cylinder":{
+        "name":"cylinder",
+        "dimId":"idFromBackend",
+        "domain":null,
+        "extent":["few","many","medium"],
+        "dtype":"string",
+        "hidden":false,
+        "independent":false,
+        "models":{"9b322875-ed80-4a09-aec7-8d417fe50c1e":"emp_mpg"}
+      },
+      "car_size":{
+        "name":"car_size",
+        "dimId":"idFromBackend",
+        "domain":null,
+        "extent":["large","midsize","small"],
+        "dtype":"string",
+        "hidden":false,
+        "independent":false,
+        "models":{"9b322875-ed80-4a09-aec7-8d417fe50c1e":"emp_mpg"}
+      },
+      "year":{
+        "name":"year",
+        "dimId":"idFromBackend",
+        "domain":[null,null],
+        "extent":[1982.7,2010.3],
+        "dtype":"numerical",
+        "hidden":false,
+        "independent":false,
+        "models":{"9b322875-ed80-4a09-aec7-8d417fe50c1e":"emp_mpg"}
+      },
+      "mpg_city":{
+        "name":"mpg_city",
+        "dimId":"idFromBackend",
+        "domain":[null,null],
+        "extent":[1.7999999999999998,52.2],
+        "dtype":"numerical",
+        "hidden":false,
+        "independent":false,
+        "models":{"9b322875-ed80-4a09-aec7-8d417fe50c1e":"emp_mpg"}
+      },
+      "mpg_highway":{
+        "name":"mpg_highway",
+        "dimId":"idFromBackend",
+        "domain":[null,null],
+        "extent":[4.8999999999999995,66.1],
+        "dtype":"numerical",
+        "hidden":false,
+        "independent":false,
+        "models":{"9b322875-ed80-4a09-aec7-8d417fe50c1e":"emp_mpg"}
+      },
+      "displacement":{
+        "name":"displacement",
+        "dimId":"idFromBackend",
+        "domain":[null,null],
+        "extent":[-0.8400000000000001,9.24],
+        "dtype":"numerical",
+        "hidden":false,
+        "independent":false,
+        "models":{"9b322875-ed80-4a09-aec7-8d417fe50c1e":"emp_mpg"}
+      }
+    }}
+}
+
 export const modelStore1 = {
     models: {
       byId: {
