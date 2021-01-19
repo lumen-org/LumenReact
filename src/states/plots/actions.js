@@ -7,17 +7,16 @@ import {
 import {
   getPlotTypeById,
   getPlotAllIds,
-  getLastCreatedPlotId,
 } from "./selector";
 import {
   selectActiveModelId,
   getLastCreatedVisualizationId,
 } from "../visualizations/selector";
-import { getLastCreatedSpecId } from "../specifications/selector";
-import { getLastCreatedModelId } from "../models/selector";
+import { getModelIdByPlotId } from "../models/selector";
 import { createNewMultiPlot, deleteMultiPlot } from "../multiplots/actions";
 import { nextAvaliableId } from "../../utils/plotData";
-import { hidePCIGraph, showPCIGraph } from "../models/actions";
+import { deleteModelIfNecessary, hidePCIGraph, showPCIGraph } from "../models/actions";
+import { deleteDimensions } from "../dimensions/actions";
 
 export function changeActivePlot(newid) {
   return {
@@ -82,7 +81,6 @@ export function deletePlot(id) {
     }
     if (plotType === PCI_PLOT) {
       let modelId = getState().visualizations.visualizations.byId[getState().plots.plots.byId[id].visualizationId].modelId;
-     
       dispatch(hidePCIGraph(modelId));
     }
     dispatch(deletePlotInStore(id));

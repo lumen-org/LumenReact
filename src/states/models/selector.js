@@ -16,9 +16,27 @@ export const getModelNameById = (state, id) => {
   );
 };
 
-export const getModelById = (state, id) => {
-  return state.models.models.byId[state.visualizations.visualizations.byId[state.plots.plots.byId[id].visualizationId].modelId] || "";
+export const isIdInAllIds = (state, id) => {
+  return state.models.models.byId.hasOwnProperty(id) || false;
+}
+
+export const getModelIdByPlotId = (state, id) => {
+  return (
+      state.visualizations.visualizations.byId[
+        state.plots.plots.byId[id].visualizationId
+        ].modelId || ""
+  );
 };
+
+export const getModelById = (state, id) => {
+  return state.models.models.byId[
+    state.visualizations.visualizations.byId[
+      state.plots.plots.byId[id].visualizationId].modelId] || "";
+};
+
+export const getModelIdByVisualisationId = (state, id) => {
+  return state.visualizations.visualizations.byId[id].modelId || "";
+}
 
 export const getDimensionsByVisualisationId = (state, id) => {
   return state.models.models.byId[state.visualizations.visualizations.byId[id].fields] || "";

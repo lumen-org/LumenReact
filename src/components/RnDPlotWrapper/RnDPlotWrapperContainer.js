@@ -24,7 +24,7 @@ class RnDPlotWrapperContainer extends React.Component {
       plots,
       _changeActiveVisualization,
       deleteVisualization,
-      _updateActiveModel,
+      _updateActiveModel, // for updating the app store
     } = this.props;
     const nextId = plots.allIds[0];
     const getVisualizationId = (plotId) => plots.byId[plotId].visualizationId;

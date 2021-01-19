@@ -1,4 +1,4 @@
-import { ADD_ALL_DIMENSIONS} from "./constants";
+import { ADD_ALL_DIMENSIONS, DELETE_DIMENSIONS } from "./constants";
 import update from "immutability-helper";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -9,10 +9,11 @@ export const defaultState = {
 };
 
 const dimensions = (state = defaultState, action) => {
+  let modelId, modelName, dimensions, byDimensionName;
   switch (action.type) {
     case ADD_ALL_DIMENSIONS:
-      let { modelId, modelName, dimensions } = action.payload;
-      let byDimensionName = {};
+      ( { modelId, modelName, dimensions } = action.payload);
+      byDimensionName = {};
       dimensions.forEach((o) => {
         const name = o.name;
         byDimensionName[name] = {
@@ -35,6 +36,23 @@ const dimensions = (state = defaultState, action) => {
           }
        })
       };
+    case DELETE_DIMENSIONS:
+      ({ modelId } = action.payload);
+      let byDimensionNameNew = state.dimensions.byDimensionName;
+      for (let dimensionName in byDimensionNameNew) {
+        let o = byDimensionNameNew[dimensionName];
+        if (o.models.hasOwnProperty(modelId)){
+          delete byDimensionNameNew[dimensionName].models[modelId];
+          if (Object.keys(byDimensionNameNew[dimensionName].models).length === 0) {
+            delete byDimensionNameNew[dimensionName];
+          }
+        }
+      };
+      return {
+        dimensions: update(state.dimensions, {
+            byDimensionName: { $set: byDimensionNameNew},
+        })
+      }
     default:
       return state;
   }
