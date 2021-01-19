@@ -13,3 +13,11 @@ export const MARGINLAIZE_MODEL = {
   AS: "",
 };
 export const DERIVE_SUB_MODEL = {};
+
+export const CREATE_EMP_MODEL = {
+  SHOW: "HEADER",
+  FROM: "emp_iris",
+  OPTS: {
+    AUTO_CREATE_MODEL: { MODEL_TYPE: "empirical", FOR_MODEL: "mcg_iris" },
+  },
+};

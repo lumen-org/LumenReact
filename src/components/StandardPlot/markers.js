@@ -1,10 +1,9 @@
-export const plotStyle = {
+export const markers = {
   scatterMarker: {
-    // color: "rgba(207, 207, 207,0.5)",
     size: 8,
     opacity: 0.5,
     line: {
-      // color: "rgba(97, 97, 97,0.5)",
+      opacity: 0.9,
       width: 1,
     },
   },
@@ -12,13 +11,13 @@ export const plotStyle = {
     size: 8,
     opacity: 0.5,
     line: {
-      //   color: "rgba(231, 99, 250,0.5)",
       width: 1.5,
     },
     symbol: "square",
   },
   modelPredictionMarker: {
-    color: "rgba(231, 99, 250, 0.5)",
+    color: "rgba(231, 99, 250)",
+    opacity: 0.8,
     size: 10,
     line: {
       color: "#000000",
@@ -28,6 +27,7 @@ export const plotStyle = {
   },
   dataPredictionMarker: {
     color: "#333333",
+    opacity: 0.8,
     size: 10,
     line: {
       color: "#000000",
@@ -36,10 +36,18 @@ export const plotStyle = {
   },
   histogramMarker: {
     color: "rgb(207, 207, 207)",
-    opacity: 0.75,
+    opacity: 0.1,
     line: {
-      color: "rgb(97, 97, 97)",
-      width: 1.5,
+      color: "rgb(33, 33, 33)",
+      width: 4.5,
+    },
+  },
+  modelHistogramMarker: {
+    color: "rgba(231, 99, 250)",
+    opacity: 0.1,
+    line: {
+      color: "rgb(33, 33, 33)",
+      width: 4.5,
     },
   },
 };

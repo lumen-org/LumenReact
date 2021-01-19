@@ -53,6 +53,52 @@ export const fetch2DPlotData = (BODY) => {
     };
   });
 };
+export const fetch2DPlotMarginalCategroy = (BODY) => {
+  return fetchData(BASE_URL, BODY).then((response) => {
+    const dataString = response["data"].split("\n");
+    dataString.splice(-1, 1);
+    var X = {};
+    var Y = {};
+    var categories = ["all"];
+    dataString.forEach((element) => {
+      var splited = element.split(",");
+      if (
+        !categories.includes(splited[1]) &&
+        splited.length === 3 &&
+        splited[1] !== undefined
+      ) {
+        categories.push(splited[1]);
+      }
+    });
+    if (dataString[0] && dataString[0].split(",").length === 3) {
+      categories.splice(0, 1);
+    } //delete "all"
+
+    categories.forEach((category) => {
+      X[category] = [];
+      Y[category] = [];
+    });
+    dataString.forEach((element) => {
+      var splited = element.split(",");
+      if (splited.length === 3) {
+        X[splited[1]].push(splited[0]);
+        Y[splited[1]].push(splited[2]);
+      } else {
+        X["all"].push(splited[0]);
+        Y["all"].push(splited[1]);
+      }
+    });
+    console.log({
+      x: X,
+      y: Y,
+    });
+
+    return {
+      x: X,
+      y: Y,
+    };
+  });
+};
 
 export const fetch2DPlotDataCategroy = (BODY) => {
   return fetchData(BASE_URL, BODY).then((response) => {

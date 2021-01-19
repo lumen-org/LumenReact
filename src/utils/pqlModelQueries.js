@@ -11,6 +11,7 @@ import {
   CLONE_MODEL,
   DROP_MODEL,
   MARGINLAIZE_MODEL,
+  CREATE_EMP_MODEL,
 } from "../constants/query";
 
 /**
@@ -32,6 +33,26 @@ export const showHeaders = (FROM) => {
   });
 };
 
+/**
+ *
+ * @param {*} FROM presumably take in an mcg model
+ * perform query to get emp model in the backend
+ */
+export const createEmpmodel = (from) => {
+  const BODY = {
+    ...CREATE_EMP_MODEL,
+    FROM: "emp_" + from.split("_")[1],
+    OPTS: {
+      AUTO_CREATE_MODEL: {
+        MODEL_TYPE: "empirical",
+        FOR_MODEL: "mcg_" + from.split("_")[1],
+      },
+    },
+  };
+  return fetchData(BASE_URL, BODY).then((response) => {
+    return response;
+  });
+};
 /**
  * reates an identical copy of a model under a different name
  */
