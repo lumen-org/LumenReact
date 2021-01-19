@@ -1,7 +1,7 @@
 import * as actions from "./actions";
 import * as types from "./constants";
 import reducer from "./reducer";
-//import * as selector from './selector';
+import * as selector from "./selector";
 import {
   emp_mpgDimensions,
   emptyModelStore,
@@ -11,12 +11,16 @@ import {
   modelId3,
   modelName1,
   modelName3,
+  modelSelectorState,
   modelStore1,
   modelStoreAddSecondModel,
   modelStoreAfterDeletion,
   modelStoreAfterModelDeletion,
   modelStoreEmpyt,
-  modelStorePCIGraphShown
+  modelStorePCIGraphShown,
+  plotId1,
+  testSchemes,
+  visualizationId1
 } from "../../mockdata/testData";
 
 describe('model actions', () => {
@@ -163,89 +167,42 @@ describe('models reducer', () => {
     expect(reducer(state, action)).toEqual(modelStoreEmpyt);
   })
 })
-/*
-describe('models reducer', () => {
-  it('should handle ADD_ALL_DIMENSIONS', () => {
-    /// first: empty store, first dimensions
-    const action = {
-      type: types.ADD_ALL_DIMENSIONS,
-      payload: {
-        modelId: modelId1,
-        modelName: "emp_mpg",
-        dimensions: emp_mpgDimensions,
-      }
-    };
-    expect(
-      reducer(undefined, action)
-    ).toEqual(dimStore);
+
+describe("models selector unit test ", () => {
+  it('should return the model name through a plot id', () => {
+    expect(selector.getModelNameById(modelSelectorState, plotId1)).toEqual(modelName3);
   })
-  it('compare dimensions and add model id to models', () => {
-    const action = {
-      type: types.ADD_ALL_DIMENSIONS,
-      payload: {
-        modelId: modelId2,
-        modelName: "emp_mpg_new",
-        dimensions: emp_mpgDimensions,
-      }
-    };
-    const state = JSON.parse(JSON.stringify(dimStore));
-    expect(
-      //// second: same model -> compare dimensions and add model id to models
-      reducer(state, action)).toEqual(dimStore2);
+  it('should return the model name through a plot id, not possible', () => {
+    const plotId = '3';
+    expect(selector.getModelNameById(modelSelectorState, plotId)).toEqual('');
   })
-  it('should add the dimensions to the dimstore and keep the others', () => {
-    const action = {
-      type: types.ADD_ALL_DIMENSIONS,
-      payload: {
-        modelId: modelId3,
-        modelName: "mcg_iris",
-        dimensions: irisDimensions,
-      }
-    };
-    const state = JSON.parse(JSON.stringify(dimStore2));
-    expect(reducer(state, action)).toEqual(dimStore3);
+  it('tests isIdInAllIds if modelId is in store ', () => {
+    expect(selector.isIdInAllIds(modelSelectorState, modelId3)).toEqual(true);
+  })
+  it('tests isIdInAllIds if modelId is not in store ', () => {
+    expect(selector.isIdInAllIds(modelSelectorState, modelId1)).toEqual(false);
+  })
+  it('test getModelIdByPlotId if modelId is in store', () => {
+    expect(selector.getModelIdByPlotId(modelSelectorState, plotId1)).toEqual(modelId3);
+  })
+  it('test getModelIdByPlotId if modelId is not in store', () => {
+    const plotId = "3";
+    expect(selector.getModelIdByPlotId(modelSelectorState, plotId)).toEqual("");
+  })
+  it('test getModelIdByVisualisationId if modelId is in store', () => {
+    expect(selector.getModelIdByVisualisationId(modelSelectorState, visualizationId1)).toEqual(modelId3);
+  })
+  it('test getModelIdByVisualisationId if modelId is not in store', () => {
+    const visId = "3";
+    expect(selector.getModelIdByVisualisationId(modelSelectorState, visId)).toEqual("");
+  })
+  it('test getLastCreatedModelId if modelId is in store', () => {
+    expect(selector.getLastCreatedModelId(modelSelectorState)).toEqual(modelId3);
+  })
+  it('test getLastCreatedModelId if modelId is not in store', () => {
+    expect(selector.getLastCreatedModelId({})).toEqual(null);
+  })
+  it('test selectSchemeNames', () => {
+    expect(selector.selectSchemeNames(modelSelectorState)).toEqual(testSchemes);
   })
 })
-
-describe('dimensions reducer DELETE_DIMENSIONS', () => {
-  it('should delete modelId3 for irisDimension and delete them', () => {
-    const action = {
-      type: types.DELETE_DIMENSIONS,
-      payload: {
-        modelId: modelId3,
-      }
-    };
-    const state = JSON.parse(JSON.stringify(dimStore3));
-    expect(reducer(state, action)).toEqual(dimStore2);
-  })
-  it('deletes modelId2 from dimensions.models', () => {
-    const action = {
-      type: types.DELETE_DIMENSIONS,
-      payload: {
-        modelId: modelId2,
-      }
-    };
-    const state = JSON.parse(JSON.stringify(dimStore2));
-    expect(reducer(state, action)).toEqual(dimStore);
-  })
-
-  it('deletes modelId1 from dimensions.models and returns empty store', () => {
-    const action = {
-      type: types.DELETE_DIMENSIONS,
-      payload: {
-        modelId: modelId1,
-      }
-    };
-    const state = JSON.parse(JSON.stringify(dimStore));
-    expect(reducer(state, action)).toEqual(emptyDimStore);
-  })
-})
-
-/*describe("dimensions selector unit test ", () => {
-  it('should return the dummy dimensions', () => {
-    expect(selector.default(selectorState)).toEqual(emp_mpgDimensions)
-  })
-})*/
-
-
-
