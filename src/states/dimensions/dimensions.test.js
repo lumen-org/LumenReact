@@ -1,14 +1,19 @@
-import * as actions from './actions';
-import * as types from './constants';
-import reducer from './reducer';
-import * as selector from './selector';
+import * as actions from "./actions";
+import * as types from "./constants";
+import reducer from "./reducer";
 import {
   dimStore,
+  dimStore2,
+  dimStore3,
+  emp_mpgDimensions,
+  emptyDimStore,
+  irisDimensions,
   modelId1,
   modelId2,
-  dummyDimensions,
-  dimStore2,
-  emptyDimStore, modelId3, dimStore3, irisDimensions, selectorState
+  modelId3,
+  modelName1,
+  modelName2,
+  modelName3
 } from "./testData";
 
 describe('actions', () => {
@@ -48,25 +53,14 @@ describe('actions', () => {
     expect(actions._deleteDimensions(modelId)).toEqual(expectedAction);
     }
   )
- /* it("should delete dimensions after model check", () => {
-    const modelId = modelId1;
-    const expectedAction = {
-      type: types.DELETE_DIMENSIONS,
-      payload: {
-        modelId: modelId
-      }
-    }
-    const state = selectorState;
-    expect(actions.deleteDimensions(modelId)).toEqual(expectedAction);
-  })*/
   });
   
 describe('dimensions reducer', () => {
-  const action ={};
-  const state = emptyDimStore;
+
     it('should return the initial state', () => {
+      const action ={};
       expect(reducer(undefined, action)).toEqual(
-        state
+        emptyDimStore
       )
     })
   
@@ -76,8 +70,8 @@ describe('dimensions reducer', () => {
         type: types.ADD_ALL_DIMENSIONS,
         payload: {
           modelId: modelId1,
-          modelName: "emp_mpg",
-          dimensions: dummyDimensions,
+          modelName: modelName1,
+          dimensions: emp_mpgDimensions,
         }
       };
       expect(
@@ -89,8 +83,8 @@ describe('dimensions reducer', () => {
       type: types.ADD_ALL_DIMENSIONS,
       payload: {
         modelId: modelId2,
-        modelName: "emp_mpg_new",
-        dimensions: dummyDimensions,
+        modelName: modelName2,
+        dimensions: emp_mpgDimensions,
       }
     };
     const state = JSON.parse(JSON.stringify(dimStore));
@@ -103,7 +97,7 @@ describe('dimensions reducer', () => {
       type: types.ADD_ALL_DIMENSIONS,
       payload: {
         modelId: modelId3,
-        modelName: "mcg_iris",
+        modelName: modelName3,
         dimensions: irisDimensions,
       }
     };
@@ -145,12 +139,4 @@ describe('dimensions reducer DELETE_DIMENSIONS', () => {
     expect(reducer(state, action)).toEqual(emptyDimStore);
   })
 })
-
-/*describe("dimensions selector unit test ", () => {
-  it('should return the dummy dimensions', () => {
-    expect(selector.default(selectorState)).toEqual(dummyDimensions)
-  })
-})*/
-
- 
 

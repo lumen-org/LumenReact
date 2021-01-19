@@ -1,10 +1,13 @@
-import dimensions from "./reducer";
-
 export const modelId1 = "9b322875-ed80-4a09-aec7-8d417fe50c1e";
+export const modelName1 = "emp_mpg";
 export const modelId2 = "58bac0af-8c1d-40c2-9c86-3721ec59e26e";
+export const modelName2 = "emp_mpg_new";
 export const modelId3 = "6b8c9fd5-6e9f-4ca8-a7f6-e3002f668ab1";
+export const modelName3 ="mcg_iris";
+export const plotId1 = "0";
+export const visualizationId1 = "7feec0c4-d2d3-4d46-8302-d89c867fc8f8";
 
-export const dummyDimensions = [
+export const emp_mpgDimensions = [
     {
       "name":"transmission",
       "domain":null,
@@ -97,6 +100,9 @@ export const irisDimensions = [
     "dtype": 'string',
     "hidden": false,
     "independent": false,
+    "default_subset": null,
+    "default_value": null,
+    "obstype": "observed",
   },
   {
     "name": 'sepal_length',
@@ -112,6 +118,9 @@ export const irisDimensions = [
     "dtype": 'numerical',
     "hidden": false,
     "independent": false,
+    "default_subset": null,
+    "default_value": null,
+    "obstype": "observed",
   },
   {
     "name": 'sepal_width',
@@ -127,6 +136,9 @@ export const irisDimensions = [
     "dtype": 'numerical',
     "hidden": false,
     "independent": false,
+    "obstype": "observed",
+    "default_subset": null,
+    "default_value": null,
   },
   {
     "name": 'petal_length',
@@ -142,6 +154,9 @@ export const irisDimensions = [
     "dtype": 'numerical',
     "hidden": false,
     "independent": false,
+    "default_subset": null,
+    "default_value": null,
+    "obstype": "observed",
   },
   {
     "name": 'petal_width',
@@ -157,13 +172,15 @@ export const irisDimensions = [
     "dtype": 'numerical',
     "hidden": false,
     "independent": false,
+    "default_subset": null,
+    "default_value": null,
+    "obstype": "observed",
   }
 ];
 
 export const emptyDimStore = {
   dimensions: {
     byDimensionName: {
-
     }
   }
 }
