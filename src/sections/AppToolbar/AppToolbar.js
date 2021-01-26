@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import ListModal from "../../components/ListModal";
 import PlotMenu from "../../components/PlotMenu";
+import PlotSettingMenu from "../../components/PlotSetting/PlotSettingMenu";
 import toolbarConfig from "../../configs/appToolbar";
 
 import "./AppToolbar.scss";
@@ -50,7 +51,7 @@ class AppToolbar extends Component {
             <li className="nav-item appToolbar-buttonContainer">
               <Button
                 variant={item.variant || "outlined"}
-                color={item.color || "default"}
+                color={ "default"}
                 endIcon={<img src={item.icon} alt="" />}
                 size="small"
                 key={key}
@@ -63,6 +64,9 @@ class AppToolbar extends Component {
           <li className="nav-item appToolbar-buttonContainer">
             <PlotMenu />
           </li>
+          <li className="nav-item appToolbar-buttonContainer">
+            <PlotSettingMenu />
+         </li> 
         </ul>
       </div>
     );

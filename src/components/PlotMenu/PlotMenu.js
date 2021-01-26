@@ -27,7 +27,7 @@ function PlotMenu(props) {
         aria-haspopup="true"
         onClick={handleClick}
         variant="contained"
-        color="primary"
+        color="default"
         endIcon={<img className="img" src={require("../../assets/icons/plus.svg")} alt=""></img>}
         size="small"
       >
