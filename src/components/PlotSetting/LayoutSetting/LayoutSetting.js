@@ -7,13 +7,17 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TextField from '@material-ui/core/TextField';
+import {getActivePlotId} from "../../../states/plots/selector";
+import {updatePlotTitle} from "../../../states/plotSettings/actions";
+
 import "./LayoutSetting.scss";
 
 class LayoutSetting extends React.Component {
   static propTypes = {
     currentXLabel:PropTypes.string.isRequired,
     currentYLabel: PropTypes.string.isRequired,
-    currentTitle: PropTypes.string.isRequired
+    currentTitle: PropTypes.string.isRequired,
+    activePlotId: PropTypes.number.isRequired
   };
 
   state = {
@@ -22,7 +26,37 @@ class LayoutSetting extends React.Component {
     title:""
   }
 
+  handleXLabelTextFieldChange = (e)=> {
+    this.setState({
+        ...this.state,
+        xlabel: e.target.value
+    });
+  }
+
+  handleYLabelTextFieldChange = (e)=> {
+    this.setState({
+        ...this.state,
+        ylabel: e.target.value
+    });
+  }
+
+  handleTitleTextFieldChange = (e)=> {
+    const {activePlotId, updatePlotTitle} = this.props;
+
+    this.setState({
+        ...this.state,
+        title: e.target.value
+    });
+
+    updatePlotTitle(activePlotId, e.target.value)
+  }
+
+
   render() {
+    const {xlabel, ylabel, title} = this.state;
+    const {activePlotId}  = this.props;
+    console.log(activePlotId)
+
     return (
       <Accordion>
       <AccordionSummary
@@ -35,6 +69,7 @@ class LayoutSetting extends React.Component {
       <AccordionDetails>
       
         <Typography>
+        
         <TextField           
           label="x-Axis label"
           id="outlined-size-small"
@@ -42,7 +77,10 @@ class LayoutSetting extends React.Component {
           variant="outlined"
           size="small" 
           margin="normal"
+          value={xlabel} 
+          onChange={this.handleXLabelTextFieldChange} 
         />
+
         <TextField           
           id="outlined-size-small"
           defaultValue=""
@@ -50,14 +88,21 @@ class LayoutSetting extends React.Component {
           size="small"
           label="y-Axis Label"
           margin="normal"
+          value={ylabel} 
+          onChange={this.handleYLabelTextFieldChange} 
+
         />
         <TextField
+
           id="outlined-size-small"
           defaultValue=""
           variant="outlined"
           size="small"
           label="Plot Title" 
           margin="normal"
+          value={title} 
+          onChange={this.handleTitleTextFieldChange} 
+
           />
 
         </Typography>
@@ -69,13 +114,13 @@ class LayoutSetting extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-
+    activePlotId: getActivePlotId(state)
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+      updatePlotTitle: (id, updatedTItle)=>dispatch(updatePlotTitle(id, updatedTItle))
   };
 };
 
