@@ -11,6 +11,9 @@ import "./LayoutSetting.scss";
 
 class LayoutSetting extends React.Component {
   static propTypes = {
+    currentXLabel:PropTypes.string.isRequired,
+    currentYLabel: PropTypes.string.isRequired,
+    currentTitle: PropTypes.string.isRequired
   };
 
   state = {
@@ -32,9 +35,30 @@ class LayoutSetting extends React.Component {
       <AccordionDetails>
       
         <Typography>
-        <TextField id="standard-basic" label="x label" />
-        <TextField id="standard-basic" label="y label" />
-        <TextField id="standard-basic" label="plot title" />
+        <TextField           
+          label="x-Axis label"
+          id="outlined-size-small"
+          defaultValue=""
+          variant="outlined"
+          size="small" 
+          margin="normal"
+        />
+        <TextField           
+          id="outlined-size-small"
+          defaultValue=""
+          variant="outlined"
+          size="small"
+          label="y-Axis Label"
+          margin="normal"
+        />
+        <TextField
+          id="outlined-size-small"
+          defaultValue=""
+          variant="outlined"
+          size="small"
+          label="Plot Title" 
+          margin="normal"
+          />
 
         </Typography>
       </AccordionDetails>
@@ -55,4 +79,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default LayoutSetting;
+export default connect(mapStateToProps, mapDispatchToProps)(LayoutSetting);

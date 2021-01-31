@@ -8,6 +8,7 @@ import models from "./states/models/reducer";
 import dimensions from "./states/dimensions/reducer";
 import standardplots from "./states/standardplots/reducer";
 import multiplots from "./states/multiplots/reducer";
+import plotSettings from "./states/plotSettings/reducer";
 
 export default combineReducers({
   app,
@@ -19,4 +20,6 @@ export default combineReducers({
   plots,
   standardplots,
   multiplots,
+  plotSettings
+
 });

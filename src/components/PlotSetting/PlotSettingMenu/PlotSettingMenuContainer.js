@@ -5,6 +5,7 @@ import PlotSettingMenu from "./PlotSettingMenu";
 
 class PlotSettingMenuContainer extends React.Component {
   static propTypes = {
+    
   };
 
   render() {

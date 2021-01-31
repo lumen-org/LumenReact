@@ -14,6 +14,7 @@ import {
 } from "../visualizations/selector";
 import { getModelIdByPlotId } from "../models/selector";
 import { createNewMultiPlot, deleteMultiPlot } from "../multiplots/actions";
+import { initializeNewPlotSettings , deletePlotSetting} from "../plotSettings/actions";
 import { nextAvaliableId } from "../../utils/plotData";
 import { deleteModelIfNecessary, hidePCIGraph, showPCIGraph } from "../models/actions";
 import { deleteDimensions } from "../dimensions/actions";
@@ -45,7 +46,9 @@ export function createNewPlot(modelName, plotType, specificationId) {
       // const specificationId = getLastCreatedSpecId(getState());
 
       dispatch(createPlot(modelName, visualizationId, specificationId, plotType));
+      dispatch(initializeNewPlotSettings(newId));
       dispatch(changeActivePlot(newId));
+
   };
 }
 
@@ -84,5 +87,6 @@ export function deletePlot(id) {
       dispatch(hidePCIGraph(modelId));
     }
     dispatch(deletePlotInStore(id));
+    dispatch(deletePlotSetting(id));
   };
 }
