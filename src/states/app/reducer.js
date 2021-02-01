@@ -11,7 +11,7 @@ const app = (state = defaultState, action) => {
     case UPDATE_ACTIVE_MODEL: {
       return {
         ...state,
-        activeModel: action.payload,
+        activeModel: action.payload.activeModelName,
       };
     }
 

@@ -69,7 +69,7 @@ class ListModalContainer extends React.Component {
         const specificationId = uuidv4();
         addSpecifications(STANDARD_SPECIFICATION, specificationId);
         createNewVisualization(specificationId);
-        createPlot(modelName, specificationId);
+        createPlot(modelName, defaultPlotType, specificationId);
         fillVisualization();
         changeActiveVisualization();
         createEmpmodel(modelName);
@@ -124,8 +124,8 @@ const mapDispatchToProps = (dispatch) => {
     updateActiveModel: (model) => dispatch(updateActiveModel(model)),
 
     changeActiveVisualization: () => dispatch(changeActiveVisualization()),
-    createPlot: (activeModel, specificationId) =>
-      dispatch(createNewPlot(activeModel, defaultPlotType, specificationId)),
+    createPlot: (activeModel, plotType, specificationId) =>
+      dispatch(createNewPlot(activeModel, plotType, specificationId)),
     addSpecifications: (specificationType, specificationId) =>
       dispatch(createNewSpecification({ specificationType, specificationId })),
     createNewModel: (modelName, model) =>
