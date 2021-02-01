@@ -404,7 +404,7 @@ temp.models.allIds.push(modelId1);
 temp.lastCreatedModelId = modelId1;
 export const modelStoreAddSecondModel = temp;
 
-temp = temp = JSON.parse(JSON.stringify(modelStore1));
+temp = JSON.parse(JSON.stringify(modelStore1));
 temp.lastCreatedModelId = modelId1;
 export const modelStoreAfterDeletion = temp;
 
@@ -762,6 +762,7 @@ export const testSchemes = {
     "petal_width"
   ]
 }
+/*
 export const create = () => {
   const store = {
     getState: jest.fn(() => ({})),
@@ -772,4 +773,4 @@ export const create = () => {
   const invoke = action => thunk(store)(next)(action)
 
   return { store, next, invoke }
-}
+}*/

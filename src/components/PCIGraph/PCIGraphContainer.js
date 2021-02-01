@@ -9,6 +9,7 @@ import { hidePCIGraph } from "../../states/models/actions";
 import { selectActiveModelId } from "../../states/visualizations/selector";
 import solve from "./utils/weakConstraintBasedGraphLayoutAlgorithm";
 import PropTypes from "prop-types";
+import { modelStore1 } from "../../states/models/testData";
 
 /**
  * Container class for communicating to the models store.
@@ -33,17 +34,26 @@ class PCIGraphContainer extends React.Component {
     // here should be stuff that fetches the data from the backend
     let graph;
     try {
-      const modelname = getModelNameById(this.props.activePlotId);
+      const modelname = this.props.activeModelName;
+      console.log(modelname, " modelname");
       let body = {
         FROM: modelname,
         "PCI_GRAPH.GET": true,
       };
       fetchData(BASE_URL, body).then(
-        (response) => (graph = this.transformGraphData(response)),
+        (response) => {
+          console.log(response, " response");
+          graph = this.transformGraphData(response);
+          console.log(JSON.parse(JSON.stringify(graph)), " after ")
+        },
         (error) => console.log("Something went wrong: " + error)
       );
     } catch (e) {
-      graph = this.transformGraphData(false);
+      graph = this.transformGraphData({graph: false});
+      console.log(graph, "graph")
+    }
+    finally {
+      graph =this.transformGraphData({graph: false});
     }
     let result = solve(graph.nodes, graph.edges);
     this.setState({
@@ -62,8 +72,9 @@ class PCIGraphContainer extends React.Component {
    * @param graphData is either a false if there is no available data in the backend or returns an object containing nodes and edges.
    */
   transformGraphData(graphData) {
-    let graph = graphData;
-    if (!graphData) {
+    console.log(graphData, "graph data");
+    let graph = graphData.graph;
+    if (graphData["graph"] === false) {
       // load mock data
       graph = JSON.parse(JSON.stringify(mockdataPCI));
     }
@@ -122,6 +133,7 @@ const mapStateToProps = (state) => ({
   plots: state.plots.plots,
   activePlotId: state.plots.activePlotId,
   activeModelId: selectActiveModelId(state),
+  activeModelName: getModelNameById(state, state.plots.activePlotId)
 });
 
 const mapDispatchToProps = (dispatch) => {
