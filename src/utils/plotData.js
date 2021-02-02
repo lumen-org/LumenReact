@@ -29,8 +29,8 @@ export const nextActiveId = (ids) => {
 };
 
 export const getLayoutInformation = (specifications) => {
-  const X_Axis = [...specifications.X_Axis];
-  const Y_Axis = [...specifications.Y_Axis];
+  const X_Axis = [...specifications["X-Axis"]];
+  const Y_Axis = [...specifications["Y-Axis"]];
 
   if (X_Axis.length === 0 && Y_Axis.length === 0) {
     return {};
@@ -79,8 +79,8 @@ export const getSelectFieldObject = (X_Axis, Y_Axis) => {
 
 // TODO: refractor this to action or fetch
 export const fetchAllPlotData = (specifications, modelName) => {
-  const X_Axis = [...specifications.X_Axis];
-  const Y_Axis = [...specifications.Y_Axis];
+  const X_Axis = [...specifications["X-Axis"]];
+  const Y_Axis = [...specifications["Y-Axis"]];
   const combinations = getPlotCombinations(X_Axis, Y_Axis);
   return Promise.all([
     combinations.map((comb, ind) => {

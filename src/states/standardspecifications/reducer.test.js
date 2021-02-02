@@ -37,7 +37,7 @@ describe("standardspecification reducer", () => {
     it("should add new value to standardspecification", () => {
         const payload = {
             id: 10,
-            key: "X_Axis",
+            key: "X-Axis",
             value: "time[s]"
         }
 
@@ -50,7 +50,7 @@ describe("standardspecification reducer", () => {
     it("should delete a value from standardspecification", () => {
         const payload = {
             id: 10,
-            key: "X_Axis",
+            key: "X-Axis",
             value: "time[s]"
         }
 

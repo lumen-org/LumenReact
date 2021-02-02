@@ -16,8 +16,8 @@ import { getColorCatgeoryById } from "../standardspecifications/selector.js";
  */
 export const getSelectedFieldArrayById = (state, id) => {
   const specification = getSpecById(state, getSpecificationId(state, id));
-  const X_Axis = [...specification.X_Axis];
-  const Y_Axis = [...specification.Y_Axis];
+  const X_Axis = [...specification["X-Axis"]];
+  const Y_Axis = [...specification["Y-Axis"]];
   const SELECT = getSelectFieldArray(X_Axis, Y_Axis);
   return SELECT;
 };
@@ -31,8 +31,8 @@ export const getSelectedFieldArrayById = (state, id) => {
 
 export const getSelectedFieldObjectById = (state, id) => {
   const specification = getSpecById(state, getSpecificationId(state, id));
-  const X_Axis = [...specification.X_Axis];
-  const Y_Axis = [...specification.Y_Axis];
+  const X_Axis = [...specification["X-Axis"]];
+  const Y_Axis = [...specification["Y-Axis"]];
   const SELECT = getSelectFieldObject(X_Axis, Y_Axis);
   return SELECT;
 };

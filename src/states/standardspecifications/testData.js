@@ -1,7 +1,7 @@
 export const defaultValues = {
     specification: {
-        X_Axis: new Set([]),
-        Y_Axis: new Set([]),
+        "X-Axis": new Set([]),
+        "Y-Axis": new Set([]),
         Filter: new Set([]),
         Detail: new Set([]),
         Color: new Set([]),
@@ -30,8 +30,8 @@ export const defaultValues = {
 
 export const filledOneValue = {
     specification: {
-        X_Axis: new Set(["age"]),
-        Y_Axis: new Set([]),
+        "X-Axis": new Set(["age"]),
+        "Y-Axis": new Set([]),
         Filter: new Set([]),
         Detail: new Set([]),
         Color: new Set([]),
@@ -60,8 +60,8 @@ export const filledOneValue = {
 
 export const filledTwoValues = {
     specification: {
-        X_Axis: new Set(["age"]),
-        Y_Axis: new Set(["size"]),
+        "X-Axis": new Set(["age"]),
+        "Y-Axis": new Set(["size"]),
         Filter: new Set([]),
         Detail: new Set([]),
         Color: new Set([]),
@@ -92,8 +92,8 @@ export const defaultState = {
     standardspecifications: {
         '10': {
             specification: {
-                X_Axis: new Set([]),
-                Y_Axis: new Set([]),
+                "X-Axis": new Set([]),
+                "Y-Axis": new Set([]),
                 Filter: new Set([]),
                 Detail: new Set([]),
                 Color: new Set([]),
@@ -126,8 +126,8 @@ export const filledOneState = {
     standardspecifications: {
         '10': {
             specification: {
-                X_Axis: new Set(["time[s]"]),
-                Y_Axis: new Set([]),
+                "X-Axis": new Set(["time[s]"]),
+                "Y-Axis": new Set([]),
                 Filter: new Set([]),
                 Detail: new Set([]),
                 Color: new Set([]),
@@ -160,8 +160,8 @@ export const changedPredictionModelState = {
     standardspecifications: {
         '10': {
             specification: {
-                X_Axis: new Set([]),
-                Y_Axis: new Set([]),
+                "X-Axis": new Set([]),
+                "Y-Axis": new Set([]),
                 Filter: new Set([]),
                 Detail: new Set([]),
                 Color: new Set([]),
