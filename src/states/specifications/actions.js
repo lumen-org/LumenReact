@@ -5,7 +5,8 @@ import { createNewMultiSpecification } from "../multispecifications/actions";
 import { CHANGE_ACTIVE_SPECIFICATIONS, CREATE_NEW_SPECIFICATION } from "./constants"
 import {
   STANDARD_SPECIFICATION,
-  MULTI_SPECIFICATION
+  MULTI_SPECIFICATION,
+  PPC_SPECIFICATION,
 } from "./specificationTypes"
 
 export const createNewSpecification = ({specificationType = STANDARD_SPECIFICATION, specificationId = uuidv4(), initValues = null}) => {
@@ -14,6 +15,9 @@ export const createNewSpecification = ({specificationType = STANDARD_SPECIFICATI
       dispatch(createNewStandardSpecification({id: specificationId, initValues}))
     }
     if (specificationType === MULTI_SPECIFICATION) {
+      dispatch(createNewMultiSpecification({id: specificationId, initValues}))
+    }
+    if (specificationType === PPC_SPECIFICATION) {
       dispatch(createNewMultiSpecification({id: specificationId, initValues}))
     }
     dispatch(createSpecification({specificationId, specificationType}))

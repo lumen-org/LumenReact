@@ -1,5 +1,5 @@
 import { CREATE_NEW_PLOT, CHANGE_ACTIVE_PLOT, DELETE_PLOT } from "./constants";
-import { STANDARD_PLOT, PCI_PLOT, MULTI_PLOT } from "../../constants/plotTypes";
+import { STANDARD_PLOT, PCI_PLOT, MULTI_PLOT, PPC_PLOT } from "../../constants/plotTypes";
 import {
   createNewStandardPlot,
   deleteStandardPlot,
@@ -39,6 +39,9 @@ export function createNewPlot(modelName, plotType, specificationId) {
       }
       if (plotType === PCI_PLOT) {
         dispatch(showPCIGraph(selectActiveModelId(getState())));
+      }
+      if (plotType === PPC_PLOT) {
+        //dispatch(createNewPP());
       }
 
       const visualizationId = getLastCreatedVisualizationId(getState());
