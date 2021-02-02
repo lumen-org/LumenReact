@@ -10,7 +10,7 @@ import {
   createNewVisualization,
   fillVisualization,
 } from "../../states/visualizations/actions";
-import { STANDARD_PLOT, MULTI_PLOT, PCI_PLOT } from "../../constants/plotTypes";
+import { STANDARD_PLOT, MULTI_PLOT, PCI_PLOT, PPC_PLOT } from "../../constants/plotTypes";
 import { STANDARD_SPECIFICATION } from "../../states/specifications/specificationTypes";
 class PlotMenuContainer extends React.Component {
   static propTypes = {
@@ -25,6 +25,9 @@ class PlotMenuContainer extends React.Component {
   };
   onCreatePCIPlot = () => {
     this.createNewPlot(PCI_PLOT);
+  };
+  onCreatePPCPlot = () => {
+    this.createNewPlot(PPC_PLOT);
   };
 
   createNewPlot = (plotType) => {
@@ -55,6 +58,7 @@ class PlotMenuContainer extends React.Component {
         onCreateMultiPlot={this.onCreateMultiPlot}
         onCreateStandardPlot={this.onCreateStandardPlot}
         onCreatePCIPlot={this.onCreatePCIPlot}
+        onCreatePPCPlot={this.onCreatePPCPlot}
       />
     );
   }
