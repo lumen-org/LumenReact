@@ -243,7 +243,7 @@ export function fetchOnSpecChange() {
 
     const facets = getFacetById(getState(), getSpecificationId(getState(), id));
     dispatch(fetchDataPending(id));
-    if (facets["Data Points"].data === true) {
+    if (facets["Samples"].data === true) {
       dispatch(fetchTrainingDataPoints());
     }
     if (facets["Density"].data === true) {
@@ -252,10 +252,10 @@ export function fetchOnSpecChange() {
     if (facets["Marginals"].data === true) {
       dispatch(fetchDataMarginals());
     }
-    if (facets["Prediction"].data === true) {
+    if (facets["Aggregation"].data === true) {
       dispatch(fetchDataPrediction());
     }
-    if (facets["Data Points"].model === true) {
+    if (facets["Samples"].model === true) {
       dispatch(fetchModelDataPoints());
     }
     if (facets["Marginals"].model === true) {
@@ -264,7 +264,7 @@ export function fetchOnSpecChange() {
     if (facets["Density"].model === true) {
       dispatch(fetchModelDensityData());
     }
-    if (facets["Prediction"].model === true) {
+    if (facets["Aggregation"].model === true) {
       dispatch(fetchModelPrediction());
     }
   };

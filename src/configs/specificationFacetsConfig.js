@@ -1,11 +1,11 @@
 const specificationFacetsConfig = {
   facetsActions: [
     {
-      name: "Prediction",
+      name: "Aggregation",
       icon: require("../assets/icons/prediction.svg"),
     },
     {
-      name: "Data Points",
+      name: "Samples",
       icon: require("../assets/icons/dataPoints.svg"),
     },
     {

@@ -21,11 +21,11 @@ const defaultValues = {
         Size: new Set([]),
     },
     facets: {
-        Prediction: {
+        Aggregation: {
             model: false,
             data: false,
         },
-        "Data Points": {
+        Samples: {
             model: false,
             data: true,
         },

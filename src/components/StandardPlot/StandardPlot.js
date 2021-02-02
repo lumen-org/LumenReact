@@ -158,13 +158,13 @@ class StandardPlot extends Component {
     const categoryColorMap = createCategoryColorMap(category);
     const data = [];
     displayTraces.map((traceinfo, ind) => {
-      if (traceinfo.name === "Prediction" && traceinfo.from === "data") {
+      if (traceinfo.name === "Aggregation" && traceinfo.from === "data") {
         data.push(this.getNewDataPredictionTrace());
       }
-      if (traceinfo.name === "Prediction" && traceinfo.from === "model") {
+      if (traceinfo.name === "Aggregation" && traceinfo.from === "model") {
         data.push(this.getNewModelPredictionTrace());
       }
-      if (traceinfo.name === "Data Points" && traceinfo.from === "data") {
+      if (traceinfo.name === "Samples" && traceinfo.from === "data") {
         this.getNewDataScatterTrace(data, categoryColorMap);
       }
       if (traceinfo.name === "Density" && traceinfo.from === "data") {
@@ -175,7 +175,7 @@ class StandardPlot extends Component {
         this.getNewDataYHistogramTrace(data, categoryColorMap);
       }
 
-      if (traceinfo.name === "Data Points" && traceinfo.from === "model") {
+      if (traceinfo.name === "Samples" && traceinfo.from === "model") {
         this.getNewModelScatterTrace(data, categoryColorMap);
       }
       if (traceinfo.name === "Density" && traceinfo.from === "model") {
