@@ -10,7 +10,11 @@ import { FIELD_ITEM } from "../../constants/dragAndDropTypes";
 import FieldItemModal from "../FieldItemModal";
 import { selectActiveSpecificationId } from "../../states/visualizations/selector";
 import { getSpecType } from "../../states/specifications/selector";
-import { STANDARD_SPECIFICATION } from "../../states/specifications/specificationTypes";
+import { MULTI_SPECIFICATION, STANDARD_SPECIFICATION } from "../../states/specifications/specificationTypes";
+import {
+  addToMultiSpecification,
+  deleteFromMultiSpecification
+} from "../../states/multispecifications/actions";
 
 function FieldItemContainer({ value, fieldName = "", type = FIELD_ITEM }) {
   const item = { type: type };
@@ -26,6 +30,14 @@ function FieldItemContainer({ value, fieldName = "", type = FIELD_ITEM }) {
           value: value,
         })
       );
+    } else if (specificationType === MULTI_SPECIFICATION) {
+      dispatch(
+        deleteFromMultiSpecification({
+          id: specificationId,
+          key: fieldName,
+          value: value,
+        })
+      )
     }
   }
 
@@ -60,9 +72,20 @@ function FieldItemContainer({ value, fieldName = "", type = FIELD_ITEM }) {
               value: value,
             })
           );
+        } else if (specificationType === MULTI_SPECIFICATION) {
+          if (fieldName) {
+            dispatchListItem();
+          }
+          dispatch(
+            addToMultiSpecification({
+              id: specificationId,
+              key: dropResult.result,
+              value: value,
+            })
+          );
         } else if (fieldName) {
           dispatchListItem();
-        }
+        } 
       }
     },
   });

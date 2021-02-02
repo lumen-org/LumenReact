@@ -11,7 +11,7 @@ import {
   fillVisualization,
 } from "../../states/visualizations/actions";
 import { STANDARD_PLOT, MULTI_PLOT, PCI_PLOT } from "../../constants/plotTypes";
-import { STANDARD_SPECIFICATION } from "../../states/specifications/specificationTypes";
+import { STANDARD_SPECIFICATION, MULTI_SPECIFICATION } from "../../states/specifications/specificationTypes";
 class PlotMenuContainer extends React.Component {
   static propTypes = {
     activeModel: PropTypes.string,
@@ -38,7 +38,11 @@ class PlotMenuContainer extends React.Component {
     } = this.props;
     if (activeModel !== ""){
       const specificationId = uuidv4();
-      addSpecifications(STANDARD_SPECIFICATION, specificationId);
+      if (plotType === MULTI_PLOT){
+        addSpecifications(MULTI_SPECIFICATION, specificationId);
+      } else {
+        addSpecifications(STANDARD_SPECIFICATION, specificationId);
+      }
       createNewVisualization(specificationId);
       createPlot(activeModel, plotType, specificationId);
       fillVisualization();

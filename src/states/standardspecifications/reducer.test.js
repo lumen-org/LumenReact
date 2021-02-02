@@ -11,7 +11,7 @@ describe("standardspecification reducer", () => {
         )
     })
 
-    it("should create new standardspecification", () => {
+    it("should create a new standardspecification", () => {
         const id = 10
 
         expect(reducer(undefined, {
@@ -34,7 +34,7 @@ describe("standardspecification reducer", () => {
         })).toEqual({ standardspecifications: {} })
     })
 
-    it("should add new value to standardspecification", () => {
+    it("should add a new value to standardspecification", () => {
         const payload = {
             id: 10,
             key: "X_Axis",
