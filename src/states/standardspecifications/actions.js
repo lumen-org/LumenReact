@@ -40,7 +40,7 @@ const defaultValues = {
     },
 };
 
-export const createNewStandardSpecification = (id, initValues = null) => {
+export const createNewStandardSpecification = ({id, initValues = null}) => {
     return {
         type: CREATE_NEW_STANDARD_SPECIFICATION,
         payload: {

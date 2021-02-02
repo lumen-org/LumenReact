@@ -16,8 +16,8 @@ describe("actions", () => {
         }
 
         // should create a new standardspecification with defaultValues
-        expect(actions.createNewStandardSpecification(id)).toEqual(defaultAction)
-        expect(actions.createNewStandardSpecification(id, defaultValues)).toEqual(defaultAction)
+        expect(actions.createNewStandardSpecification({ id })).toEqual(defaultAction)
+        expect(actions.createNewStandardSpecification({ id, initValues: defaultValues })).toEqual(defaultAction)
 
         const filledAction = {
             type: types.CREATE_NEW_STANDARD_SPECIFICATION,
@@ -27,7 +27,7 @@ describe("actions", () => {
             }
         }
         // should create a new specification with set values
-        expect(actions.createNewStandardSpecification(id, filledTwoValues)).toEqual(filledAction)
+        expect(actions.createNewStandardSpecification({ id, initValues: filledTwoValues })).toEqual(filledAction)
     })
 
     it("should create an action which adds values to standardspecification", () => {
