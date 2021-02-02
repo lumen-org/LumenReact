@@ -15,6 +15,11 @@ import {
   fetchOnSpecChange,
   deriveSubmodelsOnSpecChange,
 } from "../../states/standardplots/actions";
+import {
+  getPlotTitleById,
+  getPlotSettingsById
+} from "../../states/plotSettings/selector"
+
 import { getSpecificationId } from "../../states/plots/selector.js";
 import { getModelNameById } from "../../states/models/selector";
 import StandardPlot from "./StandardPlot";
@@ -24,7 +29,7 @@ class StandardPlotContainer extends React.Component {
     plotData: PropTypes.object,
     specification: PropTypes.object,
     facets: PropTypes.object,
-    layout: PropTypes.object,
+    defaultPlot: PropTypes.object,
     id: PropTypes.number,
     loading: PropTypes.bool,
     modelName: PropTypes.string,
@@ -94,6 +99,7 @@ class StandardPlotContainer extends React.Component {
       axisFields,
       modelName,
       category,
+      defaultPlot
     } = this.props;
 
     const { displayTraces } = this.state;
@@ -105,6 +111,7 @@ class StandardPlotContainer extends React.Component {
         axisFields={axisFields}
         modelName={modelName}
         category={category}
+        defaultPlot = {defaultPlot}
       />
     );
   }
@@ -124,6 +131,7 @@ const mapStateToProps = (state, ownProps) => {
     facets: getFacetById(state, getSpecificationId(state, ownProps.id)),
     axisFields: getSelectedFieldObjectById(state, ownProps.id),
     modelName: getModelNameById(state, ownProps.id),
+    defaultPlot: getPlotSettingsById(state, ownProps.id )
   };
 };
 

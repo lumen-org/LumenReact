@@ -3,7 +3,6 @@ import Loader from "react-loader-spinner";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./StandardPlot.css";
-import { defaultPlot } from "./defaultPlot";
 import { markers } from "./markers";
 import { createCategoryColorMap } from "./colorPalettes";
 import Plot from "react-plotly.js";
@@ -16,15 +15,16 @@ class StandardPlot extends Component {
     axisFields: PropTypes.object,
     modelName: PropTypes.string,
     category: PropTypes.array,
+    defaultPlot: PropTypes.object
   };
 
   state = {
-    layout: defaultPlot.layout,
+    layout:{},
     data: [],
   };
 
   getNewDataScatterTrace = (data, categoryColorMap) => {
-    const { plotData } = this.props;
+    const { plotData,defaultPlot } = this.props;
     for (var key of Object.keys(plotData.trainingDataPoints.x)) {
       data.push({
         ...defaultPlot.scatterTrace,
@@ -40,7 +40,7 @@ class StandardPlot extends Component {
   };
 
   getNewDataXHistogramTrace = (data, categoryColorMap) => {
-    const { plotData } = this.props;
+    const { plotData,defaultPlot } = this.props;
     for (var key of Object.keys(plotData.dataMarginals.xAxis.x)) {
       data.push({
         ...defaultPlot.xHistogramTrace,
@@ -55,7 +55,7 @@ class StandardPlot extends Component {
   };
 
   getNewDataYHistogramTrace = (data, categoryColorMap) => {
-    const { plotData } = this.props;
+    const { plotData,defaultPlot } = this.props;
     for (var key of Object.keys(plotData.dataMarginals.yAxis.x)) {
       data.push({
         ...defaultPlot.yHistogramTrace,
@@ -70,7 +70,7 @@ class StandardPlot extends Component {
   };
 
   getNewDataDensityTrace = () => {
-    const { plotData } = this.props;
+    const { plotData ,defaultPlot} = this.props;
     return {
       ...defaultPlot.dataDensityTrace,
       x: plotData.dataDensity.x,
@@ -80,7 +80,7 @@ class StandardPlot extends Component {
   };
 
   getNewModelScatterTrace = (data, categoryColorMap) => {
-    const { plotData } = this.props;
+    const { plotData,defaultPlot } = this.props;
     for (var key of Object.keys(plotData.modelDataPoints.x)) {
       data.push({
         ...defaultPlot.modelScatterTrace,
@@ -96,7 +96,7 @@ class StandardPlot extends Component {
   };
 
   getNewModelXHistogramTrace = (data, categoryColorMap) => {
-    const { plotData } = this.props;
+    const { plotData,defaultPlot } = this.props;
     for (var key of Object.keys(plotData.modelMarginals.xAxis.x)) {
       data.push({
         ...defaultPlot.modelXHistogramTrace,
@@ -111,7 +111,7 @@ class StandardPlot extends Component {
   };
 
   getNewModelYHistogramTrace = (data, categoryColorMap) => {
-    const { plotData } = this.props;
+    const { plotData,defaultPlot } = this.props;
     for (var key of Object.keys(plotData.modelMarginals.yAxis.x)) {
       data.push({
         ...defaultPlot.modelYHistogramTrace,
@@ -126,7 +126,7 @@ class StandardPlot extends Component {
   };
 
   getNewModelDensityTrace = () => {
-    const { plotData } = this.props;
+    const { plotData,defaultPlot } = this.props;
     return {
       ...defaultPlot.modelDensityTrace,
       x: plotData.modelDensity.x || [],
@@ -136,7 +136,7 @@ class StandardPlot extends Component {
   };
 
   getNewModelPredictionTrace = () => {
-    const { plotData } = this.props;
+    const { plotData,defaultPlot } = this.props;
     return {
       ...defaultPlot.modelPredictionTrace,
       x: plotData.modelPrediction.x || [],
@@ -145,7 +145,7 @@ class StandardPlot extends Component {
   };
 
   getNewDataPredictionTrace = () => {
-    const { plotData } = this.props;
+    const { plotData,defaultPlot } = this.props;
     return {
       ...defaultPlot.dataPredictionTrace,
       x: plotData.dataPrediction.x || [],
@@ -154,7 +154,7 @@ class StandardPlot extends Component {
   };
 
   setPlotData = () => {
-    const { displayTraces, modelName, axisFields, category } = this.props;
+    const { displayTraces, modelName, axisFields, category , defaultPlot} = this.props;
     const categoryColorMap = createCategoryColorMap(category);
     const data = [];
     displayTraces.map((traceinfo, ind) => {
@@ -187,24 +187,7 @@ class StandardPlot extends Component {
       }
     });
     this.setState({
-      layout: {
-        ...defaultPlot.layout,
-        xaxis: {
-          ...defaultPlot.layout.xaxis,
-          title: {
-            ...defaultPlot.layout.xaxis.title,
-            text: axisFields.x,
-          },
-        },
-        yaxis: {
-          ...defaultPlot.layout.yaxis,
-          title: {
-            ...defaultPlot.layout.yaxis.title,
-            text: axisFields.y,
-          },
-        },
-        title: modelName,
-      },
+      layout: defaultPlot.layout,
       data,
     });
   };
