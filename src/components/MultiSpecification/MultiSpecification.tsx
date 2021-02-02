@@ -8,19 +8,10 @@ type MultiSpecificationProps = {
 }
 
 const MultiSpecification = (props: MultiSpecificationProps) => {
-    
-    const handleDrop = (item: any) => {
-    };
-
-    function simplifiedFunction(value: any) {
-        console.log(value)
-    }
-
     const { specifications } = props;
-    console.log(specifications)
     return (
         <div className="specification">
-            <TitelH1 value={"Spezifikation"} />
+            <TitelH1 value={"Specification"} />
             {Object.entries(specifications).map((item, index) => (
                 <Field
                     title={item[0]}
