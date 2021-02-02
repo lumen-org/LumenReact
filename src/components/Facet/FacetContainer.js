@@ -36,11 +36,11 @@ class FacetContainer extends React.Component {
       fetchDataPrediction,
     } = this.props;
 
-    if (facets[key].data === false && key === "Data Points") {
+    if (facets[key].data === false && key === "Samples") {
       fetchTrainingDataPoints();
     }
 
-    if (facets[key].data === false && key === "Prediction") {
+    if (facets[key].data === false && key === "Aggregation") {
       fetchDataPrediction();
     }
 
@@ -65,11 +65,11 @@ class FacetContainer extends React.Component {
       fetchModelPrediction,
       facets,
     } = this.props;
-    if (facets[key].model === false && key === "Data Points") {
+    if (facets[key].model === false && key === "Samples") {
       fetchModelDataPoints();
     }
 
-    if (facets[key].model === false && key === "Prediction") {
+    if (facets[key].model === false && key === "Aggregation") {
       fetchModelPrediction();
     }
 

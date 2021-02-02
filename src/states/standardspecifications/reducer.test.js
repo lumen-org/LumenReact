@@ -64,7 +64,7 @@ describe("standardspecification reducer", () => {
         const payload = {
             id: 10,
             type: "model",
-            key: "Prediction"
+            key: "Aggregation"
         }
 
         expect(reducer(defaultState, {

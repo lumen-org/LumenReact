@@ -9,11 +9,11 @@ export const defaultValues = {
         Size: new Set([]),
     },
     facets: {
-        Prediction: {
+        Aggregation: {
             model: false,
             data: false,
         },
-        "Data Points": {
+        Samples: {
             model: false,
             data: true,
         },
@@ -39,11 +39,11 @@ export const filledOneValue = {
         Size: new Set([]),
     },
     facets: {
-        Prediction: {
+        Aggregation: {
             model: false,
             data: false,
         },
-        "Data Points": {
+        Samples: {
             model: false,
             data: true,
         },
@@ -69,11 +69,11 @@ export const filledTwoValues = {
         Size: new Set([]),
     },
     facets: {
-        Prediction: {
+        Aggregation: {
             model: false,
             data: false,
         },
-        "Data Points": {
+        Samples: {
             model: false,
             data: true,
         },
@@ -101,11 +101,11 @@ export const defaultState = {
                 Size: new Set([]),
             },
             facets: {
-                Prediction: {
+                Aggregation: {
                     model: false,
                     data: false,
                 },
-                "Data Points": {
+                Samples: {
                     model: false,
                     data: true,
                 },
@@ -135,11 +135,11 @@ export const filledOneState = {
                 Size: new Set([]),
             },
             facets: {
-                Prediction: {
+                Aggregation: {
                     model: false,
                     data: false,
                 },
-                "Data Points": {
+                Samples: {
                     model: false,
                     data: true,
                 },
@@ -169,11 +169,11 @@ export const changedPredictionModelState = {
                 Size: new Set([]),
             },
             facets: {
-                Prediction: {
+                Aggregation: {
                     model: true,
                     data: false,
                 },
-                "Data Points": {
+                Samples: {
                     model: false,
                     data: true,
                 },
