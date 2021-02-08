@@ -10,8 +10,8 @@ import {
   createNewVisualization,
   fillVisualization,
 } from "../../states/visualizations/actions";
-import { STANDARD_PLOT, MULTI_PLOT, PCI_PLOT } from "../../constants/plotTypes";
-import { STANDARD_SPECIFICATION } from "../../states/specifications/specificationTypes";
+import { STANDARD_PLOT, MULTI_PLOT, PCI_PLOT, DMP_PLOT } from "../../constants/plotTypes";
+import { STANDARD_SPECIFICATION , DMP_SPECIFICATION} from "../../states/specifications/specificationTypes";
 class PlotMenuContainer extends React.Component {
   static propTypes = {
     activeModel: PropTypes.string,
@@ -26,7 +26,9 @@ class PlotMenuContainer extends React.Component {
   onCreatePCIPlot = () => {
     this.createNewPlot(PCI_PLOT);
   };
-
+  onCreateDMPPlot = ()=> {
+    this.createNewPlot(DMP_PLOT)
+  }
   createNewPlot = (plotType) => {
     const {
       activeModel,
@@ -38,7 +40,12 @@ class PlotMenuContainer extends React.Component {
     } = this.props;
     if (activeModel !== ""){
       const specificationId = uuidv4();
-      addSpecifications(STANDARD_SPECIFICATION, specificationId);
+      if(plotType === DMP_PLOT){
+        addSpecifications(DMP_SPECIFICATION, specificationId);
+      }
+      else{
+        addSpecifications(STANDARD_SPECIFICATION, specificationId);
+      }
       createNewVisualization(specificationId);
       createPlot(activeModel, plotType, specificationId);
       fillVisualization();
@@ -55,6 +62,7 @@ class PlotMenuContainer extends React.Component {
         onCreateMultiPlot={this.onCreateMultiPlot}
         onCreateStandardPlot={this.onCreateStandardPlot}
         onCreatePCIPlot={this.onCreatePCIPlot}
+        onCreateDMPPlot= {this.onCreateDMPPlot}
       />
     );
   }

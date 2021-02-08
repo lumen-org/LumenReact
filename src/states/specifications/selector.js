@@ -1,4 +1,4 @@
-import { STANDARD_SPECIFICATION } from "./specificationTypes";
+import { STANDARD_SPECIFICATION,DMP_SPECIFICATION } from "./specificationTypes";
 
 export const getSpecType = (state, id) => {
   return state.specifications.specifications.byId[id].specificationType || {};
@@ -8,6 +8,10 @@ export const getSpecById = (state, id) => {
   const specType = getSpecType(state, id);
   if (specType === STANDARD_SPECIFICATION) {
     return state.standardspecifications.standardspecifications[id]
+      .specification;
+  }
+  if (specType === DMP_SPECIFICATION) {
+    return state.DMPspecifications.DMPspecifications[id]
       .specification;
   }
 };

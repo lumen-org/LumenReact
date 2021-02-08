@@ -10,7 +10,7 @@ import { FIELD_ITEM } from "../../constants/dragAndDropTypes";
 import FieldItemModal from "../FieldItemModal";
 import { selectActiveSpecificationId } from "../../states/visualizations/selector";
 import { getSpecType } from "../../states/specifications/selector";
-import { STANDARD_SPECIFICATION } from "../../states/specifications/specificationTypes";
+import { STANDARD_SPECIFICATION,DMP_SPECIFICATION } from "../../states/specifications/specificationTypes";
 
 function FieldItemContainer({ value, fieldName = "", type = FIELD_ITEM }) {
   const item = { type: type };

@@ -43,6 +43,9 @@ function PlotMenu(props) {
         <MenuItem onClick={() => props.onCreateStandardPlot()}>
           Standard Plot
         </MenuItem>
+        <MenuItem onClick={() => props.onCreateDMPPlot()}>
+          Differential Marginal Plot
+        </MenuItem>
         <MenuItem onClick={() => props.onCreateMultiPlot()}>
           {" "}
           Multi Plot</MenuItem>

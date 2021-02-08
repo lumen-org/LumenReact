@@ -1,15 +1,19 @@
 import { v4 as uuidv4 } from "uuid";
 import { createNewStandardSpecification } from "../standardspecifications/actions";
-
+import { createNewDMPSpecification} from "../dmpspecifications/actions";
 import { CHANGE_ACTIVE_SPECIFICATIONS, CREATE_NEW_SPECIFICATION } from "./constants"
 import {
-  STANDARD_SPECIFICATION
+  STANDARD_SPECIFICATION,
+  DMP_SPECIFICATION
 } from "./specificationTypes"
 
 export const createNewSpecification = ({specificationType = STANDARD_SPECIFICATION, specificationId = uuidv4(), initValues = null}) => {
   return (dispatch) => {
     if (specificationType === STANDARD_SPECIFICATION) {
       dispatch(createNewStandardSpecification(specificationId, initValues))
+    }
+    if (specificationType === DMP_SPECIFICATION ){
+      createNewDMPSpecification(specificationId, initValues)
     }
     dispatch(createSpecification({specificationId, specificationType}))
     dispatch(changeActiveSpecification({specificationId}))
