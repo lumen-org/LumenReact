@@ -1,0 +1,2 @@
+export const CREATE_NEW_PPC_PLOT = "CREATE_NEW_PPC_PLOT";
+export const DELETE_PPC_PLOT = "DELETE_PPC_PLOT";

@@ -17,6 +17,7 @@ import { createNewMultiPlot, deleteMultiPlot } from "../multiplots/actions";
 import { nextAvaliableId } from "../../utils/plotData";
 import { deleteModelIfNecessary, hidePCIGraph, showPCIGraph } from "../models/actions";
 import { deleteDimensions } from "../dimensions/actions";
+import { createNewPPCPlot } from "../ppcplots/actions";
 
 export function changeActivePlot(newid) {
   return {
@@ -41,7 +42,7 @@ export function createNewPlot(modelName, plotType, specificationId) {
         dispatch(showPCIGraph(selectActiveModelId(getState())));
       }
       if (plotType === PPC_PLOT) {
-        //dispatch(createNewPP());
+        dispatch(createNewPPCPlot());
       }
 
       const visualizationId = getLastCreatedVisualizationId(getState());

@@ -8,6 +8,7 @@ import {
   MULTI_SPECIFICATION,
   PPC_SPECIFICATION,
 } from "./specificationTypes"
+import { createNewPPCSpecification } from "../ppcspecification/actions";
 
 export const createNewSpecification = ({specificationType = STANDARD_SPECIFICATION, specificationId = uuidv4(), initValues = null}) => {
   return (dispatch) => {
@@ -18,7 +19,7 @@ export const createNewSpecification = ({specificationType = STANDARD_SPECIFICATI
       dispatch(createNewMultiSpecification({id: specificationId, initValues}))
     }
     if (specificationType === PPC_SPECIFICATION) {
-      dispatch(createNewMultiSpecification({id: specificationId, initValues}))
+      dispatch(createNewPPCSpecification({id: specificationId, initValues}))
     }
     dispatch(createSpecification({specificationId, specificationType}))
     dispatch(changeActiveSpecification({specificationId}))
