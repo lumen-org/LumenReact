@@ -10,12 +10,13 @@ class DMPSpecificationContainer extends React.Component {
     };
 
     render() {
-        const { specifications, specificationId } = this.props
+        const { dmpspecifications, specificationId } = this.props
+        console.log("DMP dmpSPECIFICATIONS",dmpspecifications)
         return (<div>
             {
-                (specificationId && specificationId !== EMPTY && specifications[specificationId]) &&
+                (specificationId && specificationId !== EMPTY && dmpspecifications[specificationId]) &&
                 <DMPSpecification
-                    specifications={specifications[specificationId].specification}
+                    dmpspecifications={dmpspecifications[specificationId].specification}
                 />
             }
         </div>
@@ -25,7 +26,7 @@ class DMPSpecificationContainer extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        specifications: state.dmpspecifications.DMPSpecifications,
+        dmpspecifications: state.dmpspecifications.DMPSpecifications,
     };
 };
 

@@ -8,7 +8,7 @@ import "./DMPSpecification.css";
 
 class DMPSpecification extends Component {
   static propTypes = {
-    specifications: PropTypes.object.isRequired,
+    dmpspecifications: PropTypes.object.isRequired,
     facets: PropTypes.object.isRequired
   };
 
@@ -20,7 +20,7 @@ class DMPSpecification extends Component {
   }
 
   render() {
-    const { specifications } = this.props;
+    const { dmpspecifications } = this.props;
     return (
       <div className="specification">
 {/*         <TitelH1 value={"Spezification"}/>

@@ -4,7 +4,7 @@ import RnDPlot from "../../components/RnDPlotWrapper";
 import PropTypes from "prop-types";
 import PCIGraph from "../../components/PCIGraph";
 import "./VisualizationCanvas.scss";
-import { MULTI_PLOT, PCI_PLOT, STANDARD_PLOT } from "../../constants/plotTypes";
+import { MULTI_PLOT, PCI_PLOT, STANDARD_PLOT,DMP_PLOT } from "../../constants/plotTypes";
 import StandardPlot from "../../components/StandardPlot/StandardPlotContainer";
 import MultiPlot from "../../components/MultiPlot/MultiPlotContainer";
 import { STANDARD_SPECIFICATION } from "../../states/specifications/specificationTypes";
@@ -60,6 +60,8 @@ class VisualizationCanvas extends Component {
                   // plotWindowsHeight={plotWindowsHeight}
                   // plotWindowsWidth={plotWindowsWidth}
                   />
+                ) : plotType === DMP_PLOT ? (
+                  <MultiPlot id={id} />
                 ) : null}
               </RnDPlot>
             )

@@ -11,7 +11,7 @@ export const getSpecById = (state, id) => {
       .specification;
   }
   if (specType === DMP_SPECIFICATION) {
-    return state.DMPspecifications.DMPspecifications[id]
+    return state.dmpspecifications.DMPspecifications[id]
       .specification;
   }
 };
