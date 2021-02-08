@@ -14,6 +14,7 @@ import {
   fetchDataMarginals,
   fetchDataPrediction,
 } from "../../states/standardplots/actions";
+import { aggregationName, densityName, marginalName, samplesName } from "../../configs/specificationFacetsConfig";
 class FacetContainer extends React.Component {
   render() {
     return (
@@ -36,19 +37,19 @@ class FacetContainer extends React.Component {
       fetchDataPrediction,
     } = this.props;
 
-    if (facets[key].data === false && key === "Data Points") {
+    if (facets[key].data === false && key === samplesName) {
       fetchTrainingDataPoints();
     }
 
-    if (facets[key].data === false && key === "Prediction") {
+    if (facets[key].data === false && key === aggregationName) {
       fetchDataPrediction();
     }
 
-    if (facets[key].data === false && key === "Marginals") {
+    if (facets[key].data === false && key === marginalName) {
       fetchDataMarginals();
     }
 
-    if (facets[key].data === false && key === "Density") {
+    if (facets[key].data === false && key === densityName) {
       fetchDataDensity();
     }
 
@@ -65,19 +66,19 @@ class FacetContainer extends React.Component {
       fetchModelPrediction,
       facets,
     } = this.props;
-    if (facets[key].model === false && key === "Data Points") {
+    if (facets[key].model === false && key === samplesName) {
       fetchModelDataPoints();
     }
 
-    if (facets[key].model === false && key === "Prediction") {
+    if (facets[key].model === false && key === aggregationName) {
       fetchModelPrediction();
     }
 
-    if (facets[key].model === false && key === "Marginals") {
+    if (facets[key].model === false && key === marginalName) {
       fetchModelMarginals();
     }
 
-    if (facets[key].model === false && key === "Density") {
+    if (facets[key].model === false && key === densityName) {
       fetchModelDensityData();
     }
     changeFacets(activeSpecification, key, "model");
