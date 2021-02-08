@@ -7,6 +7,7 @@ import { getSpecById } from "../specifications/selector";
 import { getSpecificationId } from "../plots/selector";
 import { getModelNameById } from "../models/selector";
 import { getColorCatgeoryById } from "../standardspecifications/selector.js";
+import { xAxisName, yAxisName } from "../../configs/specificationFacetsConfig";
 /**
  *
  * @param {the entire redux state} state
@@ -16,8 +17,8 @@ import { getColorCatgeoryById } from "../standardspecifications/selector.js";
  */
 export const getSelectedFieldArrayById = (state, id) => {
   const specification = getSpecById(state, getSpecificationId(state, id));
-  const X_Axis = [...specification["X-Axis"]];
-  const Y_Axis = [...specification["Y-Axis"]];
+  const X_Axis = [...specification[xAxisName]];
+  const Y_Axis = [...specification[yAxisName]];
   const SELECT = getSelectFieldArray(X_Axis, Y_Axis);
   return SELECT;
 };
@@ -31,8 +32,8 @@ export const getSelectedFieldArrayById = (state, id) => {
 
 export const getSelectedFieldObjectById = (state, id) => {
   const specification = getSpecById(state, getSpecificationId(state, id));
-  const X_Axis = [...specification["X-Axis"]];
-  const Y_Axis = [...specification["Y-Axis"]];
+  const X_Axis = [...specification[xAxisName]];
+  const Y_Axis = [...specification[yAxisName]];
   const SELECT = getSelectFieldObject(X_Axis, Y_Axis);
   return SELECT;
 };

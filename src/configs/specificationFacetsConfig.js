@@ -19,4 +19,10 @@ const specificationFacetsConfig = {
   ]
 };
 
+export const aggregationName = "Aggregation";
+export const samplesName = "Samples";
+export const marginalName = "Marginals";
+export const densityName = "Density";
+export const xAxisName = "X-Axis";
+export const yAxisName = "Y-Axis";
 export default specificationFacetsConfig;
