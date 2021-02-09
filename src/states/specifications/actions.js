@@ -4,13 +4,20 @@ import { createNewDMPSpecification} from "../dmpspecifications/actions";
 import { CHANGE_ACTIVE_SPECIFICATIONS, CREATE_NEW_SPECIFICATION } from "./constants"
 import {
   STANDARD_SPECIFICATION,
-  DMP_SPECIFICATION
-} from "./specificationTypes"
+  DMP_SPECIFICATION,
+  MULTI_SPECIFICATION
+}from "./specificationTypes"
+import { createNewMultiSpecification } from "../multispecifications/actions";
+
+
 
 export const createNewSpecification = ({specificationType , specificationId = uuidv4(), initValues = null}) => {
   return (dispatch) => {
     if (specificationType === STANDARD_SPECIFICATION) {
-      dispatch(createNewStandardSpecification(specificationId, initValues))
+      dispatch(createNewStandardSpecification({id: specificationId, initValues}))
+    }
+    if (specificationType === MULTI_SPECIFICATION) {
+      dispatch(createNewMultiSpecification({id: specificationId, initValues}))
     }
     if (specificationType === DMP_SPECIFICATION ){
       dispatch(createNewDMPSpecification(specificationId, initValues))

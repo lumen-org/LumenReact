@@ -8,6 +8,7 @@ import visualizations from "./states/visualizations/reducer";
 import models from "./states/models/reducer";
 import dimensions from "./states/dimensions/reducer";
 import standardplots from "./states/standardplots/reducer";
+import multispecifications from "./states/multispecifications/reducer"
 import multiplots from "./states/multiplots/reducer";
 import plotSettings from "./states/plotSettings/reducer";
 
@@ -20,7 +21,9 @@ export default combineReducers({
   models,
   dimensions,
   plots,
+  standardspecifications,
   standardplots,
+  multispecifications,
   multiplots,
   plotSettings
 

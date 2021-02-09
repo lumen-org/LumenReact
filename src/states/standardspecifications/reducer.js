@@ -71,8 +71,8 @@ const standardspecifications = (state = defaultState, action) => {
                     },
                 }),
             };
-            case RESET_STANDARD_SPECIFICATIONS:
-                return defaultState
+        case RESET_STANDARD_SPECIFICATIONS:
+            return defaultState
         default:
             return state
     }
