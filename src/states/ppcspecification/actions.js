@@ -1,12 +1,12 @@
-import { CREATE_NEW_PPC_SPECIFICATION, REMOVE_PPC_SPECIFICATION} from "./constants";
-
+import { CHANGE_PPC_SPECIFICATION, CREATE_NEW_PPC_SPECIFICATION, REMOVE_PPC_SPECIFICATION } from "./constants";
 
 const defaultValues = {
-  specification: {
-    "Number of Samples": new Set([]),
-    "Statistics": new Set([]),
-  }
+    statistic: "median",
+      k: 20,
+      n: 2,
 }
+
+
 
 export const createNewPPCSpecification = ({ id, initValues = null }) => {
   return {
@@ -27,6 +27,15 @@ export const removePPCSpecification = (id) => {
   }
 }
 
+export const changeSpecificationValue = (id, values) => {
+  return {
+    type: CHANGE_PPC_SPECIFICATION,
+    payload: {
+      id: id,
+      values: values,
+    }
+  }
+}
 /*
 export const addToMultiSpecification = (payload: object) => {
   return {

@@ -1,5 +1,5 @@
 import update from "immutability-helper";
-import { CREATE_NEW_PPC_SPECIFICATION, REMOVE_PPC_SPECIFICATION} from "./constants";
+import { CHANGE_PPC_SPECIFICATION, CREATE_NEW_PPC_SPECIFICATION, REMOVE_PPC_SPECIFICATION } from "./constants";
 
 export const defaultState = {
   ppcspecification: {}
@@ -8,7 +8,7 @@ export const defaultState = {
 const ppcspecification = (state = defaultState, action) => {
   switch (action.type) {
     case CREATE_NEW_PPC_SPECIFICATION:
-      const { id, defaultValues } = action.payload
+      const { id, defaultValues } = action.payload;
       return {
         ...state,
         ppcspecification: update(state.ppcspecification, {
@@ -23,6 +23,19 @@ const ppcspecification = (state = defaultState, action) => {
           $unset: [action.payload.id]
         })
       }
+
+    case CHANGE_PPC_SPECIFICATION: {
+      const { id, values} = action.payload;
+      return {
+        ...state,
+        ppcspecification: update(state.ppcspecification, {
+            [id]: {$merge: values }
+
+          }
+        )
+      }
+    }
+
       /*
     case ADD_TO_MULTI_SPECIFICATION:
       return {
