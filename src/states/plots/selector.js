@@ -22,7 +22,7 @@ export const getActivePlotId = (state) => {
 };
 
 export const getModelNameOfActivePlotId = (state) => {
-  if (getActivePlotId(state)) {
+  if (getActivePlotId(state) != null) {
     return state.plots.plots.byId[state.plots.activePlotId].model;
   }
   else {

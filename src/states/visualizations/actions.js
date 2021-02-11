@@ -9,7 +9,6 @@ import { getLastCreatedSpecId } from "../specifications/selector";
 import { getLastCreatedPlotId } from "../plots/selector";
 import { getLastCreatedVisualizationId } from "./selector";
 import { v4 as uuidv4 } from "uuid";
-import visualizations from "./reducer";
 import { deleteDimensions } from "../dimensions/actions";
 import { deleteModelIfNecessary } from "../models/actions";
 
@@ -53,7 +52,10 @@ export const deleteVisualization = (visualizationId) => {
     dispatch(_deleteVisualization(visualizationId))
   }
 }
-
+/**
+ * changes active Visualization to last created visualization
+ * @returns {function(*, *): void}
+ */
 export const changeActiveVisualization = () => {
   return (dispatch, getState) => {
     const visualizationId = getLastCreatedVisualizationId(getState());
@@ -61,6 +63,12 @@ export const changeActiveVisualization = () => {
   };
 };
 
+/**
+ * Changes active Visualization to the given visualizationId
+ * @param visualizationId
+ * @returns {{payload: {visualizationId: *}, type: string}}
+ * @private
+ */
 export const _changeActiveVisualization = (visualizationId) => {
 
   return {
