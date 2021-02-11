@@ -23,17 +23,16 @@ class DMPSpecification extends Component {
     const { dmpspecifications } = this.props;
     return (
       <div className="specification">
-{/*         <TitelH1 value={"Spezification"}/>
-        {Object.entries(specifications).map((item, index) => (
+        <TitelH1 value={"DMP Spec"}/>
+        {Object.entries(dmpspecifications).map((item, index) => (
           <Field
             title={item[0]}
             data={item[1]}
             dropable={true}
           />
         ))}
-        <TitelH2 value={"Drop here to remove"}/>
-        <TitelH1 value={"Facets"}/>
-        <Facet text="Test" facets={this.props.facets}/> */}
+
+
       </div>
     );
   }

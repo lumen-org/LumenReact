@@ -12,8 +12,7 @@ export const getSpecById = (state, id) => {
   } else if (specType === MULTI_SPECIFICATION) {
     return state.multispecifications.multispecifications[id]
       .specification;
-  }
-  if (specType === DMP_SPECIFICATION) {
+  } else if (specType === DMP_SPECIFICATION) {
     return state.dmpspecifications.DMPspecifications[id]
       .specification;
   }

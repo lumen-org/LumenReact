@@ -26,7 +26,7 @@ class DMPSpecificationContainer extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        dmpspecifications: state.dmpspecifications.DMPSpecifications,
+        dmpspecifications: state.dmpspecifications.DMPspecifications,
     };
 };
 

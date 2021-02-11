@@ -11,16 +11,10 @@ maintains all existing specifications and there state
  */
 const defaultValues = {
     specification: {
-        model1:{
-            modelid:"",
-        },
-        model2:{
-            modelid:"",
-        },
+
         X_Axis: new Set([]),
         Y_Axis: new Set([]),
-        Color: new Set([]),
-        Shape: new Set([]),
+
     }
 };
 

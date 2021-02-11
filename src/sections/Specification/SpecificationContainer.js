@@ -5,10 +5,12 @@ import { EMPTY } from "../../states/constants";
 import Specification from "./Specification";
 
 class SpecificationContainer extends React.Component {
+
   render() {
-    return this.props.activeSpecification !== EMPTY && <Specification
-      specificationType={this.props.specifications[this.props.activeSpecification].specificationType}
-      specificationId={this.props.activeSpecification}
+    const {activeSpecificationId, specifications} = this.props;
+    return activeSpecificationId !== EMPTY && <Specification
+      specificationType={specifications[activeSpecificationId].specificationType}
+      specificationId={activeSpecificationId}
     />
   }
 }
@@ -16,7 +18,7 @@ class SpecificationContainer extends React.Component {
 const mapStateToProps = state => {
   return {
     specifications: state.specifications.specifications.byId,
-    activeSpecification: selectActiveSpecificationId(state)
+    activeSpecificationId: selectActiveSpecificationId(state)
   };
 };
 
