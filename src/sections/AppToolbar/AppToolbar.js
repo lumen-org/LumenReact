@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import ListModal from "../../components/ListModal";
 import PlotMenu from "../../components/PlotMenu";
-import PlotSettingMenu from "../../components/PlotSetting/PlotSettingMenu";
+import SettingsMenu from "../../components/PlotSetting/SettingsMenu";
 import toolbarConfig from "../../configs/appToolbar";
 
 import "./AppToolbar.scss";
@@ -65,7 +65,7 @@ class AppToolbar extends Component {
             <PlotMenu />
           </li>
           <li className="nav-item appToolbar-buttonContainer">
-            <PlotSettingMenu />
+            <SettingsMenu />
          </li> 
         </ul>
       </div>

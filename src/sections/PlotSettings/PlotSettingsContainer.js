@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import PlotSettings from "./PlotSettings";
 import { connect } from "react-redux";
+
+import PlotSettings from "./PlotSettings";
 
 class PlotSettingsContainer extends Component {
   render() {
@@ -11,4 +12,5 @@ class PlotSettingsContainer extends Component {
 const mapStateToProps = (state) => ({
   modelName: state.app.activeModel,
 });
+
 export default connect(mapStateToProps, null)(PlotSettingsContainer);
