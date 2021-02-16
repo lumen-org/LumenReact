@@ -66,7 +66,51 @@ export const changePPCPlot = (id, values) => {
       fetchPPCData(modelname, ["sepal_length"], statistic, k, n).then(
         (results) => {console.log(results, "results");
         if (results !== null) {
-          dispatch(addDataToPPCPlot(id, JSON.parse(JSON.stringify(results))))
+          const data = results["test"];
+          const n = data[0].length;
+          const vals = data[0].sort();
+          const min = vals[0];
+          const max = vals[n-1];
+          console.log(n, min ,max);
+          const size = (max-min)/n;
+          const values = {
+            data: [{
+              type: 'bar',
+              orientation: "v",
+              x: [results.reference[0]],
+              name: "reference",
+              width: "100px"
+            },{
+              x: data[0],
+              type: 'histogram',
+              name: "ppc values",
+              marker: {
+                line: {
+                  width: 1
+                }
+              },
+              xbins: {
+                start: min,
+                end: max,
+                size: size,
+              }
+            }]
+          };
+          dispatch(addDataToPPCPlot(id, JSON.parse(JSON.stringify(values))))
+          const layout = {
+            shape: {
+              type: "line",
+              x0: results.reference[0],
+              y0: 0,
+              x1: results.reference[0],
+              y1: 5,
+              line: {
+                color: "#000000"
+              }
+            }
+          }
+          dispatch(addDataToPPCPlot(id, {reference: results.reference[0]}));
+          dispatch(changePPCPlot(id, {layout: layout}));
         }}).then(dispatch(changePPCPlot(id, {loading: false}))
 
       );

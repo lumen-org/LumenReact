@@ -14,6 +14,7 @@ class PPCPlot extends React.Component {
   render() {
     const { loading, plotData, layout } = this.props;
     console.log(plotData, " plotData");
+    console.log(layout, " layout");
     if (plotData !== []) {
       return (
         <div>

@@ -21,32 +21,16 @@ export const getPPCLayout = (state, id) => {
 }
 
 export const getPPCPlotData = (state, id) => {
-  const data = state.ppcplots.ppcplots[id]["test"];
-  console.log(data, "data");
-  if (data != null) {
-    const n = data[0].length;
-    const vals = data[0].sort();
-    const min = vals[0];
-    const max = vals[n-1];
-    console.log(n, min ,max);
-    const size = (max-min)/n;
-    return [{
-      x: data[0],
-      type: 'histogram',
-      marker: {
-        line: {
-          width: 1
-        }
-      },
-      xbins: {
-        start: min,
-        end: max,
-        size: size,
-      }
-    }];
+  try {
+    const result = state.ppcplots.ppcplots[id]["data"];
+    console.log(result);
+    return result;
   }
-  else {
+  catch (e) {
+    console.log("unsuccessful");
     return [];
   }
+
+
  // return [{x: [6.450294183181606, 5.338990172239377], type: 'histogram'}];
 }
