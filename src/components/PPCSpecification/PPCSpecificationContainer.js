@@ -17,30 +17,27 @@ class PPCSpecificationContainer extends React.Component {
     specificationId: PropTypes.number,
   };
 
-  onSpecificationChange = (type, value) => {
+  onSpecificationValueChange = (type, value) => {
+    const modelname = this.props.activeModelName;
+    console.log("modelname ", modelname);
     if (type === "statistic"){
-      //console.log("changed statistic");
       const values = {
         statistic: value,
       }
-      this.props.changeSpecificationValue(this.props.specificationId, values)
+      this.props.changeSpecificationValue(this.props.specificationId, values, modelname);
     }
     else if (type === "k"){
-      //console.log("changed k");
       const values = {
         k: value,
       }
-      this.props.changeSpecificationValue(this.props.specificationId, values)
+      this.props.changeSpecificationValue(this.props.specificationId, values, modelname);
     }
     else if (type === "n"){
-      //console.log("changed n");
       const values = {
         n: value,
       }
-      this.props.changeSpecificationValue(this.props.specificationId, values)
+      this.props.changeSpecificationValue(this.props.specificationId, values, modelname);
     }
-
-
   }
 
   render() {
@@ -50,7 +47,7 @@ class PPCSpecificationContainer extends React.Component {
           (specificationId && specificationId !== EMPTY && ppcspecifications[specificationId]) &&
           <PPCSpecification
             statisticsLabel={statistics}
-            onSpecificationChange={this.onSpecificationChange}
+            onSpecificationChange={this.onSpecificationValueChange}
             defaults={this.props.currentValues}
           />
         }
@@ -63,14 +60,15 @@ class PPCSpecificationContainer extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     activeModelName: getModelNameById(state, state.plots.activePlotId),
-    ppcspecifications: state.ppcspecification.ppcspecification,
-    currentValues: state.ppcspecification.ppcspecification[ownProps.specificationId],
+    ppcspecifications: state.ppcspecifications.ppcspecifications,
+    currentValues: state.ppcspecifications.ppcspecifications[ownProps.specificationId],
+
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeSpecificationValue: (id, values) => dispatch(changeSpecificationValue(id, values)),
+    changeSpecificationValue: (id, values, modelname) => dispatch(changeSpecificationValue(id, values, modelname)),
   };
 };
 

@@ -64,6 +64,14 @@ class PPCSpecification extends Component {
             type: 'number',
           }}
         />
+        <InputLabel id="usedFields">Calculate for:</InputLabel>
+          {Object.entries(defaults.selectedFields).map((item, index) => (
+            <Field
+              title={item[0]}
+              data={item[1]}
+              dropable={true}
+            />
+          ))}
       </div>
     );
   }

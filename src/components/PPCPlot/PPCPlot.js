@@ -2,34 +2,39 @@ import Plot from "react-plotly.js";
 import React from "react";
 import Loader from "react-loader-spinner";
 import { defaultPlot } from "../StandardPlot/defaultPlot";
+import PropTypes from "prop-types";
 
 class PPCPlot extends React.Component {
-  state = {
-    layout: {},//defaultPlot.layout,
-    data: [],
+  static propTypes = {
+    getData: PropTypes.func,
+    loading: PropTypes.bool,
   };
+
+
   render() {
-    const { layout, data } = this.state;
-    const { loading } = false;//this.props.plotData;
-    return (
-      <div>
-        <Plot
-          data={data}
-          layout={layout}
-          useResizeHandler={true}
-          className="StandardPlot-plot"
-        />
-        {loading && (
-          <Loader
-            className={"standardplot-spinner"}
-            type="TailSpin"
-            color="#6465a1"
-            height={80}
-            width={80}
+    const { loading, plotData, layout } = this.props;
+    console.log(plotData, " plotData");
+    if (plotData !== []) {
+      return (
+        <div>
+          <Plot
+            data={plotData}
+            layout={layout}
+            useResizeHandler={true}
+            className="StandardPlot-plot"
           />
-        )}
-      </div>
-    );
+          {loading && (
+            <Loader
+              className={"standardplot-spinner"}
+              type="TailSpin"
+              color="#6465a1"
+              height={80}
+              width={80}
+            />
+          )}
+        </div>
+      );
+    }
   }
 }
 export default PPCPlot;

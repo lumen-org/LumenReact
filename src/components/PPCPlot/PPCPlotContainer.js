@@ -1,51 +1,61 @@
 import React from "react";
 import {connect} from "react-redux";
 import PPCPlot from "./PPCPlot";
-import { BASE_URL } from "../../constants/query";
-import fetchData from "../../utils/fetch";
+import { getParameter, getPPCSpecDefaults } from "../../states/ppcspecification/selector";
+import PropTypes from "prop-types";
+import { getModelNameById } from "../../states/models/selector";
+import { fetchPPCPlotData } from "../../states/ppcplots/actions";
+import { getPPCLayout, getPPCLoadingState, getPPCPlotData } from "../../states/ppcplots/selector";
+import { getSpecificationId } from "../../states/plots/selector";
 
 class PPCPlotContainer extends React.Component  {
+  static propTypes = {
+    id: PropTypes.string,
+  };
+
+  getData = () => {
+    const { getPPCPlotData } = this.props;
+    return getPPCPlotData(this.props.modelname, this.props.id, this.props.k, this.props.n,
+      this.props.statistic)
+  }
+
+  componentDidUpdate(prevProps) {
+    if(prevProps.k !== this.props.k || prevProps.n !== this.props.n || prevProps.statistic !== this.props.statistic){
+      this.getData();
+    }
+  }
+  componentDidMount() {
+    this.getData();
+  }
+
   render() {
     return (
-      <PPCPlot
+      <PPCPlot getData={this.getData}
+               plotData={this.props.plotData}
+               loading={this.props.isLoading}
+               layout={this.props.layout}
       />
     );
   }
-
-  fetchData() {
-    // here should be stuff that fetches the data from the backend
-    try {
-      const modelname = this.props.activeModelName;
-      console.log(modelname, " modelname");
-      let body = {
-        FROM: modelname,
-        PPC: '*',
-        OPTS: {
-          TEST_QUANTITY: this.defaults.statistic,
-          k: this.defaults.k,
-          n: this.defaults.n,
-        }
-      };
-      fetchData(BASE_URL, body).then(
-        (response) => {
-          console.log(response, " response");
-          console.log(JSON.parse(JSON.stringify(response)), " after ")
-        },
-        (error) => console.log("Something went wrong: " + error)
-      );
-    } catch (e) {
-    }
-    finally {
-    }
-  }
 }
+
 const mapDispatchToProps = (dispatch) => {
   return {
+    getPPCPlotData: (modelname, id, k, n, statistic) => dispatch(fetchPPCPlotData(modelname,id, k, n, statistic))
   };
 };
+
 const mapStateToProps = (state, ownProps) => {
   return {
-    currentValues: state.ppcspecification.ppcspecification[ownProps.specificationId],
+    defaults: getPPCSpecDefaults(state, ownProps.id),
+    modelname: getModelNameById(state, ownProps.id),
+    isLoading: getPPCLoadingState(state, ownProps.id),
+    plotData: getPPCPlotData(state, ownProps.id),
+    k: getParameter(state, getSpecificationId(state, ownProps.id), "k"),
+    n: getParameter(state, getSpecificationId(state, ownProps.id), "n"),
+    statistic: getParameter(state, getSpecificationId(state, ownProps.id), "statistic"),
+    layout: getPPCLayout(state, ownProps.id),
   };
 };
+
 export default connect(mapStateToProps,mapDispatchToProps)(PPCPlotContainer);

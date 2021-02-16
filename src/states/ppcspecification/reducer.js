@@ -1,17 +1,22 @@
 import update from "immutability-helper";
-import { CHANGE_PPC_SPECIFICATION, CREATE_NEW_PPC_SPECIFICATION, REMOVE_PPC_SPECIFICATION } from "./constants";
+import {
+  ADD_TO_PPC_SPECIFICATION,
+  CHANGE_PPC_SPECIFICATION,
+  CREATE_NEW_PPC_SPECIFICATION,
+  REMOVE_PPC_SPECIFICATION
+} from "./constants";
 
 export const defaultState = {
-  ppcspecification: {}
+  ppcspecifications: {}
 }
 
-const ppcspecification = (state = defaultState, action) => {
+const ppcspecifications = (state = defaultState, action) => {
   switch (action.type) {
     case CREATE_NEW_PPC_SPECIFICATION:
       const { id, defaultValues } = action.payload;
       return {
         ...state,
-        ppcspecification: update(state.ppcspecification, {
+        ppcspecifications: update(state.ppcspecifications, {
             [id]: { $set: defaultValues }
           }
         )
@@ -19,7 +24,7 @@ const ppcspecification = (state = defaultState, action) => {
     case REMOVE_PPC_SPECIFICATION:
       return {
         ...state,
-        ppcspecification: update(state.ppcspecification, {
+        ppcspecifications: update(state.ppcspecifications, {
           $unset: [action.payload.id]
         })
       }
@@ -28,11 +33,20 @@ const ppcspecification = (state = defaultState, action) => {
       const { id, values} = action.payload;
       return {
         ...state,
-        ppcspecification: update(state.ppcspecification, {
+        ppcspecifications: update(state.ppcspecifications, {
             [id]: {$merge: values }
 
           }
         )
+      }
+    }
+    case ADD_TO_PPC_SPECIFICATION: {
+      const { id, values } = action.payload;
+      return {
+        ...state,
+        ppcspecifications: update(state.ppcspecifications, {
+          [id]: {$merge: values}
+        })
       }
     }
 
@@ -67,4 +81,4 @@ const ppcspecification = (state = defaultState, action) => {
   }
 }
 
-export default ppcspecification
+export default ppcspecifications
