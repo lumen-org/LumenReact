@@ -15,7 +15,7 @@ class SettingsMenu extends React.Component {
   render() {
     const settings = this.props.settings
     return (
-      <Menu right noOverlay>
+      <div>
         <p> {settings.name}</p>
         <LayoutSetting />
         <MarkerSetting title="Prediction Marker" />
@@ -33,7 +33,7 @@ class SettingsMenu extends React.Component {
             }
           )
         }
-      </Menu>
+      </div>
     );
   }
 }
