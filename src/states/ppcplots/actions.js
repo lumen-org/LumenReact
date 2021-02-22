@@ -70,17 +70,11 @@ export const changePPCPlot = (id, values) => {
           const n = data[0].length;
           const vals = data[0].sort();
           const min = vals[0];
-          const max = vals[n-1];
+          const max = Math.round(vals[n-1]);
           console.log(n, min ,max);
-          const size = (max-min)/n;
+          //const size = (max-min)/n;
           const values = {
             data: [{
-              type: 'bar',
-              orientation: "v",
-              x: [results.reference[0]],
-              name: "reference",
-              width: "100px"
-            },{
               x: data[0],
               type: 'histogram',
               name: "ppc values",
@@ -92,22 +86,39 @@ export const changePPCPlot = (id, values) => {
               xbins: {
                 start: min,
                 end: max,
-                size: size,
+                //size: size,
               }
-            }]
+            },
+              /*{
+              type: 'scatter',
+              x: [results.reference[0], results.reference[0]],
+              y: [2, 0],
+              name: "reference",
+              width: "10px",
+              marker: {
+                line: {
+                  width: 1,
+                }
+              }
+            },*/
+            ]
           };
           dispatch(addDataToPPCPlot(id, JSON.parse(JSON.stringify(values))))
           const layout = {
-            shape: {
+            shapes: [{
               type: "line",
               x0: results.reference[0],
               y0: 0,
               x1: results.reference[0],
-              y1: 5,
+              yref: 'paper',
+              y1: 1,
+              name: "reference",
               line: {
-                color: "#000000"
+                color: 'orange',
+                width: 1.5,
+
               }
-            }
+            }]
           }
           dispatch(addDataToPPCPlot(id, {reference: results.reference[0]}));
           dispatch(changePPCPlot(id, {layout: layout}));
