@@ -1,5 +1,5 @@
 import React from "react";
-import AppToolbar from "./AppToolbar";
+import AppToolbar from "./AppToolbarOld";
 import { connect } from "react-redux";
 import { changeActivePlot, createNewPlot, deletePlot } from "../../states/plots/actions";
 import { selectActiveModelId } from "../../states/visualizations/selector";

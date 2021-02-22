@@ -6,36 +6,35 @@ import MarkerSetting from "../MarkerSetting";
 
 import "./SettingsMenu.scss"
 import SubSettingsGenerator from "../SubSettingsGenerator";
+import { Divider } from "@material-ui/core";
 
-class SettingsMenu extends React.Component {
-  static propTypes = {
+import { makeStyles } from '@material-ui/core/styles';
 
-  };
-  // TODO: Make Plot Setting for Different Plots
-  render() {
-    const settings = this.props.settings
-    return (
-      <div>
-        <p> {settings.name}</p>
-        <LayoutSetting />
-        <MarkerSetting title="Prediction Marker" />
-        <MarkerSetting title="Data Marker" />
-        {
-          Object.keys(settings.subSettings).map(
-            (key) => {
-              return (
+const useStyles = makeStyles((theme) => ({
+  root: {
+    // width: '100%',
+  },
+}));
+
+const SettingsMenu = ({settings, settingKey}) => {
+  const classes = useStyles()
+  return (
+    <div className={classes.root}>
+      {
+        Object.keys(settings.subSettings).map(
+          (key) => {
+            return (
                 <SubSettingsGenerator
                   settings={settings.subSettings[key]}
-                  settingKey={this.props.settingKey}
+                  settingKey={settingKey}
                   subSettingKey={key}
                 />
-              )
-            }
-          )
-        }
-      </div>
-    );
-  }
+            )
+          }
+        )
+      }
+    </div>
+  );
 }
 
 

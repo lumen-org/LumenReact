@@ -4,6 +4,29 @@
   margin-left: 10px;
 }
 
-.navbar-dark {
+.navbar-custom {
   background-color: $nav-bar;
+  z-index: 1400;
+  position: fixed
+}
+
+.navbar-list-icon {
+  color: white
+}
+
+.navbar-settings-icon {
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-settings-drawer {
+  flex-shrink: 0 !important;
+  width: 1400px !important;
+}
+
+.navbar-settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: black;
 }
