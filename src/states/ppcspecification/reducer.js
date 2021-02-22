@@ -2,7 +2,7 @@ import update from "immutability-helper";
 import {
   ADD_TO_PPC_SPECIFICATION,
   CHANGE_PPC_SPECIFICATION,
-  CREATE_NEW_PPC_SPECIFICATION,
+  CREATE_NEW_PPC_SPECIFICATION, DELETE_FROM_PPC_SPECIFICATION,
   REMOVE_PPC_SPECIFICATION
 } from "./constants";
 
@@ -41,38 +41,30 @@ const ppcspecifications = (state = defaultState, action) => {
       }
     }
     case ADD_TO_PPC_SPECIFICATION: {
-      const { id, values } = action.payload;
+      const { id, key, value } = action.payload;
+      console.log(id, key, value);
       return {
         ...state,
         ppcspecifications: update(state.ppcspecifications, {
-          [id]: {$merge: values}
-        })
-      }
-    }
-
-      /*
-    case ADD_TO_MULTI_SPECIFICATION:
-      return {
-        ...state,
-        multispecifications: update(state.multispecifications, {
-          [action.payload.id]: {
-            specification: {
-              [action.payload.key]: { $add: [action.payload.value] }
+          [id]: {
+            selectedFields: {
+              [key]: { $add: [value] }
             }
           }
         })
       }
-    case DELETE_FROM_MULTI_SPECIFICATION:
+    }
+    case DELETE_FROM_PPC_SPECIFICATION:{
+      const { id, key, value } = action.payload;
       return {
         ...state,
-        multispecifications: update(state.multispecifications, {
-          [action.payload.id]: {
-            specification: {
-              [action.payload.key]: { $remove: [action.payload.value] },
-            },
-          },
+        ppcspecifications: update(state.ppcspecifications, {
+          [id]: {
+            selectedFields: {
+              [key]: { $remove: [value] },
+            },}
         })
-      }
+      }} /*
     case RESET_MULTI_SPECIFICATION:
       return defaultState
        */

@@ -1,9 +1,8 @@
 import { ADD_DATA_TO_PPC_PLOT, CHANGE_PPC_PLOT, CREATE_NEW_PPC_PLOT, DELETE_PPC_PLOT } from "./constants";
-import { getPlotAllIds, getSpecificationId } from "../plots/selector";
+import { getPlotAllIds} from "../plots/selector";
 import { nextAvaliableId } from "../../utils/plotData";
-import { getParameter } from "../ppcspecification/selector";
 import { fetchPPCData } from "../../utils/fetch";
-import { addToPPCSpecification } from "../ppcspecification/actions";
+
 
 
 export function _createNewPPCPlot(id) {
@@ -58,19 +57,21 @@ export const changePPCPlot = (id, values) => {
    * @param k
    * @param n
    * @param statistic
+   * @param selectedFields
    * @returns {function(*, *): void}
    */
-  export function fetchPPCPlotData(modelname, id, k, n, statistic) {
+  export function fetchPPCPlotData(modelname, id, k, n, statistic, selectedFields) {
     return (dispatch, getState) => {
       dispatch(changePPCPlot(id,{loading: true}));
-      fetchPPCData(modelname, ["sepal_length"], statistic, k, n).then(
+      console.log(selectedFields);
+      fetchPPCData(modelname, selectedFields, statistic, k, n).then(
         (results) => {console.log(results, "results");
         if (results !== null) {
           const data = results["test"];
           const n = data[0].length;
           const vals = data[0].sort();
-          const min = vals[0];
-          const max = Math.round(vals[n-1]);
+          const min = Math.floor(vals[0]);
+          const max = Math.ceil(vals[n-1]);
           console.log(n, min ,max);
           //const size = (max-min)/n;
           const values = {

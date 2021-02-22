@@ -16,16 +16,16 @@ class PPCPlotContainer extends React.Component  {
   getData = () => {
     const { getPPCPlotData } = this.props;
     return getPPCPlotData(this.props.modelname, this.props.id, this.props.k, this.props.n,
-      this.props.statistic)
+      this.props.statistic, Array.from(this.props.selectedFields));
   }
 
   componentDidUpdate(prevProps) {
-    if(prevProps.k !== this.props.k || prevProps.n !== this.props.n || prevProps.statistic !== this.props.statistic){
+    if(prevProps.k !== this.props.k || prevProps.n !== this.props.n || prevProps.statistic !== this.props.statistic || prevProps.selectedFields !== this.props.selectedFields){
       this.getData();
     }
   }
   componentDidMount() {
-    this.getData();
+    //this.getData();
   }
 
   render() {
@@ -41,7 +41,7 @@ class PPCPlotContainer extends React.Component  {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getPPCPlotData: (modelname, id, k, n, statistic) => dispatch(fetchPPCPlotData(modelname,id, k, n, statistic))
+    getPPCPlotData: (modelname, id, k, n, statistic, selectedFields) => dispatch(fetchPPCPlotData(modelname,id, k, n, statistic, selectedFields))
   };
 };
 
@@ -55,6 +55,7 @@ const mapStateToProps = (state, ownProps) => {
     n: getParameter(state, getSpecificationId(state, ownProps.id), "n"),
     statistic: getParameter(state, getSpecificationId(state, ownProps.id), "statistic"),
     layout: getPPCLayout(state, ownProps.id),
+    selectedFields: getParameter(state, getSpecificationId(state, ownProps.id), "selectedFields").Dimensions,
   };
 };
 

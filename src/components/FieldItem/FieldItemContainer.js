@@ -10,11 +10,12 @@ import { FIELD_ITEM } from "../../constants/dragAndDropTypes";
 import FieldItemModal from "../FieldItemModal";
 import { selectActiveSpecificationId } from "../../states/visualizations/selector";
 import { getSpecType } from "../../states/specifications/selector";
-import { MULTI_SPECIFICATION, STANDARD_SPECIFICATION } from "../../states/specifications/specificationTypes";
+import { MULTI_SPECIFICATION, PPC_SPECIFICATION, STANDARD_SPECIFICATION } from "../../states/specifications/specificationTypes";
 import {
   addToMultiSpecification,
   deleteFromMultiSpecification
 } from "../../states/multispecifications/actions";
+import { addToPPCSpecification, deleteFromPPCSpecification } from "../../states/ppcspecification/actions";
 
 function FieldItemContainer({ value, fieldName = "", type = FIELD_ITEM }) {
   const item = { type: type };
@@ -37,6 +38,12 @@ function FieldItemContainer({ value, fieldName = "", type = FIELD_ITEM }) {
           key: fieldName,
           value: value,
         })
+      )
+    }
+    else if (specificationType === PPC_SPECIFICATION) {
+      dispatch(
+        deleteFromPPCSpecification(specificationId, fieldName, value,
+        )
       )
     }
   }
@@ -83,7 +90,16 @@ function FieldItemContainer({ value, fieldName = "", type = FIELD_ITEM }) {
               value: value,
             })
           );
-        } else if (fieldName) {
+        }
+        else if (specificationType === PPC_SPECIFICATION) {
+          if (fieldName) {
+            dispatchListItem();
+          }
+          dispatch(
+            addToPPCSpecification(specificationId, dropResult.result, value,)
+          );
+        }
+        else if (fieldName) {
           dispatchListItem();
         } 
       }

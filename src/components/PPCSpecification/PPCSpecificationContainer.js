@@ -3,12 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { EMPTY } from "../../states/constants";
 import PPCSpecification from "./PPCSpecification";
-import fetchData from "../../utils/fetch";
-import { BASE_URL } from "../../constants/query";
-import solve from "../PCIGraph/utils/weakConstraintBasedGraphLayoutAlgorithm";
 import { getModelNameById } from "../../states/models/selector";
 import { statistics } from "../../configs/ppcspecificationConfig";
-import { hidePCIGraph } from "../../states/models/actions";
 import { changeSpecificationValue } from "../../states/ppcspecification/actions";
 
 
@@ -62,7 +58,6 @@ const mapStateToProps = (state, ownProps) => {
     activeModelName: getModelNameById(state, state.plots.activePlotId),
     ppcspecifications: state.ppcspecifications.ppcspecifications,
     currentValues: state.ppcspecifications.ppcspecifications[ownProps.specificationId],
-
   };
 };
 

@@ -1,18 +1,17 @@
 import {
   ADD_TO_PPC_SPECIFICATION,
   CHANGE_PPC_SPECIFICATION,
-  CREATE_NEW_PPC_SPECIFICATION,
+  CREATE_NEW_PPC_SPECIFICATION, DELETE_FROM_PPC_SPECIFICATION,
   REMOVE_PPC_SPECIFICATION
 } from "./constants";
-import { fetchPPCData } from "../../utils/fetch";
-import { getParameter } from "./selector";
-import { fetchPPCPlotData } from "../ppcplots/actions";
 
 const defaultValues = {
   statistic: "median",
   k: 2,
-  n: 2,
-  selectedFields: new Set(),
+  n: 20,
+  selectedFields: {
+    Dimensions: new Set(),
+  },
 }
 
 
@@ -52,23 +51,28 @@ export const changeSpecificationValue = (id, values, modelname) => {
   }
 }
 
-export const addToPPCSpecification = (id, values) => {
+export const addToPPCSpecification = (id, key, value) => {
   return {
     type: ADD_TO_PPC_SPECIFICATION,
     payload: {
       id: id,
-      values: values,
+      key: key,
+      value: value,
+    }
+  }
+}
+
+export const deleteFromPPCSpecification = (id, key, value) => {
+  return {
+    type: DELETE_FROM_PPC_SPECIFICATION,
+    payload: {
+      id: id,
+      key: key,
+      value: value,
     }
   }
 }
 /*
-export const deleteFromMultiSpecification = (payload: any) => {
-  return {
-    type: DELETE_FROM_MULTI_SPECIFICATION,
-    payload
-  }
-}
-
 export const resetMultiSpecification = () => {
   return {
     type: RESET_MULTI_SPECIFICATION

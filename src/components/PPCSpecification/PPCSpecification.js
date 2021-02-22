@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import TitelH1 from "../Titles/TitleH1";
-import TitelH2 from "../Titles/TitleH2";
 import Field from "../Field";
 import Select from '@material-ui/core/Select';
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 
 class PPCSpecification extends Component {
@@ -56,7 +54,6 @@ class PPCSpecification extends Component {
           margin="dense"
           value={defaults.k}
           onChange={(event) => {onSpecificationChange("k", event.target.value)}}
-          //onBlur={handleBlur}
           inputProps={{
             step: 1,
             min: 0,
@@ -64,7 +61,6 @@ class PPCSpecification extends Component {
             type: 'number',
           }}
         />
-        <InputLabel id="usedFields">Calculate for:</InputLabel>
           {Object.entries(defaults.selectedFields).map((item, index) => (
             <Field
               title={item[0]}
