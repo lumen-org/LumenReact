@@ -1,15 +1,15 @@
 export const defaultValues = {
     specification: {
-        X_Axis: new Set([]),
-        Y_Axis: new Set([]),
+        ["X-Axis"]: new Set([]),
+        ["Y-Axis"]: new Set([]),
         Color: new Set([]),
     }
 }
 
 export const filledTwoValues = {
     specification: {
-        X_Axis: new Set(["age"]),
-        Y_Axis: new Set(["size"]),
+        ["X-Axis"]: new Set(["age"]),
+        ["Y-Axis"]: new Set(["size"]),
         Filter: new Set([]),
         Detail: new Set([]),
         Color: new Set([]),
@@ -20,8 +20,8 @@ export const filledTwoValues = {
 
 export const filledOneValues = {
     specification: {
-        X_Axis: new Set(["age"]),
-        Y_Axis: new Set([]),
+        ["X-Axis"]: new Set(["age"]),
+        ["Y-Axis"]: new Set([]),
         Filter: new Set([]),
         Detail: new Set([]),
         Color: new Set([]),
@@ -35,8 +35,8 @@ export const defaultState = {
         "10": {
             "specification": {
                 "Color": new Set([]),
-                "X_Axis": new Set([]),
-                "Y_Axis": new Set([]),
+                "X-Axis": new Set([]),
+                "Y-Axis": new Set([]),
             }
         }
     }
@@ -47,8 +47,8 @@ export const filledOneState = {
         "10": {
             "specification": {
                 "Color": new Set([]),
-                "X_Axis": new Set(["time[s]"]),
-                "Y_Axis": new Set([]),
+                "X-Axis": new Set(["time[s]"]),
+                "Y-Axis": new Set([]),
             }
         }
     }
