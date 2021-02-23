@@ -1,4 +1,10 @@
-import { ADD_DATA_TO_PPC_PLOT, CHANGE_PPC_PLOT, CREATE_NEW_PPC_PLOT, DELETE_PPC_PLOT } from "./constants";
+import {
+  ADD_DATA_TO_PPC_PLOT,
+  CHANGE_PPC_PLOT,
+  CHANGE_PPC_PLOT_LAYOUT,
+  CREATE_NEW_PPC_PLOT,
+  DELETE_PPC_PLOT
+} from "./constants";
 import { getPlotAllIds} from "../plots/selector";
 import { nextAvaliableId } from "../../utils/plotData";
 import { fetchPPCData } from "../../utils/fetch";
@@ -31,12 +37,14 @@ export function deletePPCPlot(id) {
   };
 }
 
-export const addDataToPPCPlot = (id, results) => {
+export const addDataToPPCPlot = (id, x, min, max) => {
   return {
     type: ADD_DATA_TO_PPC_PLOT,
     payload: {
       id: id,
-      results: results,
+      x: x,
+      min: min,
+      max: max,
     },
   };
 }
@@ -47,6 +55,16 @@ export const changePPCPlot = (id, values) => {
     payload: {
       id: id,
       values: values
+    }
+  }
+}
+
+export const addLayoutToPPCPlot = (id, x_vals) => {
+  return {
+    type: CHANGE_PPC_PLOT_LAYOUT,
+    payload: {
+      id: id,
+      x_vals: x_vals,
     }
   }
 }
@@ -67,62 +85,17 @@ export const changePPCPlot = (id, values) => {
       fetchPPCData(modelname, selectedFields, statistic, k, n).then(
         (results) => {console.log(results, "results");
         if (results !== null) {
+          console.log(results);
           const data = results["test"];
           const n = data[0].length;
           const vals = data[0].sort();
           const min = Math.floor(vals[0]);
           const max = Math.ceil(vals[n-1]);
-          console.log(n, min ,max);
-          //const size = (max-min)/n;
-          const values = {
-            data: [{
-              x: data[0],
-              type: 'histogram',
-              name: "ppc values",
-              marker: {
-                line: {
-                  width: 1
-                }
-              },
-              xbins: {
-                start: min,
-                end: max,
-                //size: size,
-              }
-            },
-              /*{
-              type: 'scatter',
-              x: [results.reference[0], results.reference[0]],
-              y: [2, 0],
-              name: "reference",
-              width: "10px",
-              marker: {
-                line: {
-                  width: 1,
-                }
-              }
-            },*/
-            ]
-          };
-          dispatch(addDataToPPCPlot(id, JSON.parse(JSON.stringify(values))))
-          const layout = {
-            shapes: [{
-              type: "line",
-              x0: results.reference[0],
-              y0: 0,
-              x1: results.reference[0],
-              yref: 'paper',
-              y1: 1,
-              name: "reference",
-              line: {
-                color: 'orange',
-                width: 1.5,
-
-              }
-            }]
-          }
-          dispatch(addDataToPPCPlot(id, {reference: results.reference[0]}));
-          dispatch(changePPCPlot(id, {layout: layout}));
+          dispatch(addDataToPPCPlot(id, data[0], min, max));
+          const reference =  results.reference[0];
+          console.log(reference);
+          dispatch(changePPCPlot(id, {reference: reference}));
+          dispatch(addLayoutToPPCPlot(id, reference));
         }}).then(dispatch(changePPCPlot(id, {loading: false}))
 
       );

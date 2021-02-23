@@ -7,24 +7,12 @@ export const getPPCLoadingState = (state, id) => {
 }
 
 export const getPPCLayout = (state, id) => {
-  const data = state.ppcplots.ppcplots[id]["test"];
-  console.log(data, "data");
-  if (data != null) {
-    const n = data[0].length;
-    const vals = data[0].sort();
-    const min = vals[0];
-    const max = vals[n - 1];
-    console.log(n, min, max);
-    const size = (max - min) / n;
-  }
   return state.ppcplots.ppcplots[id]["layout"];
 }
 
 export const getPPCPlotData = (state, id) => {
   try {
-    const result = state.ppcplots.ppcplots[id]["data"];
-    console.log(result);
-    return result;
+    return state.ppcplots.ppcplots[id]["data"];
   }
   catch (e) {
     console.log("unsuccessful");

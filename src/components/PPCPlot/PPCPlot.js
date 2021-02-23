@@ -13,8 +13,6 @@ class PPCPlot extends React.Component {
 
   render() {
     const { loading, plotData, layout } = this.props;
-    console.log(plotData, " plotData");
-    console.log(layout, " layout");
     if (plotData !== []) {
       return (
         <div>
@@ -22,7 +20,7 @@ class PPCPlot extends React.Component {
             data={plotData}
             layout={layout}
             useResizeHandler={true}
-            className="StandardPlot-plot"
+            style={{width: '100%', height: '100%'}}
           />
           {loading && (
             <Loader

@@ -1,4 +1,4 @@
-export const BASE_URL = "http://192.168.178.30:52104/webservice";//"http://127.0.0.1:52104/webservice";
+export const BASE_URL = "http://127.0.0.1:52104/webservice";
 export const SHOW_MODELS = { SHOW: "MODELS" };
 export const SHOW_HEADERS = { SHOW: "HEADER", FROM: "" };
 export const DROP_MODEL = { DROP: "" };
