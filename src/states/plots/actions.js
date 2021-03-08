@@ -1,5 +1,5 @@
 import { CREATE_NEW_PLOT, CHANGE_ACTIVE_PLOT, DELETE_PLOT } from "./constants";
-import { STANDARD_PLOT, PCI_PLOT, MULTI_PLOT } from "../../constants/plotTypes";
+import { STANDARD_PLOT, PCI_PLOT, MULTI_PLOT, PPC_PLOT } from "../../constants/plotTypes";
 import {
   createNewStandardPlot,
   deleteStandardPlot,
@@ -12,11 +12,10 @@ import {
   selectActiveModelId,
   getLastCreatedVisualizationId,
 } from "../visualizations/selector";
-import { getModelIdByPlotId } from "../models/selector";
 import { createNewMultiPlot, deleteMultiPlot } from "../multiplots/actions";
 import { nextAvaliableId } from "../../utils/plotData";
-import { deleteModelIfNecessary, hidePCIGraph, showPCIGraph } from "../models/actions";
-import { deleteDimensions } from "../dimensions/actions";
+import { hidePCIGraph, showPCIGraph } from "../models/actions";
+import { createNewPPCPlot, deletePPCPlot } from "../ppcplots/actions";
 
 export function changeActivePlot(newid) {
   return {
@@ -39,6 +38,9 @@ export function createNewPlot(modelName, plotType, specificationId) {
       }
       if (plotType === PCI_PLOT) {
         dispatch(showPCIGraph(selectActiveModelId(getState())));
+      }
+      if (plotType === PPC_PLOT) {
+        dispatch(createNewPPCPlot());
       }
 
       const visualizationId = getLastCreatedVisualizationId(getState());
@@ -82,6 +84,9 @@ export function deletePlot(id) {
     if (plotType === PCI_PLOT) {
       let modelId = getState().visualizations.visualizations.byId[getState().plots.plots.byId[id].visualizationId].modelId;
       dispatch(hidePCIGraph(modelId));
+    }
+    if(plotType === PPC_PLOT) {
+      dispatch(deletePPCPlot(id));
     }
     dispatch(deletePlotInStore(id));
   };

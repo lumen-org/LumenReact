@@ -156,4 +156,27 @@ export const fetch1DPlotData = (BODY) => {
   });
 };
 
+export const fetchPPCData = (modelname, selectedFields, testquantity, k, n) => {
+  // here should be stuff that fetches the data from the backend
+    let body = {
+      FROM: modelname,
+      PPC: selectedFields,
+      OPTS: {
+        TEST_QUANTITY: testquantity,
+        k: k,
+        n: n,
+      }
+    };
+    return fetchData(BASE_URL, body).then(
+      (response) => {
+        console.log(response, " response");
+        return response;
+      },
+      (error) => {
+        console.log("Something went wrong: " + error);
+        return null;
+      }
+    );
+}
+
 export default fetchData;

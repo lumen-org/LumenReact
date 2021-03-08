@@ -13,6 +13,7 @@ import queryTemplates from "../../utils/queryTemplates";
 import { getSpecById } from "../specifications/selector";
 import { getSpecificationId } from "../plots/selector";
 import { getModelNameById } from "../models/selector";
+import { xAxisName, yAxisName } from "../../configs/specificationFacetsConfig";
 
 function initializePlot(id) {
   return {
@@ -90,7 +91,8 @@ export function fetchMultiPlotLayout(id) {
 
     const specification = getSpecById(getState(), specId);
     const modelName = getModelNameById(getState(), id);
-    const { X_Axis, Y_Axis } = specification;
+    const X_Axis = specification[xAxisName];
+    const Y_Axis = specification[yAxisName];
     const defaultLayout = {
       autosize: true,
       title: modelName,

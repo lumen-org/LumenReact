@@ -1,6 +1,7 @@
 import * as types from "./constants";
 import reducer from "./reducer";
 import { defaultValues, defaultState, filledOneState, changedPredictionModelState } from "./testData";
+import { aggregationName, xAxisName } from "../../configs/specificationFacetsConfig";
 
 describe("standardspecification reducer", () => {
     it("should create the initial state", () => {
@@ -37,7 +38,7 @@ describe("standardspecification reducer", () => {
     it("should add a new value to standardspecification", () => {
         const payload = {
             id: 10,
-            key: "X_Axis",
+            key: xAxisName,
             value: "time[s]"
         }
 
@@ -50,7 +51,7 @@ describe("standardspecification reducer", () => {
     it("should delete a value from standardspecification", () => {
         const payload = {
             id: 10,
-            key: "X_Axis",
+            key: xAxisName,
             value: "time[s]"
         }
 
@@ -64,7 +65,7 @@ describe("standardspecification reducer", () => {
         const payload = {
             id: 10,
             type: "model",
-            key: "Prediction"
+            key: aggregationName,
         }
 
         expect(reducer(defaultState, {

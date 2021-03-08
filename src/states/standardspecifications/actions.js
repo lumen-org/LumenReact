@@ -12,8 +12,8 @@ maintains all existing specifications and there state
  */
 const defaultValues = {
     specification: {
-        X_Axis: new Set([]),
-        Y_Axis: new Set([]),
+        "X-Axis": new Set([]),
+        "Y-Axis": new Set([]),
         Filter: new Set([]),
         Detail: new Set([]),
         Color: new Set([]),
@@ -21,11 +21,11 @@ const defaultValues = {
         Size: new Set([]),
     },
     facets: {
-        Prediction: {
+        Aggregation: {
             model: false,
             data: false,
         },
-        "Data Points": {
+        Samples: {
             model: false,
             data: true,
         },

@@ -26,7 +26,7 @@ class Facet extends React.Component {
         <thead>
           <tr>
             <th scope="col"> </th>
-            <th scope="col">Prediction</th>
+            <th scope="col">Model</th>
             <th scope="col">Data</th>
           </tr>
         </thead>
@@ -34,8 +34,7 @@ class Facet extends React.Component {
           {facetsActions.map((item, key) => (
             <tr>
               <th scope="row">
-                <img src={item.icon} alt="" />
-                <div className="d-none d-m-block">{item.name}</div>
+                {item.name}
               </th>
               <td className="text-center">
                 <div className="custom-control custom-checkbox">

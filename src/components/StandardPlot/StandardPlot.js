@@ -7,6 +7,7 @@ import { defaultPlot } from "./defaultPlot";
 import { markers } from "./markers";
 import { createCategoryColorMap } from "./colorPalettes";
 import Plot from "react-plotly.js";
+import { aggregationName, densityName, marginalName, samplesName } from "../../configs/specificationFacetsConfig";
 class StandardPlot extends Component {
   static propTypes = {
     plotData: PropTypes.array,
@@ -158,30 +159,30 @@ class StandardPlot extends Component {
     const categoryColorMap = createCategoryColorMap(category);
     const data = [];
     displayTraces.map((traceinfo, ind) => {
-      if (traceinfo.name === "Prediction" && traceinfo.from === "data") {
+      if (traceinfo.name === aggregationName && traceinfo.from === "data") {
         data.push(this.getNewDataPredictionTrace());
       }
-      if (traceinfo.name === "Prediction" && traceinfo.from === "model") {
+      if (traceinfo.name === aggregationName && traceinfo.from === "model") {
         data.push(this.getNewModelPredictionTrace());
       }
-      if (traceinfo.name === "Data Points" && traceinfo.from === "data") {
+      if (traceinfo.name === samplesName && traceinfo.from === "data") {
         this.getNewDataScatterTrace(data, categoryColorMap);
       }
-      if (traceinfo.name === "Density" && traceinfo.from === "data") {
+      if (traceinfo.name === densityName && traceinfo.from === "data") {
         data.push(this.getNewDataDensityTrace());
       }
-      if (traceinfo.name === "Marginals" && traceinfo.from === "data") {
+      if (traceinfo.name === marginalName && traceinfo.from === "data") {
         this.getNewDataXHistogramTrace(data, categoryColorMap);
         this.getNewDataYHistogramTrace(data, categoryColorMap);
       }
 
-      if (traceinfo.name === "Data Points" && traceinfo.from === "model") {
+      if (traceinfo.name === samplesName && traceinfo.from === "model") {
         this.getNewModelScatterTrace(data, categoryColorMap);
       }
-      if (traceinfo.name === "Density" && traceinfo.from === "model") {
+      if (traceinfo.name === densityName && traceinfo.from === "model") {
         data.push(this.getNewModelDensityTrace());
       }
-      if (traceinfo.name === "Marginals" && traceinfo.from === "model") {
+      if (traceinfo.name === marginalName && traceinfo.from === "model") {
         this.getNewModelXHistogramTrace(data, categoryColorMap);
         this.getNewModelYHistogramTrace(data, categoryColorMap);
       }

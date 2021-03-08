@@ -9,6 +9,8 @@ import dimensions from "./states/dimensions/reducer";
 import standardplots from "./states/standardplots/reducer";
 import multispecifications from "./states/multispecifications/reducer"
 import multiplots from "./states/multiplots/reducer";
+import ppcplots from "./states/ppcplots/reducer";
+import ppcspecifications from "./states/ppcspecification/reducer";
 
 export default combineReducers({
   app,
@@ -21,4 +23,6 @@ export default combineReducers({
   standardplots,
   multispecifications,
   multiplots,
+  ppcplots,
+  ppcspecifications,
 });

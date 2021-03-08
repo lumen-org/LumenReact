@@ -16,6 +16,8 @@ import {
   DELETE_STANDARD_PLOT,
 } from "./constants";
 
+
+
 import { getPlotAllIds } from "../plots/selector";
 import { getModelNameById } from "../models/selector";
 
@@ -41,6 +43,7 @@ import {
   getPredictionQueryBodyId,
   getSelectedFieldArrayById,
 } from "./utils";
+import { aggregationName, densityName, marginalName, samplesName } from "../../configs/specificationFacetsConfig";
 
 function initializePlot(id) {
   return {
@@ -243,28 +246,28 @@ export function fetchOnSpecChange() {
 
     const facets = getFacetById(getState(), getSpecificationId(getState(), id));
     dispatch(fetchDataPending(id));
-    if (facets["Data Points"].data === true) {
+    if (facets[samplesName].data === true) {
       dispatch(fetchTrainingDataPoints());
     }
-    if (facets["Density"].data === true) {
+    if (facets[densityName].data === true) {
       dispatch(fetchDataDensity());
     }
-    if (facets["Marginals"].data === true) {
+    if (facets[marginalName].data === true) {
       dispatch(fetchDataMarginals());
     }
-    if (facets["Prediction"].data === true) {
+    if (facets[aggregationName].data === true) {
       dispatch(fetchDataPrediction());
     }
-    if (facets["Data Points"].model === true) {
+    if (facets[samplesName].model === true) {
       dispatch(fetchModelDataPoints());
     }
-    if (facets["Marginals"].model === true) {
+    if (facets[marginalName].model === true) {
       dispatch(fetchModelMarginals());
     }
-    if (facets["Density"].model === true) {
+    if (facets[densityName].model === true) {
       dispatch(fetchModelDensityData());
     }
-    if (facets["Prediction"].model === true) {
+    if (facets[aggregationName].model === true) {
       dispatch(fetchModelPrediction());
     }
   };

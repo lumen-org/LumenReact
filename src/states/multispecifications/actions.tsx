@@ -10,8 +10,8 @@ import {
 
 const defaultValues = {
     specification: {
-        X_Axis: new Set([]),
-        Y_Axis: new Set([]),
+        "X-Axis": new Set([]),
+        "Y-Axis": new Set([]),
         Color: new Set([]),
     }
 }

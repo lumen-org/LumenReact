@@ -46,6 +46,9 @@ function PlotMenu(props) {
         <MenuItem onClick={() => props.onCreateMultiPlot()}>
           {" "}
           Multi Plot</MenuItem>
+        <MenuItem onClick={() => props.onCreatePPCPlot()}>
+          PPC Plot
+        </MenuItem>
         <MenuItem onClick={() => props.onCreatePCIPlot()}>
           PCI Graph
         </MenuItem>

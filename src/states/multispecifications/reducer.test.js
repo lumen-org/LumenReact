@@ -41,7 +41,7 @@ describe("multispecification reducer", () => {
     it("should add a new value to multispecification", () => {
         const payload = {
             id: 10,
-            key: "X_Axis",
+            key: "X-Axis",
             value: "time[s]"
         }
 
@@ -54,7 +54,7 @@ describe("multispecification reducer", () => {
     it("should delete a value from multispecification", () => {
         const payload = {
             id: 10,
-            key: "X_Axis",
+            key: "X-Axis",
             value: "time[s]"
         }
 

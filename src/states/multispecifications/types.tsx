@@ -1,6 +1,6 @@
 export interface Multispecification {
-    X_Axis: object,
-    Y_Axis: object,
+    "X-Axis": object,
+    "Y-Axis": object,
     Color: object
 }
 

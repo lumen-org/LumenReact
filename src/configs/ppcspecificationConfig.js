@@ -1,0 +1,1 @@
+export const statistics = ["average", "median", "variance", "min", "max", "most_frequent", "least_frequent"];
