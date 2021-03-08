@@ -23,7 +23,6 @@ export function createNewPPCPlot() {
   return (dispatch, getState) => {
     const allIds = getPlotAllIds(getState());
     const newId = nextAvaliableId(allIds);
-    console.log(newId);
     dispatch(_createNewPPCPlot(newId));
   };
 }

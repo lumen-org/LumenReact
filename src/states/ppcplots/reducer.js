@@ -30,11 +30,10 @@ const ppcplots = (state = defaultState, action) => {
         })
       }}
     case DELETE_PPC_PLOT: {
-      const { id } = action.payload.id;
       return {
         ...state,
         ppcplots: update(state.ppcplots, {
-          $unset: [id],
+            $unset: [action.payload.id]
         }),
       }
     }
